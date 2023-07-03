@@ -6,8 +6,11 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint -c .eslintrc.cjs --ext .ts src",
+    "check:code": "eslint -c .eslintrc.cjs src",
+    "fix:code": "npm run check:code -- --fix",
+    "pre-commit:fix:code": "eslint -c .eslintrc.cjs --fix"
   },
   "dependencies": {
     "@dcl/schemas": "^7.4.1",
@@ -15,6 +18,7 @@
     "ajv": "^8.12.0",
     "decentraland-dapps": "^14.3.1",
     "decentraland-ui": "^3.112.1",
+    "husky": "^8.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.9",
@@ -24,6 +28,7 @@
     "redux-saga": "^1.2.3"
   },
   "devDependencies": {
+    "@dcl/eslint-config": "1.1.7",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/redux": "^3.6.0",
