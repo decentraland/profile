@@ -10,7 +10,8 @@
     "lint": "eslint -c .eslintrc.cjs --ext .ts src",
     "check:code": "eslint -c .eslintrc.cjs src",
     "fix:code": "npm run check:code -- --fix",
-    "pre-commit:fix:code": "eslint -c .eslintrc.cjs --fix"
+    "pre-commit:fix:code": "eslint -c .eslintrc.cjs --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@dcl/schemas": "^7.4.1",
@@ -18,7 +19,6 @@
     "ajv": "^8.12.0",
     "decentraland-dapps": "^14.3.1",
     "decentraland-ui": "^3.112.1",
-    "husky": "^8.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.9",
@@ -39,6 +39,7 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "husky": "^8.0.3",
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
   }
