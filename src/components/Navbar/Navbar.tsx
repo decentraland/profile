@@ -1,20 +1,17 @@
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-// import { Navbar as BaseNavbar } from "decentraland-dapps/dist/containers";
-import { Navbar as BaseNavbar } from "decentraland-ui/dist/components/Navbar/Navbar";
-
-// import { locations } from '../../modules/routing/locations'
-import UserMenu from "../UserMenu";
-import { Props } from "./Navbar.types";
-import "./Navbar.css";
+import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Navbar as BaseNavbar } from 'decentraland-ui/dist/components/Navbar/Navbar'
+import UserMenu from '../UserMenu'
+import { Props } from './Navbar.types'
+import './Navbar.css'
 
 const Navbar = (props: Props) => {
-  const { isConnected } = props;
-  const { pathname, search } = location;
-  const navigate = useNavigate();
+  const { isConnected } = props
+  const { pathname, search } = location
+  const navigate = useNavigate()
 
   if (isConnected) {
-    props = { ...props, rightMenu: <UserMenu /> };
+    props = { ...props, rightMenu: <UserMenu /> }
   }
 
   const handleOnSignIn = useCallback(() => {
@@ -23,13 +20,12 @@ const Navbar = (props: Props) => {
     // const redirectTo = !currentRedirectTo
     //   ? `${pathname}${search}`
     //   : currentRedirectTo
-    navigate("locations.signIn(redirectTo)");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, search]);
+    navigate('locations.signIn(redirectTo)')
+  }, [pathname, search])
 
   const handleOnClickAccount = useCallback(() => {
-    navigate("locations.settings()");
-  }, [navigate]);
+    navigate('locations.settings()')
+  }, [navigate])
 
   return (
     <BaseNavbar
@@ -40,7 +36,7 @@ const Navbar = (props: Props) => {
       onSignIn={handleOnSignIn}
       onClickAccount={handleOnClickAccount}
     />
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
