@@ -3,8 +3,6 @@ import dev from "./env/dev.json";
 import stg from "./env/stg.json";
 import prod from "./env/prod.json";
 
-console.log(import.meta.env);
-
 export const config = createConfig(
   {
     [Env.DEVELOPMENT as string]: dev,

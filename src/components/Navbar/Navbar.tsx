@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Navbar as BaseNavbar } from "decentraland-ui/dist/components/Navbar/Navbar";
+import { Navbar as BaseNavbar } from "decentraland-dapps/dist/containers";
 
 import { locations } from "../../modules/routing/location";
 import UserMenu from "../UserMenu";

@@ -1,1 +1,5 @@
-{}
+{
+  "NETWORK": "goerli",
+  "CHAIN_ID": "5",
+  "PEER_URL": "https://peer-ap1.decentraland.zone"
+}

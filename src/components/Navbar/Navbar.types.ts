@@ -1,4 +1,4 @@
-import { NavbarProps } from "decentraland-ui";
+import { NavbarProps } from "decentraland-ui/dist/components/Navbar/Navbar";
 
 export type Props = Partial<NavbarProps> & {
   isConnected: boolean;

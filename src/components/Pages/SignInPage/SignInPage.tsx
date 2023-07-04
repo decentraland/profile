@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { default as SignIn } from "decentraland-dapps/dist/containers/SignInPage";
 import { PageLayout } from "../../PageLayout";
@@ -10,9 +11,11 @@ const SignInPage = (props: Props) => {
   const redirectTo = searchParams.get("redirectTo");
   const navigate = useNavigate();
 
-  if (redirectTo && isConnected) {
-    navigate(decodeURIComponent(redirectTo));
-  }
+  useEffect(() => {
+    if (redirectTo && isConnected) {
+      navigate(decodeURIComponent(redirectTo));
+    }
+  }, [redirectTo, isConnected, navigate]);
 
   return (
     <PageLayout>

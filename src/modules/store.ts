@@ -3,6 +3,7 @@ import { createLogger } from "redux-logger";
 import createSagasMiddleware from "redux-saga";
 import { Env } from "@dcl/ui-env";
 import { createAnalyticsMiddleware } from "decentraland-dapps/dist/modules/analytics/middleware";
+import { createStorageMiddleware } from "decentraland-dapps/dist/modules/storage/middleware";
 import { config } from "./config";
 import { rootSaga } from "./saga";
 import { createRootReducer } from "./reducer";
@@ -17,11 +18,19 @@ export function initStore() {
   const analyticsMiddleware = createAnalyticsMiddleware(
     config.get("SEGMENT_API_KEY")
   );
+  const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
+    storageKey: "profile", // this is the key used to save the state in localStorage (required)
+    paths: [["identity", "data"]], // array of paths from state to be persisted (optional)
+    actions: [], // array of actions types that will trigger a SAVE (optional)
+    migrations: {}, // migration object that will migrate your localstorage (optional)
+  });
   const middleware = applyMiddleware(
     sagasMiddleware,
     loggerMiddleware,
-    analyticsMiddleware
+    analyticsMiddleware,
+    storageMiddleware
   );
+
   const store = createStore(createRootReducer(), compose(middleware));
   if (isDev) {
     const _window = window as any;
@@ -29,6 +38,7 @@ export function initStore() {
   }
 
   sagasMiddleware.run(rootSaga);
+  loadStorageMiddleware(store);
 
   return store;
 }
