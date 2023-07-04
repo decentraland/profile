@@ -1,29 +1,29 @@
-import "semantic-ui-css/semantic.min.css";
-import "decentraland-ui/dist/themes/base-theme.css";
-
-import React from "react";
-import { Provider } from "react-redux";
-import ReactDOM from "react-dom";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import TranslationProvider from "decentraland-dapps/dist/providers/TranslationProvider";
-import ModalProvider from "decentraland-dapps/dist/providers/ModalProvider";
-import WalletProvider from "decentraland-dapps/dist/providers/WalletProvider";
-import MainPage from "./components/Pages/MainPage";
-import SignInPage from "./components/Pages/SignInPage";
-import { initStore } from "./modules/store";
-import * as locales from "./modules/translation/locales";
-import * as modals from "./components/Modals";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
+import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
+import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
+import 'decentraland-ui/dist/themes/base-theme.css'
+import * as modals from './components/Modals'
+import MainPage from './components/Pages/MainPage'
+import SignInPage from './components/Pages/SignInPage'
+import { initStore } from './modules/store'
+import * as locales from './modules/translation/locales'
+// eslint-disable-next-line import/order
+import 'semantic-ui-css/semantic.min.css'
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <MainPage />,
+    path: '/',
+    element: <MainPage />
   },
   {
-    path: "sign-in",
-    element: <SignInPage />,
-  },
-]);
+    path: 'sign-in',
+    element: <SignInPage />
+  }
+])
 
 const component = (
   <React.StrictMode>
@@ -37,11 +37,13 @@ const component = (
       </WalletProvider>
     </Provider>
   </React.StrictMode>
-);
+)
 
-ReactDOM.render(component, document.getElementById("root") as HTMLElement);
+ReactDOM.render(component, document.getElementById('root') as HTMLElement)
 
 // Adding the theme and the CSS after loading all files to prevent overwriting the CSS
 
-import "decentraland-ui/dist/themes/alternative/dark-theme.css";
-import "./index.css";
+// eslint-disable-next-line import/order
+import 'decentraland-ui/dist/themes/alternative/dark-theme.css'
+// eslint-disable-next-line import/order
+import './index.css'

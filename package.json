@@ -2,12 +2,15 @@
   "name": "profile",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint -c .eslintrc.js --ext .ts src",
+    "check:code": "eslint -c .eslintrc.js src",
+    "fix:code": "npm run check:code -- --fix",
+    "pre-commit:fix:code": "eslint -c .eslintrc.js --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@dcl/schemas": "^7.4.1",
@@ -24,6 +27,7 @@
     "redux-saga": "^1.2.3"
   },
   "devDependencies": {
+    "@dcl/eslint-config": "1.1.7",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/redux": "^3.6.0",
@@ -34,6 +38,7 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "husky": "^8.0.3",
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
   }
