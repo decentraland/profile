@@ -22,14 +22,7 @@ export function initStore() {
     loggerMiddleware,
     analyticsMiddleware
   );
-  const composeEnhancers =
-    isDev && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-      ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()
-      : compose;
-  const enhancer = composeEnhancers(middleware);
-
-  const store = createStore(createRootReducer(), enhancer);
-
+  const store = createStore(createRootReducer(), compose(middleware));
   if (isDev) {
     const _window = window as any;
     _window.getState = store.getState;
