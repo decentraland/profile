@@ -1,4 +1,3 @@
-import { applyMiddleware, compose, createStore } from 'redux'
 import { createLogger } from 'redux-logger'
 import createSagasMiddleware from 'redux-saga'
 import { Env } from '@dcl/ui-env'
@@ -22,9 +21,9 @@ export function initStore() {
     actions: [], // array of actions types that will trigger a SAVE (optional)
     migrations: {} // migration object that will migrate your localstorage (optional)
   })
-  const middleware = applyMiddleware(sagasMiddleware, loggerMiddleware, analyticsMiddleware, storageMiddleware)
+  // const middleware = applyMiddleware()
 
-  const store = createStore(createRootReducer(), compose(middleware))
+  const store = createRootReducer([sagasMiddleware, loggerMiddleware, analyticsMiddleware, storageMiddleware])
   if (isDev) {
     const _window = window as any
     // eslint-disable-next-line @typescript-eslint/unbound-method
