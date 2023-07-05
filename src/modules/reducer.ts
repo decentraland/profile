@@ -1,5 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { AnyAction, Middleware, Reducer } from 'redux'
+import { configureStore, Reducer, Middleware, AnyAction } from '@reduxjs/toolkit'
 import { FeaturesState, featuresReducer as features } from 'decentraland-dapps/dist/modules/features/reducer'
 import { ModalState, modalReducer as modal } from 'decentraland-dapps/dist/modules/modal/reducer'
 import { profileReducer as profile } from 'decentraland-dapps/dist/modules/profile/reducer'
