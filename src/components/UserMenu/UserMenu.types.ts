@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit'
-import { UserMenuProps } from 'decentraland-ui/dist/components/UserMenu/UserMenu'
 import { ConnectWalletRequestAction, DisconnectWalletAction } from 'decentraland-dapps/dist/modules/wallet/actions'
+import { UserMenuProps } from 'decentraland-ui/dist/components/UserMenu/UserMenu'
 
 export type Props = UserMenuProps & { hasTranslations: boolean }
 
