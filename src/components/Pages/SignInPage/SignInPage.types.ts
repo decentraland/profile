@@ -1,5 +1,5 @@
 export type Props = {
-  isConnected: boolean;
-};
+  isConnected: boolean
+}
 
-export type MapStateProps = Pick<Props, "isConnected">;
+export type MapStateProps = Pick<Props, 'isConnected'>

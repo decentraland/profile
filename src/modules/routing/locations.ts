@@ -1,8 +1,6 @@
 export const locations = {
-  root: () => "/",
+  root: () => '/',
   signIn: (redirectTo?: string) => {
-    return `/sign-in${
-      redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""
-    }`;
-  },
-};
+    return `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`
+  }
+}
