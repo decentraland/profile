@@ -1,8 +1,8 @@
 import classNames from 'classnames'
 import { Footer } from '../Footer'
+import styles from './PageLayout.module.css'
 import Navbar from '../Navbar'
 import { Props } from './PageLayout.types'
-import styles from './PageLayout.module.css'
 
 const PageLayout = ({ children, className }: Props) => {
   return (
