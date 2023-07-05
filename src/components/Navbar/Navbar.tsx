@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Navbar as BaseNavbar } from 'decentraland-ui/dist/components/Navbar/Navbar'
+import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
+import { locations } from '../../modules/routing/location'
 import UserMenu from '../UserMenu'
 import { Props } from './Navbar.types'
 import './Navbar.css'
@@ -15,26 +16,19 @@ const Navbar = (props: Props) => {
   }
 
   const handleOnSignIn = useCallback(() => {
-    // const searchParams = new URLSearchParams(search)
-    // const currentRedirectTo = searchParams.get('redirectTo')
-    // const redirectTo = !currentRedirectTo
-    //   ? `${pathname}${search}`
-    //   : currentRedirectTo
-    navigate('locations.signIn(redirectTo)')
-  }, [pathname, search])
-
-  const handleOnClickAccount = useCallback(() => {
-    navigate('locations.settings()')
-  }, [navigate])
+    const searchParams = new URLSearchParams(search)
+    const currentRedirectTo = searchParams.get('redirectTo')
+    const redirectTo = !currentRedirectTo ? `${pathname}${search}` : currentRedirectTo
+    navigate(locations.signIn(redirectTo))
+  }, [navigate, pathname, search])
 
   return (
     <BaseNavbar
       {...props}
-      activePage="marketplace"
+      activePage="profile"
       isFullscreen={props.isFullscreen}
-      // isSignIn={"pathname === locations.signIn()"}
+      isSignIn={pathname === locations.signIn()}
       onSignIn={handleOnSignIn}
-      onClickAccount={handleOnClickAccount}
     />
   )
 }
