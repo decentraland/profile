@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Set package.json version
-        uses: menduz/oddish-action@main
+        uses: menduz/oddish-action@master
         with:
           deterministic-snapshot: true
           only-update-versions: true
@@ -32,7 +32,7 @@ jobs:
           NODE_PATH: 'src'
           NODE_OPTIONS: '--max-old-space-size=6144'
       - name: Publish
-        uses: menduz/oddish-action@main
+        uses: menduz/oddish-action@master
         with:
           cwd: './build'
           deterministic-snapshot: true
