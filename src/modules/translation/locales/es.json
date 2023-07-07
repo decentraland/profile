@@ -1,1 +1,10 @@
-{}
+{
+  "tabs": {
+    "overview": "Resumen",
+    "assets": "Objetos",
+    "creations": "Creaciones",
+    "lists": "Listas",
+    "dao_activity": "Actividad DAO",
+    "places": "Places"
+  }
+}

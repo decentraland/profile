@@ -1,1 +1,11 @@
-{}
+{
+  "edit_avatar": "Edit Avatar",
+  "tabs": {
+    "assets": "Assets",
+    "creations": "Creations",
+    "dao_activity": "DAO Activity",
+    "lists": "Lists",
+    "overview": "Overview",
+    "places": "Places"
+  }
+}
