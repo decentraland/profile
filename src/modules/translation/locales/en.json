@@ -1,5 +1,7 @@
 {
-  "edit_avatar": "Edit Avatar",
+  "avatar": {
+    "edit": "Edit Avatar"
+  },
   "tabs": {
     "assets": "Assets",
     "creations": "Creations",

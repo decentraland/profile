@@ -9,7 +9,7 @@ import { Avatar } from '../../Avatar'
 import styles from './MainPage.module.css'
 
 function MainPage() {
-  const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('navigation.overview'), value: t('navigation.overview') }]
+  const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('tabs.overview'), value: t('tabs.overview') }]
 
   const [selectedTab, setSelectedTab] = useState<string>(tabs[0].value)
 
