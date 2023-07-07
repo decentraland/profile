@@ -6,7 +6,6 @@ jobs:
   set-rollout:
     if: ${{ github.event.deployment.task == 'upload-to-cdn' && github.event.deployment_status.state == 'success' }}
     runs-on: ubuntu-latest
-    defaults:
     steps:
       - uses: hmarr/debug-action@v2
 

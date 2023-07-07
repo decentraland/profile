@@ -24,7 +24,6 @@ on:
 jobs:
   set-manual-rollout:
     runs-on: ubuntu-latest
-    defaults:
     steps:
       - uses: hmarr/debug-action@v2
       - name: Set Rollout
