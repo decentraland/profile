@@ -10,7 +10,7 @@ const Avatar = () => {
       <WearablePreview disableBackground={true} profile="0xd4fEC88A49EB514e9347eC655D0481D8483a9AE0" />
       <Button secondary fluid>
         <Icon name="edit" />
-        {t('navigation.places')}
+        {t('avatar.edit')}
       </Button>
     </div>
   )
