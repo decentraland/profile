@@ -1,9 +1,7 @@
 import { Icon } from 'semantic-ui-react'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
-
 import wallet from '../../assets/icons/Wallet.svg'
-
 import styles from './ProfileInformation.module.css'
 
 const ProfileInformation = () => {
