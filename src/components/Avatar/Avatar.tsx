@@ -2,7 +2,6 @@ import { Icon } from 'semantic-ui-react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { WearablePreview } from 'decentraland-ui/dist/components/WearablePreview/WearablePreview'
-
 import styles from './Avatar.module.css'
 
 const Avatar = () => {
