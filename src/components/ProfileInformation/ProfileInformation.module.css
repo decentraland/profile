@@ -1,0 +1,60 @@
+.ProfileInformation {
+  color: white;
+  gap: 36px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.ProfileInformation .actions {
+  gap: 13px;
+}
+
+.ProfileInformation .basicRow {
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+}
+
+.ProfileInformation .description {
+  font-size: 12px;
+}
+
+.ProfileInformation .userName {
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.ProfileInformation .userNumber {
+  font-size: 18px;
+  color: var(--secondary-text);
+}
+
+.ProfileInformation .profileData {
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ProfileInformation .wallet {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+  height: 24px;
+}
+
+.ProfileInformation :global(.ui.inverted.button).smallButton,
+.ProfileInformation :global(.ui.secondary.button).smallButton {
+  align-items: center;
+  height: 34px;
+  justify-content: center;
+  min-width: unset;
+  padding: 0px 0px 0px 9px;
+  width: 34px;
+}
+
+.Profile.inline .dcl.blockie {
+  width: 100px;
+}
