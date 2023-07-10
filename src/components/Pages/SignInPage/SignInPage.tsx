@@ -1,27 +1,27 @@
-import { useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { default as SignIn } from "decentraland-dapps/dist/containers/SignInPage";
-import { PageLayout } from "../../PageLayout";
-import { Props } from "./SignInPage.types";
+import { useEffect } from 'react'
+import { useSearchParams, useNavigate } from 'react-router-dom'
+import { default as SignIn } from 'decentraland-dapps/dist/containers/SignInPage'
+import { PageLayout } from '../../PageLayout'
+import { Props } from './SignInPage.types'
 
 const SignInPage = (props: Props) => {
-  const { isConnected } = props;
+  const { isConnected } = props
 
-  const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo");
-  const navigate = useNavigate();
+  const [searchParams] = useSearchParams()
+  const redirectTo = searchParams.get('redirectTo')
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (redirectTo && isConnected) {
-      navigate(decodeURIComponent(redirectTo));
+      navigate(decodeURIComponent(redirectTo))
     }
-  }, [redirectTo, isConnected, navigate]);
+  }, [redirectTo, isConnected, navigate])
 
   return (
     <PageLayout>
       <SignIn />
     </PageLayout>
-  );
-};
+  )
+}
 
-export default SignInPage;
+export default SignInPage
