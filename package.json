@@ -1,9 +1,11 @@
 {
-  "name": "profile",
+  "name": "@dcl/profile",
   "private": true,
   "version": "0.0.0",
+  "description": "Profile website",
   "scripts": {
     "start": "vite",
+    "prebuild": "node scripts/prebuild.js",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint -c .eslintrc.js --ext .ts src",
@@ -41,15 +43,17 @@
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
     "@vitejs/plugin-react-swc": "^3.3.2",
+    "dotenv": "^16.3.1",
     "eslint": "^8.44.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
     "husky": "^8.0.3",
-    "rollup-plugin-polyfill-node": "^0.12.0",
     "jest": "^29.5.0",
+    "rollup-plugin-polyfill-node": "^0.12.0",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
-  }
+  },
+  "homepage": "https://cdn.decentraland.org/@dcl/profile/0.0.0"
 }
