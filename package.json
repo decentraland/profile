@@ -54,6 +54,5 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
-  },
-  "homepage": "https://cdn.decentraland.org/@dcl/profile/0.0.0"
+  }
 }
