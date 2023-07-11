@@ -1,1 +1,17 @@
-{}
+{
+  "avatar": {
+    "edit": "Edit Avatar"
+  },
+  "profile_information": {
+    "get_a_name": "GET A UNIQUE NAME",
+    "friends": "Friends"
+  },
+  "tabs": {
+    "assets": "Assets",
+    "creations": "Creations",
+    "dao_activity": "DAO Activity",
+    "lists": "Lists",
+    "overview": "Overview",
+    "places": "Places"
+  }
+}

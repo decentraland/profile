@@ -1,1 +1,17 @@
-{}
+{
+  "avatar": {
+    "edit": "Editar Avatar"
+  },
+  "profile_information": {
+    "get_a_name": "RECLAMA TU NOMBRE",
+    "friends": "Amigos"
+  },
+  "tabs": {
+    "overview": "Resumen",
+    "assets": "Objetos",
+    "creations": "Creaciones",
+    "lists": "Listas",
+    "dao_activity": "Actividad DAO",
+    "places": "Places"
+  }
+}

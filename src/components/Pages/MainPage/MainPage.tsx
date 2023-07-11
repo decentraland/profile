@@ -1,33 +1,41 @@
-import { useState } from 'react'
-import { Button } from 'decentraland-ui/dist/components/Button/Button'
-import reactLogo from '../../../assets/react.svg'
+import { useCallback, useState } from 'react'
+import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
+import { Avatar } from '../../Avatar'
 import { PageLayout } from '../../PageLayout'
+import { ProfileInformation } from '../../ProfileInformation'
 import styles from './MainPage.module.css'
 
 function MainPage() {
-  const [count, setCount] = useState(0)
+  const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('tabs.overview'), value: t('tabs.overview') }]
+
+  const [selectedTab, setSelectedTab] = useState<string>(tabs[0].value)
+
+  const handleTabChange = useCallback(
+    (tab: string) => {
+      setSelectedTab(tab)
+    },
+    [setSelectedTab]
+  )
 
   return (
     <PageLayout>
-      <>
-        <div>
-          <a href="https://vitejs.dev" target="_blank">
-            <img src={reactLogo} className={styles.logo + ' ' + styles.react} alt="React logo" />
-          </a>
-          <a href="https://react.dev" target="_blank">
-            <img src={reactLogo} className={styles.logo + ' ' + styles.react} alt="React logo" />
-          </a>
+      <div className={styles.MainPage}>
+        {selectedTab === tabs[0].value && <Avatar />}
+        <div className={styles.infoContainer}>
+          <ProfileInformation />
+          <Divider />
+          <Tabs>
+            {tabs.map(tab => (
+              <Tabs.Tab key={tab.value} active={selectedTab === tab.value} onClick={() => handleTabChange(tab.value)}>
+                <span className={styles.tab}>{tab.displayValue}</span>
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+          <div>content</div>
         </div>
-        <h1>Vite + React</h1>
-        <Button primary>This is a button</Button>
-        <div className="card">
-          <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
-        </div>
-        <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-      </>
+      </div>
     </PageLayout>
   )
 }
