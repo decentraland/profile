@@ -1,4 +1,11 @@
 {
+  "avatar": {
+    "edit": "編輯頭像"
+  },
+  "profile_information": {
+    "get_a_name": "取個名字",
+    "friends": "朋友們"
+  },
   "tabs": {
     "overview": "概述",
     "assets": "資產",

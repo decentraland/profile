@@ -1,4 +1,5 @@
-import { Icon } from 'semantic-ui-react'
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
 import Copy from '../../assets/icons/Copy.svg'
@@ -10,7 +11,6 @@ import styles from './ProfileInformation.module.css'
 const ProfileInformation = () => {
   return (
     <div className={styles.ProfileInformation}>
-      {/* TODO: what to do with this size */}
       <div className={styles.basicRow}>
         <Profile size="massive" imageOnly address="0xd4fEC88A49EB514e9347eC655D0481D8483a9AE0" />
         <div className={styles.profileData}>
@@ -24,7 +24,7 @@ const ProfileInformation = () => {
           </div>
           <div className={styles.basicCenteredRow}>
             <img src={People} className="iconSize" />
-            &nbsp; 714 friends
+            &nbsp; 714 {t('profile_information.friends')}
           </div>
           <span className={styles.description}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -33,7 +33,7 @@ const ProfileInformation = () => {
       </div>
       <div className={styles.actions}>
         <Button primary className={styles.fluidButton}>
-          GET A UNIQUE NAME
+          {t('profile_information.get_a_name')}
         </Button>
         <Button primary className={styles.smallButton}>
           <img src={Share} className="iconSize" />

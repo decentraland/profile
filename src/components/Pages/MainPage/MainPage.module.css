@@ -24,6 +24,6 @@
 }
 
 .MainPage .tab {
-  color: white;
+  color: var(--text);
   font-weight: 700;
 }

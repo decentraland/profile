@@ -67,7 +67,7 @@ code {
 .dcl.navbar .ui.menu .item,
 .dcl.footer .main-footer .links a,
 .dcl.footer .copyright {
-  color: white;
+  color: var(--text);
 }
 
 .dcl.footer {
@@ -75,7 +75,7 @@ code {
 }
 
 .dcl.footer .social-links .social-icon {
-  fill: white;
+  fill: var(--text);
 }
 
 .WearablePreview {

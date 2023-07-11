@@ -1,5 +1,5 @@
 .ProfileInformation {
-  color: white;
+  color: var(--text);
   gap: 36px;
   display: flex;
   justify-content: space-between;
@@ -28,7 +28,7 @@
 }
 
 .ProfileInformation .userName {
-  color: white;
+  color: var(--text);
   font-size: 24px;
   font-weight: 700;
 }
