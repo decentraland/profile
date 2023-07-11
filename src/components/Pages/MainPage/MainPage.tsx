@@ -1,11 +1,10 @@
 import { useCallback, useState } from 'react'
-import { Divider } from 'decentraland-ui'
-import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-
+import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
+import { Divider } from 'decentraland-ui'
+import { Avatar } from '../../Avatar'
 import { PageLayout } from '../../PageLayout'
 import { ProfileInformation } from '../../ProfileInformation'
-import { Avatar } from '../../Avatar'
 import styles from './MainPage.module.css'
 
 function MainPage() {

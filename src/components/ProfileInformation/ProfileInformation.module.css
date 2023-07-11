@@ -7,13 +7,20 @@
 }
 
 .ProfileInformation .actions {
+  display: flex;
+  flex-direction: row;
   gap: 13px;
+  height: 34px;
 }
 
 .ProfileInformation .basicRow {
   display: flex;
   flex-direction: row;
   gap: 36px;
+}
+
+.ProfileInformation .basicCenteredRow {
+  align-items: center;
 }
 
 .ProfileInformation .description {
@@ -28,7 +35,6 @@
 
 .ProfileInformation .userNumber {
   font-size: 18px;
-  color: var(--secondary-text);
 }
 
 .ProfileInformation .profileData {
@@ -45,14 +51,28 @@
   height: 24px;
 }
 
-.ProfileInformation :global(.ui.inverted.button).smallButton,
-.ProfileInformation :global(.ui.secondary.button).smallButton {
+.ProfileInformation :global(.ui.inverted.button).smallButton {
   align-items: center;
   height: 34px;
   justify-content: center;
-  min-width: unset;
+  min-width: 34px;
+  max-width: 34px;
   padding: 0px 0px 0px 9px;
-  width: 34px;
+}
+
+.ProfileInformation :global(.ui.primary.button).smallButton {
+  align-items: center;
+  display: flex;
+  height: 34px;
+  justify-content: center;
+  min-width: 34px;
+  max-width: 34px;
+  padding: unset;
+}
+
+.ProfileInformation :global(.ui.primary.button).fluidButton {
+  padding-bottom: unset;
+  padding-top: unset;
 }
 
 .Profile.inline .dcl.blockie {

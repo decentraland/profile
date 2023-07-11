@@ -82,6 +82,16 @@ code {
   background-color: unset;
 }
 
+.iconSize {
+  height: 18px;
+}
+
+.ui.button.customIconButton {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
 @media only screen and (min-width: 768px) {
   .dcl.toast .toast-info .body .list-flow-toast {
     width: 350px;
