@@ -1,4 +1,5 @@
 import { Avatar } from '@dcl/schemas'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { getAvatarName } from './utils'
 
 let avatar: Avatar | undefined
@@ -10,7 +11,7 @@ describe("when getting an avatar's name", () => {
     })
 
     it('should return default name without last part', () => {
-      expect(getAvatarName(avatar)).toEqual({ name: 'Unnamed' })
+      expect(getAvatarName(avatar)).toEqual({ name: t('avatar.defaultName') })
     })
   })
 

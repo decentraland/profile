@@ -1,8 +1,9 @@
 import { Avatar } from '@dcl/schemas'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 
 export const getAvatarName = (avatar?: Avatar): { name: string; lastPart?: string } => {
   if (!avatar) {
-    return { name: 'Unnamed' }
+    return { name: t('avatar.defaultName') }
   }
 
   if (avatar.hasClaimedName) {
