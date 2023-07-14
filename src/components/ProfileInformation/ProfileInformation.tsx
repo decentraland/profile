@@ -1,22 +1,21 @@
+import { useCallback } from 'react'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
-
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
 import Copy from '../../assets/icons/Copy'
 import People from '../../assets/icons/People.svg'
-import Twitter from '../../assets/icons/Twitter.svg'
 import Share from '../../assets/icons/Share.svg'
+import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
-import { Props } from './ProfileInformation.types'
-import styles from './ProfileInformation.module.css'
-import { EDIT_PROFILE_URL } from '../Avatar/consts'
 import { config } from '../../modules/config/config'
-import { useCallback } from 'react'
 import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
+import { EDIT_PROFILE_URL } from '../Avatar/consts'
 import { twitterURL } from './contsts'
+import { Props } from './ProfileInformation.types'
+import styles from './ProfileInformation.module.css'
 
 const EXPLORER_URL = config.get('EXPLORER_URL', '')
 const PROFILE_URL = config.get('PROFILE_URL', '')
