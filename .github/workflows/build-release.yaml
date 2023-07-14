@@ -36,6 +36,7 @@ jobs:
         with:
           cwd: './dist'
           deterministic-snapshot: true
+          provenance: false
           registry-url: 'https://registry.npmjs.org'
           access: public
           gitlab-token: ${{ secrets.GITLAB_CDN_DEPLOYER_TOKEN }}
