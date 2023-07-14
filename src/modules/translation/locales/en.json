@@ -4,7 +4,12 @@
   },
   "profile_information": {
     "friends": "{count} {count, plural, one {Friend} other {Friend}}",
-    "unnamed": "Unnamed"
+    "unnamed": "Unnamed",
+    "edit": "Edit Profile",
+    "copied": "Copied",
+    "copy_link": "Copy Link",
+    "share_on_tw": "Share on Twitter",
+    "tw_message": "Hey, checkout my profile in decentraland\n"
   },
   "worlds_button": {
     "get_a_name": "Get an unique name",

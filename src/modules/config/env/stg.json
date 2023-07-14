@@ -1,9 +1,10 @@
 {
   "NETWORK": "mainnet",
   "CHAIN_ID": "1",
+  "EXPLORER_URL": "https://play.decentraland.today",
   "PEER_URL": "https://peer.decentraland.org",
   "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org",
-  "EXPLORER_URL": "https://play.decentraland.org",
-  "BUILDER_URL": "https://builder.decentraland.org"
+  "BUILDER_URL": "https://builder.decentraland.org",
+  "PROFILE_URL": "https://profile.decentraland.today"
 }
