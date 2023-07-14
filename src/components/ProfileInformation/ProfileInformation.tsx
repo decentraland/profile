@@ -6,6 +6,7 @@ import Copy from '../../assets/icons/Copy.svg'
 import People from '../../assets/icons/People.svg'
 import Share from '../../assets/icons/Share.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
+import WorldsButton from '../WorldsButton'
 import styles from './ProfileInformation.module.css'
 
 const ProfileInformation = () => {
@@ -32,9 +33,7 @@ const ProfileInformation = () => {
         </div>
       </div>
       <div className={styles.actions}>
-        <Button primary className={styles.fluidButton}>
-          {t('profile_information.get_a_name')}
-        </Button>
+        <WorldsButton address="0xeDaE96F7739aF8A7fB16E2a888C1E578E1328299" />
         <Button primary className={styles.smallButton}>
           <img src={Share} className="iconSize" />
         </Button>
