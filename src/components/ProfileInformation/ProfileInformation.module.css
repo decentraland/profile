@@ -21,6 +21,7 @@
 
 .ProfileInformation .basicCenteredRow {
   align-items: center;
+  display: flex;
 }
 
 .ProfileInformation .description {

@@ -3,7 +3,8 @@
     "edit": "編輯頭像"
   },
   "profile_information": {
-    "friends": "朋友們"
+    "get_a_name": "取個名字",
+    "friends": "{count} {count, plural, one {朋友們} other {朋友們}}"
   },
   "worlds_button": {
     "get_a_name": "取一个独特的名字",
