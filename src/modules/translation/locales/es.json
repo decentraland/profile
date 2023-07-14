@@ -4,7 +4,7 @@
   },
   "profile_information": {
     "get_a_name": "RECLAMA TU NOMBRE",
-    "friends": "Amigos"
+    "friends": "{count} {count, plural, one {Amigo} other {Amigos}}"
   },
   "tabs": {
     "overview": "Resumen",

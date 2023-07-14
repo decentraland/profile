@@ -1,5 +1,6 @@
 {
   "NETWORK": "mainnet",
   "CHAIN_ID": "1",
-  "PEER_URL": "https://peer.decentraland.org"
+  "PEER_URL": "https://peer.decentraland.org",
+  "EXPLORER_URL": "https://play.decentraland.today"
 }

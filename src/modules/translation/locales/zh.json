@@ -4,7 +4,7 @@
   },
   "profile_information": {
     "get_a_name": "取個名字",
-    "friends": "朋友們"
+    "friends": "{count} {count, plural, one {朋友們} other {朋友們}}"
   },
   "tabs": {
     "overview": "概述",

@@ -4,7 +4,7 @@
   },
   "profile_information": {
     "get_a_name": "GET A UNIQUE NAME",
-    "friends": "Friends"
+    "friends": "{count} {count, plural, one {Friend} other {Friend}}"
   },
   "tabs": {
     "assets": "Assets",
