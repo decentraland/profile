@@ -1,5 +1,5 @@
 export const locations = {
-  root: () => '/',
+  root: () => '/:profileAddress?',
   signIn: (redirectTo?: string) => {
     return `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`
   }

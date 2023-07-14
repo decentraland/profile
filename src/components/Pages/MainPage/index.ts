@@ -1,2 +1,2 @@
-import MainPage from './MainPage'
+import MainPage from './MainPage.container'
 export default MainPage

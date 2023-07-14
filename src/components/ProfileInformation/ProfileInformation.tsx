@@ -8,29 +8,37 @@ import People from '../../assets/icons/People.svg'
 import Share from '../../assets/icons/Share.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
 import WorldsButton from '../WorldsButton'
+import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
-const ProfileInformation = () => {
-  return (
+const ProfileInformation = (props: Props) => {
+  const { profile, isLoggedInProfile = false } = props
+
+  const profileData = profile?.avatars[0]
+
+  return profileData ? (
     <div className={styles.ProfileInformation}>
       <div className={styles.basicRow}>
-        <Profile size="massive" imageOnly address="0xd4fEC88A49EB514e9347eC655D0481D8483a9AE0" />
+        <Profile size="massive" imageOnly address={profileData.ethAddress} />
         <div className={styles.profileData}>
           <span className={styles.userNumber}>
-            <span className={styles.userName}>Florencia</span>&nbsp; #222
+            <span className={styles.userName}>{profileData.name}</span>&nbsp; #222
           </span>
           <div className={styles.wallet}>
             <img src={Wallet} className="iconSize" />
-            <Profile textOnly address="0xd4fEC88A49EB514e9347eC655D0481D8483a9AE0" />
+            <Profile textOnly address={profileData.ethAddress} />
             <img src={Copy} className="iconSize" />
           </div>
-          <div className={styles.basicCenteredRow}>
-            <img src={People} className="iconSize" />
-            &nbsp; 714 {t('profile_information.friends')}
-          </div>
-          <span className={styles.description}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </span>
+          {isLoggedInProfile && (
+            <div className={styles.basicCenteredRow}>
+              <img src={People} className="iconSize" />
+              {/* TODO: this information should be based on actual friends */}
+              {t('profile_information.friends', {
+                count: 714
+              })}
+            </div>
+          )}
+          <span className={styles.description}>{profileData.description}</span>
         </div>
       </div>
       <div className={styles.actions}>
@@ -43,7 +51,7 @@ const ProfileInformation = () => {
         </Button>
       </div>
     </div>
-  )
+  ) : null
 }
 
 export default ProfileInformation
