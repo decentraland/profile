@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { redirect, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
@@ -23,16 +23,21 @@ function MainPage(props: Props) {
     },
     [setSelectedTab]
   )
+  const navigate = useNavigate()
 
   const { profileAddress } = useParams<MainPageParams>()
 
   useEffect(() => {
     if (profileAddress) {
       onFetchProfile(profileAddress)
-    } else if (!loggedInAddress) {
-      redirect(locations.signIn())
     }
   }, [profileAddress])
+
+  useEffect(() => {
+    if (!profileAddress && !loggedInAddress && !isLoading) {
+      navigate(locations.signIn(locations.root()))
+    }
+  }, [isLoading, loggedInAddress, profileAddress])
 
   return (
     <PageLayout>
