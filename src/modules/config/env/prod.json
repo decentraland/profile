@@ -1,5 +1,9 @@
 {
   "NETWORK": "mainnet",
   "CHAIN_ID": "1",
-  "PEER_URL": "https://peer.decentraland.org"
+  "PEER_URL": "https://peer.decentraland.org",
+  "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace-goerli",
+  "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.zone",
+  "EXPLORER_URL": "https://play.decentraland.zone",
+  "BUILDER_URL": "https://builder.decentraland.zone"
 }
