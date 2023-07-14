@@ -52,6 +52,10 @@
   height: 24px;
 }
 
+.ProfileInformation :global(.ui.button.basic).copyLink {
+  padding: unset;
+}
+
 .ProfileInformation :global(.ui.inverted.button).smallButton {
   align-items: center;
   height: 34px;
@@ -74,6 +78,13 @@
 .ProfileInformation :global(.ui.primary.button).fluidButton {
   padding-bottom: unset;
   padding-top: unset;
+}
+
+.ProfileInformation :global(.ui.dropdown .menu > .item > img).dropdownMenuIcon {
+  margin: unset;
+  stroke: white;
+  height: 20px;
+  width: 20px;
 }
 
 .Profile.inline .dcl.blockie {

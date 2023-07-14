@@ -4,7 +4,12 @@
   },
   "profile_information": {
     "get_a_name": "取個名字",
-    "friends": "{count} {count, plural, one {朋友們} other {朋友們}}"
+    "friends": "{count} {count, plural, one {朋友們} other {朋友們}}",
+    "edit": "編輯個人資料",
+    "copied": "已復制",
+    "copy_link": "複製鏈接",
+    "share_on_tw": "在 Twitter 上分享",
+    "tw_message": "嘿，查看我在 decentraland 中的個人資料\n"
   },
   "tabs": {
     "overview": "概述",

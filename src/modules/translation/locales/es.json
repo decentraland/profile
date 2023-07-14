@@ -4,7 +4,12 @@
   },
   "profile_information": {
     "get_a_name": "RECLAMA TU NOMBRE",
-    "friends": "{count} {count, plural, one {Amigo} other {Amigos}}"
+    "friends": "{count} {count, plural, one {Amigo} other {Amigos}}",
+    "edit": "Editar Perfil",
+    "copied": "Copiado",
+    "copy_link": "Copiar enlace",
+    "share_on_tw": "Compartir en Twitter",
+    "tw_message": "Oye, revisa mi perfil en decentraland\n"
   },
   "tabs": {
     "overview": "Resumen",

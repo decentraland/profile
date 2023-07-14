@@ -1,6 +1,7 @@
 {
   "NETWORK": "goerli",
   "CHAIN_ID": "5",
+  "EXPLORER_URL": "https://play.decentraland.zone",
   "PEER_URL": "https://peer-ap1.decentraland.zone",
-  "EXPLORER_URL": "https://play.decentraland.zone"
+  "PROFILE_URL": "https://profile.decentraland.zone"
 }

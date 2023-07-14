@@ -4,7 +4,12 @@
   },
   "profile_information": {
     "get_a_name": "GET A UNIQUE NAME",
-    "friends": "{count} {count, plural, one {Friend} other {Friend}}"
+    "friends": "{count} {count, plural, one {Friend} other {Friend}}",
+    "edit": "Edit Profile",
+    "copied": "Copied",
+    "copy_link": "Copy Link",
+    "share_on_tw": "Share on Twitter",
+    "tw_message": "Hey, checkout my profile in decentraland\n"
   },
   "tabs": {
     "assets": "Assets",
