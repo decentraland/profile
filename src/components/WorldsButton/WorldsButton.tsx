@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import classNames from 'classnames'
 import { Env } from '@dcl/ui-env'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'

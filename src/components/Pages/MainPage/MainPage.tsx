@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
