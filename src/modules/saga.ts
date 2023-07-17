@@ -15,9 +15,7 @@ export function* rootSaga() {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       CHAIN_ID: Number(config.get('CHAIN_ID')),
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      POLL_INTERVAL: 0,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      TRANSACTIONS_API_URL: ''
+      POLL_INTERVAL: 0
     })(),
     translationSaga(),
     createProfileSaga({ peerUrl: config.get('PEER_URL') })(),
