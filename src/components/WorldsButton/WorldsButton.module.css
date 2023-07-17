@@ -1,0 +1,41 @@
+
+.jumpIcon {
+  height: 22px;
+  width: 22px;
+}
+
+.worldItem {
+  display: flex;
+  align-items: center;
+}
+
+.worldDropdown :global(.dropdown.icon) {
+  display: none;
+}
+
+.worldDropdown:global(.ui.dropdown) :global(.menu>.item) {
+  display: flex;
+  align-items: center;
+}
+
+.worldDropdown:global(.ui.dropdown) :global(.menu>.item>img) {
+  margin: 0 1em 0 0;
+}
+
+.worldButton:global(.ui.primary.button) {
+  padding: 5px 20px;
+}
+
+.worldButton:not(.smallButton) > img {
+  margin-right: 10px;
+}
+
+.smallButton:global(.ui.primary.button) {
+  align-items: center;
+  display: flex;
+  height: 34px;
+  min-width: 34px;
+  max-width: 34px;
+  justify-content: center;
+  padding: unset;
+}

@@ -3,8 +3,12 @@
     "edit": "Edit Avatar"
   },
   "profile_information": {
-    "get_a_name": "GET A UNIQUE NAME",
     "friends": "Friends"
+  },
+  "worlds_button": {
+    "get_a_name": "Get an unique name",
+    "activate_world": "Activate my world",
+    "jump": "Jump to \"{domain}\" World"
   },
   "tabs": {
     "assets": "Assets",

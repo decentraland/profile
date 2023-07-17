@@ -54,9 +54,9 @@
 .ProfileInformation :global(.ui.inverted.button).smallButton {
   align-items: center;
   height: 34px;
-  justify-content: center;
   min-width: 34px;
   max-width: 34px;
+  justify-content: center;
   padding: 0px 0px 0px 9px;
 }
 
@@ -64,9 +64,9 @@
   align-items: center;
   display: flex;
   height: 34px;
-  justify-content: center;
   min-width: 34px;
   max-width: 34px;
+  justify-content: center;
   padding: unset;
 }
 
