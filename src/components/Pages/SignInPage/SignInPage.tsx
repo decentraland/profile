@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { default as SignIn } from 'decentraland-dapps/dist/containers/SignInPage'
 import { PageLayout } from '../../PageLayout'

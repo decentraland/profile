@@ -2,15 +2,18 @@ import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfil
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 import react from '@vitejs/plugin-react-swc'
 import rollupNodePolyFill from 'rollup-plugin-polyfill-node'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command, mode }) => ({
   plugins: [react()],
   // Required because the CatalystClient tries to access it
   define: {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    'process.env': {}
+    'process.env': {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      VITE_REACT_APP_DCL_DEFAULT_ENV: loadEnv(mode, process.cwd()).VITE_REACT_APP_DCL_DEFAULT_ENV
+    }
   },
   ...(command === 'build'
     ? {

@@ -20,7 +20,7 @@ export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphCl
       // eslint-disable-next-line @typescript-eslint/naming-convention
       POLL_INTERVAL: 0,
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      TRANSACTIONS_API_URL: ''
+      TRANSACTIONS_API_URL: 'https://transactions-api.decentraland.org/v1'
     })(),
     worldSagas(worldsContentClient, marketplaceGraphClient),
     translationSaga(),

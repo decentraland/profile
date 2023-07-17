@@ -24,7 +24,6 @@ export function initStore() {
     actions: [], // array of actions types that will trigger a SAVE (optional)
     migrations: {} // migration object that will migrate your localstorage (optional)
   })
-
   const store = createRootReducer([sagasMiddleware, loggerMiddleware, analyticsMiddleware, storageMiddleware])
   if (isDev) {
     const _window = window as any

@@ -1,3 +1,4 @@
+import React from 'react'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
