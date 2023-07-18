@@ -61,9 +61,17 @@
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
   },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "decentraland",
+    "profile",
+    "site"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/decentraland/profile.git"
   },
-  "homepage": "https://profile.decentraland.org"
+  "homepage": ""
 }
