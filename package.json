@@ -1,6 +1,5 @@
 {
   "name": "@dcl/profile-site",
-  "private": true,
   "version": "0.0.0",
   "description": "Profile website",
   "scripts": {
@@ -62,5 +61,9 @@
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
   },
-  "homepage": ""
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/decentraland/profile.git"
+  },
+  "homepage": "https://profile.decentraland.org"
 }
