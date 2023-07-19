@@ -8,8 +8,8 @@ import { locations } from '../../../modules/routing/locations'
 import { Avatar } from '../../Avatar'
 import { PageLayout } from '../../PageLayout'
 import { ProfileInformation } from '../../ProfileInformation'
-import { MainPageParams, Props } from './MainPage.types'
 import { nullAddress } from './constants'
+import { MainPageParams, Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
