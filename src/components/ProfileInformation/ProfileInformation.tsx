@@ -10,21 +10,22 @@ import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
 const ProfileInformation = (props: Props) => {
-  const { profile, isLoggedInProfile = false } = props
+  const { profile, loggedInAddress, profileAddress } = props
 
-  const profileData = profile?.avatars[0]
+  const avatar = profile?.avatars[0]
+  const isLoggedInProfile = loggedInAddress === avatar?.ethAddress
 
-  return profileData ? (
+  return (
     <div className={styles.ProfileInformation}>
       <div className={styles.basicRow}>
-        <Profile size="massive" imageOnly address={profileData.ethAddress} />
-        <div className={styles.profileData}>
+        <Profile size="massive" imageOnly address={avatar ? avatar.ethAddress : ''} />
+        <div className={styles.avatar}>
           <span className={styles.userNumber}>
-            <span className={styles.userName}>{profileData.name}</span>&nbsp; #222
+            <span className={styles.userName}>{avatar ? avatar.name : t('profile_information.unnamed')}</span>&nbsp; #222
           </span>
           <div className={styles.wallet}>
             <img src={Wallet} className="iconSize" />
-            <Profile textOnly address={profileData.ethAddress} />
+            <Profile textOnly address={avatar ? avatar.ethAddress : profileAddress} />
             <img src={Copy} className="iconSize" />
           </div>
           {isLoggedInProfile && (
@@ -36,7 +37,7 @@ const ProfileInformation = (props: Props) => {
               })}
             </div>
           )}
-          <span className={styles.description}>{profileData.description}</span>
+          {avatar && <span className={styles.description}>{avatar.description}</span>}
         </div>
       </div>
       <div className={styles.actions}>
@@ -51,7 +52,7 @@ const ProfileInformation = (props: Props) => {
         </Button>
       </div>
     </div>
-  ) : null
+  )
 }
 
 export default ProfileInformation
