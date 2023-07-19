@@ -1,11 +1,11 @@
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 
 export type Props = {
-  isLoggedInProfile: boolean
+  loggedInAddress?: string
   profile?: Profile
-  profileAddress?: string
+  profileAddress: string
 }
 
-export type OwnProps = Pick<Props, 'profileAddress' | 'isLoggedInProfile'>
+export type OwnProps = Pick<Props, 'profileAddress' | 'loggedInAddress'>
 
 export type MapStateProps = Pick<Props, 'profile'>

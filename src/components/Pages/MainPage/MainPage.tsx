@@ -9,6 +9,7 @@ import { Avatar } from '../../Avatar'
 import { PageLayout } from '../../PageLayout'
 import { ProfileInformation } from '../../ProfileInformation'
 import { MainPageParams, Props } from './MainPage.types'
+import { nullAddress } from './constants'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
@@ -45,12 +46,9 @@ function MainPage(props: Props) {
         <Loader active />
       ) : (
         <div className={styles.MainPage}>
-          {selectedTab === tabs[0].value && <Avatar profileAddress={profileAddress ?? loggedInAddress} />}
+          {selectedTab === tabs[0].value && <Avatar profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />}
           <div className={styles.infoContainer}>
-            <ProfileInformation
-              profileAddress={profileAddress ?? loggedInAddress}
-              isLoggedInProfile={loggedInAddress ? profileAddress === loggedInAddress : !profileAddress}
-            />
+            <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider />
             <Tabs>
               {tabs.map(tab => (
