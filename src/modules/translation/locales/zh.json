@@ -4,7 +4,8 @@
   },
   "profile_information": {
     "get_a_name": "取個名字",
-    "friends": "{count} {count, plural, one {朋友們} other {朋友們}}"
+    "friends": "{count} {count, plural, one {朋友們} other {朋友們}}",
+    "unnamed": "未命名的"
   },
   "worlds_button": {
     "get_a_name": "取一个独特的名字",
