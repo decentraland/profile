@@ -12,17 +12,19 @@ import styles from './Avatar.module.css'
 const EXPLORER_URL = config.get('EXPLORER_URL', '')
 
 const Avatar = (props: Props) => {
-  const { profile } = props
+  const { profile, loggedInAddress } = props
   const avatar = profile?.avatars[0]
 
   return (
     <div className={styles.Avatar}>
       {avatar?.ethAddress && <WearablePreview disableBackground={true} profile={avatar.ethAddress} />}
-      <Button primary fluid className="customIconButton" as={Link} to={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} target="_blank">
-        <img src={Edit} className="iconSize" />
-        &nbsp;
-        {t('avatar.edit')}
-      </Button>
+      {loggedInAddress === avatar?.ethAddress && (
+        <Button primary fluid className="customIconButton" as={Link} to={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} target="_blank">
+          <img src={Edit} className="iconSize" />
+          &nbsp;
+          {t('avatar.edit')}
+        </Button>
+      )}
     </div>
   )
 }
