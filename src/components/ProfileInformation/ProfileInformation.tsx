@@ -4,7 +4,6 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
-import Copy from '../../assets/icons/Copy.tsx'
 import People from '../../assets/icons/People.svg'
 import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
@@ -13,8 +12,9 @@ import { config } from '../../modules/config/config'
 import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
 import { EDIT_PROFILE_URL } from '../Avatar/consts'
+import CopyIcon from '../CopyIcon/index.tsx'
 import WorldsButton from '../WorldsButton'
-import { twitterURL } from './contsts'
+import { shareButtonTestId, twitterURL } from './consts.ts'
 import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
@@ -31,7 +31,7 @@ const ProfileInformation = (props: Props) => {
   const handleCopyLink = useCallback(() => {
     const url = `${PROFILE_URL}${avatar?.ethAddress}`
     copyText(url, setHasCopied)
-  }, [setHasCopied])
+  }, [setHasCopied, avatar])
 
   const isLoggedInProfile = loggedInAddress === avatar?.ethAddress
 
@@ -50,7 +50,7 @@ const ProfileInformation = (props: Props) => {
             <img src={Wallet} className="iconSize" />
             <Profile textOnly address={avatar ? avatar.ethAddress : profileAddress} />
             <Button basic onClick={handleCopyLink} className={styles.copyLink}>
-              <Copy />
+              <CopyIcon />
             </Button>
           </div>
           {isLoggedInProfile && (
@@ -70,7 +70,7 @@ const ProfileInformation = (props: Props) => {
         <Dropdown
           className={styles.smallButton}
           icon={
-            <Button primary className={styles.smallButton}>
+            <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
               <img src={Share} className="iconSize" />
             </Button>
           }
@@ -78,14 +78,16 @@ const ProfileInformation = (props: Props) => {
         >
           <Dropdown.Menu>
             <Dropdown.Item
-              icon={<Copy color="white" />}
+              icon={<CopyIcon color="white" />}
               text={hasCopiedAddress ? ` ${t('profile_information.copied')}` : ` ${t('profile_information.copy_link')}`}
               onClick={handleCopyLink}
             />
             <Dropdown.Item
+              as={'a'}
               icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
               text={` ${t('profile_information.share_on_tw')}`}
               href={`${twitterURL}${encodeURIComponent(`${t('profile_information.tw_message')} ${PROFILE_URL}${avatar?.ethAddress}`)}`}
+              target="_blank"
             />
           </Dropdown.Menu>
         </Dropdown>
