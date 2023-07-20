@@ -3,7 +3,6 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import path from 'path'
-import { TextEncoder, TextDecoder } from 'util'
 import '@testing-library/jest-dom'
 import { config } from 'dotenv'
 import flatten from 'flat'
@@ -28,7 +27,5 @@ jest.mock('decentraland-dapps/dist/modules/translation/utils', () => {
 })
 
 config({ path: path.resolve(process.cwd(), '.env.example') })
-global.TextEncoder = TextEncoder
-global.TextDecoder = TextDecoder as any
 
 setCurrentLocale('en', mergeTranslations(flatten(dappsEn), flatten(locales.en)))
