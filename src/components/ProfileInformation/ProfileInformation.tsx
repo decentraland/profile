@@ -23,7 +23,10 @@ const ProfileInformation = (props: Props) => {
         <Profile size="massive" imageOnly address={avatar ? avatar.ethAddress : ''} />
         <div className={styles.avatar}>
           <span className={styles.userNumber}>
-            <span className={styles.userName}>{avatar ? avatar.name : t('profile_information.unnamed')}</span>&nbsp; #222
+            <span className={styles.userName} data-testid={avatar?.ethAddress}>
+              {avatar ? avatar.name : t('profile_information.unnamed')}
+            </span>
+            &nbsp; #222
           </span>
           <div className={styles.wallet}>
             <img src={Wallet} className="iconSize" />

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { render } from '@testing-library/react'
 import flatten from 'flat'
 import { Store } from 'redux'
@@ -25,10 +26,20 @@ export function renderWithProviders(
       }
     })
 
-  function AppProviders({ children }: { children: JSX.Element }) {
+  const router = (component: React.ReactNode) =>
+    createBrowserRouter([
+      {
+        path: '*',
+        element: component
+      }
+    ])
+
+  function AppProviders({ children }: { children: React.ReactNode }) {
     return (
       <Provider store={initializedStore}>
-        <TranslationProvider locales={['en']}>{children}</TranslationProvider>
+        <TranslationProvider locales={['en']}>
+          <RouterProvider router={router(children)} />
+        </TranslationProvider>
       </Provider>
     )
   }
