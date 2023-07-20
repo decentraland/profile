@@ -31,7 +31,7 @@ describe('Avatar', () => {
     })
 
     describe('and the user is checking other profile', () => {
-      it('should render the avatar and the edit button', async () => {
+      it('should not render the avatar and the edit button', async () => {
         const { queryByText } = renderWithProviders(
           <Avatar profileAddress={anotherAddress} loggedInAddress={anAddress} profile={anotherProfile} />
         )
