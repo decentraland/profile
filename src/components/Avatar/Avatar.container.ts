@@ -5,7 +5,7 @@ import Avatar from './Avatar'
 import { MapStateProps, OwnProps } from './Avatar.types'
 
 const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
-  return { profile: getProfileOfAddress(state, ownProps.profileAddress ?? '') }
+  return { profile: getProfileOfAddress(state, ownProps.profileAddress) }
 }
 
 export default connect(mapState)(Avatar)

@@ -3,7 +3,6 @@
     "edit": "Edit Avatar"
   },
   "profile_information": {
-    "get_a_name": "GET A UNIQUE NAME",
     "friends": "{count} {count, plural, one {Friend} other {Friend}}",
     "unnamed": "Unnamed"
   },

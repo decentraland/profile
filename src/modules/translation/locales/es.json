@@ -3,7 +3,6 @@
     "edit": "Editar Avatar"
   },
   "profile_information": {
-    "get_a_name": "RECLAMA TU NOMBRE",
     "friends": "{count} {count, plural, one {Amigo} other {Amigos}}",
     "unnamed": "Sin nombrar"
   },
