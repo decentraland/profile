@@ -3,7 +3,8 @@
     "edit": "Edit Avatar"
   },
   "profile_information": {
-    "friends": "Friends"
+    "friends": "{count} {count, plural, one {Friend} other {Friend}}",
+    "unnamed": "Unnamed"
   },
   "worlds_button": {
     "get_a_name": "Get an unique name",

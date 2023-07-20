@@ -1,1 +1,1 @@
-export { default as ProfileInformation } from './ProfileInformation'
+export { default as ProfileInformation } from './ProfileInformation.container'
