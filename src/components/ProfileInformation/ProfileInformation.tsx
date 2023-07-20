@@ -91,19 +91,21 @@ const ProfileInformation = (props: Props) => {
             />
           </Dropdown.Menu>
         </Dropdown>
-        <Dropdown
-          className={styles.smallButton}
-          icon={
-            <Button inverted className={styles.smallButton}>
-              <Icon name="ellipsis horizontal"></Icon>
-            </Button>
-          }
-          direction="left"
-        >
-          <Dropdown.Menu>
-            <Dropdown.Item icon={'user outline'} text={t('profile_information.edit')} href={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} />
-          </Dropdown.Menu>
-        </Dropdown>
+        {isLoggedInProfile && (
+          <Dropdown
+            className={styles.smallButton}
+            icon={
+              <Button inverted className={styles.smallButton}>
+                <Icon name="ellipsis horizontal"></Icon>
+              </Button>
+            }
+            direction="left"
+          >
+            <Dropdown.Menu>
+              <Dropdown.Item icon={'user outline'} text={t('profile_information.edit')} href={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} />
+            </Dropdown.Menu>
+          </Dropdown>
+        )}
       </div>
     </div>
   )

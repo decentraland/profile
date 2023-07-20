@@ -54,6 +54,7 @@ describe('ProfileInformation', () => {
 
         expect(getByText(t('profile_information.copy_link'))).toBeInTheDocument()
         expect(getByText(t('profile_information.share_on_tw'))).toBeInTheDocument()
+        expect(getByText(t('profile_information.edit'))).toBeInTheDocument()
       })
 
       it('should open twitter with the correct URL', async () => {
@@ -92,10 +93,18 @@ describe('ProfileInformation', () => {
 
   describe('when the user is not logged in', () => {
     describe('and the user is checking on a profile', () => {
-      it('should not render the avatar and the edit button', async () => {
-        const { queryByText, queryByTestId } = renderWithProviders(<ProfileInformation profileAddress={anAddress} profile={aProfile} />)
-        expect(queryByText(avatarName)).toBeInTheDocument()
-        expect(queryByTestId(anAddress)).toBeInTheDocument()
+      it('should render the profile information', async () => {
+        const { queryByText, queryByTestId } = renderWithProviders(
+          <ProfileInformation profileAddress={anotherAddress} loggedInAddress={anAddress} profile={anotherProfile} />
+        )
+
+        expect(queryByText(anotherAvatarName)).toBeInTheDocument()
+        expect(queryByTestId(anotherAddress)).toBeInTheDocument()
+      })
+
+      it('should not render the edit button', async () => {
+        const { queryByText } = renderWithProviders(<ProfileInformation profileAddress={anAddress} profile={aProfile} />)
+        expect(queryByText(t('profile_information.edit'))).toBeNull()
       })
     })
   })
