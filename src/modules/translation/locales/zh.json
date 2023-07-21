@@ -4,7 +4,12 @@
   },
   "profile_information": {
     "friends": "{count} {count, plural, one {朋友們} other {朋友們}}",
-    "unnamed": "未命名的"
+    "unnamed": "未命名的",
+    "edit": "編輯個人資料",
+    "copied": "已復制",
+    "copy_link": "複製鏈接",
+    "share_on_tw": "在 Twitter 上分享",
+    "tw_message": "嘿，查看我在 decentraland 中的個人資料\n"
   },
   "worlds_button": {
     "get_a_name": "取一个独特的名字",

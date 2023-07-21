@@ -1,7 +1,13 @@
 import React from 'react'
+import { fireEvent } from '@testing-library/react'
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { config } from '../../modules/config/config'
 import { renderWithProviders } from '../../tests/tests'
+import { shareButtonTestId, twitterURL as twitterLink } from './consts'
 import ProfileInformation from './ProfileInformation'
+
+const PROFILE_URL = config.get('PROFILE_URL', '')
 
 jest.mock('decentraland-ui/dist/components/Profile/Profile', () => {
   const module = jest.requireActual('decentraland-ui/dist/components/Profile/Profile')
@@ -38,6 +44,37 @@ describe('ProfileInformation', () => {
         expect(getByText(avatarName)).toBeInTheDocument()
         expect(getByTestId(anAddress)).toBeInTheDocument()
       })
+
+      it('should render the actions buttons', async () => {
+        const { getByTestId, getByText } = renderWithProviders(
+          <ProfileInformation profileAddress={anAddress} loggedInAddress={anAddress} profile={aProfile} />
+        )
+        const shareButton = getByTestId(shareButtonTestId)
+        fireEvent.click(shareButton)
+
+        expect(getByText(t('profile_information.copy_link'))).toBeInTheDocument()
+        expect(getByText(t('profile_information.share_on_tw'))).toBeInTheDocument()
+        expect(getByText(t('profile_information.edit'))).toBeInTheDocument()
+      })
+
+      it('should open twitter with the correct URL', async () => {
+        const { getByTestId, getByRole } = renderWithProviders(
+          <ProfileInformation profileAddress={anAddress} loggedInAddress={anAddress} profile={aProfile} />
+        )
+
+        const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          `${twitterLink}${encodeURIComponent(`${t('profile_information.tw_message')} ${PROFILE_URL}${anAddress}`)}`
+        )}`
+
+        const shareButton = getByTestId(shareButtonTestId)
+        fireEvent.click(shareButton)
+
+        const twitterShareButton = getByRole('option', {
+          name: t('profile_information.share_on_tw')
+        })
+
+        expect(twitterShareButton.hasAttributeNS('href', twitterURL))
+      })
     })
 
     describe('and the user is checking other profile', () => {
@@ -56,10 +93,27 @@ describe('ProfileInformation', () => {
 
   describe('when the user is not logged in', () => {
     describe('and the user is checking on a profile', () => {
-      it('should not render the avatar and the edit button', async () => {
-        const { queryByText, queryByTestId } = renderWithProviders(<ProfileInformation profileAddress={anAddress} profile={aProfile} />)
-        expect(queryByText(avatarName)).toBeInTheDocument()
-        expect(queryByTestId(anAddress)).toBeInTheDocument()
+      it('should render the profile information', async () => {
+        const { queryByText, queryByTestId } = renderWithProviders(
+          <ProfileInformation profileAddress={anotherAddress} profile={anotherProfile} />
+        )
+
+        expect(queryByText(anotherAvatarName)).toBeInTheDocument()
+        expect(queryByTestId(anotherAddress)).toBeInTheDocument()
+      })
+
+      it('should not render the edit button', async () => {
+        const { queryByText } = renderWithProviders(<ProfileInformation profileAddress={anAddress} profile={aProfile} />)
+        expect(queryByText(t('profile_information.edit'))).toBeNull()
+      })
+
+      it('should render the share buttons', async () => {
+        const { getByTestId, getByText } = renderWithProviders(<ProfileInformation profileAddress={anAddress} profile={aProfile} />)
+        const shareButton = getByTestId(shareButtonTestId)
+        fireEvent.click(shareButton)
+
+        expect(getByText(t('profile_information.copy_link'))).toBeInTheDocument()
+        expect(getByText(t('profile_information.share_on_tw'))).toBeInTheDocument()
       })
     })
   })
