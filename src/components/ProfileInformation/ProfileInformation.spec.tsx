@@ -95,7 +95,7 @@ describe('ProfileInformation', () => {
     describe('and the user is checking on a profile', () => {
       it('should render the profile information', async () => {
         const { queryByText, queryByTestId } = renderWithProviders(
-          <ProfileInformation profileAddress={anotherAddress} loggedInAddress={anAddress} profile={anotherProfile} />
+          <ProfileInformation profileAddress={anotherAddress} profile={anotherProfile} />
         )
 
         expect(queryByText(anotherAvatarName)).toBeInTheDocument()
@@ -105,6 +105,15 @@ describe('ProfileInformation', () => {
       it('should not render the edit button', async () => {
         const { queryByText } = renderWithProviders(<ProfileInformation profileAddress={anAddress} profile={aProfile} />)
         expect(queryByText(t('profile_information.edit'))).toBeNull()
+      })
+
+      it('should render the share buttons', async () => {
+        const { getByTestId, getByText } = renderWithProviders(<ProfileInformation profileAddress={anAddress} profile={aProfile} />)
+        const shareButton = getByTestId(shareButtonTestId)
+        fireEvent.click(shareButton)
+
+        expect(getByText(t('profile_information.copy_link'))).toBeInTheDocument()
+        expect(getByText(t('profile_information.share_on_tw'))).toBeInTheDocument()
       })
     })
   })
