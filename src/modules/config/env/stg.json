@@ -5,5 +5,7 @@
   "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org",
   "EXPLORER_URL": "https://play.decentraland.org",
-  "BUILDER_URL": "https://builder.decentraland.org"
+  "BUILDER_URL": "https://builder.decentraland.org",
+  "SYNAPSE_URL": "https://social.decentraland.today",
+  "SOCIAL_RPC_URL": "wss://rpc-social-service.decentraland.today"
 }
