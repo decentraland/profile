@@ -1,6 +1,8 @@
-import { Avatar } from '@dcl/schemas'
+import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { getAvatarName } from './utils'
+
+type Avatar = Profile['avatars'][0]
 
 let avatar: Avatar | undefined
 
@@ -11,7 +13,7 @@ describe("when getting an avatar's name", () => {
     })
 
     it('should return default name without last part', () => {
-      expect(getAvatarName(avatar)).toEqual({ name: t('avatar.defaultName') })
+      expect(getAvatarName(avatar)).toEqual({ name: t('profile_information.default_name') })
     })
   })
 
