@@ -1,0 +1,92 @@
+.ProfileInformation {
+  color: var(--text);
+  gap: 36px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.ProfileInformation .actions {
+  display: flex;
+  flex-direction: row;
+  gap: 13px;
+  height: 34px;
+}
+
+.ProfileInformation .basicRow {
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+}
+
+.ProfileInformation .basicCenteredRow {
+  align-items: center;
+  display: flex;
+}
+
+.ProfileInformation .description {
+  font-size: 12px;
+}
+
+.ProfileInformation .userName {
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.ProfileInformation .userNumber {
+  font-size: 18px;
+}
+
+.ProfileInformation .profileData {
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ProfileInformation .wallet {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+  height: 24px;
+}
+
+.ProfileInformation :global(.ui.button.basic).copyLink {
+  padding: unset;
+}
+
+.ProfileInformation :global(.ui.inverted.button).smallButton {
+  align-items: center;
+  height: 34px;
+  min-width: 34px;
+  max-width: 34px;
+  justify-content: center;
+  padding: 0px 0px 0px 9px;
+}
+
+.ProfileInformation :global(.ui.primary.button).smallButton {
+  align-items: center;
+  display: flex;
+  height: 34px;
+  min-width: 34px;
+  max-width: 34px;
+  justify-content: center;
+  padding: unset;
+}
+
+.ProfileInformation :global(.ui.primary.button).fluidButton {
+  padding-bottom: unset;
+  padding-top: unset;
+}
+
+.ProfileInformation :global(.ui.dropdown .menu > .item > img).dropdownMenuIcon {
+  margin: unset;
+  stroke: white;
+  height: 20px;
+  width: 20px;
+}
+
+.Profile.inline .dcl.blockie {
+  width: 100px;
+}

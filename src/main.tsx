@@ -1,3 +1,5 @@
+/* eslint-disable import/order */
+import 'semantic-ui-css/semantic.min.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
@@ -5,18 +7,18 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
-import 'decentraland-ui/dist/themes/base-theme.css'
 import * as modals from './components/Modals'
 import MainPage from './components/Pages/MainPage'
 import SignInPage from './components/Pages/SignInPage'
 import { initStore } from './modules/store'
 import * as locales from './modules/translation/locales'
-// eslint-disable-next-line import/order
-import 'semantic-ui-css/semantic.min.css'
+// These CSS styles must be defined last to avoid overriding other styles
+import 'decentraland-ui/dist/themes/alternative/dark-theme.css'
+import './index.css'
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/:profileAddress?',
     element: <MainPage />
   },
   {
@@ -40,10 +42,3 @@ const component = (
 )
 
 ReactDOM.render(component, document.getElementById('root') as HTMLElement)
-
-// Adding the theme and the CSS after loading all files to prevent overwriting the CSS
-
-// eslint-disable-next-line import/order
-import 'decentraland-ui/dist/themes/alternative/dark-theme.css'
-// eslint-disable-next-line import/order
-import './index.css'

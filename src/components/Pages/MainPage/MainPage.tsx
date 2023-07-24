@@ -1,33 +1,66 @@
-import { useState } from 'react'
-import { Button } from 'decentraland-ui/dist/components/Button/Button'
-import reactLogo from '../../../assets/react.svg'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
+import { Loader } from 'decentraland-ui'
+import { locations } from '../../../modules/routing/locations'
+import { Avatar } from '../../Avatar'
 import { PageLayout } from '../../PageLayout'
+import { ProfileInformation } from '../../ProfileInformation'
+import { nullAddress } from './constants'
+import { MainPageParams, Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
-function MainPage() {
-  const [count, setCount] = useState(0)
+function MainPage(props: Props) {
+  const { isLoading, onFetchProfile, loggedInAddress } = props
+  const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('tabs.overview'), value: t('tabs.overview') }]
+
+  const [selectedTab, setSelectedTab] = useState<string>(tabs[0].value)
+
+  const handleTabChange = useCallback(
+    (tab: string) => {
+      setSelectedTab(tab)
+    },
+    [setSelectedTab]
+  )
+  const navigate = useNavigate()
+
+  const { profileAddress } = useParams<MainPageParams>()
+
+  useEffect(() => {
+    if (profileAddress) {
+      onFetchProfile(profileAddress)
+    }
+  }, [profileAddress])
+
+  useEffect(() => {
+    if (!profileAddress && !loggedInAddress && !isLoading) {
+      navigate(locations.signIn(locations.root()))
+    }
+  }, [isLoading, loggedInAddress, profileAddress])
 
   return (
     <PageLayout>
-      <>
-        <div>
-          <a href="https://vitejs.dev" target="_blank">
-            <img src={reactLogo} className={styles.logo + ' ' + styles.react} alt="React logo" />
-          </a>
-          <a href="https://react.dev" target="_blank">
-            <img src={reactLogo} className={styles.logo + ' ' + styles.react} alt="React logo" />
-          </a>
+      {isLoading ? (
+        <Loader active />
+      ) : (
+        <div className={styles.MainPage}>
+          {selectedTab === tabs[0].value && <Avatar profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />}
+          <div className={styles.infoContainer}>
+            <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
+            <Divider />
+            <Tabs>
+              {tabs.map(tab => (
+                <Tabs.Tab key={tab.value} active={selectedTab === tab.value} onClick={() => handleTabChange(tab.value)}>
+                  <span className={styles.tab}>{tab.displayValue}</span>
+                </Tabs.Tab>
+              ))}
+            </Tabs>
+            <div>content</div>
+          </div>
         </div>
-        <h1>Vite + React</h1>
-        <Button primary>This is a button</Button>
-        <div className="card">
-          <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
-        </div>
-        <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-      </>
+      )}
     </PageLayout>
   )
 }
