@@ -10,4 +10,4 @@ export type LoginRequestAction = ReturnType<typeof loginRequest>
 export type LoginSuccessAction = ReturnType<typeof loginSuccess>
 export type LoginFailureAction = ReturnType<typeof loginFailure>
 
-export const logout = createAction('Logout')
+export const logout = createAction<string>('Logout')
