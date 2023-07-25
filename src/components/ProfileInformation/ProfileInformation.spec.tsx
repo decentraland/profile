@@ -17,6 +17,8 @@ jest.mock('decentraland-ui/dist/components/Profile/Profile', () => {
   }
 })
 
+type Avatar = Profile['avatars'][0]
+
 describe('ProfileInformation', () => {
   const anAddress = 'anAddress'
   const anotherAddress = 'anotherAddress'
@@ -28,10 +30,10 @@ describe('ProfileInformation', () => {
 
   beforeEach(() => {
     aProfile = {
-      avatars: [{ name: avatarName, ethAddress: anAddress } as Profile['avatars'][0]]
+      avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress } as Avatar]
     }
     anotherProfile = {
-      avatars: [{ name: anotherAvatarName, ethAddress: anotherAddress } as Profile['avatars'][0]]
+      avatars: [{ name: anotherAvatarName, userId: anotherAddress, ethAddress: anotherAddress } as Avatar]
     }
   })
 

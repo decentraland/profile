@@ -9,6 +9,7 @@ import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
 import { config } from '../../modules/config/config'
+import { getAvatarName } from '../../modules/profile/utils.ts'
 import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
 import { EDIT_PROFILE_URL } from '../Avatar/consts'
@@ -34,6 +35,7 @@ const ProfileInformation = (props: Props) => {
   }, [setHasCopied, avatar])
 
   const isLoggedInProfile = loggedInAddress === avatar?.ethAddress
+  const avatarName = getAvatarName(avatar)
 
   return (
     <div className={styles.ProfileInformation}>
@@ -42,9 +44,9 @@ const ProfileInformation = (props: Props) => {
         <div className={styles.avatar}>
           <span className={styles.userNumber}>
             <span className={styles.userName} data-testid={avatar?.ethAddress}>
-              {avatar ? avatar.name : t('profile_information.unnamed')}
+              {avatarName.name}
             </span>
-            &nbsp; #222
+            {avatarName.lastPart ? <span>&nbsp; {avatarName.lastPart}</span> : null}
           </span>
           <div className={styles.wallet}>
             <img src={Wallet} className="iconSize" />
@@ -66,7 +68,7 @@ const ProfileInformation = (props: Props) => {
         </div>
       </div>
       <div className={styles.actions}>
-        <WorldsButton address="0xeDaE96F7739aF8A7fB16E2a888C1E578E1328299" />
+        {loggedInAddress ? <WorldsButton address={loggedInAddress} /> : null}
         <Dropdown
           className={styles.smallButton}
           icon={
