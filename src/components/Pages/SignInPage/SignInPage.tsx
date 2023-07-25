@@ -5,7 +5,7 @@ import { PageLayout } from '../../PageLayout'
 import { Props } from './SignInPage.types'
 
 const SignInPage = (props: Props) => {
-  const { isConnected } = props
+  const { isConnected, onConnect } = props
 
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get('redirectTo')
@@ -19,7 +19,7 @@ const SignInPage = (props: Props) => {
 
   return (
     <PageLayout>
-      <SignIn />
+      <SignIn isConnected={isConnected} handleLoginConnect={onConnect} />
     </PageLayout>
   )
 }
