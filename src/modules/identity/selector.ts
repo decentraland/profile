@@ -24,3 +24,6 @@ export const getCurrentIdentity = createSelector([getAddress, getData], (current
   }
   return null
 })
+export const isLoggedIn = createSelector([getCurrentIdentity], identity => {
+  return !!identity
+})

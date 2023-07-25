@@ -1,42 +1,33 @@
-import { ethers } from 'ethers'
 import { call, put, race, select, take, takeEvery } from 'redux-saga/effects'
-import { Authenticator, AuthIdentity } from '@dcl/crypto'
+import { AuthIdentity } from '@dcl/crypto'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
-import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
 import {
   CONNECT_WALLET_FAILURE,
   CONNECT_WALLET_SUCCESS,
+  ChangeAccountAction,
   ConnectWalletFailureAction,
   ConnectWalletSuccessAction,
   ENABLE_WALLET_FAILURE,
   ENABLE_WALLET_SUCCESS,
   EnableWalletFailureAction,
   EnableWalletSuccessAction,
-  enableWalletRequest
+  CHANGE_ACCOUNT,
+  enableWalletRequest,
+  DISCONNECT_WALLET
 } from 'decentraland-dapps/dist/modules/wallet/actions'
 import { getAddress, isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
-import { LoginRequestAction, loginFailure, loginRequest, loginSuccess } from './action'
-import { getCurrentIdentity } from './selector'
-
-const ONE_MONTH_IN_MINUTES = 31 * 24 * 60
-
-export async function getEth(): Promise<ethers.BrowserProvider> {
-  const provider: Provider | null = await getConnectedProvider()
-
-  if (!provider) {
-    throw new Error('Could not get a valid connected Wallet')
-  }
-
-  return new ethers.BrowserProvider(provider)
-}
+import { LoginRequestAction, loginFailure, loginRequest, loginSuccess, logout } from './action'
+import { getCurrentIdentity, isLoggingIn } from './selector'
+import { generateIdentity } from './utils'
 
 export function* identitySaga() {
   yield takeEvery(loginRequest.type, handleLogin)
-  // yield takeEvery(disconnectWallet.type, handleLogout)
+  yield takeEvery(CHANGE_ACCOUNT, handleChangeAccount)
+  yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
+  yield takeEvery(DISCONNECT_WALLET, handleDisconnectWallet)
 
   function* handleLogin(action: LoginRequestAction) {
-    const { providerType } = action.payload
+    const providerType = action.payload
     // Check if we need to generate an identity
     try {
       // Check if we need to connect the wallet
@@ -74,25 +65,36 @@ export function* identitySaga() {
       const address: string = yield select(getAddress)
       // Check if we need  to generate a new identity
       if (!identity) {
-        const eth: ethers.BrowserProvider = yield call(getEth)
-        const account = ethers.Wallet.createRandom()
-
-        const payload = {
-          address: account.address.toString(),
-          publicKey: ethers.hexlify(account.publicKey),
-          privateKey: ethers.hexlify(account.privateKey)
-        }
-
-        const signer: Awaited<ReturnType<ethers.BrowserProvider['getSigner']>> = yield call([eth, 'getSigner'])
-
-        identity = yield call([Authenticator, 'initializeAuthChain'], address, payload, ONE_MONTH_IN_MINUTES, message =>
-          signer.signMessage(message)
-        )
+        identity = yield call(generateIdentity, address)
       }
 
       yield put(loginSuccess({ address, identity }))
     } catch (error) {
       yield put(loginFailure(isErrorWithMessage(error) ? error.message : 'Unknown error'))
     }
+  }
+
+  function* handleDisconnectWallet() {
+    const address: string = yield select(getAddress)
+    yield put(logout(address))
+  }
+
+  function* handleConnectWalletSuccess(action: ConnectWalletSuccessAction) {
+    const { wallet } = action.payload
+    const isLoggingInUser: boolean = yield select(isLoggingIn)
+    let identity: AuthIdentity = yield select(getCurrentIdentity)
+    if (!isLoggingInUser && !identity) {
+      identity = yield call(generateIdentity, wallet.address)
+      yield put(loginSuccess({ address: wallet.address, identity }))
+    }
+  }
+
+  function* handleChangeAccount(action: ChangeAccountAction) {
+    const { wallet } = action.payload
+    let identity: AuthIdentity = yield select(getCurrentIdentity)
+    if (!identity) {
+      identity = yield call(generateIdentity, wallet.address)
+    }
+    yield put(loginSuccess({ address: wallet.address, identity }))
   }
 }
