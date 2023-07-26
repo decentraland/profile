@@ -1,6 +1,5 @@
 {
   "name": "@dcl/profile-site",
-  "private": true,
   "version": "0.0.0",
   "description": "Profile website",
   "scripts": {
@@ -24,9 +23,9 @@
     "@reduxjs/toolkit": "^1.9.5",
     "ajv": "^8.12.0",
     "classnames": "^2.3.2",
-    "decentraland-dapps": "^15.4.0",
+    "decentraland-dapps": "^15.5.0",
     "decentraland-ui": "^4.0.0",
-    "ethers": "^6.6.4",
+    "ethers": "^6.6.5",
     "p-queue": "^6.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -65,6 +64,18 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "decentraland",
+    "profile",
+    "site"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/decentraland/profile.git"
   },
   "homepage": ""
 }

@@ -3,7 +3,13 @@
     "edit": "編輯頭像"
   },
   "profile_information": {
-    "friends": "朋友們"
+    "friends": "{count} {count, plural, one {朋友們} other {朋友們}}",
+    "default_name": "未命名的",
+    "edit": "編輯個人資料",
+    "copied": "已復制",
+    "copy_link": "複製鏈接",
+    "share_on_tw": "在 Twitter 上分享",
+    "tw_message": "嘿，查看我在 decentraland 中的個人資料\n"
   },
   "worlds_button": {
     "get_a_name": "取一个独特的名字",

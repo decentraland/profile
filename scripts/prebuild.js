@@ -19,7 +19,7 @@ publicPackageJson.version = packageJson.version
 
 // set public url
 Object.assign(ENV_CONTENT, getPublicUrls())
-packageJson.homepage = ENV_CONTENT['BASE_URL']
+packageJson.homepage = ENV_CONTENT['VITE_BASE_URL']
 publicPackageJson.homepage = packageJson.homepage
 if (packageJson.homepage) {
   // github action outputs. Do not touch.
@@ -55,12 +55,12 @@ function getPublicUrls() {
     const cdnUrl = `https://cdn.decentraland.org/${publicPackageJson.name}/${publicPackageJson.version}`
     console.log(`Using CDN as public url: "${cdnUrl}"`)
     return {
-      BASE_URL: cdnUrl
+      VITE_BASE_URL: cdnUrl
     }
   }
   // localhost
   console.log('Using empty pubic url')
   return {
-    BASE_URL: ''
+    VITE_BASE_URL: ''
   }
 }

@@ -3,7 +3,13 @@
     "edit": "Edit Avatar"
   },
   "profile_information": {
-    "friends": "Friends"
+    "friends": "{count} {count, plural, one {Friend} other {Friend}}",
+    "default_name": "Unnamed",
+    "edit": "Edit Profile",
+    "copied": "Copied",
+    "copy_link": "Copy Link",
+    "share_on_tw": "Share on Twitter",
+    "tw_message": "Hey, checkout my profile in decentraland\n"
   },
   "worlds_button": {
     "get_a_name": "Get an unique name",
