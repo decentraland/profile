@@ -3,13 +3,14 @@ import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors
 import { LOAD_PROFILE_REQUEST, loadProfileRequest } from 'decentraland-dapps/dist/modules/profile/actions'
 import { getLoading as isLoadingProfile } from 'decentraland-dapps/dist/modules/profile/selectors'
 import { getAddress, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { isLoggingIn } from '../../../modules/identity/selector'
 import { RootState } from '../../../modules/reducer'
 import MainPage from './MainPage'
 import { MapDispatch, MapDispatchProps, MapStateProps } from './MainPage.types'
 
 const mapStateToProps = (state: RootState): MapStateProps => {
   return {
-    isLoading: isLoadingType(isLoadingProfile(state), LOAD_PROFILE_REQUEST) || isConnecting(state),
+    isLoading: isLoadingType(isLoadingProfile(state), LOAD_PROFILE_REQUEST) || isLoggingIn(state) || isConnecting(state),
     loggedInAddress: getAddress(state)
   }
 }
