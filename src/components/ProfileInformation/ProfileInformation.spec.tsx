@@ -41,7 +41,7 @@ describe('ProfileInformation', () => {
     describe('and the user is checking on its own profile', () => {
       it('should render the users data', async () => {
         const { getByText, getByTestId } = renderWithProviders(
-          <ProfileInformation profileAddress={anAddress} loggedInAddress={anAddress} profile={aProfile} />
+          <ProfileInformation profileAddress={anAddress} loggedInAddress={anAddress} profile={aProfile} isSocialClientReady={false} />
         )
         expect(getByText(avatarName)).toBeInTheDocument()
         expect(getByTestId(anAddress)).toBeInTheDocument()
@@ -49,7 +49,7 @@ describe('ProfileInformation', () => {
 
       it('should render the actions buttons', async () => {
         const { getByTestId, getByText } = renderWithProviders(
-          <ProfileInformation profileAddress={anAddress} loggedInAddress={anAddress} profile={aProfile} />
+          <ProfileInformation profileAddress={anAddress} loggedInAddress={anAddress} profile={aProfile} isSocialClientReady={false} />
         )
         const shareButton = getByTestId(shareButtonTestId)
         fireEvent.click(shareButton)
@@ -61,7 +61,7 @@ describe('ProfileInformation', () => {
 
       it('should open twitter with the correct URL', async () => {
         const { getByTestId, getByRole } = renderWithProviders(
-          <ProfileInformation profileAddress={anAddress} loggedInAddress={anAddress} profile={aProfile} />
+          <ProfileInformation profileAddress={anAddress} loggedInAddress={anAddress} profile={aProfile} isSocialClientReady={false} />
         )
 
         const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
@@ -82,7 +82,12 @@ describe('ProfileInformation', () => {
     describe('and the user is checking other profile', () => {
       it('should render the other profile data, not the logged in', async () => {
         const { queryByText, queryByTestId } = renderWithProviders(
-          <ProfileInformation profileAddress={anotherAddress} loggedInAddress={anAddress} profile={anotherProfile} />
+          <ProfileInformation
+            profileAddress={anotherAddress}
+            loggedInAddress={anAddress}
+            profile={anotherProfile}
+            isSocialClientReady={false}
+          />
         )
         expect(queryByText(avatarName)).not.toBeInTheDocument()
         expect(queryByTestId(anAddress)).toBeNull()
@@ -97,7 +102,7 @@ describe('ProfileInformation', () => {
     describe('and the user is checking on a profile', () => {
       it('should render the profile information', async () => {
         const { queryByText, queryByTestId } = renderWithProviders(
-          <ProfileInformation profileAddress={anotherAddress} profile={anotherProfile} />
+          <ProfileInformation profileAddress={anotherAddress} profile={anotherProfile} isSocialClientReady={false} />
         )
 
         expect(queryByText(anotherAvatarName)).toBeInTheDocument()
@@ -105,12 +110,16 @@ describe('ProfileInformation', () => {
       })
 
       it('should not render the edit button', async () => {
-        const { queryByText } = renderWithProviders(<ProfileInformation profileAddress={anAddress} profile={aProfile} />)
+        const { queryByText } = renderWithProviders(
+          <ProfileInformation profileAddress={anAddress} profile={aProfile} isSocialClientReady={false} />
+        )
         expect(queryByText(t('profile_information.edit'))).toBeNull()
       })
 
       it('should render the share buttons', async () => {
-        const { getByTestId, getByText } = renderWithProviders(<ProfileInformation profileAddress={anAddress} profile={aProfile} />)
+        const { getByTestId, getByText } = renderWithProviders(
+          <ProfileInformation profileAddress={anAddress} profile={aProfile} isSocialClientReady={false} />
+        )
         const shareButton = getByTestId(shareButtonTestId)
         fireEvent.click(shareButton)
 
