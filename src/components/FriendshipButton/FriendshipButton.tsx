@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
@@ -9,11 +9,27 @@ import unfriendUserIcon from '../../assets/icons/UnfriendUser.png'
 import userIcon from '../../assets/icons/User.png'
 import { FriendshipStatus } from '../../modules/social/types'
 import { Props } from './FriendshipButton.types'
+import styles from './FriendshipButton.module.css'
 
 const FriendshipButton = (props: Props) => {
-  const { friendshipStatus, className, onAddFriend, onCancelFriendRequest, onAcceptFriendRequest, onRemoveFriend } = props
+  const {
+    friendshipStatus,
+    className,
+    isLoading,
+    onFetchFriends,
+    onAddFriend,
+    onCancelFriendRequest,
+    onAcceptFriendRequest,
+    onRemoveFriend
+  } = props
 
   const [isHovering, setIsHovering] = useState(false)
+
+  useEffect(() => {
+    if (!isLoading) {
+      onFetchFriends()
+    }
+  }, [onFetchFriends])
 
   const handleButtonClick = useCallback(() => {
     switch (friendshipStatus) {
@@ -26,7 +42,7 @@ const FriendshipButton = (props: Props) => {
       case FriendshipStatus.PENDING_RESPONSE:
         return onAcceptFriendRequest()
     }
-  }, [friendshipStatus])
+  }, [friendshipStatus, isHovering])
 
   const buttonText = useMemo(() => {
     switch (friendshipStatus) {
@@ -43,7 +59,7 @@ const FriendshipButton = (props: Props) => {
       default:
         return 'Unknown'
     }
-  }, [friendshipStatus])
+  }, [friendshipStatus, isHovering])
 
   const buttonIcon = useMemo(() => {
     switch (friendshipStatus) {
@@ -60,7 +76,7 @@ const FriendshipButton = (props: Props) => {
       default:
         return ''
     }
-  }, [friendshipStatus])
+  }, [friendshipStatus, isHovering])
 
   const handleOnButtonMouseOver = useCallback(() => {
     setIsHovering(true)
@@ -79,10 +95,13 @@ const FriendshipButton = (props: Props) => {
     <Button
       onClick={handleButtonClick}
       primary
+      disabled={isLoading}
+      loading={isLoading}
       inverted={isInverted}
+      data-testid="FriendshipButton"
       onMouseOver={handleOnButtonMouseOver}
       onMouseOut={handleOnButtonMouseOut}
-      className={classNames(className)}
+      className={classNames(className, styles.button, 'customIconButton')}
     >
       <img src={buttonIcon} /> {buttonText}
     </Button>

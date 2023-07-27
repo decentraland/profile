@@ -1,5 +1,5 @@
 import { RootState } from '../reducer'
-import { fetchFriendRequestsEventsRequest, fetchFriendsRequest } from './actions'
+import { fetchFriendRequestsEventsRequest, fetchFriendsRequest, initializeSocialClientRequest } from './actions'
 import { buildInitialState } from './reducer'
 import {
   getError,
@@ -7,8 +7,10 @@ import {
   getFriendshipStatus,
   getIncomingEvents,
   getOutgoingEvents,
+  isInitializingSocialClient,
   isLoadingFriendRequestEvents,
-  isLoadingFriends
+  isLoadingFriends,
+  isSocialClientInitialized
 } from './selectors'
 import { FriendshipStatus } from './types'
 
@@ -163,6 +165,50 @@ describe('when getting if the friend requests events are being loaded', () => {
 
     it('should return true', () => {
       expect(isLoadingFriendRequestEvents(state)).toBe(true)
+    })
+  })
+})
+
+describe('when getting if the social client is being initialized', () => {
+  describe('and the social client is not being initialized', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isInitializingSocialClient(state)).toBe(false)
+    })
+  })
+
+  describe('and the social client is being initialized', () => {
+    beforeEach(() => {
+      state.social.loading = [initializeSocialClientRequest()]
+    })
+
+    it('should return true', () => {
+      expect(isInitializingSocialClient(state)).toBe(true)
+    })
+  })
+})
+
+describe('when getting if the social client is initialized', () => {
+  describe('and the social client is not initialized', () => {
+    beforeEach(() => {
+      state.social.data.initialized = false
+    })
+
+    it('should return false', () => {
+      expect(isSocialClientInitialized(state)).toBe(false)
+    })
+  })
+
+  describe('and the social client is initialized', () => {
+    beforeEach(() => {
+      state.social.data.initialized = true
+    })
+
+    it('should return true', () => {
+      expect(isSocialClientInitialized(state)).toBe(true)
     })
   })
 })

@@ -9,13 +9,14 @@ import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
 import { config } from '../../modules/config/config'
-import { getAvatarName } from '../../modules/profile/utils.ts'
+import { getAvatarName } from '../../modules/profile/utils'
 import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
 import { EDIT_PROFILE_URL } from '../Avatar/consts'
-import CopyIcon from '../CopyIcon/index.tsx'
+import CopyIcon from '../CopyIcon'
+import FriendshipButton from '../FriendshipButton'
 import WorldsButton from '../WorldsButton'
-import { shareButtonTestId, twitterURL } from './consts.ts'
+import { shareButtonTestId, twitterURL } from './consts'
 import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
@@ -23,7 +24,7 @@ const EXPLORER_URL = config.get('EXPLORER_URL', '')
 const PROFILE_URL = config.get('PROFILE_URL', '')
 
 const ProfileInformation = (props: Props) => {
-  const { profile, loggedInAddress, profileAddress } = props
+  const { profile, isSocialClientReady, loggedInAddress, profileAddress } = props
 
   const [hasCopiedAddress, setHasCopied] = useTimer(1200)
 
@@ -34,8 +35,9 @@ const ProfileInformation = (props: Props) => {
     copyText(url, setHasCopied)
   }, [setHasCopied, avatar])
 
-  const isLoggedInProfile = loggedInAddress === avatar?.ethAddress
+  const isLoggedInProfile = loggedInAddress === profileAddress
   const avatarName = getAvatarName(avatar)
+  const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
 
   return (
     <div className={styles.ProfileInformation}>
@@ -68,6 +70,7 @@ const ProfileInformation = (props: Props) => {
         </div>
       </div>
       <div className={styles.actions}>
+        {shouldShowFriendsButton ? <FriendshipButton friendAddress={loggedInAddress} /> : null}
         {loggedInAddress ? <WorldsButton address={loggedInAddress} /> : null}
         <Dropdown
           className={styles.smallButton}

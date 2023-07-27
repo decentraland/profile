@@ -85,8 +85,8 @@ export function* identitySaga() {
     let identity: AuthIdentity = yield select(getCurrentIdentity)
     if (!isLoggingInUser && !identity) {
       identity = yield call(generateIdentity, wallet.address)
-      yield put(loginSuccess({ address: wallet.address, identity }))
     }
+    yield put(loginSuccess({ address: wallet.address, identity }))
   }
 
   function* handleChangeAccount(action: ChangeAccountAction) {

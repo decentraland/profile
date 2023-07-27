@@ -6,7 +6,10 @@ import {
   fetchFriendRequestsEventsSuccess,
   fetchFriendsFailure,
   fetchFriendsRequest,
-  fetchFriendsSuccess
+  fetchFriendsSuccess,
+  initializeSocialClientFailure,
+  initializeSocialClientRequest,
+  initializeSocialClientSuccess
 } from './actions'
 import { RequestEvent } from './types'
 
@@ -17,6 +20,7 @@ export type SocialState = {
       outgoing: Record<string, RequestEvent>
     }
     friends: string[]
+    initialized: boolean
   }
   loading: LoadingState
   error: string | null
@@ -28,7 +32,8 @@ export const buildInitialState = (): SocialState => ({
       incoming: {},
       outgoing: {}
     },
-    friends: []
+    friends: [],
+    initialized: false
   },
   loading: [],
   error: null
@@ -66,6 +71,18 @@ export const socialReducer = createReducer<SocialState>(buildInitialState(), bui
       state.error = null
     })
     .addCase(fetchFriendRequestsEventsFailure, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = action.payload
+    })
+    .addCase(initializeSocialClientRequest, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = null
+    })
+    .addCase(initializeSocialClientSuccess, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.data.initialized = true
+    })
+    .addCase(initializeSocialClientFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = action.payload
     })
