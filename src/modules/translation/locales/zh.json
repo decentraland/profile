@@ -4,7 +4,7 @@
   },
   "profile_information": {
     "friends": "{count} {count, plural, one {朋友們} other {朋友們}}",
-    "unnamed": "未命名的",
+    "default_name": "未命名的",
     "edit": "編輯個人資料",
     "copied": "已復制",
     "copy_link": "複製鏈接",

@@ -3,7 +3,7 @@
   "CHAIN_ID": "11155111",
   "EXPLORER_URL": "https://play.decentraland.zone/?NETWORK=sepolia&DEBUG_MODE=true",
   "PEER_URL": "https://peer-ap1.decentraland.zone",
-  "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace-goerli",
+  "MARKETPLACE_GRAPH_URL": "https://api.studio.thegraph.com/query/49472/marketplace-sepolia/version/latest",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.zone",
   "BUILDER_URL": "https://builder.decentraland.zone",
   "PROFILE_URL": "https://profile.decentraland.zone",

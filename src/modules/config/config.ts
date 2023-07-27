@@ -16,4 +16,3 @@ export const config = createConfig(
     }
   }
 )
-console.log(process.env.VITE_REACT_APP_DCL_DEFAULT_ENV)

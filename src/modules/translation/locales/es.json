@@ -4,7 +4,7 @@
   },
   "profile_information": {
     "friends": "{count} {count, plural, one {Amigo} other {Amigos}}",
-    "unnamed": "Sin nombrar",
+    "default_name": "Sin nombrar",
     "edit": "Editar Perfil",
     "copied": "Copiado",
     "copy_link": "Copiar enlace",
