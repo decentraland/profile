@@ -6,5 +6,6 @@
   "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org",
   "BUILDER_URL": "https://builder.decentraland.today",
-  "PROFILE_URL": "https://profile.decentraland.today"
+  "PROFILE_URL": "https://profile.decentraland.today",
+  "MARKETPLACE_URL": "https://market.decentraland.today"
 }

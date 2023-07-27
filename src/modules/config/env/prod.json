@@ -6,5 +6,6 @@
   "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace-goerli",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.zone",
   "BUILDER_URL": "https://builder.decentraland.org",
-  "PROFILE_URL": "https://profile.decentraland.org"
+  "PROFILE_URL": "https://profile.decentraland.org",
+  "MARKETPLACE_URL": "https://market.decentraland.org"
 }

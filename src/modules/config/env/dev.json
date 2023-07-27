@@ -1,10 +1,11 @@
 {
-  "NETWORK": "goerli",
-  "CHAIN_ID": "5",
-  "EXPLORER_URL": "https://play.decentraland.zone",
+  "NETWORK": "sepolia",
+  "CHAIN_ID": "11155111",
+  "EXPLORER_URL": "https://play.decentraland.zone/?NETWORK=sepolia&DEBUG_MODE=true",
   "PEER_URL": "https://peer-ap1.decentraland.zone",
   "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace-goerli",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.zone",
   "BUILDER_URL": "https://builder.decentraland.zone",
-  "PROFILE_URL": "https://profile.decentraland.zone"
+  "PROFILE_URL": "https://profile.decentraland.zone",
+  "MARKETPLACE_URL": "https://market.decentraland.zone"
 }
