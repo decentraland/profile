@@ -5,6 +5,8 @@
   "PEER_URL": "https://peer-ap1.decentraland.zone",
   "MARKETPLACE_GRAPH_URL": "https://api.studio.thegraph.com/query/49472/marketplace-sepolia/version/latest",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.zone",
+  "SOCIAL_RPC_URL": "wss://rpc-social-service.decentraland.zone",
   "BUILDER_URL": "https://builder.decentraland.zone",
+  "SYNAPSE_URL": "https://social.decentraland.zone",
   "PROFILE_URL": "https://profile.decentraland.zone"
 }

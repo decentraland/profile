@@ -23,5 +23,14 @@
     "lists": "Listas",
     "dao_activity": "Actividad DAO",
     "places": "Places"
+  },
+  "friendship_button": {
+    "friends": "Amigos",
+    "add_friend": "Agregar amigo",
+    "pending": "Petición pendiente",
+    "cancel_request": "Cancelar petición",
+    "accept_request": "Acceptar petición",
+    "blocked": "Bloqueado",
+    "unfriend": "Dejar de ser amigo"
   }
 }

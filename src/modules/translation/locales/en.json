@@ -23,5 +23,14 @@
     "lists": "Lists",
     "overview": "Overview",
     "places": "Places"
+  },
+  "friendship_button": {
+    "friends": "Friends",
+    "add_friend": "Add Friend",
+    "pending": "Pending Request",
+    "cancel_request": "Cancel Request",
+    "accept_request": "Accept Request",
+    "blocked": "Blocked",
+    "unfriend": "Unfriend"
   }
 }

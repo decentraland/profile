@@ -23,5 +23,14 @@
     "lists": "列表",
     "dao_activity": "DAO 活動",
     "places": "地點"
+  },
+  "friendship_button": {
+    "friends": "朋友们",
+    "add_friend": "添加好友",
+    "pending": "待处理请求",
+    "cancel_request": "取消请求",
+    "accept_request": "接受请求",
+    "blocked": "阻止",
+    "unfriend": "不朋友"
   }
 }
