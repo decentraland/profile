@@ -3,6 +3,7 @@ import { RootState } from '../../modules/reducer'
 import { fetchFriendsRequest, fetchFriendRequestsEventsRequest, acceptFriendshipRequest } from '../../modules/social/actions'
 import {
   getFriendshipStatus,
+  isAcceptingFriendRequest,
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
   isLoadingFriends
@@ -12,7 +13,11 @@ import { MapStateProps, MapDispatch, MapDispatchProps, OwnProps } from './Friend
 
 const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   return {
-    isLoading: isLoadingFriends(state) || isLoadingFriendRequestEvents(state) || isInitializingSocialClient(state),
+    isLoading:
+      isLoadingFriends(state) ||
+      isLoadingFriendRequestEvents(state) ||
+      isInitializingSocialClient(state) ||
+      isAcceptingFriendRequest(state, ownProps.friendAddress),
     friendshipStatus: getFriendshipStatus(state, ownProps.friendAddress)
   }
 }
