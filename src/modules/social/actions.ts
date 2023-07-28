@@ -32,3 +32,23 @@ export const initializeSocialClientFailure = createAction<string>('[Failure] Ini
 export type InitializeSocialClientRequestAction = ReturnType<typeof initializeSocialClientRequest>
 export type InitializeSocialClientSuccessAction = ReturnType<typeof initializeSocialClientSuccess>
 export type InitializeSocialClientFailureAction = ReturnType<typeof initializeSocialClientFailure>
+
+// Accept friend requests
+
+export const acceptFriendshipRequest = createAction<string>('[Request] Accept Friendship')
+export const acceptFriendshipSuccess = createAction<string>('[Success] Accept Friendship')
+export const acceptFriendshipFailure = createAction<string>('[Failure] Accept Friendship')
+
+export type AcceptFriendshipRequestAction = ReturnType<typeof acceptFriendshipRequest>
+export type AcceptFriendshipSuccessAction = ReturnType<typeof acceptFriendshipSuccess>
+export type AcceptFriendshipFailureAction = ReturnType<typeof acceptFriendshipFailure>
+
+// Reject friend requests
+
+export const rejectFriendshipRequest = createAction<string>('[Request] Reject Friendship')
+export const rejectFriendshipSuccess = createAction<string>('[Success] Reject Friendship')
+export const rejectFriendshipFailure = createAction<string>('[Failure] Reject Friendship')
+
+export type RejectFriendshipRequestAction = ReturnType<typeof rejectFriendshipRequest>
+export type RejectFriendshipSuccessAction = ReturnType<typeof rejectFriendshipSuccess>
+export type RejectFriendshipFailureAction = ReturnType<typeof rejectFriendshipFailure>
