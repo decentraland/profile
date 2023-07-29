@@ -1,5 +1,5 @@
 import { RootState } from '../reducer'
-import { fetchFriendRequestsEventsRequest, fetchFriendsRequest, initializeSocialClientRequest } from './actions'
+import { fetchFriendRequestsEventsRequest, fetchFriendsRequest, fetchMutualFriendsRequest, initializeSocialClientRequest } from './actions'
 import { buildInitialState } from './reducer'
 import {
   getError,
@@ -10,6 +10,7 @@ import {
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
   isLoadingFriends,
+  isLoadingMutualFriends,
   isSocialClientInitialized
 } from './selectors'
 import { FriendshipStatus } from './types'
@@ -209,6 +210,28 @@ describe('when getting if the social client is initialized', () => {
 
     it('should return true', () => {
       expect(isSocialClientInitialized(state)).toBe(true)
+    })
+  })
+})
+
+describe('when getting if the mutual friends are being loaded', () => {
+  describe('and the mutual friends are not being loaded', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isLoadingMutualFriends(state)).toBe(false)
+    })
+  })
+
+  describe('and the friends are being loaded', () => {
+    beforeEach(() => {
+      state.social.loading = [fetchMutualFriendsRequest('0x1')]
+    })
+
+    it('should return true', () => {
+      expect(isLoadingMutualFriends(state)).toBe(true)
     })
   })
 })

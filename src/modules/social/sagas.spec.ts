@@ -10,11 +10,14 @@ import {
   fetchFriendsFailure,
   fetchFriendsRequest,
   fetchFriendsSuccess,
+  fetchMutualFriendsFailure,
+  fetchMutualFriendsRequest,
+  fetchMutualFriendsSuccess,
   initializeSocialClientFailure,
   initializeSocialClientRequest,
   initializeSocialClientSuccess
 } from './actions'
-import { getClient, getFriends, initiateSocialClient } from './client'
+import { getClient, getFriends, getMutualFriends, initiateSocialClient } from './client'
 import { socialSagas } from './sagas'
 import { RequestEvent } from './types'
 
@@ -135,5 +138,30 @@ describe('when handing the login success action', () => {
         .dispatch(loginSuccess({ address, identity }))
         .silentRun()
     })
+  })
+})
+
+describe('when handling the fetch mutual friends action', () => {
+  describe('and getting the mutual friends succeeds', () => {
+    let mutuals: string[]
+    beforeEach(() => {
+      mutuals = ['0x1', '0x2']
+    })
+
+    it("should put a fetch friends success action with the user's friends", () =>
+      expectSaga(socialSagas)
+        .provide([[call(getMutualFriends, 'anAddress'), Promise.resolve(mutuals)]])
+        .put(fetchMutualFriendsSuccess(mutuals))
+        .dispatch(fetchMutualFriendsRequest('anAddress'))
+        .silentRun())
+  })
+
+  describe('and getting the mutual friends fails', () => {
+    it('should put a fetch mutual friends failure action with the error message', () =>
+      expectSaga(socialSagas)
+        .provide([[call(getMutualFriends, 'anAddress'), Promise.reject(new Error('anErrorMessage'))]])
+        .put(fetchMutualFriendsFailure('anErrorMessage'))
+        .dispatch(fetchMutualFriendsRequest('anAddress'))
+        .silentRun())
   })
 })

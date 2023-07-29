@@ -32,3 +32,13 @@ export const initializeSocialClientFailure = createAction<string>('[Failure] Ini
 export type InitializeSocialClientRequestAction = ReturnType<typeof initializeSocialClientRequest>
 export type InitializeSocialClientSuccessAction = ReturnType<typeof initializeSocialClientSuccess>
 export type InitializeSocialClientFailureAction = ReturnType<typeof initializeSocialClientFailure>
+
+// Fetch mutual friends actions
+
+export const fetchMutualFriendsRequest = createAction<string>('[Request] Fetch Mutual Friends')
+export const fetchMutualFriendsSuccess = createAction<string[]>('[Success] Fetch Mutual Friends')
+export const fetchMutualFriendsFailure = createAction<string>('[Failure] Fetch Mutual Friends')
+
+export type FetchMutualFriendsRequestAction = ReturnType<typeof fetchMutualFriendsRequest>
+export type FetchMutualFriendsSuccessAction = ReturnType<typeof fetchMutualFriendsSuccess>
+export type FetchMutualFriendsFailureAction = ReturnType<typeof fetchMutualFriendsFailure>
