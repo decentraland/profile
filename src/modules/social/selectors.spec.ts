@@ -1,5 +1,11 @@
 import { RootState } from '../reducer'
-import { fetchFriendRequestsEventsRequest, fetchFriendsRequest, initializeSocialClientRequest } from './actions'
+import {
+  fetchFriendRequestsEventsRequest,
+  fetchFriendsRequest,
+  initializeSocialClientRequest,
+  removeFriendRequest,
+  requestFriendshipRequest
+} from './actions'
 import { buildInitialState } from './reducer'
 import {
   getError,
@@ -10,6 +16,8 @@ import {
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
   isLoadingFriends,
+  isRemovingFriend,
+  isRequestingFriendship,
   isSocialClientInitialized
 } from './selectors'
 import { FriendshipStatus } from './types'
@@ -209,6 +217,50 @@ describe('when getting if the social client is initialized', () => {
 
     it('should return true', () => {
       expect(isSocialClientInitialized(state)).toBe(true)
+    })
+  })
+})
+
+describe("when getting if the user is requesting a user's friendship", () => {
+  describe("and the user is not requesting a user's friendship", () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isRequestingFriendship(state, 'anAddress')).toBe(false)
+    })
+  })
+
+  describe("and the user is requesting a user's friendship", () => {
+    beforeEach(() => {
+      state.social.loading = [requestFriendshipRequest('anAddress')]
+    })
+
+    it('should return true', () => {
+      expect(isRequestingFriendship(state, 'anAddress')).toBe(true)
+    })
+  })
+})
+
+describe('when getting it the user is removing a friend', () => {
+  describe('and the user is not removing a friend', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isRequestingFriendship(state, 'anAddress')).toBe(false)
+    })
+  })
+
+  describe('and the user is removing a friend', () => {
+    beforeEach(() => {
+      state.social.loading = [removeFriendRequest('anAddress')]
+    })
+
+    it('should return true', () => {
+      expect(isRemovingFriend(state, 'anAddress')).toBe(true)
     })
   })
 })

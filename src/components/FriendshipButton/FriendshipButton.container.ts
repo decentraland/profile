@@ -10,14 +10,21 @@ import {
   getFriendshipStatus,
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
-  isLoadingFriends
+  isLoadingFriends,
+  isRemovingFriend,
+  isRequestingFriendship
 } from '../../modules/social/selectors'
 import FriendshipButton from './FriendshipButton'
 import { MapStateProps, MapDispatch, MapDispatchProps, OwnProps } from './FriendshipButton.types'
 
 const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   return {
-    isLoading: isLoadingFriends(state) || isLoadingFriendRequestEvents(state) || isInitializingSocialClient(state),
+    isLoading:
+      isLoadingFriends(state) ||
+      isLoadingFriendRequestEvents(state) ||
+      isInitializingSocialClient(state) ||
+      isRequestingFriendship(state, ownProps.friendAddress) ||
+      isRemovingFriend(state, ownProps.friendAddress),
     friendshipStatus: getFriendshipStatus(state, ownProps.friendAddress)
   }
 }
