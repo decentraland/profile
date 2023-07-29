@@ -1,7 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
 import { RootState } from '../reducer'
-import { fetchFriendRequestsEventsRequest, fetchFriendsRequest, initializeSocialClientRequest } from './actions'
+import {
+  cancelFriendshipRequestRequest,
+  fetchFriendRequestsEventsRequest,
+  fetchFriendsRequest,
+  initializeSocialClientRequest
+} from './actions'
 import { FriendshipStatus } from './types'
 
 const getState = (state: RootState) => state.social
@@ -38,3 +43,8 @@ export const isInitializingSocialClient = createSelector([getLoading], loadingSt
   isLoadingType(loadingState, initializeSocialClientRequest.type)
 )
 export const isSocialClientInitialized = createSelector([getData], data => data.initialized)
+export const isCancellingFriendshipRequest = createSelector(
+  [getLoading, (_state, friendAddress) => friendAddress],
+  (loadingState, friendAddress) =>
+    loadingState.some(action => action.type === cancelFriendshipRequestRequest.type && action.payload === friendAddress)
+)

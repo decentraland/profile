@@ -32,3 +32,13 @@ export const initializeSocialClientFailure = createAction<string>('[Failure] Ini
 export type InitializeSocialClientRequestAction = ReturnType<typeof initializeSocialClientRequest>
 export type InitializeSocialClientSuccessAction = ReturnType<typeof initializeSocialClientSuccess>
 export type InitializeSocialClientFailureAction = ReturnType<typeof initializeSocialClientFailure>
+
+// Cancel friendship request
+
+export const cancelFriendshipRequestRequest = createAction<string>('[Request] Cancel Friendship Request')
+export const cancelFriendshipRequestSuccess = createAction<string>('[Success] Cancel Friendship Request')
+export const cancelFriendshipRequestFailure = createAction<string>('[Failure] Cancel Friendship Request')
+
+export type CancelFriendshipRequestRequestAction = ReturnType<typeof cancelFriendshipRequestRequest>
+export type CancelFriendshipRequestSuccessAction = ReturnType<typeof cancelFriendshipRequestSuccess>
+export type CancelFriendshipRequestFailureAction = ReturnType<typeof cancelFriendshipRequestFailure>

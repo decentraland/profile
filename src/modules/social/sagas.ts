@@ -2,6 +2,9 @@ import { takeEvery, call, put } from 'redux-saga/effects'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import { LoginSuccessAction, loginSuccess } from '../identity/action'
 import {
+  cancelFriendshipRequestRequest,
+  cancelFriendshipRequestFailure,
+  cancelFriendshipRequestSuccess,
   fetchFriendRequestsEventsFailure,
   fetchFriendRequestsEventsRequest,
   fetchFriendRequestsEventsSuccess,
@@ -10,7 +13,8 @@ import {
   fetchFriendsSuccess,
   initializeSocialClientFailure,
   initializeSocialClientRequest,
-  initializeSocialClientSuccess
+  initializeSocialClientSuccess,
+  CancelFriendshipRequestRequestAction
 } from './actions'
 import { getClient, getFriends, initiateSocialClient } from './client'
 import { RequestEvent, SocialClient } from './types'
@@ -19,6 +23,7 @@ export function* socialSagas() {
   yield takeEvery(loginSuccess.type, handleStartSocialServiceConnection)
   yield takeEvery(fetchFriendsRequest.type, handleFetchFriends)
   yield takeEvery(fetchFriendRequestsEventsRequest.type, handleFetchFriendRequests)
+  yield takeEvery(cancelFriendshipRequestRequest.type, handleCancelFriendshipRequest)
 
   function* handleStartSocialServiceConnection(action: LoginSuccessAction) {
     try {
@@ -60,6 +65,16 @@ export function* socialSagas() {
       yield put(fetchFriendRequestsEventsSuccess({ incoming, outgoing }))
     } catch (error) {
       yield put(fetchFriendRequestsEventsFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+    }
+  }
+
+  function* handleCancelFriendshipRequest(action: CancelFriendshipRequestRequestAction) {
+    try {
+      const client: SocialClient = yield call(getClient)
+      yield call([client, 'cancelFriendshipRequest'], action.payload)
+      yield put(cancelFriendshipRequestSuccess(action.payload))
+    } catch (error) {
+      yield put(cancelFriendshipRequestFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
   }
 }

@@ -4,6 +4,9 @@ import * as matchers from 'redux-saga-test-plan/matchers'
 import { AuthIdentity } from '@dcl/crypto'
 import { loginSuccess } from '../identity/action'
 import {
+  cancelFriendshipRequestFailure,
+  cancelFriendshipRequestRequest,
+  cancelFriendshipRequestSuccess,
   fetchFriendRequestsEventsFailure,
   fetchFriendRequestsEventsRequest,
   fetchFriendRequestsEventsSuccess,
@@ -133,6 +136,44 @@ describe('when handing the login success action', () => {
         })
         .put(initializeSocialClientSuccess())
         .dispatch(loginSuccess({ address, identity }))
+        .silentRun()
+    })
+  })
+})
+
+describe('when handling the cancel friendship request action', () => {
+  describe('and getting the client fails', () => {
+    it('should put a cancel friendship request failure action with the error', () => {
+      return expectSaga(socialSagas)
+        .provide([[call(getClient), Promise.reject(new Error('anErrorMessage'))]])
+        .put(cancelFriendshipRequestFailure('anErrorMessage'))
+        .dispatch(cancelFriendshipRequestRequest('anAddress'))
+        .silentRun()
+    })
+  })
+
+  describe('and the cancelling fails', () => {
+    it('should put a cancel friendship request failure action with the error', () => {
+      return expectSaga(socialSagas)
+        .provide([[call(getClient), Promise.resolve({ cancelFriendshipRequest: () => Promise.reject(new Error('anErrorMessage')) })]])
+        .put(cancelFriendshipRequestFailure('anErrorMessage'))
+        .dispatch(cancelFriendshipRequestRequest('anAddress'))
+        .silentRun()
+    })
+  })
+
+  describe('and the cancelling succeeds', () => {
+    let mockedClient: { cancelFriendshipRequest: () => Promise<void> }
+    beforeEach(() => {
+      mockedClient = { cancelFriendshipRequest: () => Promise.resolve() }
+    })
+
+    it('should put a cancel friendship request success action with the address of the new friend', () => {
+      return expectSaga(socialSagas)
+        .provide([[call(getClient), Promise.resolve(mockedClient)]])
+        .call.like({ fn: mockedClient.cancelFriendshipRequest, args: ['anAddress'] })
+        .put(cancelFriendshipRequestSuccess('anAddress'))
+        .dispatch(cancelFriendshipRequestRequest('anAddress'))
         .silentRun()
     })
   })

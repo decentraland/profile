@@ -1,4 +1,7 @@
 import {
+  cancelFriendshipRequestFailure,
+  cancelFriendshipRequestRequest,
+  cancelFriendshipRequestSuccess,
   fetchFriendRequestsEventsFailure,
   fetchFriendRequestsEventsRequest,
   fetchFriendRequestsEventsSuccess,
@@ -169,6 +172,57 @@ describe('when reducing the failure action to initialize the social client', () 
 
   it('should return a state with the error set and the loading state cleared', () => {
     expect(socialReducer(state, initializeSocialClientFailure('anError'))).toEqual({
+      ...state,
+      loading: [],
+      error: 'anError'
+    })
+  })
+})
+
+describe('when reducing the request action of cancelling a friendship request', () => {
+  beforeEach(() => {
+    state.error = 'anError'
+  })
+
+  it('should return a state with the error nulled and the loading state set', () => {
+    expect(socialReducer(state, cancelFriendshipRequestRequest('anAddress'))).toEqual({
+      ...state,
+      loading: [cancelFriendshipRequestRequest('anAddress')],
+      error: null
+    })
+  })
+})
+
+describe('when reducing the success action of cancelling a friendship request', () => {
+  beforeEach(() => {
+    state.loading = [cancelFriendshipRequestRequest('anAddress')]
+    state.data.events.outgoing = {
+      anAddress: {} as RequestEvent
+    }
+  })
+
+  it('should return a state with the request removed and the loading state cleared', () => {
+    expect(socialReducer(state, cancelFriendshipRequestSuccess('anAddress'))).toEqual({
+      ...state,
+      loading: [],
+      data: {
+        ...state.data,
+        events: {
+          ...state.data.events,
+          outgoing: {}
+        }
+      }
+    })
+  })
+})
+
+describe('when reducing the failure action of rejecting a friend', () => {
+  beforeEach(() => {
+    state.loading = [cancelFriendshipRequestRequest('anAddress')]
+  })
+
+  it('should return a state with the error set and the loading state cleared', () => {
+    expect(socialReducer(state, cancelFriendshipRequestFailure('anError'))).toEqual({
       ...state,
       loading: [],
       error: 'anError'

@@ -1,5 +1,10 @@
 import { RootState } from '../reducer'
-import { fetchFriendRequestsEventsRequest, fetchFriendsRequest, initializeSocialClientRequest } from './actions'
+import {
+  cancelFriendshipRequestRequest,
+  fetchFriendRequestsEventsRequest,
+  fetchFriendsRequest,
+  initializeSocialClientRequest
+} from './actions'
 import { buildInitialState } from './reducer'
 import {
   getError,
@@ -7,6 +12,7 @@ import {
   getFriendshipStatus,
   getIncomingEvents,
   getOutgoingEvents,
+  isCancellingFriendshipRequest,
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
   isLoadingFriends,
@@ -209,6 +215,28 @@ describe('when getting if the social client is initialized', () => {
 
     it('should return true', () => {
       expect(isSocialClientInitialized(state)).toBe(true)
+    })
+  })
+})
+
+describe('when getting it the user is cancelling a friendship request', () => {
+  describe('and the user is not cancelling a friendship request', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isCancellingFriendshipRequest(state, 'anAddress')).toBe(false)
+    })
+  })
+
+  describe('and the user is cancelling a friendship request', () => {
+    beforeEach(() => {
+      state.social.loading = [cancelFriendshipRequestRequest('anAddress')]
+    })
+
+    it('should return true', () => {
+      expect(isCancellingFriendshipRequest(state, 'anAddress')).toBe(true)
     })
   })
 })
