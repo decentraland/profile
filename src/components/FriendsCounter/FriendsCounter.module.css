@@ -1,0 +1,15 @@
+.counter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 14px;
+}
+
+.counter img {
+  height: 24px;
+  width: 24px;
+}
+
+.clickable {
+  cursor: pointer;
+}

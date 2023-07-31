@@ -3,7 +3,6 @@
     "edit": "Edit Avatar"
   },
   "profile_information": {
-    "friends": "{count} {count, plural, one {Friend} other {Friend}}",
     "default_name": "Unnamed",
     "edit": "Edit Profile",
     "copied": "Copied",
@@ -32,5 +31,8 @@
     "accept_request": "Accept Request",
     "blocked": "Blocked",
     "unfriend": "Unfriend"
+  },
+  "friends_counter": {
+    "friends": "{count} {count, plural, one {friend} other {friends}}"
   }
 }
