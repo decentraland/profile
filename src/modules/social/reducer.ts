@@ -14,7 +14,6 @@ import {
   initializeSocialClientRequest,
   initializeSocialClientSuccess,
   rejectFriendshipFailure,
-  // rejectFriendRequestFailure,
   rejectFriendshipRequest,
   rejectFriendshipSuccess
 } from './actions'
