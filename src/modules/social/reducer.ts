@@ -120,7 +120,7 @@ export const socialReducer = createReducer<SocialState>(buildInitialState(), bui
     })
     .addCase(removeFriendFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
-      state.error = null
+      state.error = action.payload
     })
     .addCase(acceptFriendshipRequest, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
