@@ -1,6 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { LoadingState, loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
 import {
+  requestFriendshipFailure,
+  requestFriendshipRequest,
+  requestFriendshipSuccess,
   acceptFriendshipFailure,
   acceptFriendshipRequest,
   acceptFriendshipSuccess,
@@ -13,6 +16,9 @@ import {
   initializeSocialClientFailure,
   initializeSocialClientRequest,
   initializeSocialClientSuccess,
+  removeFriendRequest,
+  removeFriendSuccess,
+  removeFriendFailure,
   rejectFriendshipFailure,
   rejectFriendshipRequest,
   rejectFriendshipSuccess
@@ -89,6 +95,30 @@ export const socialReducer = createReducer<SocialState>(buildInitialState(), bui
       state.data.initialized = true
     })
     .addCase(initializeSocialClientFailure, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = action.payload
+    })
+    .addCase(requestFriendshipRequest, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = null
+    })
+    .addCase(requestFriendshipSuccess, (state, action) => {
+      state.data.events.outgoing[action.payload.address] = action.payload
+      state.loading = loadingReducer(state.loading, action)
+    })
+    .addCase(requestFriendshipFailure, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = action.payload
+    })
+    .addCase(removeFriendRequest, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = null
+    })
+    .addCase(removeFriendSuccess, (state, action) => {
+      state.data.friends = state.data.friends.filter(address => address !== action.payload)
+      state.loading = loadingReducer(state.loading, action)
+    })
+    .addCase(removeFriendFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = action.payload
     })
