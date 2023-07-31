@@ -1,5 +1,5 @@
 import { RootState } from '../reducer'
-import { fetchFriendRequestsEventsRequest, fetchFriendsRequest, initializeSocialClientRequest } from './actions'
+import { acceptFriendshipRequest, fetchFriendRequestsEventsRequest, fetchFriendsRequest, initializeSocialClientRequest } from './actions'
 import { buildInitialState } from './reducer'
 import {
   getError,
@@ -7,6 +7,7 @@ import {
   getFriendshipStatus,
   getIncomingEvents,
   getOutgoingEvents,
+  isAcceptingFriendRequest,
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
   isLoadingFriends,
@@ -209,6 +210,28 @@ describe('when getting if the social client is initialized', () => {
 
     it('should return true', () => {
       expect(isSocialClientInitialized(state)).toBe(true)
+    })
+  })
+})
+
+describe('when getting if a friend request is being accepted', () => {
+  describe('and the friend request is not being accepted', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isAcceptingFriendRequest(state, '0x1')).toBe(false)
+    })
+  })
+
+  describe('and the friend request is being accepted', () => {
+    beforeEach(() => {
+      state.social.loading = [acceptFriendshipRequest('0x1')]
+    })
+
+    it('should return true', () => {
+      expect(isAcceptingFriendRequest(state, '0x1')).toBe(true)
     })
   })
 })
