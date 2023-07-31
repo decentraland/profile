@@ -4,7 +4,8 @@ import {
   fetchFriendsRequest,
   initializeSocialClientRequest,
   removeFriendRequest,
-  requestFriendshipRequest
+  requestFriendshipRequest,
+  acceptFriendshipRequest
 } from './actions'
 import { buildInitialState } from './reducer'
 import {
@@ -13,6 +14,7 @@ import {
   getFriendshipStatus,
   getIncomingEvents,
   getOutgoingEvents,
+  isAcceptingFriendRequest,
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
   isLoadingFriends,
@@ -239,6 +241,28 @@ describe("when getting if the user is requesting a user's friendship", () => {
 
     it('should return true', () => {
       expect(isRequestingFriendship(state, 'anAddress')).toBe(true)
+    })
+  })
+})
+
+describe('when getting if a friend request is being accepted', () => {
+  describe('and the friend request is not being accepted', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isAcceptingFriendRequest(state, '0x1')).toBe(false)
+    })
+  })
+
+  describe('and the friend request is being accepted', () => {
+    beforeEach(() => {
+      state.social.loading = [acceptFriendshipRequest('0x1')]
+    })
+
+    it('should return true', () => {
+      expect(isAcceptingFriendRequest(state, '0x1')).toBe(true)
     })
   })
 })

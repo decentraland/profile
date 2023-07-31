@@ -1,4 +1,7 @@
 import {
+  acceptFriendshipFailure,
+  acceptFriendshipRequest,
+  acceptFriendshipSuccess,
   fetchFriendRequestsEventsFailure,
   fetchFriendRequestsEventsRequest,
   fetchFriendRequestsEventsSuccess,
@@ -13,7 +16,10 @@ import {
   removeFriendSuccess,
   requestFriendshipFailure,
   requestFriendshipRequest,
-  requestFriendshipSuccess
+  requestFriendshipSuccess,
+  rejectFriendshipFailure,
+  rejectFriendshipRequest,
+  rejectFriendshipSuccess
 } from './actions'
 import { buildInitialState, SocialState, socialReducer } from './reducer'
 import { RequestEvent } from './types'
@@ -221,13 +227,116 @@ describe('when reducing the success action of requesting friendship', () => {
   })
 })
 
-describe('when reducing the failure action of rejecting a friend', () => {
+describe('when reducing the failure action of requesting friendship', () => {
   beforeEach(() => {
     state.loading = [requestFriendshipRequest('anAddress')]
   })
 
   it('should return a state with the error set and the loading state cleared', () => {
     expect(socialReducer(state, requestFriendshipFailure('anError'))).toEqual({
+      ...state,
+      loading: [],
+      error: 'anError'
+    })
+  })
+})
+
+describe('when reducing the request action of accepting a friend', () => {
+  beforeEach(() => {
+    state.error = 'anError'
+  })
+
+  it('should return a state with the error nulled and the loading state set', () => {
+    expect(socialReducer(state, acceptFriendshipRequest('anAddress'))).toEqual({
+      ...state,
+      loading: [acceptFriendshipRequest('anAddress')],
+      error: null
+    })
+  })
+})
+
+describe('when reducing the success action of accepting a friend', () => {
+  beforeEach(() => {
+    state.loading = [acceptFriendshipRequest('anAddress')]
+  })
+
+  it('should return a state with the new friend added to the friends list, the request removed and the loading state cleared', () => {
+    expect(socialReducer(state, acceptFriendshipSuccess('anAddress'))).toEqual({
+      ...state,
+      loading: [],
+      data: {
+        ...state.data,
+        friends: [...state.data.friends, 'anAddress'],
+        events: {
+          ...state.data.events,
+          incoming: {
+            ...state.data.events.incoming,
+            anAddress: undefined
+          }
+        }
+      }
+    })
+  })
+})
+
+describe('when reducing the failure action of accepting a friend', () => {
+  beforeEach(() => {
+    state.loading = [acceptFriendshipRequest('anAddress')]
+  })
+
+  it('should return a state with the error set and the loading state cleared', () => {
+    expect(socialReducer(state, acceptFriendshipFailure('anError'))).toEqual({
+      ...state,
+      loading: [],
+      error: 'anError'
+    })
+  })
+})
+
+describe('when reducing the request action of rejecting a friend', () => {
+  beforeEach(() => {
+    state.error = 'anError'
+  })
+
+  it('should return a state with the error nulled and the loading state set', () => {
+    expect(socialReducer(state, rejectFriendshipRequest('anAddress'))).toEqual({
+      ...state,
+      loading: [rejectFriendshipRequest('anAddress')],
+      error: null
+    })
+  })
+})
+
+describe('when reducing the success action of rejecting a friend', () => {
+  beforeEach(() => {
+    state.loading = [rejectFriendshipRequest('anAddress')]
+    state.data.events.incoming = {
+      anAddress: {} as RequestEvent
+    }
+  })
+
+  it('should return a state with the request removed and the loading state cleared', () => {
+    expect(socialReducer(state, rejectFriendshipSuccess('anAddress'))).toEqual({
+      ...state,
+      loading: [],
+      data: {
+        ...state.data,
+        events: {
+          ...state.data.events,
+          incoming: {}
+        }
+      }
+    })
+  })
+})
+
+describe('when reducing the failure action of rejecting a friend', () => {
+  beforeEach(() => {
+    state.loading = [rejectFriendshipRequest('anAddress')]
+  })
+
+  it('should return a state with the error set and the loading state cleared', () => {
+    expect(socialReducer(state, rejectFriendshipFailure('anError'))).toEqual({
       ...state,
       loading: [],
       error: 'anError'
@@ -267,7 +376,7 @@ describe('when reducing the success action of removing a friend', () => {
   })
 })
 
-describe('when reducing the failure action of rejecting a friend', () => {
+describe('when reducing the failure action of removing a friend', () => {
   beforeEach(() => {
     state.loading = [removeFriendRequest('anAddress')]
   })

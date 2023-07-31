@@ -7,6 +7,11 @@ import {
   requestFriendshipFailure,
   requestFriendshipRequest,
   requestFriendshipSuccess,
+  AcceptFriendshipRequestAction,
+  RejectFriendshipRequestAction,
+  acceptFriendshipFailure,
+  acceptFriendshipRequest,
+  acceptFriendshipSuccess,
   fetchFriendRequestsEventsFailure,
   fetchFriendRequestsEventsRequest,
   fetchFriendRequestsEventsSuccess,
@@ -18,7 +23,10 @@ import {
   initializeSocialClientSuccess,
   removeFriendFailure,
   removeFriendRequest,
-  removeFriendSuccess
+  removeFriendSuccess,
+  rejectFriendshipFailure,
+  rejectFriendshipRequest,
+  rejectFriendshipSuccess
 } from './actions'
 import { getClient, getFriends, initiateSocialClient } from './client'
 import { RequestEvent, SocialClient } from './types'
@@ -29,6 +37,8 @@ export function* socialSagas() {
   yield takeEvery(fetchFriendRequestsEventsRequest.type, handleFetchFriendRequests)
   yield takeEvery(requestFriendshipRequest.type, handleRequestFriendship)
   yield takeEvery(removeFriendRequest.type, handleRemoveFriend)
+  yield takeEvery(acceptFriendshipRequest.type, handleAcceptFriendRequest)
+  yield takeEvery(rejectFriendshipRequest.type, handleRejectFriendRequest)
 
   function* handleStartSocialServiceConnection(action: LoginSuccessAction) {
     try {
@@ -96,6 +106,26 @@ export function* socialSagas() {
       yield put(removeFriendSuccess(action.payload))
     } catch (error) {
       yield put(removeFriendFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+    }
+  }
+
+  function* handleAcceptFriendRequest(action: AcceptFriendshipRequestAction) {
+    try {
+      const client: SocialClient = yield call(getClient)
+      yield call([client, 'acceptFriendshipRequest'], action.payload)
+      yield put(acceptFriendshipSuccess(action.payload))
+    } catch (error) {
+      yield put(acceptFriendshipFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+    }
+  }
+
+  function* handleRejectFriendRequest(action: RejectFriendshipRequestAction) {
+    try {
+      const client: SocialClient = yield call(getClient)
+      yield call([client, 'rejectFriendshipRequest'], action.payload)
+      yield put(rejectFriendshipSuccess(action.payload))
+    } catch (error) {
+      yield put(rejectFriendshipFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
   }
 }

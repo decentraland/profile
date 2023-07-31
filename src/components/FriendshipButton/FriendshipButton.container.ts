@@ -4,10 +4,12 @@ import {
   fetchFriendsRequest,
   fetchFriendRequestsEventsRequest,
   removeFriendRequest,
+  acceptFriendshipRequest,
   requestFriendshipRequest
 } from '../../modules/social/actions'
 import {
   getFriendshipStatus,
+  isAcceptingFriendRequest,
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
   isLoadingFriends,
@@ -24,7 +26,8 @@ const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
       isLoadingFriendRequestEvents(state) ||
       isInitializingSocialClient(state) ||
       isRequestingFriendship(state, ownProps.friendAddress) ||
-      isRemovingFriend(state, ownProps.friendAddress),
+      isRemovingFriend(state, ownProps.friendAddress) ||
+      isAcceptingFriendRequest(state, ownProps.friendAddress),
     friendshipStatus: getFriendshipStatus(state, ownProps.friendAddress)
   }
 }
@@ -34,10 +37,10 @@ const mapDispatch = (dispatch: MapDispatch, ownProps: OwnProps): MapDispatchProp
     dispatch(fetchFriendsRequest())
     dispatch(fetchFriendRequestsEventsRequest())
   },
-  onAcceptFriendRequest: () => undefined,
   onCancelFriendRequest: () => undefined,
   onRemoveFriend: () => dispatch(removeFriendRequest(ownProps.friendAddress)),
-  onAddFriend: () => dispatch(requestFriendshipRequest(ownProps.friendAddress))
+  onAddFriend: () => dispatch(requestFriendshipRequest(ownProps.friendAddress)),
+  onAcceptFriendRequest: () => dispatch(acceptFriendshipRequest(ownProps.friendAddress))
 })
 
 export default connect(mapState, mapDispatch)(FriendshipButton)

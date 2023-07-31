@@ -4,6 +4,9 @@ import * as matchers from 'redux-saga-test-plan/matchers'
 import { AuthIdentity } from '@dcl/crypto'
 import { loginSuccess } from '../identity/action'
 import {
+  acceptFriendshipFailure,
+  acceptFriendshipRequest,
+  acceptFriendshipSuccess,
   fetchFriendRequestsEventsFailure,
   fetchFriendRequestsEventsRequest,
   fetchFriendRequestsEventsSuccess,
@@ -18,7 +21,10 @@ import {
   removeFriendSuccess,
   requestFriendshipFailure,
   requestFriendshipRequest,
-  requestFriendshipSuccess
+  requestFriendshipSuccess,
+  rejectFriendshipFailure,
+  rejectFriendshipRequest,
+  rejectFriendshipSuccess
 } from './actions'
 import { getClient, getFriends, initiateSocialClient } from './client'
 import { socialSagas } from './sagas'
@@ -194,6 +200,44 @@ describe('when handling the friendship request action', () => {
   })
 })
 
+describe('when handling the accept friend request action', () => {
+  describe('and getting the client fails', () => {
+    it('should put an accept friend request failure action with the error', () => {
+      return expectSaga(socialSagas)
+        .provide([[call(getClient), Promise.reject(new Error('anErrorMessage'))]])
+        .put(acceptFriendshipFailure('anErrorMessage'))
+        .dispatch(acceptFriendshipRequest('anAddress'))
+        .silentRun()
+    })
+  })
+
+  describe('and the request fails', () => {
+    it('should put an accept friend request failure action with the error', () => {
+      return expectSaga(socialSagas)
+        .provide([[call(getClient), Promise.resolve({ acceptFriendshipRequest: () => Promise.reject(new Error('anErrorMessage')) })]])
+        .put(acceptFriendshipFailure('anErrorMessage'))
+        .dispatch(acceptFriendshipRequest('anAddress'))
+        .silentRun()
+    })
+  })
+
+  describe('and the request succeeds', () => {
+    let mockedClient: { acceptFriendshipRequest: () => Promise<void> }
+    beforeEach(() => {
+      mockedClient = { acceptFriendshipRequest: () => Promise.resolve() }
+    })
+
+    it('should put an accept friend request success action with the address of the new friend', () => {
+      return expectSaga(socialSagas)
+        .provide([[call(getClient), Promise.resolve(mockedClient)]])
+        .call.like({ fn: mockedClient.acceptFriendshipRequest, args: ['anAddress'] })
+        .put(acceptFriendshipSuccess('anAddress'))
+        .dispatch(acceptFriendshipRequest('anAddress'))
+        .silentRun()
+    })
+  })
+})
+
 describe('when handling the remove friend request action', () => {
   describe('and getting the client fails', () => {
     it('should put a remove friend request failure action with the error', () => {
@@ -228,6 +272,44 @@ describe('when handling the remove friend request action', () => {
         .call.like({ fn: mockedClient.removeFriend, args: ['anAddress'] })
         .put(removeFriendSuccess('anAddress'))
         .dispatch(removeFriendRequest('anAddress'))
+        .silentRun()
+    })
+  })
+})
+
+describe('when handling the reject friend request action', () => {
+  describe('and getting the client fails', () => {
+    it('should put a reject friend request failure action with the error', () => {
+      return expectSaga(socialSagas)
+        .provide([[call(getClient), Promise.reject(new Error('anErrorMessage'))]])
+        .put(rejectFriendshipFailure('anErrorMessage'))
+        .dispatch(rejectFriendshipRequest('anAddress'))
+        .silentRun()
+    })
+  })
+
+  describe('and the rejection fails', () => {
+    it('should put a reject friend request failure action with the error', () => {
+      return expectSaga(socialSagas)
+        .provide([[call(getClient), Promise.resolve({ rejectFriendshipRequest: () => Promise.reject(new Error('anErrorMessage')) })]])
+        .put(rejectFriendshipFailure('anErrorMessage'))
+        .dispatch(rejectFriendshipRequest('anAddress'))
+        .silentRun()
+    })
+  })
+
+  describe('and the rejection succeeds', () => {
+    let mockedClient: { rejectFriendshipRequest: () => Promise<void> }
+    beforeEach(() => {
+      mockedClient = { rejectFriendshipRequest: () => Promise.resolve() }
+    })
+
+    it('should put a reject friend request success action with the address of the new friend', () => {
+      return expectSaga(socialSagas)
+        .provide([[call(getClient), Promise.resolve(mockedClient)]])
+        .call.like({ fn: mockedClient.rejectFriendshipRequest, args: ['anAddress'] })
+        .put(rejectFriendshipSuccess('anAddress'))
+        .dispatch(rejectFriendshipRequest('anAddress'))
         .silentRun()
     })
   })

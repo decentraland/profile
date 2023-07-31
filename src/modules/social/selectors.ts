@@ -5,6 +5,7 @@ import {
   fetchFriendRequestsEventsRequest,
   fetchFriendsRequest,
   initializeSocialClientRequest,
+  acceptFriendshipRequest,
   removeFriendRequest,
   requestFriendshipRequest
 } from './actions'
@@ -52,4 +53,10 @@ export const isRequestingFriendship = createSelector(
 )
 export const isRemovingFriend = createSelector([getLoading, (_state, friendAddress) => friendAddress], (loadingState, friendAddress) =>
   loadingState.some(action => action.type === removeFriendRequest.type && action.payload === friendAddress)
+)
+
+export const isAcceptingFriendRequest = createSelector(
+  [getLoading, (_state, friendAddress) => friendAddress],
+  (loadingState, friendAddress) =>
+    loadingState.some(action => action.type === acceptFriendshipRequest.type && action.payload === friendAddress)
 )

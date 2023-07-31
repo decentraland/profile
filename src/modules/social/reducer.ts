@@ -4,6 +4,9 @@ import {
   requestFriendshipFailure,
   requestFriendshipRequest,
   requestFriendshipSuccess,
+  acceptFriendshipFailure,
+  acceptFriendshipRequest,
+  acceptFriendshipSuccess,
   fetchFriendRequestsEventsFailure,
   fetchFriendRequestsEventsRequest,
   fetchFriendRequestsEventsSuccess,
@@ -15,7 +18,10 @@ import {
   initializeSocialClientSuccess,
   removeFriendRequest,
   removeFriendSuccess,
-  removeFriendFailure
+  removeFriendFailure,
+  rejectFriendshipFailure,
+  rejectFriendshipRequest,
+  rejectFriendshipSuccess
 } from './actions'
 import { RequestEvent } from './types'
 
@@ -113,6 +119,31 @@ export const socialReducer = createReducer<SocialState>(buildInitialState(), bui
       state.loading = loadingReducer(state.loading, action)
     })
     .addCase(removeFriendFailure, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = null
+    })
+    .addCase(acceptFriendshipRequest, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = null
+    })
+    .addCase(acceptFriendshipSuccess, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.data.friends.push(action.payload)
+      delete state.data.events.incoming[action.payload]
+    })
+    .addCase(acceptFriendshipFailure, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = action.payload
+    })
+    .addCase(rejectFriendshipRequest, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = null
+    })
+    .addCase(rejectFriendshipSuccess, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      delete state.data.events.incoming[action.payload]
+    })
+    .addCase(rejectFriendshipFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = action.payload
     })
