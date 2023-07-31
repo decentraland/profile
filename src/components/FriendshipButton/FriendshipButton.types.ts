@@ -1,5 +1,11 @@
 import { Dispatch } from '@reduxjs/toolkit'
-import { FetchFriendRequestsEventsRequestAction, FetchFriendsRequestAction } from '../../modules/social/actions'
+import {
+  RemoveFriendRequestAction,
+  RequestFriendshipRequestAction,
+  AcceptFriendshipRequestAction,
+  FetchFriendRequestsEventsRequestAction,
+  FetchFriendsRequestAction
+} from '../../modules/social/actions'
 import { FriendshipStatus } from '../../modules/social/types'
 
 export type Props = {
@@ -20,4 +26,10 @@ export type MapDispatchProps = Pick<
   Props,
   'onFetchFriends' | 'onRemoveFriend' | 'onAcceptFriendRequest' | 'onCancelFriendRequest' | 'onAddFriend'
 >
-export type MapDispatch = Dispatch<FetchFriendsRequestAction | FetchFriendRequestsEventsRequestAction>
+export type MapDispatch = Dispatch<
+  | FetchFriendsRequestAction
+  | FetchFriendRequestsEventsRequestAction
+  | RequestFriendshipRequestAction
+  | RemoveFriendRequestAction
+  | AcceptFriendshipRequestAction
+>

@@ -3,6 +3,16 @@ import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import { LoginSuccessAction, loginSuccess } from '../identity/action'
 import {
   FetchMutualFriendsRequestAction,
+  RequestFriendshipRequestAction,
+  RemoveFriendRequestAction,
+  requestFriendshipFailure,
+  requestFriendshipRequest,
+  requestFriendshipSuccess,
+  AcceptFriendshipRequestAction,
+  RejectFriendshipRequestAction,
+  acceptFriendshipFailure,
+  acceptFriendshipRequest,
+  acceptFriendshipSuccess,
   fetchFriendRequestsEventsFailure,
   fetchFriendRequestsEventsRequest,
   fetchFriendRequestsEventsSuccess,
@@ -14,7 +24,13 @@ import {
   fetchMutualFriendsSuccess,
   initializeSocialClientFailure,
   initializeSocialClientRequest,
-  initializeSocialClientSuccess
+  initializeSocialClientSuccess,
+  removeFriendFailure,
+  removeFriendRequest,
+  removeFriendSuccess,
+  rejectFriendshipFailure,
+  rejectFriendshipRequest,
+  rejectFriendshipSuccess
 } from './actions'
 import { getClient, getFriends, getMutualFriends, initiateSocialClient } from './client'
 import { RequestEvent, SocialClient } from './types'
@@ -24,6 +40,10 @@ export function* socialSagas() {
   yield takeEvery(fetchFriendsRequest.type, handleFetchFriends)
   yield takeEvery(fetchFriendRequestsEventsRequest.type, handleFetchFriendRequests)
   yield takeEvery(fetchMutualFriendsRequest.type, handleFetchMutualFriendsRequests)
+  yield takeEvery(requestFriendshipRequest.type, handleRequestFriendship)
+  yield takeEvery(removeFriendRequest.type, handleRemoveFriend)
+  yield takeEvery(acceptFriendshipRequest.type, handleAcceptFriendRequest)
+  yield takeEvery(rejectFriendshipRequest.type, handleRejectFriendRequest)
 
   function* handleStartSocialServiceConnection(action: LoginSuccessAction) {
     try {
@@ -74,6 +94,52 @@ export function* socialSagas() {
       yield put(fetchMutualFriendsSuccess(mutuals))
     } catch (error) {
       yield put(fetchMutualFriendsFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+    }
+  }
+
+  function* handleRequestFriendship(action: RequestFriendshipRequestAction) {
+    try {
+      const client: SocialClient = yield call(getClient)
+      const requestEvent: Awaited<ReturnType<typeof client.requestFriendship>> = yield call([client, 'requestFriendship'], action.payload)
+      yield put(
+        requestFriendshipSuccess({
+          address: requestEvent?.request?.user?.address ?? 'Unknown',
+          createdAt: requestEvent?.request?.createdAt ?? 0,
+          message: requestEvent?.request?.message
+        })
+      )
+    } catch (error) {
+      yield put(requestFriendshipFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+    }
+  }
+
+  function* handleRemoveFriend(action: RemoveFriendRequestAction) {
+    try {
+      const client: SocialClient = yield call(getClient)
+      yield call([client, 'removeFriend'], action.payload)
+      yield put(removeFriendSuccess(action.payload))
+    } catch (error) {
+      yield put(removeFriendFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+    }
+  }
+
+  function* handleAcceptFriendRequest(action: AcceptFriendshipRequestAction) {
+    try {
+      const client: SocialClient = yield call(getClient)
+      yield call([client, 'acceptFriendshipRequest'], action.payload)
+      yield put(acceptFriendshipSuccess(action.payload))
+    } catch (error) {
+      yield put(acceptFriendshipFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+    }
+  }
+
+  function* handleRejectFriendRequest(action: RejectFriendshipRequestAction) {
+    try {
+      const client: SocialClient = yield call(getClient)
+      yield call([client, 'rejectFriendshipRequest'], action.payload)
+      yield put(rejectFriendshipSuccess(action.payload))
+    } catch (error) {
+      yield put(rejectFriendshipFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
   }
 }
