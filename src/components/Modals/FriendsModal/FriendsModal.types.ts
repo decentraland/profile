@@ -8,13 +8,13 @@ export enum FriendsType {
 }
 
 export type Metadata = {
-  itemId: string
+  type: FriendsType
 }
 
 export type Props = Omit<ModalProps, 'metadata'> & {
   metadata: Metadata
-  type: FriendsType
   friends: string[]
 }
 
 export type MapStateProps = Pick<Props, 'friends'>
+export type OwnProps = Pick<Props, 'metadata'>

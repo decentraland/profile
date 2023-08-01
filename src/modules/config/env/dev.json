@@ -7,6 +7,6 @@
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.zone",
   "SOCIAL_RPC_URL": "wss://rpc-social-service.decentraland.zone",
   "BUILDER_URL": "https://builder.decentraland.zone",
-  "SYNAPSE_UR L": "https://social.decentraland.zone",
+  "SYNAPSE_URL": "https://social.decentraland.zone",
   "PROFILE_URL": "https://profile.decentraland.zone"
 }

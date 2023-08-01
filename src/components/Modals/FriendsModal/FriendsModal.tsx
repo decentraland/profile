@@ -7,7 +7,7 @@ import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media
 import { ModalNavigation } from 'decentraland-ui/dist/components/ModalNavigation/ModalNavigation'
 import FriendshipButton from '../../FriendshipButton'
 import { LinkedProfile } from '../../LinkedProfile'
-import { Props } from './FriendsModal.types'
+import { FriendsType, Props } from './FriendsModal.types'
 import styles from './FriendsModal.module.css'
 
 const ITEM_HEIGHT = 70
@@ -15,7 +15,7 @@ const DEFAULT_LIST_HEIGHT = 300
 const DEFAULT_LIST_WIDTH = 650
 
 const FriendsModal = (props: Props) => {
-  const { onClose, friends } = props
+  const { onClose, friends, metadata } = props
 
   const isMobile = useMobileMediaQuery()
 
@@ -33,7 +33,11 @@ const FriendsModal = (props: Props) => {
 
   return (
     <Modal size="tiny" onClose={onClose}>
-      <ModalNavigation title={t('friends_modal.friends.title')} onClose={onClose} data-testid="friends-modal" />
+      <ModalNavigation
+        title={metadata.type === FriendsType.FRIENDS ? t('friends_modal.friends.title') : t('friends_modal.mutuals.title')}
+        onClose={onClose}
+        data-testid="friends-modal"
+      />
       <Modal.Content className={styles.content}>
         <AutoSizer>
           {({ height, width }) => (
