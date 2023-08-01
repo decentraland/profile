@@ -111,7 +111,7 @@ export function* socialSagas() {
   function* handleRemoveFriend(action: RemoveFriendRequestAction) {
     try {
       const client: SocialClient = yield call(getClient)
-      yield call([client, 'removeFriend'], action.payload)
+      yield call([client, 'removeFriend'], action.payload.toLowerCase())
       yield put(removeFriendSuccess(action.payload))
     } catch (error) {
       yield put(removeFriendFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))

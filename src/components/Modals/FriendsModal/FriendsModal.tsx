@@ -10,7 +10,7 @@ import { LinkedProfile } from '../../LinkedProfile'
 import { Props } from './FriendsModal.types'
 import styles from './FriendsModal.module.css'
 
-const ITEM_HEIGHT = 40
+const ITEM_HEIGHT = 70
 const DEFAULT_LIST_HEIGHT = 300
 const DEFAULT_LIST_WIDTH = 650
 
@@ -18,14 +18,12 @@ const FriendsModal = (props: Props) => {
   const { onClose, friends } = props
 
   const isMobile = useMobileMediaQuery()
-  console.log('Friends', friends)
 
   const Row = useCallback(
     ({ index, style }: { index: number; style: object }) => {
-      console.log('Rendering row', index)
       return (
         <div style={style} className={styles.row} tabIndex={0}>
-          <LinkedProfile size="large" key={friends[index]} sliceAddressBy={isMobile ? 18 : 42} address={friends[index]} />
+          <LinkedProfile size="large" key={friends[index]} sliceAddressBy={isMobile ? 12 : 14} address={friends[index]} />
           <FriendshipButton className={styles.friendshipButton} friendAddress={friends[index]} />
         </div>
       )
