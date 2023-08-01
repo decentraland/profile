@@ -20,6 +20,7 @@ export const getError = (state: RootState) => getState(state).error
 export const getFriends = (state: RootState) => getData(state).friends
 export const getIncomingEvents = (state: RootState) => getData(state).events.incoming
 export const getOutgoingEvents = (state: RootState) => getData(state).events.outgoing
+export const getMutualFriends = (state: RootState) => getData(state).mutuals
 export const isLoadingFriends = createSelector([getLoading], loadingState => isLoadingType(loadingState, fetchFriendsRequest.type))
 export const isLoadingFriendRequestEvents = createSelector([getLoading], loadingState =>
   isLoadingType(loadingState, fetchFriendRequestsEventsRequest.type)
@@ -62,7 +63,6 @@ export const isRequestingFriendship = createSelector(
 export const isRemovingFriend = createSelector([getLoading, (_state, friendAddress) => friendAddress], (loadingState, friendAddress) =>
   loadingState.some(action => action.type === removeFriendRequest.type && action.payload.toLowerCase() === friendAddress.toLowerCase())
 )
-
 export const isAcceptingFriendRequest = createSelector(
   [getLoading, (_state, friendAddress) => friendAddress],
   (loadingState, friendAddress) =>

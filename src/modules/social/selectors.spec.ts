@@ -14,6 +14,7 @@ import {
   getFriends,
   getFriendshipStatus,
   getIncomingEvents,
+  getMutualFriends,
   getOutgoingEvents,
   isAcceptingFriendRequest,
   isInitializingSocialClient,
@@ -310,5 +311,15 @@ describe('when getting if the mutual friends are being loaded', () => {
     it('should return true', () => {
       expect(isLoadingMutualFriends(state)).toBe(true)
     })
+  })
+})
+
+describe("when getting the user's mutual friends", () => {
+  beforeEach(() => {
+    state.social.data.mutuals = ['0x1']
+  })
+
+  it('should return the mutual friends', () => {
+    expect(getMutualFriends(state)).toBe(state.social.data.mutuals)
   })
 })
