@@ -20,7 +20,6 @@ const FriendsCounter = (props: Props) => {
         <Loader active inline size="mini" />
       ) : (
         <>
-          {' '}
           <img src={userIcon} />
           <span>
             {t('friends_counter.friends', {
