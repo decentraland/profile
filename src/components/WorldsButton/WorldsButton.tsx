@@ -40,12 +40,7 @@ const WorldsButton = (props: Props) => {
   }, [hasNames, hasWorlds])
 
   useEffect(() => {
-    console.log('Address changed, re-fetching worlds', address)
     onFetchWorlds(address)
-
-    return () => {
-      console.log('Unmounting worlds button')
-    }
   }, [address])
 
   return (
