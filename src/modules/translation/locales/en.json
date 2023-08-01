@@ -3,7 +3,6 @@
     "edit": "Edit Avatar"
   },
   "profile_information": {
-    "friends": "{count} {count, plural, one {Friend} other {Friend}}",
     "default_name": "Unnamed",
     "edit": "Edit Profile",
     "copied": "Copied",
@@ -38,7 +37,10 @@
       "title": "Friends"
     },
     "mutuals": {
-      "title": "Mutuals"
+      "title": "Mutual friends"
     }
+  },
+  "friends_counter": {
+    "friends": "{count} {count, plural, one {friend} other {friends}}"
   }
 }

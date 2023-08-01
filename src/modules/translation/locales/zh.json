@@ -3,7 +3,6 @@
     "edit": "編輯頭像"
   },
   "profile_information": {
-    "friends": "{count} {count, plural, one {朋友們} other {朋友們}}",
     "default_name": "未命名的",
     "edit": "編輯個人資料",
     "copied": "已復制",
@@ -32,5 +31,16 @@
     "accept_request": "接受请求",
     "blocked": "阻止",
     "unfriend": "不朋友"
+  },
+  "friends_modal": {
+    "friends": {
+      "title": "朋友们"
+    },
+    "mutuals": {
+      "title": "共同的朋友"
+    }
+  },
+  "friends_counter": {
+    "friends": "{count} 朋友們"
   }
 }

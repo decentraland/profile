@@ -8,6 +8,9 @@ import {
   fetchFriendsFailure,
   fetchFriendsRequest,
   fetchFriendsSuccess,
+  fetchMutualFriendsFailure,
+  fetchMutualFriendsRequest,
+  fetchMutualFriendsSuccess,
   initializeSocialClientFailure,
   initializeSocialClientRequest,
   initializeSocialClientSuccess,
@@ -386,6 +389,52 @@ describe('when reducing the failure action of removing a friend', () => {
       ...state,
       loading: [],
       error: 'anError'
+    })
+  })
+})
+
+describe('when reducing the request action to fetch mutual friends', () => {
+  beforeEach(() => {
+    state.data.mutuals = ['0x1']
+  })
+
+  it('should return a state with the error nulled, the loading state set and the mutuals cleared', () => {
+    expect(socialReducer(state, fetchMutualFriendsRequest('anAddress'))).toEqual({
+      ...state,
+      loading: [fetchMutualFriendsRequest('anAddress')],
+      error: null,
+      data: { ...state.data, mutuals: [] }
+    })
+  })
+})
+
+describe('when reducing the success action to fetch mutuals friends', () => {
+  beforeEach(() => {
+    state.loading = [fetchMutualFriendsRequest('anAddress')]
+  })
+
+  it('should return a state with the friends set and the loading state cleared', () => {
+    expect(socialReducer(state, fetchMutualFriendsSuccess(['0x1', '0x2']))).toEqual({
+      ...state,
+      loading: [],
+      data: {
+        ...state.data,
+        mutuals: ['0x1', '0x2']
+      }
+    })
+  })
+})
+
+describe('when reducing the failure action to fetch friends', () => {
+  beforeEach(() => {
+    state.loading = [fetchMutualFriendsRequest('anAddress')]
+  })
+
+  it('should return a state with the error set and the loading state cleared', () => {
+    expect(socialReducer(state, fetchMutualFriendsFailure('anErrorMessage'))).toEqual({
+      ...state,
+      loading: [],
+      error: 'anErrorMessage'
     })
   })
 })

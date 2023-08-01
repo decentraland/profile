@@ -1,12 +1,9 @@
 import React, { useCallback } from 'react'
-import { useDispatch } from 'react-redux'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
-import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
-import People from '../../assets/icons/People.svg'
 import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
@@ -16,6 +13,7 @@ import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
 import { EDIT_PROFILE_URL } from '../Avatar/consts'
 import CopyIcon from '../CopyIcon'
+import FriendsCounter from '../FriendsCounter'
 import FriendshipButton from '../FriendshipButton'
 import WorldsButton from '../WorldsButton'
 import { shareButtonTestId, twitterURL } from './consts'
@@ -37,8 +35,6 @@ const ProfileInformation = (props: Props) => {
     copyText(url, setHasCopied)
   }, [setHasCopied, avatar])
 
-  const dispatch = useDispatch()
-
   const isLoggedInProfile = loggedInAddress === profileAddress
   const avatarName = getAvatarName(avatar)
   const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
@@ -55,22 +51,13 @@ const ProfileInformation = (props: Props) => {
             {avatarName.lastPart ? <span>&nbsp; {avatarName.lastPart}</span> : null}
           </span>
           <div className={styles.wallet}>
-            <img src={Wallet} className="iconSize" />
+            <img src={Wallet} className={styles.walletIcon} />
             <Profile textOnly address={avatar ? avatar.ethAddress : profileAddress} />
             <Button basic onClick={handleCopyLink} className={styles.copyLink}>
               <CopyIcon />
             </Button>
-            <Button onClick={() => dispatch(openModal('FriendsModal'))}>Modal</Button>
           </div>
-          {isLoggedInProfile && (
-            <div className={styles.basicCenteredRow}>
-              <img src={People} className="iconSize" />
-              {/* TODO: this information should be based on actual friends */}
-              {t('profile_information.friends', {
-                count: 714
-              })}
-            </div>
-          )}
+          {isLoggedInProfile && <div className={styles.basicCenteredRow}>{isSocialClientReady ? <FriendsCounter /> : null}</div>}
           {avatar && <span className={styles.description}>{avatar.description}</span>}
         </div>
       </div>

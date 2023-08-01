@@ -3,6 +3,7 @@ import {
   fetchFriendRequestsEventsRequest,
   fetchFriendsRequest,
   initializeSocialClientRequest,
+  fetchMutualFriendsRequest,
   removeFriendRequest,
   requestFriendshipRequest,
   acceptFriendshipRequest
@@ -18,6 +19,7 @@ import {
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
   isLoadingFriends,
+  isLoadingMutualFriends,
   isRemovingFriend,
   isRequestingFriendship,
   isSocialClientInitialized
@@ -285,6 +287,28 @@ describe('when getting it the user is removing a friend', () => {
 
     it('should return true', () => {
       expect(isRemovingFriend(state, 'anAddress')).toBe(true)
+    })
+  })
+})
+
+describe('when getting if the mutual friends are being loaded', () => {
+  describe('and the mutual friends are not being loaded', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isLoadingMutualFriends(state)).toBe(false)
+    })
+  })
+
+  describe('and the friends are being loaded', () => {
+    beforeEach(() => {
+      state.social.loading = [fetchMutualFriendsRequest('0x1')]
+    })
+
+    it('should return true', () => {
+      expect(isLoadingMutualFriends(state)).toBe(true)
     })
   })
 })

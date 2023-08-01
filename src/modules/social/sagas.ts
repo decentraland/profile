@@ -2,6 +2,7 @@ import { takeEvery, call, put } from 'redux-saga/effects'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import { LoginSuccessAction, loginSuccess } from '../identity/action'
 import {
+  FetchMutualFriendsRequestAction,
   RequestFriendshipRequestAction,
   RemoveFriendRequestAction,
   requestFriendshipFailure,
@@ -18,6 +19,9 @@ import {
   fetchFriendsFailure,
   fetchFriendsRequest,
   fetchFriendsSuccess,
+  fetchMutualFriendsFailure,
+  fetchMutualFriendsRequest,
+  fetchMutualFriendsSuccess,
   initializeSocialClientFailure,
   initializeSocialClientRequest,
   initializeSocialClientSuccess,
@@ -28,13 +32,14 @@ import {
   rejectFriendshipRequest,
   rejectFriendshipSuccess
 } from './actions'
-import { getClient, getFriends, initiateSocialClient } from './client'
+import { getClient, getFriends, getMutualFriends, initiateSocialClient } from './client'
 import { RequestEvent, SocialClient } from './types'
 
 export function* socialSagas() {
   yield takeEvery(loginSuccess.type, handleStartSocialServiceConnection)
   yield takeEvery(fetchFriendsRequest.type, handleFetchFriends)
   yield takeEvery(fetchFriendRequestsEventsRequest.type, handleFetchFriendRequests)
+  yield takeEvery(fetchMutualFriendsRequest.type, handleFetchMutualFriendsRequests)
   yield takeEvery(requestFriendshipRequest.type, handleRequestFriendship)
   yield takeEvery(removeFriendRequest.type, handleRemoveFriend)
   yield takeEvery(acceptFriendshipRequest.type, handleAcceptFriendRequest)
@@ -86,6 +91,15 @@ export function* socialSagas() {
       yield put(fetchFriendRequestsEventsSuccess({ incoming, outgoing }))
     } catch (error) {
       yield put(fetchFriendRequestsEventsFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+    }
+  }
+
+  function* handleFetchMutualFriendsRequests(action: FetchMutualFriendsRequestAction) {
+    try {
+      const mutuals: string[] = yield call(getMutualFriends, action.payload)
+      yield put(fetchMutualFriendsSuccess(mutuals))
+    } catch (error) {
+      yield put(fetchMutualFriendsFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
   }
 
