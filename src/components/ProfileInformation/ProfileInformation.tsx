@@ -70,7 +70,7 @@ const ProfileInformation = (props: Props) => {
         </div>
       </div>
       <div className={styles.actions}>
-        {shouldShowFriendsButton ? <FriendshipButton friendAddress={loggedInAddress} /> : null}
+        {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
         {loggedInAddress ? <WorldsButton address={loggedInAddress} /> : null}
         <Dropdown
           className={styles.smallButton}
