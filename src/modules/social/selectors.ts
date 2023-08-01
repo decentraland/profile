@@ -5,6 +5,7 @@ import {
   fetchFriendRequestsEventsRequest,
   fetchFriendsRequest,
   initializeSocialClientRequest,
+  fetchMutualFriendsRequest,
   acceptFriendshipRequest,
   removeFriendRequest,
   requestFriendshipRequest
@@ -45,6 +46,9 @@ export const isInitializingSocialClient = createSelector([getLoading], loadingSt
   isLoadingType(loadingState, initializeSocialClientRequest.type)
 )
 export const isSocialClientInitialized = createSelector([getData], data => data.initialized)
+export const isLoadingMutualFriends = createSelector([getLoading], loadingState =>
+  isLoadingType(loadingState, fetchMutualFriendsRequest.type)
+)
 export const isAddingFriend = createSelector([getLoading], loadingState => isLoadingType(loadingState, fetchFriendsRequest.type))
 export const isRequestingFriendship = createSelector(
   [getLoading, (_state, friendAddress) => friendAddress],
