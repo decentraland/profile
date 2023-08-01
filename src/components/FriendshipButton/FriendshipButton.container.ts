@@ -1,12 +1,6 @@
 import { connect } from 'react-redux'
 import { RootState } from '../../modules/reducer'
-import {
-  fetchFriendsRequest,
-  fetchFriendRequestsEventsRequest,
-  removeFriendRequest,
-  acceptFriendshipRequest,
-  requestFriendshipRequest
-} from '../../modules/social/actions'
+import { removeFriendRequest, acceptFriendshipRequest, requestFriendshipRequest } from '../../modules/social/actions'
 import {
   getFriendshipStatus,
   isAcceptingFriendRequest,
@@ -33,10 +27,6 @@ const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
 }
 
 const mapDispatch = (dispatch: MapDispatch, ownProps: OwnProps): MapDispatchProps => ({
-  onFetchFriends: () => {
-    dispatch(fetchFriendsRequest())
-    dispatch(fetchFriendRequestsEventsRequest())
-  },
   onCancelFriendRequest: () => undefined,
   onRemoveFriend: () => dispatch(removeFriendRequest(ownProps.friendAddress)),
   onAddFriend: () => dispatch(requestFriendshipRequest(ownProps.friendAddress)),

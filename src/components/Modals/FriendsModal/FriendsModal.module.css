@@ -1,0 +1,16 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.friendshipButton {
+  height: 40px;
+}
+
+.content {
+  height: 400px;
+}

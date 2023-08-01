@@ -24,17 +24,19 @@ export const isLoadingFriendRequestEvents = createSelector([getLoading], loading
   isLoadingType(loadingState, fetchFriendRequestsEventsRequest.type)
 )
 export const getFriendshipStatus = (state: RootState, address: string) => {
-  const isFriend = getData(state).friends.includes(address)
+  const lowercasedAddress = address.toLowerCase()
+
+  const isFriend = getData(state).friends.includes(lowercasedAddress)
   if (isFriend) {
     return FriendshipStatus.FRIEND
   }
 
-  const hasBeenRequestedFriendship = !!getIncomingEvents(state)[address]
+  const hasBeenRequestedFriendship = !!getIncomingEvents(state)[lowercasedAddress]
   if (hasBeenRequestedFriendship) {
     return FriendshipStatus.PENDING_RESPONSE
   }
 
-  const hasRequestedFriendship = !!getOutgoingEvents(state)[address]
+  const hasRequestedFriendship = !!getOutgoingEvents(state)[lowercasedAddress]
   if (hasRequestedFriendship) {
     return FriendshipStatus.PENDING_REQUEST
   }
@@ -49,14 +51,18 @@ export const isAddingFriend = createSelector([getLoading], loadingState => isLoa
 export const isRequestingFriendship = createSelector(
   [getLoading, (_state, friendAddress) => friendAddress],
   (loadingState, friendAddress) =>
-    loadingState.some(action => action.type === requestFriendshipRequest.type && action.payload === friendAddress)
+    loadingState.some(
+      action => action.type === requestFriendshipRequest.type && action.payload.toLowerCase() === friendAddress.toLowerCase()
+    )
 )
 export const isRemovingFriend = createSelector([getLoading, (_state, friendAddress) => friendAddress], (loadingState, friendAddress) =>
-  loadingState.some(action => action.type === removeFriendRequest.type && action.payload === friendAddress)
+  loadingState.some(action => action.type === removeFriendRequest.type && action.payload.toLowerCase() === friendAddress.toLowerCase())
 )
 
 export const isAcceptingFriendRequest = createSelector(
   [getLoading, (_state, friendAddress) => friendAddress],
   (loadingState, friendAddress) =>
-    loadingState.some(action => action.type === acceptFriendshipRequest.type && action.payload === friendAddress)
+    loadingState.some(
+      action => action.type === acceptFriendshipRequest.type && action.payload.toLowerCase() === friendAddress.toLowerCase()
+    )
 )

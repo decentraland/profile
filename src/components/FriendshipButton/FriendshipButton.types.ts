@@ -13,7 +13,6 @@ export type Props = {
   onRemoveFriend: () => void
   onAcceptFriendRequest: () => void
   onCancelFriendRequest: () => void
-  onFetchFriends: () => void
   friendAddress: string
   isLoading: boolean
   friendshipStatus?: FriendshipStatus
@@ -22,10 +21,7 @@ export type Props = {
 
 export type OwnProps = Pick<Props, 'friendAddress' | 'className'>
 export type MapStateProps = Pick<Props, 'isLoading' | 'friendshipStatus'>
-export type MapDispatchProps = Pick<
-  Props,
-  'onFetchFriends' | 'onRemoveFriend' | 'onAcceptFriendRequest' | 'onCancelFriendRequest' | 'onAddFriend'
->
+export type MapDispatchProps = Pick<Props, 'onRemoveFriend' | 'onAcceptFriendRequest' | 'onCancelFriendRequest' | 'onAddFriend'>
 export type MapDispatch = Dispatch<
   | FetchFriendsRequestAction
   | FetchFriendRequestsEventsRequestAction

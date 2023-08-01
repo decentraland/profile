@@ -32,5 +32,13 @@
     "accept_request": "Accept Request",
     "blocked": "Blocked",
     "unfriend": "Unfriend"
+  },
+  "friends_modal": {
+    "friends": {
+      "title": "Friends"
+    },
+    "mutuals": {
+      "title": "Mutuals"
+    }
   }
 }

@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
+import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
@@ -35,6 +37,8 @@ const ProfileInformation = (props: Props) => {
     copyText(url, setHasCopied)
   }, [setHasCopied, avatar])
 
+  const dispatch = useDispatch()
+
   const isLoggedInProfile = loggedInAddress === profileAddress
   const avatarName = getAvatarName(avatar)
   const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
@@ -56,6 +60,7 @@ const ProfileInformation = (props: Props) => {
             <Button basic onClick={handleCopyLink} className={styles.copyLink}>
               <CopyIcon />
             </Button>
+            <Button onClick={() => dispatch(openModal('FriendsModal'))}>Modal</Button>
           </div>
           {isLoggedInProfile && (
             <div className={styles.basicCenteredRow}>
@@ -70,7 +75,7 @@ const ProfileInformation = (props: Props) => {
         </div>
       </div>
       <div className={styles.actions}>
-        {shouldShowFriendsButton ? <FriendshipButton friendAddress={loggedInAddress} /> : null}
+        {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
         {loggedInAddress ? <WorldsButton address={loggedInAddress} /> : null}
         <Dropdown
           className={styles.smallButton}
