@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { LoadProfileRequestAction, loadProfileRequest } from 'decentraland-dapps/dist/modules/profile/actions'
-import { RouterProps } from '../../../utils/withRouter'
+import { RouterProps } from '../../../utils/WithRouter'
 
 export type Props = {
   onFetchProfile: typeof loadProfileRequest
@@ -9,9 +9,12 @@ export type Props = {
   isLoading: boolean
 }
 
-export type MapStateProps = Pick<Props, 'loggedInAddress' | 'isLoading'>
+export type MapStateProps = Pick<Props, 'loggedInAddress' | 'isLoading' | 'profileAddress'>
 export type MapDispatchProps = Pick<Props, 'onFetchProfile'>
 export type MapDispatch = Dispatch<LoadProfileRequestAction>
+type Params = {
+  profileAddress?: string
+}
 export type OwnProps = {
-  router: RouterProps
+  router: RouterProps<Params>
 }

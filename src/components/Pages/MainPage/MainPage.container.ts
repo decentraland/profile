@@ -4,7 +4,7 @@ import { getAddress, isConnecting } from 'decentraland-dapps/dist/modules/wallet
 import { isLoggingIn } from '../../../modules/identity/selector'
 import { isLoadingProfile } from '../../../modules/profile/selectors'
 import { RootState } from '../../../modules/reducer'
-import withRouter from '../../../utils/withRouter'
+import withRouter from '../../../utils/WithRouter'
 import MainPage from './MainPage'
 import { MapDispatch, MapDispatchProps, MapStateProps, OwnProps } from './MainPage.types'
 
@@ -14,6 +14,7 @@ const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps =>
   const isLoadingLoggedInUserProfile = getAddress(state) && isLoadingProfile(state, getAddress(state))
 
   return {
+    profileAddress: addressFromPath,
     isLoading: isLoadingAddressFromPath || isLoadingLoggedInUserProfile || isLoggingIn(state) || isConnecting(state),
     loggedInAddress: getAddress(state)
   }
