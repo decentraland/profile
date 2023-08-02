@@ -1,6 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { LoadingState, loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
 import {
+  cancelFriendshipRequestFailure,
+  cancelFriendshipRequestRequest,
+  cancelFriendshipRequestSuccess,
   requestFriendshipFailure,
   requestFriendshipRequest,
   requestFriendshipSuccess,
@@ -100,6 +103,18 @@ export const socialReducer = createReducer<SocialState>(buildInitialState(), bui
       state.data.initialized = true
     })
     .addCase(initializeSocialClientFailure, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = action.payload
+    })
+    .addCase(cancelFriendshipRequestRequest, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = null
+    })
+    .addCase(cancelFriendshipRequestSuccess, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      delete state.data.events.outgoing[action.payload]
+    })
+    .addCase(cancelFriendshipRequestFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = action.payload
     })
