@@ -34,5 +34,8 @@
   },
   "friends_counter": {
     "friends": "{count} {count, plural, one {friend} other {friends}}"
+  },
+  "mutual_friends_counter": {
+    "mutual": "mutual"
   }
 }
