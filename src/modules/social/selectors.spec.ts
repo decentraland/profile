@@ -15,6 +15,7 @@ import {
   getFriends,
   getFriendshipStatus,
   getIncomingEvents,
+  getMutualFriends,
   getOutgoingEvents,
   isCancellingFriendshipRequest,
   isAcceptingFriendRequest,
@@ -334,5 +335,15 @@ describe('when getting it the user is cancelling a friendship request', () => {
     it('should return true', () => {
       expect(isCancellingFriendshipRequest(state, 'anAddress')).toBe(true)
     })
+  })
+})
+
+describe("when getting the user's mutual friends", () => {
+  beforeEach(() => {
+    state.social.data.mutuals = ['0x1']
+  })
+
+  it('should return the mutual friends', () => {
+    expect(getMutualFriends(state)).toBe(state.social.data.mutuals)
   })
 })

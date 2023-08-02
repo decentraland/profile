@@ -1,0 +1,54 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.friendshipButton {
+  height: 40px;
+  width: 180px;
+}
+
+.content {
+  min-height: 400px;
+}
+
+.content :global(.Profile .name) {
+  margin-left: 10px;
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 0.3149999976158142px;
+  text-align: left;
+}
+
+.modal {
+  height: 100%;
+}
+
+@media (max-width: 767px) {
+  .content {
+    overflow: hidden;
+    height: calc(100vh - 95px - 20px);
+  }
+  
+  .content :global(.Profile) {
+    display: flex;
+    flex-wrap: row;
+    align-items: center;
+  }
+
+  .content :global(.Profile .name) {
+    font-size: 14px;
+  }
+
+  .friendshipButton {
+    font-size: 12px;
+    height: 40px;
+    width: 40px;
+  }
+}

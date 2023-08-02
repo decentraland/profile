@@ -14,7 +14,6 @@ function renderFriendshipButton(props: Partial<Props> = {}) {
       friendAddress="0x1234"
       onAcceptFriendRequest={jest.fn()}
       onRemoveFriend={jest.fn()}
-      onFetchFriends={jest.fn()}
       onAddFriend={jest.fn()}
       onCancelFriendRequest={jest.fn()}
       {...props}

@@ -198,7 +198,7 @@ describe('when handling the friendship request action', () => {
     it('should put a request friendship success action with the address of the new friend', () => {
       return expectSaga(socialSagas)
         .provide([[call(getClient), Promise.resolve(mockedClient)]])
-        .call.like({ fn: mockedClient.requestFriendship, args: [requestEvent.address] })
+        .call.like({ fn: mockedClient.requestFriendship, args: [requestEvent.address.toLowerCase()] })
         .put(requestFriendshipSuccess(requestEvent))
         .dispatch(requestFriendshipRequest(requestEvent.address))
         .silentRun()
@@ -236,7 +236,7 @@ describe('when handling the accept friend request action', () => {
     it('should put an accept friend request success action with the address of the new friend', () => {
       return expectSaga(socialSagas)
         .provide([[call(getClient), Promise.resolve(mockedClient)]])
-        .call.like({ fn: mockedClient.acceptFriendshipRequest, args: ['anAddress'] })
+        .call.like({ fn: mockedClient.acceptFriendshipRequest, args: ['anAddress'.toLowerCase()] })
         .put(acceptFriendshipSuccess('anAddress'))
         .dispatch(acceptFriendshipRequest('anAddress'))
         .silentRun()
@@ -275,7 +275,7 @@ describe('when handling the remove friend request action', () => {
     it('should put a reject friend success action with the address of the new friend', () => {
       return expectSaga(socialSagas)
         .provide([[call(getClient), Promise.resolve(mockedClient)]])
-        .call.like({ fn: mockedClient.removeFriend, args: ['anAddress'] })
+        .call.like({ fn: mockedClient.removeFriend, args: ['anAddress'.toLowerCase()] })
         .put(removeFriendSuccess('anAddress'))
         .dispatch(removeFriendRequest('anAddress'))
         .silentRun()
@@ -313,7 +313,7 @@ describe('when handling the reject friend request action', () => {
     it('should put a reject friend request success action with the address of the new friend', () => {
       return expectSaga(socialSagas)
         .provide([[call(getClient), Promise.resolve(mockedClient)]])
-        .call.like({ fn: mockedClient.rejectFriendshipRequest, args: ['anAddress'] })
+        .call.like({ fn: mockedClient.rejectFriendshipRequest, args: ['anAddress'.toLowerCase()] })
         .put(rejectFriendshipSuccess('anAddress'))
         .dispatch(rejectFriendshipRequest('anAddress'))
         .silentRun()
