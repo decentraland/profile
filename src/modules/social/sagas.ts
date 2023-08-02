@@ -102,8 +102,8 @@ export function* socialSagas() {
   function* handleCancelFriendshipRequest(action: CancelFriendshipRequestRequestAction) {
     try {
       const client: SocialClient = yield call(getClient)
-      yield call([client, 'cancelFriendshipRequest'], action.payload)
-      yield put(cancelFriendshipRequestSuccess(action.payload))
+      yield call([client, 'cancelFriendshipRequest'], action.payload.toLowerCase())
+      yield put(cancelFriendshipRequestSuccess(action.payload.toLowerCase()))
     } catch (error) {
       yield put(cancelFriendshipRequestFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
@@ -141,7 +141,7 @@ export function* socialSagas() {
     try {
       const client: SocialClient = yield call(getClient)
       yield call([client, 'removeFriend'], action.payload.toLowerCase())
-      yield put(removeFriendSuccess(action.payload))
+      yield put(removeFriendSuccess(action.payload.toLowerCase()))
     } catch (error) {
       yield put(removeFriendFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
@@ -151,7 +151,7 @@ export function* socialSagas() {
     try {
       const client: SocialClient = yield call(getClient)
       yield call([client, 'acceptFriendshipRequest'], action.payload.toLowerCase())
-      yield put(acceptFriendshipSuccess(action.payload))
+      yield put(acceptFriendshipSuccess(action.payload.toLowerCase()))
     } catch (error) {
       yield put(acceptFriendshipFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
@@ -161,7 +161,7 @@ export function* socialSagas() {
     try {
       const client: SocialClient = yield call(getClient)
       yield call([client, 'rejectFriendshipRequest'], action.payload.toLowerCase())
-      yield put(rejectFriendshipSuccess(action.payload))
+      yield put(rejectFriendshipSuccess(action.payload.toLowerCase()))
     } catch (error) {
       yield put(rejectFriendshipFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }

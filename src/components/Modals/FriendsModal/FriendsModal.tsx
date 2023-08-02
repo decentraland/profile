@@ -26,7 +26,7 @@ const FriendsModal = (props: Props) => {
       return (
         <div style={style} className={styles.row} tabIndex={0}>
           <LinkedProfile
-            size={isMobile ? 'large' : 'normal'}
+            size={'large'}
             key={friends[index]}
             sliceAddressBy={isMobile ? MOBILE_ADDRESS_SIZE : DESKTOP_ADDRESS_SIZE}
             address={friends[index]}

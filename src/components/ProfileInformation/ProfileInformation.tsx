@@ -15,6 +15,7 @@ import { EDIT_PROFILE_URL } from '../Avatar/consts'
 import CopyIcon from '../CopyIcon'
 import FriendsCounter from '../FriendsCounter'
 import FriendshipButton from '../FriendshipButton'
+import MutualFriendsCounter from '../MutualFriendsCounter'
 import WorldsButton from '../WorldsButton'
 import { shareButtonTestId, twitterURL } from './consts'
 import { Props } from './ProfileInformation.types'
@@ -57,7 +58,11 @@ const ProfileInformation = (props: Props) => {
               <CopyIcon />
             </Button>
           </div>
-          {isLoggedInProfile && <div className={styles.basicCenteredRow}>{isSocialClientReady ? <FriendsCounter /> : null}</div>}
+          {isSocialClientReady && (
+            <div className={styles.basicCenteredRow}>
+              {isLoggedInProfile ? <FriendsCounter /> : <MutualFriendsCounter friendAddress={profileAddress} />}
+            </div>
+          )}
           {avatar && <span className={styles.description}>{avatar.description}</span>}
         </div>
       </div>

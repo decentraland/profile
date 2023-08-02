@@ -1,0 +1,19 @@
+.clickable {
+  cursor: pointer;
+}
+
+.counter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 14px;
+}
+
+.counter :global(.Profile .dcl.avatar-face) {
+  border: 1px solid #FFF;
+  background-color: rgba(var(--bluish-steel-raw));
+}
+
+.counter :global(.Profile):not(:first-child) {
+  margin-left: -15px;
+}

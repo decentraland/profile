@@ -30,16 +30,16 @@
   height: 100%;
 }
 
+.content :global(.Profile) {
+  display: flex;
+  flex-wrap: row;
+  align-items: center;
+}
+
 @media (max-width: 767px) {
   .content {
     overflow: hidden;
     height: calc(100vh - 95px - 20px);
-  }
-  
-  .content :global(.Profile) {
-    display: flex;
-    flex-wrap: row;
-    align-items: center;
   }
 
   .content :global(.Profile .name) {
