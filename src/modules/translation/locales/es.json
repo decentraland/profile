@@ -33,12 +33,8 @@
     "unfriend": "Dejar de ser amigo"
   },
   "friends_modal": {
-    "friends": {
-      "title": "Amigos"
-    },
-    "mutuals": {
-      "title": "Amigos en común"
-    }
+    "friends_title": "Amigos",
+    "mutuals_title": "Amigos en común"
   },
   "friends_counter": {
     "friends": "{count} {count, plural, one {amigo} other {amigos}}"

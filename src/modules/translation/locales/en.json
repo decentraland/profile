@@ -33,12 +33,8 @@
     "unfriend": "Unfriend"
   },
   "friends_modal": {
-    "friends": {
-      "title": "Friends"
-    },
-    "mutuals": {
-      "title": "Mutual friends"
-    }
+    "friends_title": "Friends",
+    "mutuals_title": "Mutual friends"
   },
   "friends_counter": {
     "friends": "{count} {count, plural, one {friend} other {friends}}"

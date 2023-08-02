@@ -33,12 +33,8 @@
     "unfriend": "不朋友"
   },
   "friends_modal": {
-    "friends": {
-      "title": "朋友们"
-    },
-    "mutuals": {
-      "title": "共同的朋友"
-    }
+    "friends_title": "朋友们",
+    "mutuals_title": "共同的朋友"
   },
   "friends_counter": {
     "friends": "{count} 朋友們"

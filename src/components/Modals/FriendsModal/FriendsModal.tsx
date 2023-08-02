@@ -34,7 +34,7 @@ const FriendsModal = (props: Props) => {
   return (
     <Modal size="tiny" onClose={onClose}>
       <ModalNavigation
-        title={metadata.type === FriendsType.FRIENDS ? t('friends_modal.friends.title') : t('friends_modal.mutuals.title')}
+        title={metadata.type === FriendsType.FRIENDS ? t('friends_modal.friends_title') : t('friends_modal.mutuals_title')}
         onClose={onClose}
         data-testid="friends-modal"
       />
