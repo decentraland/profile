@@ -3,4 +3,14 @@
   flex-direction: column;
   height: 100%;
   width: 15%;
+  align-items: center;
+}
+
+.loading { 
+  justify-content: center;
+}
+
+.loaderOverlay {
+  position: absolute;
+  margin: auto;
 }
