@@ -12,7 +12,9 @@ import styles from './FriendsModal.module.css'
 
 const ITEM_HEIGHT = 70
 const DEFAULT_LIST_HEIGHT = 300
-const DEFAULT_LIST_WIDTH = 650
+const DEFAULT_LIST_WIDTH = 200
+const MOBILE_ADDRESS_SIZE = 10
+const DESKTOP_ADDRESS_SIZE = 14
 
 const FriendsModal = (props: Props) => {
   const { onClose, friends, metadata } = props
@@ -23,7 +25,12 @@ const FriendsModal = (props: Props) => {
     ({ index, style }: { index: number; style: object }) => {
       return (
         <div style={style} className={styles.row} tabIndex={0}>
-          <LinkedProfile size="large" key={friends[index]} sliceAddressBy={isMobile ? 12 : 14} address={friends[index]} />
+          <LinkedProfile
+            size={isMobile ? 'large' : 'normal'}
+            key={friends[index]}
+            sliceAddressBy={isMobile ? MOBILE_ADDRESS_SIZE : DESKTOP_ADDRESS_SIZE}
+            address={friends[index]}
+          />
           <FriendshipButton className={styles.friendshipButton} friendAddress={friends[index]} />
         </div>
       )
