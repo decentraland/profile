@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
@@ -9,11 +9,11 @@ import { Avatar } from '../../Avatar'
 import { PageLayout } from '../../PageLayout'
 import { ProfileInformation } from '../../ProfileInformation'
 import { nullAddress } from './constants'
-import { MainPageParams, Props } from './MainPage.types'
+import { Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
-  const { isLoading, onFetchProfile, loggedInAddress } = props
+  const { isLoading, onFetchProfile, profileAddress, loggedInAddress } = props
   const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('tabs.overview'), value: t('tabs.overview') }]
 
   const [selectedTab, setSelectedTab] = useState<string>(tabs[0].value)
@@ -25,8 +25,6 @@ function MainPage(props: Props) {
     [setSelectedTab]
   )
   const navigate = useNavigate()
-
-  const { profileAddress } = useParams<MainPageParams>()
 
   useEffect(() => {
     if (profileAddress) {

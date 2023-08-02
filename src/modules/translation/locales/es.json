@@ -32,6 +32,10 @@
     "blocked": "Bloqueado",
     "unfriend": "Dejar de ser amigo"
   },
+  "friends_modal": {
+    "friends_title": "Amigos",
+    "mutuals_title": "Amigos en común"
+  },
   "friends_counter": {
     "friends": "{count} {count, plural, one {amigo} other {amigos}}"
   }
