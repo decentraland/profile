@@ -38,5 +38,8 @@
   },
   "friends_counter": {
     "friends": "{count} 朋友們"
+  },
+  "mutual_friends_counter": {
+    "mutual": "共同的朋友"
   }
 }
