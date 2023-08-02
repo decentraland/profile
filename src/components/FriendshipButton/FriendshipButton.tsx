@@ -51,7 +51,7 @@ const FriendshipButton = (props: Props) => {
       case FriendshipStatus.NOT_FRIEND:
         return t('friendship_button.add_friend')
       case FriendshipStatus.PENDING_REQUEST:
-        return isHovering ? t('friendship_button.pending') : t('friendship_button.cancel_request')
+        return isHovering ? t('friendship_button.cancel_request') : t('friendship_button.pending')
       case FriendshipStatus.PENDING_RESPONSE:
         return t('friendship_button.accept_request')
       case FriendshipStatus.BLOCKED:

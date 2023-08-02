@@ -3,7 +3,11 @@ import {
   cancelFriendshipRequestRequest,
   fetchFriendRequestsEventsRequest,
   fetchFriendsRequest,
-  initializeSocialClientRequest
+  initializeSocialClientRequest,
+  fetchMutualFriendsRequest,
+  removeFriendRequest,
+  requestFriendshipRequest,
+  acceptFriendshipRequest
 } from './actions'
 import { buildInitialState } from './reducer'
 import {
@@ -13,9 +17,13 @@ import {
   getIncomingEvents,
   getOutgoingEvents,
   isCancellingFriendshipRequest,
+  isAcceptingFriendRequest,
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
   isLoadingFriends,
+  isLoadingMutualFriends,
+  isRemovingFriend,
+  isRequestingFriendship,
   isSocialClientInitialized
 } from './selectors'
 import { FriendshipStatus } from './types'
@@ -215,6 +223,94 @@ describe('when getting if the social client is initialized', () => {
 
     it('should return true', () => {
       expect(isSocialClientInitialized(state)).toBe(true)
+    })
+  })
+})
+
+describe("when getting if the user is requesting a user's friendship", () => {
+  describe("and the user is not requesting a user's friendship", () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isRequestingFriendship(state, 'anAddress')).toBe(false)
+    })
+  })
+
+  describe("and the user is requesting a user's friendship", () => {
+    beforeEach(() => {
+      state.social.loading = [requestFriendshipRequest('anAddress')]
+    })
+
+    it('should return true', () => {
+      expect(isRequestingFriendship(state, 'anAddress')).toBe(true)
+    })
+  })
+})
+
+describe('when getting if a friend request is being accepted', () => {
+  describe('and the friend request is not being accepted', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isAcceptingFriendRequest(state, '0x1')).toBe(false)
+    })
+  })
+
+  describe('and the friend request is being accepted', () => {
+    beforeEach(() => {
+      state.social.loading = [acceptFriendshipRequest('0x1')]
+    })
+
+    it('should return true', () => {
+      expect(isAcceptingFriendRequest(state, '0x1')).toBe(true)
+    })
+  })
+})
+
+describe('when getting it the user is removing a friend', () => {
+  describe('and the user is not removing a friend', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isRequestingFriendship(state, 'anAddress')).toBe(false)
+    })
+  })
+
+  describe('and the user is removing a friend', () => {
+    beforeEach(() => {
+      state.social.loading = [removeFriendRequest('anAddress')]
+    })
+
+    it('should return true', () => {
+      expect(isRemovingFriend(state, 'anAddress')).toBe(true)
+    })
+  })
+})
+
+describe('when getting if the mutual friends are being loaded', () => {
+  describe('and the mutual friends are not being loaded', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isLoadingMutualFriends(state)).toBe(false)
+    })
+  })
+
+  describe('and the friends are being loaded', () => {
+    beforeEach(() => {
+      state.social.loading = [fetchMutualFriendsRequest('0x1')]
+    })
+
+    it('should return true', () => {
+      expect(isLoadingMutualFriends(state)).toBe(true)
     })
   })
 })

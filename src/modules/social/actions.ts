@@ -42,3 +42,52 @@ export const cancelFriendshipRequestFailure = createAction<string>('[Failure] Ca
 export type CancelFriendshipRequestRequestAction = ReturnType<typeof cancelFriendshipRequestRequest>
 export type CancelFriendshipRequestSuccessAction = ReturnType<typeof cancelFriendshipRequestSuccess>
 export type CancelFriendshipRequestFailureAction = ReturnType<typeof cancelFriendshipRequestFailure>
+
+// Fetch mutual friends actions
+
+export const fetchMutualFriendsRequest = createAction<string>('[Request] Fetch Mutual Friends')
+export const fetchMutualFriendsSuccess = createAction<string[]>('[Success] Fetch Mutual Friends')
+export const fetchMutualFriendsFailure = createAction<string>('[Failure] Fetch Mutual Friends')
+
+export type FetchMutualFriendsRequestAction = ReturnType<typeof fetchMutualFriendsRequest>
+export type FetchMutualFriendsSuccessAction = ReturnType<typeof fetchMutualFriendsSuccess>
+export type FetchMutualFriendsFailureAction = ReturnType<typeof fetchMutualFriendsFailure>
+// Request friendship
+
+export const requestFriendshipRequest = createAction<string>('[Request] Request Friendship')
+export const requestFriendshipSuccess = createAction<RequestEvent>('[Success] Request Friendship')
+export const requestFriendshipFailure = createAction<string>('[Failure] Request Friendship')
+
+export type RequestFriendshipRequestAction = ReturnType<typeof requestFriendshipRequest>
+export type RequestFriendshipSuccessAction = ReturnType<typeof requestFriendshipSuccess>
+export type RequestFriendshipFailureAction = ReturnType<typeof requestFriendshipFailure>
+
+// Remove friends
+
+export const removeFriendRequest = createAction<string>('[Request] Remove Friend')
+export const removeFriendSuccess = createAction<string>('[Success] Remove Friend')
+export const removeFriendFailure = createAction<string>('[Failure] Remove Friend')
+
+export type RemoveFriendRequestAction = ReturnType<typeof removeFriendRequest>
+export type RemoveFriendSuccessAction = ReturnType<typeof removeFriendSuccess>
+export type RemoveFriendFailureAction = ReturnType<typeof removeFriendFailure>
+
+// Accept friend requests
+
+export const acceptFriendshipRequest = createAction<string>('[Request] Accept Friendship')
+export const acceptFriendshipSuccess = createAction<string>('[Success] Accept Friendship')
+export const acceptFriendshipFailure = createAction<string>('[Failure] Accept Friendship')
+
+export type AcceptFriendshipRequestAction = ReturnType<typeof acceptFriendshipRequest>
+export type AcceptFriendshipSuccessAction = ReturnType<typeof acceptFriendshipSuccess>
+export type AcceptFriendshipFailureAction = ReturnType<typeof acceptFriendshipFailure>
+
+// Reject friend requests
+
+export const rejectFriendshipRequest = createAction<string>('[Request] Reject Friendship')
+export const rejectFriendshipSuccess = createAction<string>('[Success] Reject Friendship')
+export const rejectFriendshipFailure = createAction<string>('[Failure] Reject Friendship')
+
+export type RejectFriendshipRequestAction = ReturnType<typeof rejectFriendshipRequest>
+export type RejectFriendshipSuccessAction = ReturnType<typeof rejectFriendshipSuccess>
+export type RejectFriendshipFailureAction = ReturnType<typeof rejectFriendshipFailure>

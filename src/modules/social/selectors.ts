@@ -5,7 +5,11 @@ import {
   cancelFriendshipRequestRequest,
   fetchFriendRequestsEventsRequest,
   fetchFriendsRequest,
-  initializeSocialClientRequest
+  initializeSocialClientRequest,
+  fetchMutualFriendsRequest,
+  acceptFriendshipRequest,
+  removeFriendRequest,
+  requestFriendshipRequest
 } from './actions'
 import { FriendshipStatus } from './types'
 
@@ -47,4 +51,21 @@ export const isCancellingFriendshipRequest = createSelector(
   [getLoading, (_state, friendAddress) => friendAddress],
   (loadingState, friendAddress) =>
     loadingState.some(action => action.type === cancelFriendshipRequestRequest.type && action.payload === friendAddress)
+)
+export const isLoadingMutualFriends = createSelector([getLoading], loadingState =>
+  isLoadingType(loadingState, fetchMutualFriendsRequest.type)
+)
+export const isAddingFriend = createSelector([getLoading], loadingState => isLoadingType(loadingState, fetchFriendsRequest.type))
+export const isRequestingFriendship = createSelector(
+  [getLoading, (_state, friendAddress) => friendAddress],
+  (loadingState, friendAddress) =>
+    loadingState.some(action => action.type === requestFriendshipRequest.type && action.payload === friendAddress)
+)
+export const isRemovingFriend = createSelector([getLoading, (_state, friendAddress) => friendAddress], (loadingState, friendAddress) =>
+  loadingState.some(action => action.type === removeFriendRequest.type && action.payload === friendAddress)
+)
+export const isAcceptingFriendRequest = createSelector(
+  [getLoading, (_state, friendAddress) => friendAddress],
+  (loadingState, friendAddress) =>
+    loadingState.some(action => action.type === acceptFriendshipRequest.type && action.payload === friendAddress)
 )

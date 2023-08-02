@@ -28,3 +28,11 @@ export const getFriends = async (): Promise<string[]> => {
   }
   return friends
 }
+
+export const getMutualFriends = async (address: string): Promise<string[]> => {
+  const friends: string[] = []
+  for await (const users of getClient().getMutualFriends(address)) {
+    users.forEach(user => friends.push(user.address))
+  }
+  return friends
+}
