@@ -1,5 +1,6 @@
 import { RootState } from '../reducer'
 import {
+  cancelFriendshipRequestRequest,
   fetchFriendRequestsEventsRequest,
   fetchFriendsRequest,
   initializeSocialClientRequest,
@@ -16,6 +17,7 @@ import {
   getIncomingEvents,
   getMutualFriends,
   getOutgoingEvents,
+  isCancellingFriendshipRequest,
   isAcceptingFriendRequest,
   isInitializingSocialClient,
   isLoadingFriendRequestEvents,
@@ -310,6 +312,28 @@ describe('when getting if the mutual friends are being loaded', () => {
 
     it('should return true', () => {
       expect(isLoadingMutualFriends(state)).toBe(true)
+    })
+  })
+})
+
+describe('when getting it the user is cancelling a friendship request', () => {
+  describe('and the user is not cancelling a friendship request', () => {
+    beforeEach(() => {
+      state.social.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isCancellingFriendshipRequest(state, 'anAddress')).toBe(false)
+    })
+  })
+
+  describe('and the user is cancelling a friendship request', () => {
+    beforeEach(() => {
+      state.social.loading = [cancelFriendshipRequestRequest('anAddress')]
+    })
+
+    it('should return true', () => {
+      expect(isCancellingFriendshipRequest(state, 'anAddress')).toBe(true)
     })
   })
 })
