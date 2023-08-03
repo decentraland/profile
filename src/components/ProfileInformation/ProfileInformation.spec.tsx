@@ -181,5 +181,24 @@ describe('ProfileInformation', () => {
         expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
       })
     })
+
+    describe('and the user has some links', () => {
+      it('should render the view more button and the icons related to those links', async () => {
+        const { getByTestId, getByText } = renderProfileInformation({
+          profile: {
+            avatars: [
+              {
+                name: avatarName,
+                userId: anAddress,
+                ethAddress: anAddress,
+                links: [{ title: 'twitter', url: 'https://twitter.com/decentraland' }]
+              } as Avatar
+            ]
+          }
+        })
+        expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+        expect(getByTestId('twitter')).toBeInTheDocument()
+      })
+    })
   })
 })

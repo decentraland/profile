@@ -6,11 +6,23 @@
   width: 100%;
 }
 
-.ProfileInformation .actions {
+.ProfileInformation .actions  {
+  display: flex;
+  flex-direction: column;
+  row-gap: 75px;
+}
+
+.ProfileInformation .actions .buttons {
   display: flex;
   flex-direction: row;
-  gap: 13px;
+  column-gap: 13px;
   height: 34px;
+}
+
+.ProfileInformation .actions .links {
+  display: flex;
+  align-self: end;
+  column-gap: 16px;
 }
 
 .ProfileInformation .basicRow {

@@ -13,6 +13,7 @@ import { locations } from '../../modules/routing/locations'
 import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
 import { EDIT_PROFILE_URL } from '../Avatar/consts'
+import { AvatarLink } from '../AvatarLink'
 import CopyIcon from '../CopyIcon'
 import FriendsCounter from '../FriendsCounter'
 import FriendshipButton from '../FriendshipButton'
@@ -81,49 +82,56 @@ const ProfileInformation = (props: Props) => {
         </div>
       </div>
       <div className={styles.actions}>
-        {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
-        {loggedInAddress ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
-        <Dropdown
-          className={styles.smallButton}
-          icon={
-            <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
-              <img src={Share} className="iconSize" />
-            </Button>
-          }
-          direction="left"
-        >
-          <Dropdown.Menu>
-            <Dropdown.Item
-              icon={<CopyIcon color="white" />}
-              text={hasCopiedAddress ? ` ${t('profile_information.copied')}` : ` ${t('profile_information.copy_link')}`}
-              onClick={handleCopyLink}
-            />
-            <Dropdown.Item
-              as={'a'}
-              icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
-              text={` ${t('profile_information.share_on_tw')}`}
-              href={`${twitterURL}${encodeURIComponent(
-                `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
-              )}`}
-              target="_blank"
-            />
-          </Dropdown.Menu>
-        </Dropdown>
-        {isLoggedInProfile && (
+        <div className={styles.buttons}>
+          {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
+          {loggedInAddress ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
           <Dropdown
             className={styles.smallButton}
             icon={
-              <Button inverted className={styles.smallButton}>
-                <Icon name="ellipsis horizontal"></Icon>
+              <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
+                <img src={Share} className="iconSize" />
               </Button>
             }
             direction="left"
           >
             <Dropdown.Menu>
-              <Dropdown.Item icon={'user outline'} text={t('profile_information.edit')} href={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} />
+              <Dropdown.Item
+                icon={<CopyIcon color="white" />}
+                text={hasCopiedAddress ? ` ${t('profile_information.copied')}` : ` ${t('profile_information.copy_link')}`}
+                onClick={handleCopyLink}
+              />
+              <Dropdown.Item
+                as={'a'}
+                icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
+                text={` ${t('profile_information.share_on_tw')}`}
+                href={`${twitterURL}${encodeURIComponent(
+                  `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
+                )}`}
+                target="_blank"
+              />
             </Dropdown.Menu>
           </Dropdown>
-        )}
+          {isLoggedInProfile && (
+            <Dropdown
+              className={styles.smallButton}
+              icon={
+                <Button inverted className={styles.smallButton}>
+                  <Icon name="ellipsis horizontal"></Icon>
+                </Button>
+              }
+              direction="left"
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item icon={'user outline'} text={t('profile_information.edit')} href={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} />
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
+        </div>
+        <div className={styles.links}>
+          {avatar?.links?.map((link, index) => (
+            <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
+          ))}
+        </div>
       </div>
     </div>
   )
