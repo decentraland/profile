@@ -46,7 +46,11 @@ const Avatar = (props: Props) => {
             disableBackground={true}
             profile={profileAddress}
           />
-          {(!profile && view === View.OWN) || isError ? <div className={styles.message}>{t('avatar.message')}</div> : null}
+          {(!profile && view === View.OWN) || isError ? (
+            <div data-testid="avatar-message" className={styles.message}>
+              {t('avatar.message')}
+            </div>
+          ) : null}
         </div>
       ) : null}
       {view === View.OWN && (
