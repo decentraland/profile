@@ -1,12 +1,11 @@
 import { Dispatch } from 'redux'
 import { Item } from '@dcl/schemas/dist/dapps/item'
 import { Profile } from '@dcl/schemas/dist/platform/profile'
-import { LoadingState } from 'decentraland-dapps/dist/modules/loading/reducer'
 import { FetchItemsRequestAction } from '../../modules/items/actions'
 
 export type Props = {
   error: string | null
-  isLoading: LoadingState
+  isLoading: boolean
   items: Item[]
   onFetchItems: (wearableIds: string[]) => void
   profile?: Profile

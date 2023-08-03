@@ -1,10 +1,16 @@
 import { Item, ItemFilters } from '@dcl/schemas'
-import { BaseClient } from 'decentraland-dapps/dist/lib/BaseClient'
 
-export class ItemAPI extends BaseClient {
-  async get(filters: ItemFilters = {}): Promise<Item[]> {
+export class ItemAPI {
+  url: string
+
+  constructor(url: string) {
+    this.url = url
+  }
+
+  async get(filters: ItemFilters = {}): Promise<{ data: Item[] }> {
     const queryParams = this._buildItemsQueryString(filters)
-    return this.fetch(`/v1/catalog?${queryParams}`)
+    const response = await fetch(`${this.url}/catalog?${queryParams}`)
+    return await response.json()
   }
 
   private _buildItemsQueryString(filters: ItemFilters): string {

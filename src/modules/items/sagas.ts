@@ -19,9 +19,9 @@ export function* itemSagas() {
     }
 
     try {
-      const items: Awaited<ReturnType<ItemAPI['get']>> = yield call([itemAPI, 'get'], filters)
+      const response: Awaited<ReturnType<ItemAPI['get']>> = yield call([itemAPI, 'get'], filters)
 
-      yield put(fetchItemsSuccess(items))
+      yield put(fetchItemsSuccess(response.data))
     } catch (error) {
       yield put(fetchItemsFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }

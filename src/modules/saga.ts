@@ -5,6 +5,7 @@ import { createProfileSaga } from 'decentraland-dapps/dist/modules/profile/sagas
 import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { config } from './config'
 import { identitySaga } from './identity/sagas'
+import { itemSagas } from './items/sagas'
 import { modalSagas } from './modal/sagas'
 import { socialSagas } from './social/sagas'
 import { translationSaga } from './translation/sagas'
@@ -29,6 +30,7 @@ export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphCl
     translationSaga(),
     identitySaga(),
     modalSagas(),
+    itemSagas(),
     socialSagas(),
     createProfileSaga({ peerUrl: config.get('PEER_URL') })(),
     featuresSaga({
