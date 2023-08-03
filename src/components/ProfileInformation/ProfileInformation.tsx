@@ -23,6 +23,7 @@ import styles from './ProfileInformation.module.css'
 
 const EXPLORER_URL = config.get('EXPLORER_URL', '')
 const PROFILE_URL = config.get('PROFILE_URL', '')
+const ADDRESS_SHORTENED_LENGTH = 24
 
 const ProfileInformation = (props: Props) => {
   const { profile, isSocialClientReady, loggedInAddress, profileAddress } = props
@@ -32,9 +33,9 @@ const ProfileInformation = (props: Props) => {
   const avatar = profile?.avatars[0]
 
   const handleCopyLink = useCallback(() => {
-    const url = `${PROFILE_URL}${avatar?.ethAddress}`
+    const url = `${PROFILE_URL}/${profileAddress}`
     copyText(url, setHasCopied)
-  }, [setHasCopied, avatar])
+  }, [setHasCopied, profileAddress])
 
   const isLoggedInProfile = loggedInAddress === profileAddress
   const avatarName = getAvatarName(avatar)
@@ -43,17 +44,17 @@ const ProfileInformation = (props: Props) => {
   return (
     <div className={styles.ProfileInformation}>
       <div className={styles.basicRow}>
-        <Profile size="massive" imageOnly address={avatar ? avatar.ethAddress : ''} />
+        <Profile size="massive" imageOnly address={profileAddress} avatar={avatar} />
         <div className={styles.avatar}>
           <span className={styles.userNumber}>
-            <span className={styles.userName} data-testid={avatar?.ethAddress}>
+            <span className={styles.userName} data-testid={profileAddress}>
               {avatarName.name}
             </span>
             {avatarName.lastPart ? <span>&nbsp; {avatarName.lastPart}</span> : null}
           </span>
           <div className={styles.wallet}>
             <img src={Wallet} className={styles.walletIcon} />
-            <Profile textOnly address={avatar ? avatar.ethAddress : profileAddress} />
+            {profileAddress.slice(0, ADDRESS_SHORTENED_LENGTH)}...
             <Button basic onClick={handleCopyLink} className={styles.copyLink}>
               <CopyIcon />
             </Button>
@@ -68,7 +69,7 @@ const ProfileInformation = (props: Props) => {
       </div>
       <div className={styles.actions}>
         {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
-        {loggedInAddress ? <WorldsButton address={loggedInAddress} /> : null}
+        {loggedInAddress ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
         <Dropdown
           className={styles.smallButton}
           icon={
@@ -88,7 +89,7 @@ const ProfileInformation = (props: Props) => {
               as={'a'}
               icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
               text={` ${t('profile_information.share_on_tw')}`}
-              href={`${twitterURL}${encodeURIComponent(`${t('profile_information.tw_message')} ${PROFILE_URL}${avatar?.ethAddress}`)}`}
+              href={`${twitterURL}${encodeURIComponent(`${t('profile_information.tw_message')} ${PROFILE_URL}/${profileAddress}`)}`}
               target="_blank"
             />
           </Dropdown.Menu>

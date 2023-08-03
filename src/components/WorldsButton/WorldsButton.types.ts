@@ -8,6 +8,7 @@ export type Props = {
   worlds: World[]
   isLoading: boolean
   hasNames: boolean
+  isLoggedIn?: boolean
   onFetchWorlds: (address: string) => void
 }
 
