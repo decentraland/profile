@@ -18,7 +18,7 @@ const WORLDS_CONTENT_SERVER_URL = config.get('WORLDS_CONTENT_SERVER_URL')
 const isDevelopment = config.getEnv() === Env.DEVELOPMENT
 
 const WorldsButton = (props: Props) => {
-  const { address, isLoading, className, hasNames, worlds, onFetchWorlds } = props
+  const { address, isLoading, isLoggedIn, className, hasNames, worlds, onFetchWorlds } = props
 
   const hasWorlds = worlds.length > 0
 
@@ -47,6 +47,7 @@ const WorldsButton = (props: Props) => {
     <>
       <Dropdown
         className={classNames(className, styles.worldDropdown)}
+        disabled={!isLoading && !hasWorlds && !isLoggedIn}
         direction="left"
         open={!hasNames || (hasNames && !hasWorlds) ? false : undefined}
         trigger={
@@ -59,19 +60,19 @@ const WorldsButton = (props: Props) => {
               className,
               styles.worldButton,
               'customIconButton',
-              { [styles.smallButton]: isLoading || (hasWorlds && hasNames) },
+              { [styles.smallButton]: isLoading || hasWorlds || !isLoggedIn },
               styles.actionButton
             )}
           >
-            {!hasNames && !isLoading ? (
+            {!hasNames && !isLoading && isLoggedIn ? (
               <>
                 <img src={verifiedIcon} /> {t('worlds_button.get_a_name')}
               </>
-            ) : hasNames && !hasWorlds && !isLoading ? (
+            ) : hasNames && !hasWorlds && !isLoading && isLoggedIn ? (
               <>
                 <img src={worldIcon} /> {t('worlds_button.activate_world')}
               </>
-            ) : hasWorlds && !isLoading ? (
+            ) : !isLoading && (hasWorlds || !isLoggedIn) ? (
               <img src={worldIcon} />
             ) : null}
           </Button>

@@ -188,10 +188,10 @@ describe('when handling the friendship request action', () => {
           user: {
             address: 'anAddress'
           },
-          createdAt: Date.now()
+          createdAt: 123456789
         }
       }
-      requestEvent = { address: 'anAddress', createdAt: Date.now(), message: undefined }
+      requestEvent = { address: 'anAddress', createdAt: 123456789, message: undefined }
       mockedClient = { requestFriendship: () => Promise.resolve(resolvedEvent) }
     })
 
