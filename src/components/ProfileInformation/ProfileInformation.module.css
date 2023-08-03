@@ -59,7 +59,7 @@
   width: 24px;
 }
 
-.ProfileInformation :global(.ui.button.basic).copyLink {
+.ProfileInformation :global(.ui.button.basic).copyLink, .ProfileInformation :global(.ui.button.basic).viewMore {
   padding: unset;
 }
 

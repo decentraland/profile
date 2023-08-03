@@ -9,7 +9,8 @@
     "copied": "Copiado",
     "copy_link": "Copiar enlace",
     "share_on_tw": "Compartir en Twitter",
-    "tw_message": "Oye, revisa mi perfil en decentraland\n"
+    "tw_message": "Oye, revisa mi perfil en decentraland\n",
+    "view_more": "Ver Más"
   },
   "worlds_button": {
     "get_a_name": "Obtenga un nombre único",
@@ -47,5 +48,21 @@
     "start_dressing": "Comienza a vestirte de formas más allá de tu imaginación",
     "get_collectibles": "¡Obtén tu primer coleccionable y lúcete en Decentraland!",
     "go_to_marketplace": "ir al marketplace"
+  },
+  "about_modal": {
+    "title": "Acerca de",
+    "description_label": "Acerca de",
+    "country_label": "País",
+    "employment_status_label": "Estado de Empleo",
+    "gender_label": "Género",
+    "pronouns_label": "Pronombres",
+    "relationship_status_label": "estado civil",
+    "sexual_orientation_label": "Orientación sexual",
+    "language_label": "Idioma",
+    "profession_label": "Profesión",
+    "birthdate_label": "Fecha de nacimiento",
+    "real_name_label": "Nombre real",
+    "hobbies_label": "Aficiones",
+    "links_label": "Enlaces"
   }
 }

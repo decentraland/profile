@@ -8,7 +8,7 @@ import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
 import { config } from '../../modules/config/config'
-import { getAvatarName } from '../../modules/profile/utils'
+import { getAvatarName, hasAboutInformation } from '../../modules/profile/utils'
 import { locations } from '../../modules/routing/locations'
 import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
@@ -27,7 +27,7 @@ const PROFILE_URL = config.get('PROFILE_URL', '')
 const ADDRESS_SHORTENED_LENGTH = 24
 
 const ProfileInformation = (props: Props) => {
-  const { profile, isSocialClientReady, loggedInAddress, profileAddress } = props
+  const { profile, isSocialClientReady, loggedInAddress, profileAddress, onViewMore } = props
 
   const [hasCopiedAddress, setHasCopied] = useTimer(1200)
 
@@ -38,9 +38,14 @@ const ProfileInformation = (props: Props) => {
     copyText(url, setHasCopied)
   }, [setHasCopied, profileAddress])
 
+  const handleViewMore = useCallback(() => {
+    avatar && onViewMore && onViewMore(avatar)
+  }, [avatar, onViewMore])
+
   const isLoggedInProfile = loggedInAddress === profileAddress
   const avatarName = getAvatarName(avatar)
   const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
+  const shouldShowViewMoreButton = hasAboutInformation(avatar)
 
   return (
     <div className={styles.ProfileInformation}>
@@ -66,6 +71,13 @@ const ProfileInformation = (props: Props) => {
             </div>
           )}
           {avatar && <span className={styles.description}>{avatar.description}</span>}
+          {shouldShowViewMoreButton && (
+            <div className={styles.basicCenteredRow}>
+              <Button basic className={styles.viewMore} onClick={handleViewMore}>
+                {t('profile_information.view_more')}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.actions}>

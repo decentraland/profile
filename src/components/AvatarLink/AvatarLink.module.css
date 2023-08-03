@@ -1,0 +1,13 @@
+.AvatarLink {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.AvatarLink span {
+  text-decoration: underline;
+}
