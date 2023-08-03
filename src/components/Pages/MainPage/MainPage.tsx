@@ -38,7 +38,7 @@ function MainPage(props: Props) {
       navigate(locations.signIn(locations.root()))
     }
   }, [isLoading, loggedInAddress, profileAddress])
-  const view = getView(profileAddress, loggedInAddress)
+  const view = getView(loggedInAddress, profileAddress)
 
   return (
     <PageLayout>

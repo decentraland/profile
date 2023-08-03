@@ -30,28 +30,24 @@ const Avatar = (props: Props) => {
   }, [setIsLoadingWearablePreview])
 
   return (
-    <div className={classNames(styles.Avatar, isLoadingWearablePreview && styles.loading)}>
-      {!profile || isError ? (
-        <>
-          <div className={styles.noProfile}>
-            {!profile && view === View.OWN ? <div className={styles.message}>{t('avatar.message')}</div> : null}
-          </div>
-        </>
-      ) : isLoadingWearablePreview ? (
+    <div className={classNames(styles.Avatar, { [styles.loading]: isLoadingWearablePreview, [styles.noProfile]: !profile })}>
+      {isLoadingWearablePreview ? (
         <div className={styles.loaderOverlay}>
           <Loader active inline size="huge" />
         </div>
       ) : null}
-
-      {profile && !isError ? (
-        <WearablePreview
-          onLoad={handleOnLoad}
-          onError={handleError}
-          onUpdate={handleOnLoad}
-          dev={config.getEnv() === Env.DEVELOPMENT}
-          disableBackground={true}
-          profile={profileAddress}
-        />
+      {!isError ? (
+        <div className={styles.wearablePreview}>
+          <WearablePreview
+            onLoad={handleOnLoad}
+            onError={handleError}
+            onUpdate={handleOnLoad}
+            dev={config.getEnv() === Env.DEVELOPMENT}
+            disableBackground={true}
+            profile={profileAddress}
+          />
+          {(!profile && view === View.OWN) || isError ? <div className={styles.message}>{t('avatar.message')}</div> : null}
+        </div>
       ) : null}
       {view === View.OWN && (
         <Button primary fluid className="customIconButton" as={Link} to={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} target="_blank">
