@@ -4,7 +4,6 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
-import People from '../../assets/icons/People.svg'
 import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
@@ -14,7 +13,9 @@ import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
 import { EDIT_PROFILE_URL } from '../Avatar/consts'
 import CopyIcon from '../CopyIcon'
+import FriendsCounter from '../FriendsCounter'
 import FriendshipButton from '../FriendshipButton'
+import MutualFriendsCounter from '../MutualFriendsCounter'
 import WorldsButton from '../WorldsButton'
 import { shareButtonTestId, twitterURL } from './consts'
 import { Props } from './ProfileInformation.types'
@@ -51,26 +52,22 @@ const ProfileInformation = (props: Props) => {
             {avatarName.lastPart ? <span>&nbsp; {avatarName.lastPart}</span> : null}
           </span>
           <div className={styles.wallet}>
-            <img src={Wallet} className="iconSize" />
+            <img src={Wallet} className={styles.walletIcon} />
             <Profile textOnly address={avatar ? avatar.ethAddress : profileAddress} />
             <Button basic onClick={handleCopyLink} className={styles.copyLink}>
               <CopyIcon />
             </Button>
           </div>
-          {isLoggedInProfile && (
+          {isSocialClientReady && (
             <div className={styles.basicCenteredRow}>
-              <img src={People} className="iconSize" />
-              {/* TODO: this information should be based on actual friends */}
-              {t('profile_information.friends', {
-                count: 714
-              })}
+              {isLoggedInProfile ? <FriendsCounter /> : <MutualFriendsCounter friendAddress={profileAddress} />}
             </div>
           )}
           {avatar && <span className={styles.description}>{avatar.description}</span>}
         </div>
       </div>
       <div className={styles.actions}>
-        {shouldShowFriendsButton ? <FriendshipButton friendAddress={loggedInAddress} /> : null}
+        {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
         {loggedInAddress ? <WorldsButton address={loggedInAddress} /> : null}
         <Dropdown
           className={styles.smallButton}

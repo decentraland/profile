@@ -3,7 +3,6 @@
     "edit": "Editar Avatar"
   },
   "profile_information": {
-    "friends": "{count} {count, plural, one {Amigo} other {Amigos}}",
     "default_name": "Sin nombrar",
     "edit": "Editar Perfil",
     "copied": "Copiado",
@@ -32,6 +31,16 @@
     "accept_request": "Acceptar petición",
     "blocked": "Bloqueado",
     "unfriend": "Dejar de ser amigo"
+  },
+  "friends_modal": {
+    "friends_title": "Amigos",
+    "mutuals_title": "Amigos en común"
+  },
+  "friends_counter": {
+    "friends": "{count} {count, plural, one {amigo} other {amigos}}"
+  },
+  "mutual_friends_counter": {
+    "mutual": "amigos en común"
   },
   "asset_card": {
     "listings": "Collecionables",

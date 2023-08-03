@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
@@ -12,24 +12,9 @@ import { Props } from './FriendshipButton.types'
 import styles from './FriendshipButton.module.css'
 
 const FriendshipButton = (props: Props) => {
-  const {
-    friendshipStatus,
-    className,
-    isLoading,
-    onFetchFriends,
-    onAddFriend,
-    onCancelFriendRequest,
-    onAcceptFriendRequest,
-    onRemoveFriend
-  } = props
+  const { friendshipStatus, className, isLoading, onAddFriend, onCancelFriendRequest, onAcceptFriendRequest, onRemoveFriend } = props
 
   const [isHovering, setIsHovering] = useState(false)
-
-  useEffect(() => {
-    if (!isLoading) {
-      onFetchFriends()
-    }
-  }, [onFetchFriends])
 
   const handleButtonClick = useCallback(() => {
     switch (friendshipStatus) {
@@ -51,7 +36,7 @@ const FriendshipButton = (props: Props) => {
       case FriendshipStatus.NOT_FRIEND:
         return t('friendship_button.add_friend')
       case FriendshipStatus.PENDING_REQUEST:
-        return isHovering ? t('friendship_button.pending') : t('friendship_button.cancel_request')
+        return isHovering ? t('friendship_button.cancel_request') : t('friendship_button.pending')
       case FriendshipStatus.PENDING_RESPONSE:
         return t('friendship_button.accept_request')
       case FriendshipStatus.BLOCKED:

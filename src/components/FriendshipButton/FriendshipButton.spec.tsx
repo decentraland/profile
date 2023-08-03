@@ -14,7 +14,6 @@ function renderFriendshipButton(props: Partial<Props> = {}) {
       friendAddress="0x1234"
       onAcceptFriendRequest={jest.fn()}
       onRemoveFriend={jest.fn()}
-      onFetchFriends={jest.fn()}
       onAddFriend={jest.fn()}
       onCancelFriendRequest={jest.fn()}
       {...props}
@@ -41,7 +40,7 @@ describe('when rendering the button in its loading state', () => {
 describe.each([
   [FriendshipStatus.FRIEND, t('friendship_button.friends'), t('friendship_button.unfriend'), true],
   [FriendshipStatus.NOT_FRIEND, t('friendship_button.add_friend'), t('friendship_button.add_friend'), false],
-  [FriendshipStatus.PENDING_REQUEST, t('friendship_button.cancel_request'), t('friendship_button.pending'), true],
+  [FriendshipStatus.PENDING_REQUEST, t('friendship_button.pending'), t('friendship_button.cancel_request'), true],
   [FriendshipStatus.PENDING_RESPONSE, t('friendship_button.accept_request'), t('friendship_button.accept_request'), false],
   [FriendshipStatus.BLOCKED, t('friendship_button.blocked'), t('friendship_button.blocked'), true]
 ])('when rendering the button for a friend with the status "%s"', (status, notHoveredText, hoveredText, isInverted) => {
