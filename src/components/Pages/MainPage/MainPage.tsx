@@ -7,6 +7,7 @@ import { Loader } from 'decentraland-ui'
 import { locations } from '../../../modules/routing/locations'
 import { getView } from '../../../utils/view'
 import { Avatar } from '../../Avatar'
+import Overview from '../../Overview'
 import { PageLayout } from '../../PageLayout'
 import { ProfileInformation } from '../../ProfileInformation'
 import { nullAddress } from './constants'
@@ -57,7 +58,7 @@ function MainPage(props: Props) {
                 </Tabs.Tab>
               ))}
             </Tabs>
-            <div>content</div>
+            <Overview profileAddress={profileAddress ?? loggedInAddress ?? ''} />
           </div>
         </div>
       )}
