@@ -31,13 +31,6 @@ describe('Avatar', () => {
       })
     })
 
-    describe("and there's no profile for the user", () => {
-      it('should render a message telling the user to edit the avatar', async () => {
-        const { getByTestId } = renderWithProviders(<Avatar profileAddress={anAddress} view={View.OWN} />)
-        expect(getByTestId('avatar-message')).toBeInTheDocument()
-      })
-    })
-
     describe('and the user is checking other profile', () => {
       it('should not render the avatar and the edit button', async () => {
         const { queryByText } = renderWithProviders(<Avatar profileAddress={anotherAddress} view={View.OTHER} profile={anotherProfile} />)

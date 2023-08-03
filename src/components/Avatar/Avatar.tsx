@@ -46,7 +46,7 @@ const Avatar = (props: Props) => {
             disableBackground={true}
             profile={profileAddress}
           />
-          {(!profile && view === View.OWN) || isError ? (
+          {(!profile && view === View.OWN && !isLoadingWearablePreview) || isError ? (
             <div data-testid="avatar-message" className={styles.message}>
               {t('avatar.message')}
             </div>
