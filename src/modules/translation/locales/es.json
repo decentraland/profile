@@ -41,5 +41,10 @@
   },
   "mutual_friends_counter": {
     "mutual": "amigos en común"
+  },
+  "overview": {
+    "start_dressing": "Comienza a vestirte de formas más allá de tu imaginación",
+    "get_collectibles": "¡Obtén tu primer coleccionable y lúcete en Decentraland!",
+    "go_to_marketplace": "ir al marketplace"
   }
 }
