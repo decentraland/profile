@@ -91,7 +91,7 @@ const ProfileInformation = (props: Props) => {
               icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
               text={` ${t('profile_information.share_on_tw')}`}
               href={`${twitterURL}${encodeURIComponent(
-                `${t('profile_information.tw_message')} ${PROFILE_URL}${locations.account(profileAddress)}`
+                `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
               )}`}
               target="_blank"
             />
