@@ -58,7 +58,7 @@ function MainPage(props: Props) {
                 </Tabs.Tab>
               ))}
             </Tabs>
-            <Overview />
+            <Overview profileAddress={profileAddress ?? loggedInAddress ?? ''} />
           </div>
         </div>
       )}
