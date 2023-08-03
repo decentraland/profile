@@ -43,8 +43,6 @@ const WorldsButton = (props: Props) => {
     onFetchWorlds(address)
   }, [address])
 
-  console.log({ hasWorlds, isLoading, hasNames, isLoggedIn })
-
   return (
     <>
       <Dropdown
