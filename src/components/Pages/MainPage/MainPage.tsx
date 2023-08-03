@@ -6,6 +6,7 @@ import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
 import { Loader } from 'decentraland-ui'
 import { locations } from '../../../modules/routing/locations'
 import { Avatar } from '../../Avatar'
+import Overview from '../../Overview'
 import { PageLayout } from '../../PageLayout'
 import { ProfileInformation } from '../../ProfileInformation'
 import { nullAddress } from './constants'
@@ -44,7 +45,9 @@ function MainPage(props: Props) {
         <Loader active />
       ) : (
         <div className={styles.MainPage}>
-          {selectedTab === tabs[0].value && <Avatar profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />}
+          {selectedTab === tabs[0].value && (
+            <Avatar profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
+          )}
           <div className={styles.infoContainer}>
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider />
@@ -55,7 +58,7 @@ function MainPage(props: Props) {
                 </Tabs.Tab>
               ))}
             </Tabs>
-            <div>content</div>
+            <Overview profileAddress={profileAddress ?? loggedInAddress ?? ''} />
           </div>
         </div>
       )}

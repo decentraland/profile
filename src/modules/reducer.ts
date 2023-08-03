@@ -6,6 +6,7 @@ import { StorageState, storageReducer as storage, storageReducerWrapper } from '
 import { TranslationState, translationReducer as translation } from 'decentraland-dapps/dist/modules/translation/reducer'
 import { WalletState, walletReducer as wallet } from 'decentraland-dapps/dist/modules/wallet/reducer'
 import { IdentityState, identityReducer as identity } from './identity/reducer'
+import { ItemsState, itemsReducer as items } from './items/reducer'
 import { SocialState, socialReducer as social } from './social/reducer'
 import { WorldState, worldReducer as world } from './world/reducer'
 
@@ -21,7 +22,8 @@ export const createRootReducer = (middlewares: Middleware[], preloadedState = {}
         profile,
         identity,
         social,
-        world
+        world,
+        items
       })
     ),
     preloadedState,
@@ -47,6 +49,7 @@ export type RootState = {
   translation: TranslationState
   wallet: WalletState
   features: FeaturesState
+  items: ItemsState
 }
 
 export type RootStore = Store<RootState>
