@@ -1,5 +1,5 @@
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
-import { View } from '../../types'
+import { View } from '../../utils/view'
 
 export type Props = {
   profile?: Profile

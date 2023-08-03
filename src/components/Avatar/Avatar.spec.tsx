@@ -2,7 +2,7 @@ import React from 'react'
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { renderWithProviders } from '../../tests/tests'
-import { View } from '../../types'
+import { View } from '../../utils/view'
 import Avatar from './Avatar'
 
 describe('Avatar', () => {
