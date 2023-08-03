@@ -69,7 +69,7 @@ const ProfileInformation = (props: Props) => {
       </div>
       <div className={styles.actions}>
         {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
-        {loggedInAddress ? <WorldsButton address={loggedInAddress} /> : null}
+        {loggedInAddress ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
         <Dropdown
           className={styles.smallButton}
           icon={
