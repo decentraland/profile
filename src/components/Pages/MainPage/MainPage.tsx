@@ -37,6 +37,7 @@ function MainPage(props: Props) {
       navigate(locations.signIn(locations.root()))
     }
   }, [isLoading, loggedInAddress, profileAddress])
+  const isViewingLoggedInProfile = profileAddress === loggedInAddress || (profileAddress === undefined && loggedInAddress !== undefined)
 
   return (
     <PageLayout>
@@ -44,7 +45,9 @@ function MainPage(props: Props) {
         <Loader active />
       ) : (
         <div className={styles.MainPage}>
-          {selectedTab === tabs[0].value && <Avatar profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />}
+          {selectedTab === tabs[0].value && (
+            <Avatar isLoggedIn={isViewingLoggedInProfile} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
+          )}
           <div className={styles.infoContainer}>
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider />
