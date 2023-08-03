@@ -14,9 +14,9 @@ const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps =>
   const isLoadingLoggedInUserProfile = getAddress(state) && isLoadingProfile(state, getAddress(state))
 
   return {
-    profileAddress: addressFromPath,
+    profileAddress: addressFromPath?.toLowerCase(),
     isLoading: isLoadingAddressFromPath || isLoadingLoggedInUserProfile || isLoggingIn(state) || isConnecting(state),
-    loggedInAddress: getAddress(state)
+    loggedInAddress: getAddress(state)?.toLowerCase()
   }
 }
 

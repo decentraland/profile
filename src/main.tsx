@@ -18,7 +18,11 @@ import './index.css'
 
 const router = createBrowserRouter([
   {
-    path: '/:profileAddress?',
+    path: '/',
+    element: <MainPage />
+  },
+  {
+    path: '/accounts/:profileAddress?',
     element: <MainPage />
   },
   {

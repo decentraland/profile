@@ -9,6 +9,7 @@ import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
 import { config } from '../../modules/config/config'
 import { getAvatarName } from '../../modules/profile/utils'
+import { locations } from '../../modules/routing/locations'
 import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
 import { EDIT_PROFILE_URL } from '../Avatar/consts'
@@ -33,7 +34,7 @@ const ProfileInformation = (props: Props) => {
   const avatar = profile?.avatars[0]
 
   const handleCopyLink = useCallback(() => {
-    const url = `${PROFILE_URL}/${profileAddress}`
+    const url = `${PROFILE_URL}${locations.account(profileAddress)}`
     copyText(url, setHasCopied)
   }, [setHasCopied, profileAddress])
 
@@ -69,7 +70,7 @@ const ProfileInformation = (props: Props) => {
       </div>
       <div className={styles.actions}>
         {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
-        {loggedInAddress ? <WorldsButton address={loggedInAddress} /> : null}
+        {loggedInAddress ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
         <Dropdown
           className={styles.smallButton}
           icon={
@@ -89,7 +90,9 @@ const ProfileInformation = (props: Props) => {
               as={'a'}
               icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
               text={` ${t('profile_information.share_on_tw')}`}
-              href={`${twitterURL}${encodeURIComponent(`${t('profile_information.tw_message')} ${PROFILE_URL}/${profileAddress}`)}`}
+              href={`${twitterURL}${encodeURIComponent(
+                `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
+              )}`}
               target="_blank"
             />
           </Dropdown.Menu>

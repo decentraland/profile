@@ -1,6 +1,7 @@
 {
   "avatar": {
-    "edit": "編輯頭像"
+    "edit": "編輯頭像",
+    "message": "在 Decentraland 中编辑您的头像"
   },
   "profile_information": {
     "default_name": "未命名的",
