@@ -5,6 +5,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
 import { Loader } from 'decentraland-ui'
 import { locations } from '../../../modules/routing/locations'
+import { getView } from '../../../types'
 import { Avatar } from '../../Avatar'
 import { PageLayout } from '../../PageLayout'
 import { ProfileInformation } from '../../ProfileInformation'
@@ -37,7 +38,7 @@ function MainPage(props: Props) {
       navigate(locations.signIn(locations.root()))
     }
   }, [isLoading, loggedInAddress, profileAddress])
-  const isViewingLoggedInProfile = profileAddress === loggedInAddress || (profileAddress === undefined && loggedInAddress !== undefined)
+  const view = getView(profileAddress, loggedInAddress)
 
   return (
     <PageLayout>
@@ -45,9 +46,7 @@ function MainPage(props: Props) {
         <Loader active />
       ) : (
         <div className={styles.MainPage}>
-          {selectedTab === tabs[0].value && (
-            <Avatar isLoggedIn={isViewingLoggedInProfile} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
-          )}
+          {selectedTab === tabs[0].value && <Avatar view={view} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />}
           <div className={styles.infoContainer}>
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider />

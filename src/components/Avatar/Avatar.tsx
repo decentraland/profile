@@ -8,6 +8,7 @@ import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { WearablePreview } from 'decentraland-ui/dist/components/WearablePreview/WearablePreview'
 import Edit from '../../assets/icons/Edit.svg'
 import { config } from '../../modules/config'
+import { View } from '../../types'
 import { EDIT_PROFILE_URL } from './consts'
 import { Props } from './Avatar.types'
 import styles from './Avatar.module.css'
@@ -15,7 +16,7 @@ import styles from './Avatar.module.css'
 const EXPLORER_URL = config.get('EXPLORER_URL', '')
 
 const Avatar = (props: Props) => {
-  const { profile, profileAddress, isLoggedIn } = props
+  const { profile, profileAddress, view } = props
   const [isLoadingWearablePreview, setIsLoadingWearablePreview] = useState(true)
   const [isError, setIsError] = useState(false)
 
@@ -33,7 +34,7 @@ const Avatar = (props: Props) => {
       {!profile || isError ? (
         <>
           <div className={styles.noProfile}>
-            {!profile && isLoggedIn ? <div className={styles.message}>Edit your avatar in Decentraland</div> : null}
+            {!profile && view === View.OWN ? <div className={styles.message}>{t('avatar.message')}</div> : null}
           </div>
         </>
       ) : isLoadingWearablePreview ? (
@@ -52,7 +53,7 @@ const Avatar = (props: Props) => {
           profile={profileAddress}
         />
       ) : null}
-      {isLoggedIn && (
+      {view === View.OWN && (
         <Button primary fluid className="customIconButton" as={Link} to={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} target="_blank">
           <img src={Edit} className="iconSize" />
           &nbsp;

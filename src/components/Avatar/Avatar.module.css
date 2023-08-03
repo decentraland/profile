@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 80vh;
   width: 15%;
+  min-width: 260px;
   align-items: center;
 }
 
@@ -18,7 +19,6 @@
 .noProfile {
   height: 90%;
   width: 100%;
-  min-width: 260px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

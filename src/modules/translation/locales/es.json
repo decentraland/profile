@@ -1,6 +1,7 @@
 {
   "avatar": {
-    "edit": "Editar Avatar"
+    "edit": "Editar Avatar",
+    "message": "Edita tu Avatar en Decentraland"
   },
   "profile_information": {
     "default_name": "Sin nombrar",
