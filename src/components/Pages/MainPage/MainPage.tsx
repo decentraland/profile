@@ -6,6 +6,7 @@ import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
 import { Loader } from 'decentraland-ui'
 import { locations } from '../../../modules/routing/locations'
 import { Avatar } from '../../Avatar'
+import Overview from '../../Overview'
 import { PageLayout } from '../../PageLayout'
 import { ProfileInformation } from '../../ProfileInformation'
 import { nullAddress } from './constants'
@@ -13,6 +14,7 @@ import { MainPageParams, Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
+  // aaaa
   const { isLoading, onFetchProfile, loggedInAddress } = props
   const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('tabs.overview'), value: t('tabs.overview') }]
 
@@ -46,7 +48,9 @@ function MainPage(props: Props) {
         <Loader active />
       ) : (
         <div className={styles.MainPage}>
-          {selectedTab === tabs[0].value && <Avatar profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />}
+          {selectedTab === tabs[0].value && (
+            <Avatar profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
+          )}
           <div className={styles.infoContainer}>
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider />
@@ -57,7 +61,7 @@ function MainPage(props: Props) {
                 </Tabs.Tab>
               ))}
             </Tabs>
-            <div>content</div>
+            <Overview />
           </div>
         </div>
       )}
