@@ -1,14 +1,9 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import { ItemAPI } from '../clients/items'
-import { config } from '../config'
 import { fetchItemsRequest, fetchItemsSuccess, fetchItemsFailure, FetchItemsRequestAction } from './actions'
 
-export const NFT_SERVER_URL = config.get('NFT_SERVER_URL')
-
-export function* itemSagas() {
-  const itemAPI = new ItemAPI(NFT_SERVER_URL)
-
+export function* itemSagas(api: ItemAPI) {
   yield takeEvery(fetchItemsRequest.type, handleFetchItemsRequest)
 
   function* handleFetchItemsRequest(action: FetchItemsRequestAction) {
@@ -19,7 +14,7 @@ export function* itemSagas() {
     }
 
     try {
-      const response: Awaited<ReturnType<ItemAPI['get']>> = yield call([itemAPI, 'get'], filters)
+      const response: Awaited<ReturnType<ItemAPI['get']>> = yield call([api, 'get'], filters)
 
       yield put(fetchItemsSuccess(response.data))
     } catch (error) {

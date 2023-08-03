@@ -6,36 +6,34 @@ import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { Button } from 'decentraland-ui'
 import shirt from '../../assets/images/shirt.svg'
 import { config } from '../../modules/config'
-import { getWearableIds } from './utils'
 import { Props } from './Overview.types'
 import styles from './Overview.module.css'
 
 const MARKETPLACE_URL = config.get('MARKETPLACE_URL', '')
 
 const Overview = (props: Props) => {
-  const { isLoading, items, onFetchItems, profile } = props
-
-  const wratableIds =
-    profile?.avatars[0].avatar.wearables.length &&
-    profile?.avatars[0].avatar.wearables.length > 0 &&
-    getWearableIds(profile?.avatars[0].avatar.wearables)
+  const { isLoading, items, onFetchItems, wearableIds } = props
 
   useEffect(() => {
-    wratableIds && onFetchItems(wratableIds)
-  }, [profile])
+    if (wearableIds.length > 0) {
+      onFetchItems(wearableIds)
+    }
+  }, [wearableIds])
 
   return (
     <>
       {isLoading ? (
         <Loader active />
-      ) : wratableIds && items.length > 0 ? (
+      ) : items.length > 0 ? (
         <div className={styles.Overview}>
           {items.map((item: Item) => (
-            <AssetCard asset={item} assetFilters={{} as AssetCardFilters} onClickCardURL={MARKETPLACE_URL} />
+            <a href={`${MARKETPLACE_URL}${item.url}`} rel="noopener noreferrer" target="_blank">
+              <AssetCard asset={item} assetFilters={{} as AssetCardFilters} onClickCardURL="" />
+            </a>
           ))}
         </div>
       ) : (
-        <div className={styles.emptyItems}>
+        <div className={styles.emptyItems} data-testid="overview-empty">
           <img src={shirt} className={styles.emptyIcon} />
           <span className={styles.title}>{t('overview.start_dressing')}</span>
           <span>{t('overview.get_collectibles')}</span>

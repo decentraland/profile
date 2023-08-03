@@ -3,6 +3,7 @@ import { createAnalyticsSaga } from 'decentraland-dapps/dist/modules/analytics/s
 import { featuresSaga } from 'decentraland-dapps/dist/modules/features/sagas'
 import { createProfileSaga } from 'decentraland-dapps/dist/modules/profile/sagas'
 import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
+import { ItemAPI } from './clients/items'
 import { config } from './config'
 import { identitySaga } from './identity/sagas'
 import { itemSagas } from './items/sagas'
@@ -14,6 +15,7 @@ import type { MarketplaceGraphClient } from '../lib/MarketplaceGraphClient'
 import type { ContentClient } from 'dcl-catalyst-client'
 
 const analyticsSaga = createAnalyticsSaga()
+export const NFT_SERVER_URL = config.get('NFT_SERVER_URL')
 
 export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphClient: MarketplaceGraphClient) {
   yield all([
@@ -30,7 +32,7 @@ export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphCl
     translationSaga(),
     identitySaga(),
     modalSagas(),
-    itemSagas(),
+    itemSagas(new ItemAPI(NFT_SERVER_URL)),
     socialSagas(),
     createProfileSaga({ peerUrl: config.get('PEER_URL') })(),
     featuresSaga({
