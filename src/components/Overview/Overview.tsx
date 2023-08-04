@@ -32,7 +32,7 @@ const Overview = (props: Props) => {
         <div className={classNames(styles.Overview, isTabletAndBelow && styles.OverviewMobile)}>
           {items.map((item: Item) => (
             <a href={`${MARKETPLACE_URL}${item.url}`} rel="noopener noreferrer" target="_blank" key={item.id}>
-              <AssetCard asset={item} assetFilters={{} as AssetCardFilters} onClickCardURL={MARKETPLACE_URL} />
+              <AssetCard asset={item} assetFilters={{} as AssetCardFilters} />
             </a>
           ))}
         </div>
