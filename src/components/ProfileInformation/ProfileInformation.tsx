@@ -8,11 +8,12 @@ import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
 import { config } from '../../modules/config/config'
-import { getAvatarName } from '../../modules/profile/utils'
+import { getAvatarName, hasAboutInformation } from '../../modules/profile/utils'
 import { locations } from '../../modules/routing/locations'
 import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
 import { EDIT_PROFILE_URL } from '../Avatar/consts'
+import { AvatarLink } from '../AvatarLink'
 import CopyIcon from '../CopyIcon'
 import FriendsCounter from '../FriendsCounter'
 import FriendshipButton from '../FriendshipButton'
@@ -27,7 +28,7 @@ const PROFILE_URL = config.get('PROFILE_URL', '')
 const ADDRESS_SHORTENED_LENGTH = 24
 
 const ProfileInformation = (props: Props) => {
-  const { profile, isSocialClientReady, loggedInAddress, profileAddress } = props
+  const { profile, isSocialClientReady, loggedInAddress, profileAddress, onViewMore } = props
 
   const [hasCopiedAddress, setHasCopied] = useTimer(1200)
 
@@ -38,9 +39,14 @@ const ProfileInformation = (props: Props) => {
     copyText(url, setHasCopied)
   }, [setHasCopied, profileAddress])
 
+  const handleViewMore = useCallback(() => {
+    avatar && onViewMore && onViewMore(avatar)
+  }, [avatar, onViewMore])
+
   const isLoggedInProfile = loggedInAddress === profileAddress
   const avatarName = getAvatarName(avatar)
   const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
+  const shouldShowViewMoreButton = hasAboutInformation(avatar)
 
   return (
     <div className={styles.ProfileInformation}>
@@ -66,52 +72,66 @@ const ProfileInformation = (props: Props) => {
             </div>
           )}
           {avatar && <span className={styles.description}>{avatar.description}</span>}
+          {shouldShowViewMoreButton && (
+            <div className={styles.basicCenteredRow}>
+              <Button basic className={styles.viewMore} onClick={handleViewMore}>
+                {t('profile_information.view_more')}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.actions}>
-        {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
-        {loggedInAddress ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
-        <Dropdown
-          className={styles.smallButton}
-          icon={
-            <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
-              <img src={Share} className="iconSize" />
-            </Button>
-          }
-          direction="left"
-        >
-          <Dropdown.Menu>
-            <Dropdown.Item
-              icon={<CopyIcon color="white" />}
-              text={hasCopiedAddress ? ` ${t('profile_information.copied')}` : ` ${t('profile_information.copy_link')}`}
-              onClick={handleCopyLink}
-            />
-            <Dropdown.Item
-              as={'a'}
-              icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
-              text={` ${t('profile_information.share_on_tw')}`}
-              href={`${twitterURL}${encodeURIComponent(
-                `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
-              )}`}
-              target="_blank"
-            />
-          </Dropdown.Menu>
-        </Dropdown>
-        {isLoggedInProfile && (
+        <div className={styles.buttons}>
+          {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
+          {loggedInAddress ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
           <Dropdown
             className={styles.smallButton}
             icon={
-              <Button inverted className={styles.smallButton}>
-                <Icon name="ellipsis horizontal"></Icon>
+              <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
+                <img src={Share} className="iconSize" />
               </Button>
             }
             direction="left"
           >
             <Dropdown.Menu>
-              <Dropdown.Item icon={'user outline'} text={t('profile_information.edit')} href={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} />
+              <Dropdown.Item
+                icon={<CopyIcon color="white" />}
+                text={hasCopiedAddress ? ` ${t('profile_information.copied')}` : ` ${t('profile_information.copy_link')}`}
+                onClick={handleCopyLink}
+              />
+              <Dropdown.Item
+                as={'a'}
+                icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
+                text={` ${t('profile_information.share_on_tw')}`}
+                href={`${twitterURL}${encodeURIComponent(
+                  `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
+                )}`}
+                target="_blank"
+              />
             </Dropdown.Menu>
           </Dropdown>
-        )}
+          {isLoggedInProfile && (
+            <Dropdown
+              className={styles.smallButton}
+              icon={
+                <Button inverted className={styles.smallButton}>
+                  <Icon name="ellipsis horizontal"></Icon>
+                </Button>
+              }
+              direction="left"
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item icon={'user outline'} text={t('profile_information.edit')} href={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} />
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
+        </div>
+        <div className={styles.links}>
+          {avatar?.links?.map((link, index) => (
+            <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
+          ))}
+        </div>
       </div>
     </div>
   )

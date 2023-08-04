@@ -9,7 +9,8 @@
     "copied": "已復制",
     "copy_link": "複製鏈接",
     "share_on_tw": "在 Twitter 上分享",
-    "tw_message": "嘿，查看我在 decentraland 中的個人資料\n"
+    "tw_message": "嘿，查看我在 decentraland 中的個人資料\n",
+    "view_more": "查看更多"
   },
   "worlds_button": {
     "get_a_name": "取一个独特的名字",
@@ -47,5 +48,21 @@
     "start_dressing": "开始以超出你想象的方式穿着",
     "get_collectibles": "获得你的第一件可收藏的服饰,在Decentraland展示它!",
     "go_to_marketplace": "前往市场"
+  },
+  "about_modal": {
+    "title": "关于",
+    "description_label": "关于",
+    "country_label": "国家",
+    "employment_status_label": "就业状况",
+    "gender_label": "性别",
+    "pronouns_label": "代词",
+    "relationship_status_label": "关系状态",
+    "sexual_orientation_label": "性取向",
+    "language_label": "语言",
+    "profession_label": "职业",
+    "birthdate_label": "出生日期",
+    "real_name_label": "真正的名字",
+    "hobbies_label": "兴趣爱好",
+    "links_label": "链接"
   }
 }

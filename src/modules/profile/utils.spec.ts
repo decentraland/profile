@@ -1,8 +1,6 @@
-import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { getAvatarName } from './utils'
-
-type Avatar = Profile['avatars'][0]
+import { Avatar } from './types'
+import { getAvatarName, getAvatarFacts, hasAboutInformation } from './utils'
 
 let avatar: Avatar | undefined
 
@@ -60,6 +58,88 @@ describe("when getting an avatar's name", () => {
         it("should return the avatar's name with the last part", () => {
           expect(getAvatarName(avatar)).toEqual({ name: avatar?.name, lastPart })
         })
+      })
+    })
+  })
+})
+
+describe('when getting if an avatar has about information', () => {
+  describe('and the avatar is undefined', () => {
+    beforeEach(() => {
+      avatar = undefined
+    })
+
+    it('should return false', () => {
+      expect(hasAboutInformation(avatar)).toEqual(false)
+    })
+  })
+
+  describe('and the avatar is defined', () => {
+    beforeEach(() => {
+      avatar = {
+        userId: '0xc0ffee254729296a45a3885639AC7E10F9d54979',
+        name: 'aName'
+      } as Avatar
+    })
+
+    describe('and the avatar has an empty description and does not have avatar facts nor links', () => {
+      beforeEach(() => {
+        avatar = {
+          ...avatar,
+          description: ''
+        } as Avatar
+      })
+
+      it('should return false', () => {
+        expect(hasAboutInformation(avatar)).toEqual(false)
+      })
+    })
+
+    describe('and the avatar has a description but does not have avatar facts nor links', () => {
+      beforeEach(() => {
+        avatar = {
+          ...avatar,
+          description: 'This is my description'
+        } as Avatar
+      })
+
+      it('should return true', () => {
+        expect(hasAboutInformation(avatar)).toEqual(true)
+      })
+    })
+
+    describe.each(
+      Object.entries(
+        getAvatarFacts({
+          userId: '0xc0ffee254729296a45a3885639AC7E10F9d54979',
+          name: 'aName'
+        } as Avatar)
+      )
+    )('and the avatar has an empty description but has some avatar facts like %s', key => {
+      beforeEach(() => {
+        avatar = {
+          ...avatar,
+          description: '',
+          [key]: 'aValue'
+        } as unknown as Avatar
+      })
+
+      it('should return true', () => {
+        expect(hasAboutInformation(avatar)).toEqual(true)
+      })
+    })
+
+    describe('and the avatar has an empty description but has some links', () => {
+      beforeEach(() => {
+        avatar = {
+          ...avatar,
+          description: '',
+          links: [{ title: 'aName', url: 'https://anUrl.xyz' }]
+        } as Avatar
+      })
+
+      it('should return true', () => {
+        expect(hasAboutInformation(avatar)).toEqual(true)
       })
     })
   })

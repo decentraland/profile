@@ -6,11 +6,24 @@
   width: 100%;
 }
 
-.ProfileInformation .actions {
+.ProfileInformation .actions  {
+  display: flex;
+  flex-direction: column;
+  row-gap: 75px;
+}
+
+.ProfileInformation .actions .buttons {
   display: flex;
   flex-direction: row;
-  gap: 13px;
+  justify-content: end;
+  column-gap: 13px;
   height: 34px;
+}
+
+.ProfileInformation .actions .links {
+  display: flex;
+  align-self: end;
+  column-gap: 16px;
 }
 
 .ProfileInformation .basicRow {
@@ -59,7 +72,7 @@
   width: 24px;
 }
 
-.ProfileInformation :global(.ui.button.basic).copyLink {
+.ProfileInformation :global(.ui.button.basic).copyLink, .ProfileInformation :global(.ui.button.basic).viewMore {
   padding: unset;
 }
 
