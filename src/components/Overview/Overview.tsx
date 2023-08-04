@@ -27,8 +27,8 @@ const Overview = (props: Props) => {
       ) : items.length > 0 ? (
         <div className={styles.Overview}>
           {items.map((item: Item) => (
-            <a href={`${MARKETPLACE_URL}${item.url}`} rel="noopener noreferrer" target="_blank">
-              <AssetCard asset={item} assetFilters={{} as AssetCardFilters} key={item.id} />
+            <a href={`${MARKETPLACE_URL}${item.url}`} rel="noopener noreferrer" target="_blank" key={item.id}>
+              <AssetCard asset={item} assetFilters={{} as AssetCardFilters} />
             </a>
           ))}
         </div>
