@@ -21,13 +21,19 @@ const Overview = (props: Props) => {
   }, [wearableIds])
 
   return (
-    <>
+    <div data-testid="overview">
       {isLoading ? (
         <Loader active />
       ) : items.length > 0 ? (
         <div className={styles.Overview}>
           {items.map((item: Item) => (
-            <a href={`${MARKETPLACE_URL}${item.url}`} rel="noopener noreferrer" target="_blank" key={item.id}>
+            <a
+              href={`${MARKETPLACE_URL}${item.url}`}
+              rel="noopener noreferrer"
+              target="_blank"
+              key={item.id}
+              data-testid={`overview-${item.id}`}
+            >
               <AssetCard asset={item} assetFilters={{} as AssetCardFilters} />
             </a>
           ))}
@@ -42,7 +48,7 @@ const Overview = (props: Props) => {
           </Button>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
