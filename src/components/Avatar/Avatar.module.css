@@ -8,7 +8,7 @@
 }
 
 .noProfile iframe {
-  filter: blur(18px) brightness(0%);
+  filter: blur(8px) brightness(0%);
 }
 
 .loading {
