@@ -13,6 +13,11 @@
     "view_more": "View More",
     "blocked": "Blocked"
   },
+  "blocked": {
+    "blocked_logged_user_title": "{name} blocked you",
+    "blocked_profile_title": "You blocked {name}",
+    "description": "This means that you can't see this person's profile, send a friend request, messages and see their status."
+  },
   "worlds_button": {
     "get_a_name": "Get an unique name",
     "activate_world": "Activate my world",

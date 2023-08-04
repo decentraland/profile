@@ -7,9 +7,10 @@ export type Props = {
   loggedInAddress?: string
   profileAddress?: string
   isLoading: boolean
+  isBlocked: boolean
 }
 
-export type MapStateProps = Pick<Props, 'loggedInAddress' | 'isLoading' | 'profileAddress'>
+export type MapStateProps = Pick<Props, 'loggedInAddress' | 'isLoading' | 'profileAddress' | 'isBlocked'>
 export type MapDispatchProps = Pick<Props, 'onFetchProfile'>
 export type MapDispatch = Dispatch<LoadProfileRequestAction>
 type Params = {

@@ -7,6 +7,7 @@ import { Loader } from 'decentraland-ui'
 import { locations } from '../../../modules/routing/locations'
 import { getView } from '../../../utils/view'
 import { Avatar } from '../../Avatar'
+import { BlockedUser } from '../../BlockedUser'
 import Overview from '../../Overview'
 import { PageLayout } from '../../PageLayout'
 import { ProfileInformation } from '../../ProfileInformation'
@@ -15,8 +16,9 @@ import { Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
-  const { isLoading, onFetchProfile, profileAddress, loggedInAddress } = props
+  const { isLoading, profileAddress, loggedInAddress, isBlocked, onFetchProfile } = props
   const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('tabs.overview'), value: t('tabs.overview') }]
+  const view = getView(loggedInAddress, profileAddress)
 
   const [selectedTab, setSelectedTab] = useState<string>(tabs[0].value)
 
@@ -39,7 +41,6 @@ function MainPage(props: Props) {
       navigate(locations.signIn(locations.root()))
     }
   }, [isLoading, loggedInAddress, profileAddress])
-  const view = getView(loggedInAddress, profileAddress)
 
   return (
     <PageLayout>
@@ -51,14 +52,21 @@ function MainPage(props: Props) {
           <div className={styles.infoContainer}>
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider />
-            <Tabs>
-              {tabs.map(tab => (
-                <Tabs.Tab key={tab.value} active={selectedTab === tab.value} onClick={() => handleTabChange(tab.value)}>
-                  <span className={styles.tab}>{tab.displayValue}</span>
-                </Tabs.Tab>
-              ))}
-            </Tabs>
-            <Overview profileAddress={profileAddress ?? loggedInAddress ?? ''} />
+            {!isBlocked && (
+              <div data-testid="TBD">
+                <Tabs>
+                  {tabs.map(tab => (
+                    <Tabs.Tab key={tab.value} active={selectedTab === tab.value} onClick={() => handleTabChange(tab.value)}>
+                      <span className={styles.tab}>{tab.displayValue}</span>
+                    </Tabs.Tab>
+                  ))}
+                </Tabs>
+                <Overview profileAddress={profileAddress ?? loggedInAddress ?? ''} />
+              </div>
+            )}
+            {isBlocked && (
+              <BlockedUser profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
+            )}
           </div>
         </div>
       )}
