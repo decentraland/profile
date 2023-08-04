@@ -100,6 +100,19 @@ describe('ProfileInformation', () => {
 
         expect(twitterShareButton.hasAttributeNS('href', twitterURL))
       })
+
+      it('should not render the blocked button', () => {
+        const { queryByTestId } = renderProfileInformation({
+          profileAddress: anAddress,
+          loggedInAddress: anAddress,
+          profile: aProfile,
+          isSocialClientReady: false,
+          isBlockedByLoggedUser: true,
+          hasBlockedLoggedUser: true
+        })
+
+        expect(queryByTestId(blockedButtonTestId)).toBeNull()
+      })
     })
 
     describe('and the user is checking other profile', () => {

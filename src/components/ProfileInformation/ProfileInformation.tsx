@@ -46,7 +46,7 @@ const ProfileInformation = (props: Props) => {
   const isLoggedInProfile = loggedInAddress === profileAddress
   const avatarName = getAvatarName(avatar)
   const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
-  const isBlocked = isBlockedByLoggedUser || hasBlockedLoggedUser
+  const isBlocked = !isLoggedInProfile && (isBlockedByLoggedUser || hasBlockedLoggedUser)
   const shouldShowViewMoreButton = hasAboutInformation(avatar) && !isBlocked
 
   return (
@@ -84,7 +84,7 @@ const ProfileInformation = (props: Props) => {
       </div>
       <div className={styles.actions}>
         <div className={styles.buttons}>
-          {isBlockedByLoggedUser && (
+          {isBlocked && isBlockedByLoggedUser && (
             <Button inverted className={styles.blockedButton} data-testid={blockedButtonTestId}>
               <Icon name="user times" />
               {t('profile_information.blocked')}
