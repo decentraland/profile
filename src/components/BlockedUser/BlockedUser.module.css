@@ -5,19 +5,27 @@
   flex-direction: column;
   text-align: center;
   height: 100%;
+  gap: 30px;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0px;
 }
 
-.Blocked .title {
+.title {
   font-size: 24px;
   font-weight: 600;
   line-height: 29px;
   letter-spacing: 0px;
-  margin-top: 40px;
-  margin-bottom: 30px;
 }
 
-.Blocked .description {
+/* Mobile styles */
+
+.BlockedMobile {
+  padding: 64px 0px 64px 0px;
+  gap: 20px;
+  font-size: 14px;
+}
+
+.titleMobile {
   font-size: 18px;
-  line-height: 22px;
-  letter-spacing: 0px;
 }

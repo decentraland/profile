@@ -8,10 +8,10 @@
 }
 
 .noProfile iframe {
-  filter: blur(18px) brightness(0%);
+  filter: blur(8px) brightness(0%);
 }
 
-.loading { 
+.loading {
   justify-content: center;
 }
 
@@ -22,8 +22,8 @@
 
 .noProfile .message {
   position: absolute;
-  left:50%;
-  top:50%;
+  left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
   padding: 6px 14px 6px 14px;
   text-align: center;
@@ -35,4 +35,20 @@
 .wearablePreview {
   height: 100%;
   position: relative;
+}
+
+/* Mobile styles */
+
+.AvatarMobile {
+  height: 399px;
+  width: unset;
+}
+
+.editMobile {
+  position: absolute;
+  right: 20px;
+  top: 399px;
+  min-width: unset !important;
+  width: unset !important;
+  padding: 10px !important;
 }
