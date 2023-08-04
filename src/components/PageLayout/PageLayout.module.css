@@ -25,4 +25,11 @@
   .content {
     padding: 0;
   }
+
+  .page {
+    background-size: 100% 480px;
+    background-color: black;
+    background-position: initial;
+    position: unset;
+  }
 }

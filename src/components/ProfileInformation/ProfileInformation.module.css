@@ -6,13 +6,13 @@
   width: 100%;
 }
 
-.ProfileInformation .actions  {
+.actions {
   display: flex;
   flex-direction: column;
   row-gap: 75px;
 }
 
-.ProfileInformation .actions .buttons {
+.actions .buttons {
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -20,51 +20,49 @@
   height: 34px;
 }
 
-.ProfileInformation .actions .links {
+.actions .links {
   display: flex;
   align-self: end;
   column-gap: 16px;
 }
 
-.ProfileInformation .basicRow {
+.basicRow {
   display: flex;
   flex-direction: row;
   gap: 36px;
 }
 
-.ProfileInformation .basicCenteredRow {
+.basicCenteredRow {
   align-items: center;
   display: flex;
-  margin-top: 12px;
 }
 
-.ProfileInformation .description {
+.description {
   font-size: 12px;
 }
 
-.ProfileInformation .userName {
+.userName {
   color: var(--text);
   font-size: 24px;
   font-weight: 700;
 }
 
-.ProfileInformation .userNumber {
+.userNumber {
   font-size: 18px;
 }
 
-.ProfileInformation .profileData {
+.profileData {
   gap: 12px;
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.ProfileInformation .wallet {
+.wallet {
   align-items: center;
   display: flex;
   gap: 4px;
   height: 24px;
-  margin-top: 12px;
 }
 
 .walletIcon {
@@ -72,11 +70,12 @@
   width: 24px;
 }
 
-.ProfileInformation :global(.ui.button.basic).copyLink, .ProfileInformation :global(.ui.button.basic).viewMore {
+:global(.ui.button.basic).copyLink,
+:global(.ui.button.basic).viewMore {
   padding: unset;
 }
 
-.ProfileInformation :global(.ui.inverted.button).smallButton {
+:global(.ui.inverted.button).smallButton {
   align-items: center;
   height: 34px;
   min-width: 34px;
@@ -85,7 +84,7 @@
   padding: 0px 0px 0px 9px;
 }
 
-.ProfileInformation :global(.ui.primary.button).smallButton {
+:global(.ui.primary.button).smallButton {
   align-items: center;
   display: flex;
   height: 34px;
@@ -95,12 +94,12 @@
   padding: unset;
 }
 
-.ProfileInformation :global(.ui.primary.button).fluidButton {
+:global(.ui.primary.button).fluidButton {
   padding-bottom: unset;
   padding-top: unset;
 }
 
-.ProfileInformation :global(.ui.dropdown .menu > .item > img).dropdownMenuIcon {
+:global(.ui.dropdown .menu > .item > img).dropdownMenuIcon {
   margin: unset;
   stroke: white;
   height: 20px;
@@ -109,4 +108,46 @@
 
 .Profile.inline .dcl.blockie {
   width: 100px;
+}
+
+:global(.Profile.massive .dcl.avatar-face) {
+  width: 100px;
+  height: 100px;
+}
+
+.column {
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+
+}
+
+/* Mobile styles */
+
+.ProfileInformationMobile {
+  margin-top: -50px;
+
+}
+
+.basicColumn {
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.actionsMobile {
+  position: absolute;
+  right: 16px;
+  top: 470px;
+}
+
+.reverseColumnInformation {
+  flex-direction: column-reverse;
+  display: flex;
+  gap: 8px;
+}
+
+.actions .buttonsMobile {
+  column-gap: 6px;
 }
