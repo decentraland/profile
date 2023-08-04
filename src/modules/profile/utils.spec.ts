@@ -82,7 +82,7 @@ describe('when getting if an avatar has about information', () => {
       } as Avatar
     })
 
-    describe('and the avatar has an empty description and do not have avatar facts nor links', () => {
+    describe('and the avatar has an empty description and does not have avatar facts nor links', () => {
       beforeEach(() => {
         avatar = {
           ...avatar,
