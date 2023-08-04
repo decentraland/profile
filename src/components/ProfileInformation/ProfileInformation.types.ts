@@ -8,10 +8,12 @@ export type Props = {
   profile?: Profile
   profileAddress: string
   isSocialClientReady: boolean
+  isBlockedByLoggedUser: boolean
+  hasBlockedLoggedUser: boolean
   onViewMore: (avatar: Avatar) => void
 }
 
-export type MapStateProps = Pick<Props, 'profile' | 'isSocialClientReady'>
+export type MapStateProps = Pick<Props, 'profile' | 'isSocialClientReady' | 'isBlockedByLoggedUser' | 'hasBlockedLoggedUser'>
 export type MapDispatchProps = Pick<Props, 'onViewMore'>
 export type MapDispatch = Dispatch<OpenModalAction>
 export type OwnProps = Pick<Props, 'profileAddress' | 'loggedInAddress'>

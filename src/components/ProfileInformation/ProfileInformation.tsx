@@ -12,14 +12,14 @@ import { getAvatarName, hasAboutInformation } from '../../modules/profile/utils'
 import { locations } from '../../modules/routing/locations'
 import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
-import { EDIT_PROFILE_URL } from '../Avatar/consts'
+import { EDIT_PROFILE_URL } from '../Avatar/constants'
 import { AvatarLink } from '../AvatarLink'
 import CopyIcon from '../CopyIcon'
 import FriendsCounter from '../FriendsCounter'
 import FriendshipButton from '../FriendshipButton'
 import MutualFriendsCounter from '../MutualFriendsCounter'
 import WorldsButton from '../WorldsButton'
-import { shareButtonTestId, twitterURL } from './consts'
+import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twitterURL } from './constants'
 import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
@@ -28,7 +28,7 @@ const PROFILE_URL = config.get('PROFILE_URL', '')
 const ADDRESS_SHORTENED_LENGTH = 24
 
 const ProfileInformation = (props: Props) => {
-  const { profile, isSocialClientReady, loggedInAddress, profileAddress, onViewMore } = props
+  const { profile, isSocialClientReady, loggedInAddress, profileAddress, isBlockedByLoggedUser, hasBlockedLoggedUser, onViewMore } = props
 
   const [hasCopiedAddress, setHasCopied] = useTimer(1200)
 
@@ -46,7 +46,8 @@ const ProfileInformation = (props: Props) => {
   const isLoggedInProfile = loggedInAddress === profileAddress
   const avatarName = getAvatarName(avatar)
   const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
-  const shouldShowViewMoreButton = hasAboutInformation(avatar)
+  const isBlocked = isBlockedByLoggedUser || hasBlockedLoggedUser
+  const shouldShowViewMoreButton = hasAboutInformation(avatar) && !isBlocked
 
   return (
     <div className={styles.ProfileInformation}>
@@ -83,34 +84,45 @@ const ProfileInformation = (props: Props) => {
       </div>
       <div className={styles.actions}>
         <div className={styles.buttons}>
-          {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
-          {loggedInAddress ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
-          <Dropdown
-            className={styles.smallButton}
-            icon={
-              <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
-                <img src={Share} className="iconSize" />
-              </Button>
-            }
-            direction="left"
-          >
-            <Dropdown.Menu>
-              <Dropdown.Item
-                icon={<CopyIcon color="white" />}
-                text={hasCopiedAddress ? ` ${t('profile_information.copied')}` : ` ${t('profile_information.copy_link')}`}
-                onClick={handleCopyLink}
-              />
-              <Dropdown.Item
-                as={'a'}
-                icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
-                text={` ${t('profile_information.share_on_tw')}`}
-                href={`${twitterURL}${encodeURIComponent(
-                  `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
-                )}`}
-                target="_blank"
-              />
-            </Dropdown.Menu>
-          </Dropdown>
+          {isBlockedByLoggedUser && (
+            <Button inverted className={styles.blockedButton} data-testid={blockedButtonTestId}>
+              <Icon name="user times" />
+              {t('profile_information.blocked')}
+            </Button>
+          )}
+          {!isBlocked && (
+            // The class name is needed to avoid the display block of the div. The div is just for testing purposes
+            <div data-testid={actionsForNonBlockedTestId} className={styles.displayContents}>
+              {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
+              {loggedInAddress ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
+              <Dropdown
+                className={styles.smallButton}
+                icon={
+                  <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
+                    <img src={Share} className="iconSize" />
+                  </Button>
+                }
+                direction="left"
+              >
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    icon={<CopyIcon color="white" />}
+                    text={hasCopiedAddress ? ` ${t('profile_information.copied')}` : ` ${t('profile_information.copy_link')}`}
+                    onClick={handleCopyLink}
+                  />
+                  <Dropdown.Item
+                    as={'a'}
+                    icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
+                    text={` ${t('profile_information.share_on_tw')}`}
+                    href={`${twitterURL}${encodeURIComponent(
+                      `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
+                    )}`}
+                    target="_blank"
+                  />
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          )}
           {isLoggedInProfile && (
             <Dropdown
               className={styles.smallButton}
@@ -127,11 +139,13 @@ const ProfileInformation = (props: Props) => {
             </Dropdown>
           )}
         </div>
-        <div className={styles.links}>
-          {avatar?.links?.map((link, index) => (
-            <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
-          ))}
-        </div>
+        {!isBlocked && (
+          <div className={styles.links}>
+            {avatar?.links?.map((link, index) => (
+              <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

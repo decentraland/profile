@@ -12,6 +12,7 @@ const getBlockedAddressesOfProfile = createSelector(
   profile => profile?.avatars[0]?.blocked?.map(address => address.toLowerCase()) ?? []
 )
 
+// TODO: should we check that the logged user is not blocked by themselves?
 export const isBlockedByLoggedUser = createSelector(
   [(_state, profileAddress: string) => profileAddress.toLowerCase(), state => getBlockedAddressesOfProfile(state, getAddress(state))],
   (addressFromPath, blockedAddresses) => {
