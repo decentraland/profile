@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
@@ -20,19 +20,18 @@ function MainPage(props: Props) {
   const { isLoading, profileAddress, loggedInAddress, isBlocked, onFetchProfile } = props
   const view = getView(loggedInAddress, profileAddress)
 
-  const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('tabs.overview'), value: t('tabs.overview') }]
-  const [selectedTab, setSelectedTab] = useState<string>(tabs[0].value)
-
   const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
-  // TODO: use this function on tabs
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleTabChange = useCallback(
-    (tab: string) => {
-      setSelectedTab(tab)
-    },
-    [setSelectedTab]
-  )
+  //  TODO: use this on tabs implementation
+  // const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('tabs.overview'), value: t('tabs.overview') }]
+  // const [selectedTab, setSelectedTab] = useState<string>(tabs[0].value)
+  // const handleTabChange = useCallback(
+  //   (tab: string) => {
+  //     setSelectedTab(tab)
+  //   },
+  //   [setSelectedTab]
+  // )
+
   const navigate = useNavigate()
 
   useEffect(() => {
