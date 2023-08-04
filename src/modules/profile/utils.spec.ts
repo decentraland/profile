@@ -95,7 +95,7 @@ describe('when getting if an avatar has about information', () => {
       })
     })
 
-    describe('and the avatar has a description but do not have avatar facts nor links', () => {
+    describe('and the avatar has a description but does not have avatar facts nor links', () => {
       beforeEach(() => {
         avatar = {
           ...avatar,
