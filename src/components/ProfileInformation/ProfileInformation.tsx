@@ -80,14 +80,7 @@ const ProfileInformation = (props: Props) => {
             )}
           </div>
 
-          {avatar && (
-            <span className={styles.description}>
-              {/* TODO: remove the lorem ipsum test message  */}
-              "orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ull"
-              {avatar.description}
-            </span>
-          )}
+          {avatar && <span className={styles.description}>{avatar.description}</span>}
           {shouldShowViewMoreButton && (
             <div className={styles.basicCenteredRow}>
               <Button basic className={styles.viewMore} onClick={handleViewMore}>

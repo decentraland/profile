@@ -32,11 +32,9 @@ const Overview = (props: Props) => {
         <div className={classNames(styles.Overview, isTabletAndBelow && styles.OverviewMobile)}>
           {items.map((item: Item) => (
             <a href={`${MARKETPLACE_URL}${item.url}`} rel="noopener noreferrer" target="_blank" key={item.id}>
-              <AssetCard asset={item} assetFilters={{} as AssetCardFilters} />
+              <AssetCard asset={item} assetFilters={{} as AssetCardFilters} onClickCardURL={MARKETPLACE_URL} />
             </a>
           ))}
-          {/* TODO: remove this test card */}
-          <AssetCard asset={items[0]} assetFilters={{} as AssetCardFilters} onClickCardURL="" />
         </div>
       ) : (
         <div className={classNames(styles.emptyItems, isTabletAndBelow && styles.emptyItemsMobile)} data-testid="overview-empty">
