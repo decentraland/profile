@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { Item } from '@dcl/schemas/dist/dapps/item'
 import { LoadingState, loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
-import { fetchItemsRequest, fetchItemsSuccess, fetchItemsFailure } from './actions'
+import { fetchItemsByUrnRequest, fetchItemsByUrnSuccess, fetchItemsByUrnFailure } from './actions'
 
 export type ItemsState = {
   data: {
@@ -21,16 +21,16 @@ export const buildInitialState = (): ItemsState => ({
 
 export const itemsReducer = createReducer<ItemsState>(buildInitialState(), builder =>
   builder
-    .addCase(fetchItemsRequest, (state, action) => {
+    .addCase(fetchItemsByUrnRequest, (state, action) => {
       state.data.items = []
       state.loading = loadingReducer(state.loading, action)
       state.error = null
     })
-    .addCase(fetchItemsSuccess, (state, action) => {
+    .addCase(fetchItemsByUrnSuccess, (state, action) => {
       state.data.items = action.payload
       state.loading = loadingReducer(state.loading, action)
     })
-    .addCase(fetchItemsFailure, (state, action) => {
+    .addCase(fetchItemsByUrnFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = action.payload
     })

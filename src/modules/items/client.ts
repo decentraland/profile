@@ -20,6 +20,14 @@ export class ItemAPI {
       filters.ids.forEach(id => queryParams.append('id', id))
     }
 
+    if (filters.network) {
+      queryParams.append('network', filters.network)
+    }
+
+    if (filters.urns) {
+      filters.urns.forEach(urn => queryParams.append('urn', urn))
+    }
+
     return queryParams.toString()
   }
 }
