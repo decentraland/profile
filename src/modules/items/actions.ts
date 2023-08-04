@@ -1,10 +1,10 @@
 import { createAction } from '@reduxjs/toolkit'
 import { Item } from '@dcl/schemas'
 
-export const fetchItemsRequest = createAction<string[]>('[Request] Fetch Items')
-export const fetchItemsSuccess = createAction<Item[]>('[Success] Fetch Items')
-export const fetchItemsFailure = createAction<string>('[Failure] Fetch Items')
+export const fetchItemsByUrnRequest = createAction<string[]>('[Request] Fetch Items By Urn')
+export const fetchItemsByUrnSuccess = createAction<Item[]>('[Success] Fetch Items By Urn')
+export const fetchItemsByUrnFailure = createAction<string>('[Failure] Fetch Items By Urn')
 
-export type FetchItemsRequestAction = ReturnType<typeof fetchItemsRequest>
-export type FetchItemsSuccessAction = ReturnType<typeof fetchItemsSuccess>
-export type FetchItemsFailureAction = ReturnType<typeof fetchItemsFailure>
+export type FetchItemsByUrnRequestAction = ReturnType<typeof fetchItemsByUrnRequest>
+export type FetchItemsByUrnSuccessAction = ReturnType<typeof fetchItemsByUrnSuccess>
+export type FetchItemsByUrnFailureAction = ReturnType<typeof fetchItemsByUrnFailure>
