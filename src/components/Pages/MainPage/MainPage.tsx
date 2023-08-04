@@ -60,15 +60,20 @@ function MainPage(props: Props) {
           <div className={classNames(styles.infoContainer, isTabletAndBelow && styles.infoContainerMobile)}>
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider />
-            {/* <Tabs>
-              {tabs.map(tab => (
-                <Tabs.Tab key={tab.value} active={selectedTab === tab.value} onClick={() => handleTabChange(tab.value)}>
-                  <span className={styles.tab}>{tab.displayValue}</span>
-                </Tabs.Tab>
-              ))}
-            </Tabs> */}
-            <span className={styles.tabTitle}>{t('overview.title')}</span>
             <Overview profileAddress={profileAddress ?? loggedInAddress ?? ''} />
+            {!isBlocked && (
+              <div data-testid="TBD">
+                {/* <Tabs>
+                  {tabs.map(tab => (
+                    <Tabs.Tab key={tab.value} active={selectedTab === tab.value} onClick={() => handleTabChange(tab.value)}>
+                      <span className={styles.tab}>{tab.displayValue}</span>
+                    </Tabs.Tab>
+                  ))}
+                </Tabs> */}
+                <span className={styles.tabTitle}>{t('overview.title')}</span>
+                <Overview profileAddress={profileAddress ?? loggedInAddress ?? ''} />
+              </div>
+            )}
             {isBlocked && (
               <BlockedUser profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             )}
