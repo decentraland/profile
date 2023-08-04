@@ -10,7 +10,13 @@
     "copy_link": "Copiar enlace",
     "share_on_tw": "Compartir en Twitter",
     "tw_message": "Oye, revisa mi perfil en decentraland\n",
-    "view_more": "Ver Más"
+    "view_more": "Ver Más",
+    "blocked": "Bloqueado"
+  },
+  "blocked": {
+    "blocked_logged_user_title": "{name} te ha bloqueado",
+    "blocked_profile_title": "Has bloqueado a {name}",
+    "description": "Esto significa que no puede ver el perfil de esta persona, enviar una solicitud de amistad, mensajes y ver su estado."
   },
   "worlds_button": {
     "get_a_name": "Obtenga un nombre único",

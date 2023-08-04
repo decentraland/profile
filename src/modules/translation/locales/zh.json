@@ -10,7 +10,13 @@
     "copy_link": "複製鏈接",
     "share_on_tw": "在 Twitter 上分享",
     "tw_message": "嘿，查看我在 decentraland 中的個人資料\n",
-    "view_more": "查看更多"
+    "view_more": "查看更多",
+    "blocked": "被阻止"
+  },
+  "blocked": {
+    "blocked_logged_user_title": "{name} 阻止了你",
+    "blocked_profile_title": "您屏蔽了 {name}",
+    "description": "这意味着您无法查看此人的个人资料、发送好友请求、消息以及查看他们的状态。"
   },
   "worlds_button": {
     "get_a_name": "取一个独特的名字",

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { loadProfileRequest } from 'decentraland-dapps/dist/modules/profile/actions'
 import { getAddress, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { isLoggingIn } from '../../../modules/identity/selector'
-import { isLoadingProfile } from '../../../modules/profile/selectors'
+import { hasBlockedLoggedUser, isBlockedByLoggedUser, isLoadingProfile } from '../../../modules/profile/selectors'
 import { RootState } from '../../../modules/reducer'
 import withRouter from '../../../utils/WithRouter'
 import MainPage from './MainPage'
@@ -12,11 +12,13 @@ const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps =>
   const addressFromPath = ownProps.router.params.profileAddress
   const isLoadingAddressFromPath = addressFromPath && isLoadingProfile(state, addressFromPath)
   const isLoadingLoggedInUserProfile = getAddress(state) && isLoadingProfile(state, getAddress(state))
+  const profileAddress = addressFromPath?.toLowerCase()
 
   return {
-    profileAddress: addressFromPath?.toLowerCase(),
+    profileAddress,
     isLoading: isLoadingAddressFromPath || isLoadingLoggedInUserProfile || isLoggingIn(state) || isConnecting(state),
-    loggedInAddress: getAddress(state)?.toLowerCase()
+    loggedInAddress: getAddress(state)?.toLowerCase(),
+    isBlocked: !!profileAddress && (isBlockedByLoggedUser(state, profileAddress) || hasBlockedLoggedUser(state, profileAddress))
   }
 }
 

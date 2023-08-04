@@ -9,7 +9,7 @@ import { WearablePreview } from 'decentraland-ui/dist/components/WearablePreview
 import Edit from '../../assets/icons/Edit.svg'
 import { config } from '../../modules/config'
 import { View } from '../../utils/view'
-import { EDIT_PROFILE_URL } from './consts'
+import { EDIT_PROFILE_URL } from './constants'
 import { Props } from './Avatar.types'
 import styles from './Avatar.module.css'
 

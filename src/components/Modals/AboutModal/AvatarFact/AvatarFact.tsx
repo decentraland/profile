@@ -1,6 +1,6 @@
 import React from 'react'
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Icon } from 'decentraland-ui'
 import { AvatarFacts } from '../../../../modules/profile/types'
 import { camelToSnakeCase, formatFact, getFactIcon } from './utils'
 import { Props } from './AvatarFact.types'
