@@ -15,6 +15,7 @@
 .ProfileInformation .actions .buttons {
   display: flex;
   flex-direction: row;
+  justify-content: end;
   column-gap: 13px;
   height: 34px;
 }
