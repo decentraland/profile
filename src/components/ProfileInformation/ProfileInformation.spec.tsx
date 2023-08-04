@@ -5,7 +5,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { config } from '../../modules/config/config'
 import { Avatar } from '../../modules/profile/types'
 import { renderWithProviders } from '../../tests/tests'
-import { shareButtonTestId, twitterURL as twitterLink } from './consts'
+import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twitterURL as twitterLink } from './constants'
 import ProfileInformation from './ProfileInformation'
 import { Props } from './ProfileInformation.types'
 
@@ -31,6 +31,8 @@ describe('ProfileInformation', () => {
         profileAddress={anAddress}
         loggedInAddress={undefined}
         isSocialClientReady={false}
+        isBlockedByLoggedUser={false}
+        hasBlockedLoggedUser={false}
         onViewMore={jest.fn()}
         {...props}
       />
@@ -98,21 +100,110 @@ describe('ProfileInformation', () => {
 
         expect(twitterShareButton.hasAttributeNS('href', twitterURL))
       })
+
+      it('should not render the blocked button', () => {
+        const { queryByTestId } = renderProfileInformation({
+          profileAddress: anAddress,
+          loggedInAddress: anAddress,
+          profile: aProfile,
+          isSocialClientReady: false,
+          isBlockedByLoggedUser: true,
+          hasBlockedLoggedUser: true
+        })
+
+        expect(queryByTestId(blockedButtonTestId)).toBeNull()
+      })
     })
 
     describe('and the user is checking other profile', () => {
-      it('should render the other profile data, not the logged in', () => {
-        const { queryByText, queryByTestId } = renderProfileInformation({
-          profileAddress: anotherAddress,
-          loggedInAddress: anAddress,
-          profile: anotherProfile,
-          isSocialClientReady: false
-        })
-        expect(queryByText(avatarName)).not.toBeInTheDocument()
-        expect(queryByTestId(anAddress)).toBeNull()
+      describe('and the user is not blocked by the profile nor has blocked it', () => {
+        it('should render the other profile data, not the logged in', () => {
+          const { queryByText, queryByTestId } = renderProfileInformation({
+            profileAddress: anotherAddress,
+            loggedInAddress: anAddress,
+            profile: anotherProfile,
+            isSocialClientReady: false
+          })
+          expect(queryByText(avatarName)).not.toBeInTheDocument()
+          expect(queryByTestId(anAddress)).toBeNull()
+          expect(queryByTestId(blockedButtonTestId)).toBeNull()
 
-        expect(queryByText(anotherAvatarName)).toBeInTheDocument()
-        expect(queryByTestId(anotherAddress)).toBeInTheDocument()
+          expect(queryByText(anotherAvatarName)).toBeInTheDocument()
+          expect(queryByTestId(anotherAddress)).toBeInTheDocument()
+        })
+
+        it('should render the actions for non-blocked users', () => {
+          const { getByTestId } = renderProfileInformation({
+            profileAddress: anotherAddress,
+            loggedInAddress: anAddress,
+            profile: anotherProfile,
+            isSocialClientReady: false
+          })
+
+          expect(getByTestId(actionsForNonBlockedTestId)).toBeInTheDocument()
+        })
+      })
+
+      describe('and the user has blocked the profile', () => {
+        it('should render some of the other profile data with a button to unblock the profile', () => {
+          const { getByTestId, queryByText, queryByTestId } = renderProfileInformation({
+            profileAddress: anotherAddress,
+            loggedInAddress: anAddress,
+            profile: anotherProfile,
+            isSocialClientReady: false,
+            isBlockedByLoggedUser: true
+          })
+
+          expect(queryByText(avatarName)).not.toBeInTheDocument()
+          expect(queryByTestId(anAddress)).toBeNull()
+
+          expect(getByTestId(blockedButtonTestId)).toBeInTheDocument()
+          expect(queryByText(anotherAvatarName)).toBeInTheDocument()
+          expect(queryByTestId(anotherAddress)).toBeInTheDocument()
+        })
+
+        it('should not render the actions for non-blocked users', () => {
+          const { queryByTestId } = renderProfileInformation({
+            profileAddress: anotherAddress,
+            loggedInAddress: anAddress,
+            profile: anotherProfile,
+            isSocialClientReady: false,
+            isBlockedByLoggedUser: true
+          })
+
+          expect(queryByTestId(actionsForNonBlockedTestId)).toBeNull()
+        })
+      })
+
+      describe('and the user is blocked by the profile', () => {
+        it('should render some of the other profile data', () => {
+          const { queryByText, queryByTestId } = renderProfileInformation({
+            profileAddress: anotherAddress,
+            loggedInAddress: anAddress,
+            profile: anotherProfile,
+            isSocialClientReady: false,
+            hasBlockedLoggedUser: true
+          })
+
+          expect(queryByText(avatarName)).not.toBeInTheDocument()
+          expect(queryByTestId(anAddress)).toBeNull()
+          expect(queryByTestId(blockedButtonTestId)).toBeNull()
+
+          expect(queryByText(anotherAvatarName)).toBeInTheDocument()
+          expect(queryByTestId(anotherAddress)).toBeInTheDocument()
+        })
+
+        it('should not render the actions for non-blocked users', () => {
+          const { queryByTestId } = renderProfileInformation({
+            profileAddress: anotherAddress,
+            loggedInAddress: anAddress,
+            profile: anotherProfile,
+            isSocialClientReady: false,
+            hasBlockedLoggedUser: true
+          })
+
+          expect(queryByTestId(actionsForNonBlockedTestId)).toBeNull()
+        })
       })
     })
   })
@@ -172,32 +263,92 @@ describe('ProfileInformation', () => {
     })
 
     describe('and the user has some more information to show in the about modal', () => {
-      it('should render the view more button', () => {
-        const { getByText } = renderProfileInformation({
-          profile: {
-            avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description: 'An awesome description' } as Avatar]
-          }
+      let profile: Profile
+
+      beforeEach(() => {
+        profile = {
+          avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description: 'An awesome description' } as Avatar]
+        }
+      })
+
+      describe('and neither the user nor the profile are blocked', () => {
+        it('should render the view more button', () => {
+          const { getByText } = renderProfileInformation({
+            profile
+          })
+          expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
         })
-        expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+      })
+
+      describe('and the user has blocked the profile', () => {
+        it('should not render the view more button', () => {
+          const { getByTestId, queryByText } = renderProfileInformation({
+            profile,
+            isBlockedByLoggedUser: true
+          })
+          expect(queryByText(t('profile_information.view_more'))).toBeNull()
+          expect(getByTestId(blockedButtonTestId)).toBeInTheDocument()
+        })
+      })
+
+      describe('and the user is blocked by the profile', () => {
+        it('should not render the view more button', () => {
+          const { queryByText } = renderProfileInformation({
+            profile,
+            hasBlockedLoggedUser: true
+          })
+          expect(queryByText(t('profile_information.view_more'))).toBeNull()
+        })
       })
     })
 
     describe('and the user has some links', () => {
-      it('should render the view more button and the icons related to those links', () => {
-        const { getByTestId, getByText } = renderProfileInformation({
-          profile: {
-            avatars: [
-              {
-                name: avatarName,
-                userId: anAddress,
-                ethAddress: anAddress,
-                links: [{ title: 'twitter', url: 'https://twitter.com/decentraland' }]
-              } as Avatar
-            ]
-          }
+      let profile: Profile
+
+      beforeEach(() => {
+        profile = {
+          avatars: [
+            {
+              name: avatarName,
+              userId: anAddress,
+              ethAddress: anAddress,
+              links: [{ title: 'twitter', url: 'https://twitter.com/decentraland' }]
+            } as Avatar
+          ]
+        }
+      })
+
+      describe('and neither the user nor the profile are blocked', () => {
+        it('should render the view more button and the icons related to those links', () => {
+          const { getByTestId, getByText } = renderProfileInformation({
+            profile
+          })
+          expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+          expect(getByTestId('twitter')).toBeInTheDocument()
         })
-        expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
-        expect(getByTestId('twitter')).toBeInTheDocument()
+      })
+
+      describe('and the user has blocked the profile', () => {
+        it('should not render the view more button or the icons related to those links', () => {
+          const { getByTestId, queryByTestId, queryByText } = renderProfileInformation({
+            profile,
+            isBlockedByLoggedUser: true
+          })
+          expect(queryByText(t('profile_information.view_more'))).toBeNull()
+          expect(queryByTestId('twitter')).toBeNull()
+          expect(getByTestId(blockedButtonTestId)).toBeInTheDocument()
+        })
+      })
+
+      describe('and the user is blocked by the profile', () => {
+        it('should not render the view more button or the icons related to those links', () => {
+          const { queryByTestId, queryByText } = renderProfileInformation({
+            profile,
+            hasBlockedLoggedUser: true
+          })
+          expect(queryByText(t('profile_information.view_more'))).toBeNull()
+          expect(queryByTestId('twitter')).toBeNull()
+        })
       })
     })
   })

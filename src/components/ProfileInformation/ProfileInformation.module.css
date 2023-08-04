@@ -125,6 +125,17 @@
 
 /* Mobile styles */
 
+.ProfileInformation .blockedButton {
+  display: flex;
+  align-items: center;
+  line-height: initial;
+  color: var(--text);
+}
+
+.displayContents {
+  display: contents;
+}
+
 .ProfileInformationMobile {
   margin-top: -50px;
 

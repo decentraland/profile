@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { Item } from '@dcl/schemas/dist/dapps/item'
-import { FetchItemsRequestAction } from '../../modules/items/actions'
+import { FetchItemsByUrnRequestAction } from '../../modules/items/actions'
 
 export type Props = {
   error: string | null
@@ -14,6 +14,6 @@ export type Props = {
 export type MapStateProps = Pick<Props, 'items' | 'error' | 'isLoading' | 'wearableIds'>
 export type MapDispatchProps = Pick<Props, 'onFetchItems'>
 
-export type MapDispatch = Dispatch<FetchItemsRequestAction>
+export type MapDispatch = Dispatch<FetchItemsByUrnRequestAction>
 
 export type OwnProps = Pick<Props, 'profileAddress'>

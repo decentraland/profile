@@ -8,6 +8,7 @@ import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Med
 import { locations } from '../../../modules/routing/locations'
 import { getView } from '../../../utils/view'
 import { Avatar } from '../../Avatar'
+import { BlockedUser } from '../../BlockedUser'
 import Overview from '../../Overview'
 import { PageLayout } from '../../PageLayout'
 import { ProfileInformation } from '../../ProfileInformation'
@@ -16,7 +17,8 @@ import { Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
-  const { isLoading, onFetchProfile, profileAddress, loggedInAddress } = props
+  const { isLoading, profileAddress, loggedInAddress, isBlocked, onFetchProfile } = props
+  const view = getView(loggedInAddress, profileAddress)
 
   const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('tabs.overview'), value: t('tabs.overview') }]
   const [selectedTab, setSelectedTab] = useState<string>(tabs[0].value)
@@ -44,7 +46,6 @@ function MainPage(props: Props) {
       navigate(locations.signIn(locations.root()))
     }
   }, [isLoading, loggedInAddress, profileAddress])
-  const view = getView(loggedInAddress, profileAddress)
 
   return (
     <PageLayout>
@@ -67,6 +68,9 @@ function MainPage(props: Props) {
             </Tabs> */}
             <span className={styles.tabTitle}>{t('overview.title')}</span>
             <Overview profileAddress={profileAddress ?? loggedInAddress ?? ''} />
+            {isBlocked && (
+              <BlockedUser profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
+            )}
           </div>
         </div>
       )}
