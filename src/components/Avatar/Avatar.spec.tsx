@@ -25,14 +25,14 @@ describe('Avatar', () => {
 
   describe('when the user is logged in', () => {
     describe('and the user is checking on its own profile', () => {
-      it('should render the avatar and the edit button', async () => {
+      it('should render the avatar and the edit button', () => {
         const { getByText } = renderWithProviders(<Avatar profileAddress={anAddress} view={View.OWN} profile={aProfile} />)
         expect(getByText(t('avatar.edit'))).toBeInTheDocument()
       })
     })
 
     describe('and the user is checking other profile', () => {
-      it('should not render the avatar and the edit button', async () => {
+      it('should not render the avatar and the edit button', () => {
         const { queryByText } = renderWithProviders(<Avatar profileAddress={anotherAddress} view={View.OTHER} profile={anotherProfile} />)
         expect(queryByText(t('avatar.edit'))).not.toBeInTheDocument()
       })
@@ -41,14 +41,14 @@ describe('Avatar', () => {
 
   describe('when the user is not logged in', () => {
     describe('and the user is checking on a profile', () => {
-      it('should not render the avatar and the edit button', async () => {
+      it('should not render the avatar and the edit button', () => {
         const { queryByText } = renderWithProviders(<Avatar profileAddress={anAddress} view={View.OTHER} profile={aProfile} />)
         expect(queryByText(t('avatar.edit'))).not.toBeInTheDocument()
       })
     })
 
     describe("and there's no profile for the user", () => {
-      it('should not render a message telling the user to edit the avatar', async () => {
+      it('should not render a message telling the user to edit the avatar', () => {
         const { queryByTestId } = renderWithProviders(<Avatar profileAddress={anAddress} view={View.OTHER} />)
         expect(queryByTestId('avatar-message')).not.toBeInTheDocument()
       })

@@ -51,7 +51,7 @@ describe('ProfileInformation', () => {
 
   describe('when the user is logged in', () => {
     describe('and the user is checking on its own profile', () => {
-      it('should render the users data', async () => {
+      it('should render the users data', () => {
         const { getByText, getByTestId } = renderProfileInformation({
           profileAddress: anAddress,
           loggedInAddress: anAddress,
@@ -62,7 +62,7 @@ describe('ProfileInformation', () => {
         expect(getByTestId(anAddress)).toBeInTheDocument()
       })
 
-      it('should render the actions buttons', async () => {
+      it('should render the actions buttons', () => {
         const { getByTestId, getByText } = renderProfileInformation({
           profileAddress: anAddress,
           loggedInAddress: anAddress,
@@ -77,7 +77,7 @@ describe('ProfileInformation', () => {
         expect(getByText(t('profile_information.edit'))).toBeInTheDocument()
       })
 
-      it('should open twitter with the correct URL', async () => {
+      it('should open twitter with the correct URL', () => {
         const { getByTestId, getByRole } = renderProfileInformation({
           profileAddress: anAddress,
           loggedInAddress: anAddress,
@@ -101,7 +101,7 @@ describe('ProfileInformation', () => {
     })
 
     describe('and the user is checking other profile', () => {
-      it('should render the other profile data, not the logged in', async () => {
+      it('should render the other profile data, not the logged in', () => {
         const { queryByText, queryByTestId } = renderProfileInformation({
           profileAddress: anotherAddress,
           loggedInAddress: anAddress,
@@ -119,7 +119,7 @@ describe('ProfileInformation', () => {
 
   describe('when the user is not logged in', () => {
     describe('and the user is checking on a profile', () => {
-      it('should render the profile information', async () => {
+      it('should render the profile information', () => {
         const { queryByText, queryByTestId } = renderProfileInformation({
           profileAddress: anotherAddress,
           profile: anotherProfile,
@@ -130,12 +130,12 @@ describe('ProfileInformation', () => {
         expect(queryByTestId(anotherAddress)).toBeInTheDocument()
       })
 
-      it('should not render the edit button', async () => {
+      it('should not render the edit button', () => {
         const { queryByText } = renderProfileInformation({ profileAddress: anAddress, profile: aProfile, isSocialClientReady: false })
         expect(queryByText(t('profile_information.edit'))).toBeNull()
       })
 
-      it('should render the share buttons', async () => {
+      it('should render the share buttons', () => {
         const { getByTestId, getByText } = renderProfileInformation({
           profileAddress: anAddress,
           profile: aProfile,
@@ -151,7 +151,7 @@ describe('ProfileInformation', () => {
   })
 
   describe('when the avatar is not yet loaded', () => {
-    it('should not render the view more button', async () => {
+    it('should not render the view more button', () => {
       const { queryByText } = renderProfileInformation({
         profile: undefined
       })
@@ -161,7 +161,7 @@ describe('ProfileInformation', () => {
 
   describe('when the avatar is loaded', () => {
     describe('and the user has nothing to show in the about modal', () => {
-      it('should not render the view more button', async () => {
+      it('should not render the view more button', () => {
         const { queryByText } = renderProfileInformation({
           profile: {
             avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description: '' } as Avatar]
@@ -172,7 +172,7 @@ describe('ProfileInformation', () => {
     })
 
     describe('and the user has some more information to show in the about modal', () => {
-      it('should render the view more button', async () => {
+      it('should render the view more button', () => {
         const { getByText } = renderProfileInformation({
           profile: {
             avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description: 'An awesome description' } as Avatar]
@@ -183,7 +183,7 @@ describe('ProfileInformation', () => {
     })
 
     describe('and the user has some links', () => {
-      it('should render the view more button and the icons related to those links', async () => {
+      it('should render the view more button and the icons related to those links', () => {
         const { getByTestId, getByText } = renderProfileInformation({
           profile: {
             avatars: [

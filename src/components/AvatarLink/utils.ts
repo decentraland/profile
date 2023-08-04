@@ -7,7 +7,7 @@ type SemanticICONS = StrictIconProps['name']
 export const getLinkIcon = (url: string): SemanticICONS => {
   const match = url.match(URI_REGEX)
   if (match) {
-    const domain = match[DOMAIN_INDEX].replace('www.', '').toLowerCase()
+    const domain = match[DOMAIN_INDEX].replace('www.', '').toLowerCase().split('.')[0]
     return KNOWN_DOMAINS.includes(domain) ? (domain as SemanticICONS) : 'linkify'
   }
 

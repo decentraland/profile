@@ -2,7 +2,6 @@ import { SemanticICONS } from 'decentraland-ui'
 import { AvatarFacts } from '../../../../modules/profile/types'
 import { SpecialFormatByFact } from './AvatarFact.types'
 
-// TODO: check if we're going to use Semantic or custom icons
 const iconByFact: Record<keyof AvatarFacts, SemanticICONS> = {
   gender: 'transgender',
   country: 'world',
@@ -11,7 +10,7 @@ const iconByFact: Record<keyof AvatarFacts, SemanticICONS> = {
   relationshipStatus: 'heart outline',
   sexualOrientation: 'transgender alternate',
   language: 'language',
-  employmentStatus: 'briefcase', // TODO: missing in the figma
+  employmentStatus: 'suitcase',
   profession: 'briefcase',
   hobbies: 'gamepad',
   realName: 'user outline'

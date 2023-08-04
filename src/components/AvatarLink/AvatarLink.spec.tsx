@@ -15,7 +15,7 @@ describe('AvatarLink', () => {
         }
       })
 
-      it('should render only the known icon', async () => {
+      it('should render only the known icon', () => {
         const { getByTestId, queryByText } = renderWithProviders(<AvatarLink link={link} collapsed />)
         expect(queryByText(link.title)).toBeNull()
         expect(getByTestId('twitter')).toBeInTheDocument()
@@ -30,7 +30,7 @@ describe('AvatarLink', () => {
         }
       })
 
-      it('should render only the default icon', async () => {
+      it('should render only the default icon', () => {
         const { getByTestId, queryByText } = renderWithProviders(<AvatarLink link={link} collapsed />)
         expect(queryByText(link.title)).toBeNull()
         expect(getByTestId('linkify')).toBeInTheDocument()
@@ -47,7 +47,7 @@ describe('AvatarLink', () => {
         }
       })
 
-      it('should render the known icon and the title of the link', async () => {
+      it('should render the known icon and the title of the link', () => {
         const { getByText, getByTestId } = renderWithProviders(<AvatarLink link={link} />)
         expect(getByText(link.title)).toBeInTheDocument()
         expect(getByTestId('twitter')).toBeInTheDocument()
@@ -62,7 +62,7 @@ describe('AvatarLink', () => {
         }
       })
 
-      it('should render the default icon and the title of the link', async () => {
+      it('should render the default icon and the title of the link', () => {
         const { getByText, getByTestId } = renderWithProviders(<AvatarLink link={link} />)
         expect(getByText(link.title)).toBeInTheDocument()
         expect(getByTestId('linkify')).toBeInTheDocument()

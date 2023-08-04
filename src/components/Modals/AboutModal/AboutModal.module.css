@@ -39,7 +39,6 @@
   }
 }
 
-/* TODO: fix styles for tablet and mobile */
 @media only screen and (max-width: 1199px) {
   .facts {
     grid-template-columns: repeat(2, 1fr);

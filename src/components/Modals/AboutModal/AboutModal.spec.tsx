@@ -19,7 +19,7 @@ describe('AboutModal', () => {
       } as Avatar
     })
 
-    it('should render the description', async () => {
+    it('should render the description', () => {
       const { getByText } = renderAboutModal({ metadata: { avatar } })
       expect(getByText(avatar.description)).toBeInTheDocument()
     })
@@ -33,7 +33,7 @@ describe('AboutModal', () => {
       } as Avatar
     })
 
-    it('should render the country info', async () => {
+    it('should render the country info', () => {
       const { getByText } = renderAboutModal({ metadata: { avatar } })
       expect(getByText(country)).toBeInTheDocument()
     })
@@ -50,7 +50,7 @@ describe('AboutModal', () => {
       } as Avatar
     })
 
-    it('should render the link', async () => {
+    it('should render the link', () => {
       const { getByText } = renderAboutModal({ metadata: { avatar } })
       expect(getByText(twitterLink.title)).toBeInTheDocument()
     })

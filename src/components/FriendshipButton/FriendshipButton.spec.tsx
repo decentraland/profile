@@ -52,19 +52,19 @@ describe.each([
   })
 
   describe('and the button is hovered', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
       act(() => {
         fireEvent.mouseOver(button)
       })
     })
 
-    it(`should render the button with the label "${hoveredText}"`, async () => {
+    it(`should render the button with the label "${hoveredText}"`, () => {
       expect(button).toHaveTextContent(hoveredText)
     })
   })
 
   describe('and the button is not hovered', () => {
-    it(`should render the button with the label "${notHoveredText}"`, async () => {
+    it(`should render the button with the label "${notHoveredText}"`, () => {
       expect(button).toHaveTextContent(notHoveredText)
     })
   })
