@@ -38,6 +38,7 @@
 }
 
 .description {
+  margin-top: 8px;
   font-size: 12px;
 }
 
@@ -70,12 +71,12 @@
   width: 24px;
 }
 
-:global(.ui.button.basic).copyLink,
-:global(.ui.button.basic).viewMore {
+.copyLink:global(.ui.button.basic),
+.viewMore:global(.ui.button.basic) {
   padding: unset;
 }
 
-:global(.ui.inverted.button).smallButton {
+.smallButton:global(.ui.inverted.button) {
   align-items: center;
   height: 34px;
   min-width: 34px;
@@ -84,7 +85,7 @@
   padding: 0px 0px 0px 9px;
 }
 
-:global(.ui.primary.button).smallButton {
+.smallButton:global(.ui.primary.button) {
   align-items: center;
   display: flex;
   height: 34px;
@@ -94,12 +95,12 @@
   padding: unset;
 }
 
-:global(.ui.primary.button).fluidButton {
+.fluidButton:global(.ui.primary.button) {
   padding-bottom: unset;
   padding-top: unset;
 }
 
-:global(.ui.dropdown .menu > .item > img).dropdownMenuIcon {
+.dropdownMenuIcon:global(.ui.dropdown .menu > .item > img) {
   margin: unset;
   stroke: white;
   height: 20px;
@@ -108,11 +109,6 @@
 
 .Profile.inline .dcl.blockie {
   width: 100px;
-}
-
-:global(.Profile.massive .dcl.avatar-face) {
-  width: 100px;
-  height: 100px;
 }
 
 .column {
@@ -161,4 +157,11 @@
 
 .actions .buttonsMobile {
   column-gap: 6px;
+}
+
+@media (max-width: 991px) {
+  .ProfileInformation :global(.Profile.massive.inline .dcl.avatar-face) {
+    width: 100px !important;
+    height: 100px !important;
+  }  
 }

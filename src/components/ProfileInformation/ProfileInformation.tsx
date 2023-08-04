@@ -57,7 +57,7 @@ const ProfileInformation = (props: Props) => {
   return (
     <div className={classnames(styles.ProfileInformation, isTabletAndBelow && styles.ProfileInformationMobile)}>
       <div className={classnames(styles.basicRow, isTabletAndBelow && styles.basicColumn)}>
-        <Profile size="massive" className={styles.avatar} imageOnly address={profileAddress} avatar={avatar} />
+        <Profile size="massive" imageOnly address={profileAddress} avatar={avatar} />
         <div className={styles.avatarInformation}>
           <span className={styles.userNumber}>
             <span className={styles.userName} data-testid={profileAddress}>
@@ -80,7 +80,7 @@ const ProfileInformation = (props: Props) => {
             )}
           </div>
 
-          {avatar && <span className={styles.description}>{avatar.description}</span>}
+          {avatar && <div className={styles.description}>{avatar.description}</div>}
           {shouldShowViewMoreButton && (
             <div className={styles.basicCenteredRow}>
               <Button basic className={styles.viewMore} onClick={handleViewMore}>

@@ -14,7 +14,7 @@ import styles from './Overview.module.css'
 const MARKETPLACE_URL = config.get('MARKETPLACE_URL', '')
 
 const Overview = (props: Props) => {
-  const { isLoading, items, onFetchItems, wearableIds } = props
+  const { isLoading, items, onFetchItems, wearableIds, className } = props
 
   const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
@@ -25,7 +25,7 @@ const Overview = (props: Props) => {
   }, [wearableIds])
 
   return (
-    <>
+    <div className={classNames(className)}>
       {isLoading ? (
         <Loader active />
       ) : items.length > 0 ? (
@@ -46,7 +46,7 @@ const Overview = (props: Props) => {
           </Button>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

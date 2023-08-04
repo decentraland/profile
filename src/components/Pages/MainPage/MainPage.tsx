@@ -60,7 +60,6 @@ function MainPage(props: Props) {
           <div className={classNames(styles.infoContainer, isTabletAndBelow && styles.infoContainerMobile)}>
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider />
-            <Overview profileAddress={profileAddress ?? loggedInAddress ?? ''} />
             {!isBlocked && (
               <div data-testid="TBD">
                 {/* <Tabs>
@@ -71,7 +70,7 @@ function MainPage(props: Props) {
                   ))}
                 </Tabs> */}
                 <span className={styles.tabTitle}>{t('overview.title')}</span>
-                <Overview profileAddress={profileAddress ?? loggedInAddress ?? ''} />
+                <Overview className={styles.overview} profileAddress={profileAddress ?? loggedInAddress ?? ''} />
               </div>
             )}
             {isBlocked && (

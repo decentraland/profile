@@ -9,6 +9,7 @@ export type Props = {
   onFetchItems: (wearableIds: string[]) => void
   wearableIds: string[]
   profileAddress: string
+  className?: string
 }
 
 export type MapStateProps = Pick<Props, 'items' | 'error' | 'isLoading' | 'wearableIds'>
