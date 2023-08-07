@@ -10,5 +10,6 @@
   "SYNAPSE_URL": "https://social.decentraland.today",
   "PROFILE_URL": "https://profile.decentraland.today",
   "MARKETPLACE_URL": "https://market.decentraland.today",
-  "NFT_SERVER_URL": "https://nft-api.decentraland.today/v1"
+  "NFT_SERVER_URL": "https://nft-api.decentraland.today/v1",
+  "SEGMENT_API_KEY": "AGaiQumreF5ubucC71RoGA1rkDAnVocy"
 }

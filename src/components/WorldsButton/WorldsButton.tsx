@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect } from 'react'
 import classNames from 'classnames'
 import { Env } from '@dcl/ui-env'
+import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import jumpIcon from '../../assets/icons/Jump.png'
 import verifiedIcon from '../../assets/icons/Verified.png'
 import worldIcon from '../../assets/icons/World.png'
+import { Events } from '../../modules/analytics/types'
 import { config } from '../../modules/config'
 import { Props } from './WorldsButton.types'
 import styles from './WorldsButton.module.css'
@@ -23,19 +25,34 @@ const WorldsButton = (props: Props) => {
   const hasWorlds = worlds.length > 0
 
   const handleWorldClick = useCallback((world: World) => {
-    window.open(
-      isDevelopment
-        ? `${EXPLORER_URL}/?realm=${WORLDS_CONTENT_SERVER_URL}/world/${world.domain}&NETWORK=goerli`
-        : `${EXPLORER_URL}/world/${world.domain}`,
-      '_blank,noreferrer'
-    )
+    getAnalytics().track(Events.GO_TO_WORLD, { world: world.domain })
+    const timeout = setTimeout(() => {
+      window.open(
+        isDevelopment
+          ? `${EXPLORER_URL}/?realm=${WORLDS_CONTENT_SERVER_URL}/world/${world.domain}&NETWORK=goerli`
+          : `${EXPLORER_URL}/world/${world.domain}`,
+        '_blank,noreferrer'
+      )
+    }, 300)
+    return () => clearTimeout(timeout)
   }, [])
 
   const handleButtonClick = useCallback(() => {
+    let url: string | undefined
     if (!hasNames) {
-      window.open(`${BUILDER_URL}/names`, '_blank,noreferrer')
+      getAnalytics().track(Events.GET_A_NAME)
+      url = `${BUILDER_URL}/names`
     } else if (hasNames && !hasWorlds) {
-      window.open(`${BUILDER_URL}/worlds`, '_blank,noreferrer')
+      getAnalytics().track(Events.ACTIVATE_WORLD)
+      url = `${BUILDER_URL}/worlds`
+    }
+
+    if (url) {
+      const timeout = setTimeout(() => {
+        window.open(url, '_blank,noreferrer')
+      }, 300)
+
+      return () => clearTimeout(timeout)
     }
   }, [hasNames, hasWorlds])
 
