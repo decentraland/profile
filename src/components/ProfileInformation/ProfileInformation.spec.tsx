@@ -1,11 +1,13 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
+import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { config } from '../../modules/config/config'
 import { Avatar } from '../../modules/profile/types'
+import { locations } from '../../modules/routing/locations'
 import { renderWithProviders } from '../../tests/tests'
-import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twitterURL as twitterLink } from './constants'
+import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId } from './constants'
 import ProfileInformation from './ProfileInformation'
 import { Props } from './ProfileInformation.types'
 
@@ -18,6 +20,9 @@ jest.mock('decentraland-ui/dist/components/Profile/Profile', () => {
     Profile: () => <div></div>
   }
 })
+jest.mock('decentraland-dapps/dist/modules/analytics/utils')
+
+const getAnalyticsMock = getAnalytics as jest.Mock
 
 describe('ProfileInformation', () => {
   const anAddress = 'anAddress'
@@ -41,8 +46,14 @@ describe('ProfileInformation', () => {
 
   let aProfile: Profile
   let anotherProfile: Profile
+  let renderedComponent: ReturnType<typeof renderProfileInformation>
 
   beforeEach(() => {
+    getAnalyticsMock.mockReturnValue({
+      page: jest.fn(),
+      track: jest.fn()
+    })
+
     aProfile = {
       avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress } as Avatar]
     }
@@ -77,28 +88,6 @@ describe('ProfileInformation', () => {
         expect(getByText(t('profile_information.copy_link'))).toBeInTheDocument()
         expect(getByText(t('profile_information.share_on_tw'))).toBeInTheDocument()
         expect(getByText(t('profile_information.edit'))).toBeInTheDocument()
-      })
-
-      it('should open twitter with the correct URL', () => {
-        const { getByTestId, getByRole } = renderProfileInformation({
-          profileAddress: anAddress,
-          loggedInAddress: anAddress,
-          profile: aProfile,
-          isSocialClientReady: false
-        })
-
-        const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-          `${twitterLink}${encodeURIComponent(`${t('profile_information.tw_message')} ${PROFILE_URL}${anAddress}`)}`
-        )}`
-
-        const shareButton = getByTestId(shareButtonTestId)
-        fireEvent.click(shareButton)
-
-        const twitterShareButton = getByRole('option', {
-          name: t('profile_information.share_on_tw')
-        })
-
-        expect(twitterShareButton.hasAttributeNS('href', twitterURL))
       })
 
       it('should not render the blocked button', () => {
@@ -350,6 +339,39 @@ describe('ProfileInformation', () => {
           expect(queryByTestId('twitter')).toBeNull()
         })
       })
+    })
+  })
+
+  describe('when the share on twitter button is clicked', () => {
+    beforeEach(() => {
+      renderedComponent = renderProfileInformation({
+        profileAddress: anAddress,
+        loggedInAddress: anAddress,
+        profile: aProfile,
+        isSocialClientReady: false
+      })
+      jest.useFakeTimers()
+    })
+
+    afterEach(() => {
+      jest.useRealTimers()
+    })
+
+    it('should open a new page with a twitter message', () => {
+      jest.spyOn(window, 'open').mockImplementation(() => null)
+      const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(anAddress)}`
+      )}`
+
+      const { getByTestId, getByText } = renderedComponent
+      const dropdownButton = getByTestId(shareButtonTestId)
+      const shareItem = getByText(t('profile_information.share_on_tw'))
+      expect(dropdownButton).toBeInTheDocument()
+      fireEvent.click(dropdownButton)
+      fireEvent.click(shareItem)
+
+      jest.runAllTimers()
+      expect(window.open).toHaveBeenCalledWith(twitterURL, '_blank,noreferrer')
     })
   })
 })

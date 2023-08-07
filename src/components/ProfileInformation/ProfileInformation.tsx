@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import classnames from 'classnames'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
+import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
@@ -9,10 +10,10 @@ import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
 import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
+import { Events, ShareType } from '../../modules/analytics/types'
 import { config } from '../../modules/config/config'
 import { getAvatarName, hasAboutInformation } from '../../modules/profile/utils'
 import { locations } from '../../modules/routing/locations'
-import copyText from '../../utils/copyText'
 import { useTimer } from '../../utils/timer'
 import { EDIT_PROFILE_URL } from '../Avatar/constants'
 import { AvatarLink } from '../AvatarLink'
@@ -41,11 +42,34 @@ const ProfileInformation = (props: Props) => {
 
   const handleCopyLink = useCallback(() => {
     const url = `${PROFILE_URL}${locations.account(profileAddress)}`
-    copyText(url, setHasCopied)
+    navigator.clipboard.writeText(url)
+    setHasCopied()
+    getAnalytics().track(Events.SHARE_PROFILE, { type: ShareType.COPY_LINK })
   }, [setHasCopied, profileAddress])
+
+  const handleCopyWallet = useCallback(() => {
+    navigator.clipboard.writeText(profileAddress)
+    getAnalytics().track(Events.COPY_WALLET_ADDRESS)
+  }, [profileAddress])
+
+  const handleShareOnTwitter = useCallback(() => {
+    const url = `${twitterURL}${encodeURIComponent(
+      `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
+    )}`
+    getAnalytics().track(Events.SHARE_PROFILE, {
+      type: ShareType.TWITTER
+    })
+    // Based on SegmentAnalytics track callback implementation
+    const timeout = setTimeout(() => {
+      window.open(url, '_blank,noreferrer')
+    }, 300)
+
+    return () => clearTimeout(timeout)
+  }, [profileAddress])
 
   const handleViewMore = useCallback(() => {
     avatar && onViewMore && onViewMore(avatar)
+    getAnalytics().track(Events.VIEW_MORE_ABOUT_PROFILE)
   }, [avatar, onViewMore])
 
   const isLoggedInProfile = loggedInAddress === profileAddress
@@ -69,7 +93,7 @@ const ProfileInformation = (props: Props) => {
             <div className={styles.wallet}>
               <img src={Wallet} className={styles.walletIcon} />
               {profileAddress.slice(0, isTabletAndBelow ? ADDRESS_SHORTENED_LENGTH_MOBILE : ADDRESS_SHORTENED_LENGTH)}...
-              <Button basic onClick={handleCopyLink} className={styles.copyLink}>
+              <Button basic onClick={handleCopyWallet} className={styles.copyLink}>
                 <CopyIcon />
               </Button>
             </div>
@@ -119,13 +143,10 @@ const ProfileInformation = (props: Props) => {
                     onClick={handleCopyLink}
                   />
                   <Dropdown.Item
-                    as={'a'}
                     icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
-                    text={` ${t('profile_information.share_on_tw')}`}
-                    href={`${twitterURL}${encodeURIComponent(
-                      `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
-                    )}`}
-                    target="_blank"
+                    data-testid="share-on-twitter"
+                    text={t('profile_information.share_on_tw')}
+                    onClick={handleShareOnTwitter}
                   />
                 </Dropdown.Menu>
               </Dropdown>
