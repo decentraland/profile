@@ -13,8 +13,8 @@ const mapState = (state: RootState): MapStateProps => {
   }
 }
 
-const mapDispatch = (_dispatch: MapDispatch): MapDispatchProps => ({
-  onClick: () => openModal('FriendsModal', { type: FriendsType.FRIENDS })
+const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
+  onClick: () => dispatch(openModal('FriendsModal', { type: FriendsType.FRIENDS }))
 })
 
 export default connect(mapState, mapDispatch)(FriendsCounter)
