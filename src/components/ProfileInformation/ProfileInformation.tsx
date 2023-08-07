@@ -28,8 +28,6 @@ import styles from './ProfileInformation.module.css'
 
 const EXPLORER_URL = config.get('EXPLORER_URL', '')
 const PROFILE_URL = config.get('PROFILE_URL', '')
-const ADDRESS_SHORTENED_LENGTH = 24
-const ADDRESS_SHORTENED_LENGTH_MOBILE = 8
 
 const ProfileInformation = (props: Props) => {
   const { profile, isSocialClientReady, loggedInAddress, profileAddress, isBlockedByLoggedUser, hasBlockedLoggedUser, onViewMore } = props
@@ -92,7 +90,7 @@ const ProfileInformation = (props: Props) => {
           <div className={classnames(styles.column, isTabletAndBelow && styles.reverseColumnInformation)}>
             <div className={styles.wallet}>
               <img src={Wallet} className={styles.walletIcon} />
-              {profileAddress.slice(0, isTabletAndBelow ? ADDRESS_SHORTENED_LENGTH_MOBILE : ADDRESS_SHORTENED_LENGTH)}...
+              {profileAddress.slice(0, 6)}...{profileAddress.slice(4, 8)}
               <Button basic onClick={handleCopyWallet} className={styles.copyLink}>
                 <CopyIcon />
               </Button>
