@@ -5,6 +5,7 @@ import { Env } from '@dcl/ui-env'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
+import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { WearablePreview } from 'decentraland-ui/dist/components/WearablePreview/WearablePreview'
 import Edit from '../../assets/icons/Edit.svg'
 import { config } from '../../modules/config'
@@ -17,8 +18,11 @@ const EXPLORER_URL = config.get('EXPLORER_URL', '')
 
 const Avatar = (props: Props) => {
   const { profile, profileAddress, view } = props
+
   const [isLoadingWearablePreview, setIsLoadingWearablePreview] = useState(true)
   const [isError, setIsError] = useState(false)
+
+  const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
   const handleOnLoad = useCallback(() => {
     setIsLoadingWearablePreview(false)
@@ -30,7 +34,13 @@ const Avatar = (props: Props) => {
   }, [setIsLoadingWearablePreview])
 
   return (
-    <div className={classNames(styles.Avatar, { [styles.loading]: isLoadingWearablePreview, [styles.noProfile]: !profile })}>
+    <div
+      className={classNames(
+        styles.Avatar,
+        { [styles.loading]: isLoadingWearablePreview, [styles.noProfile]: !profile },
+        isTabletAndBelow && styles.AvatarMobile
+      )}
+    >
       {isLoadingWearablePreview ? (
         <div className={styles.loaderOverlay}>
           <Loader active inline size="huge" />
@@ -54,10 +64,16 @@ const Avatar = (props: Props) => {
         </div>
       ) : null}
       {view === View.OWN && (
-        <Button primary fluid className="customIconButton" as={Link} to={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} target="_blank">
+        <Button
+          primary
+          fluid
+          className={classNames('customIconButton', isTabletAndBelow && styles.editMobile)}
+          as={Link}
+          to={`${EXPLORER_URL}${EDIT_PROFILE_URL}`}
+          target="_blank"
+        >
           <img src={Edit} className="iconSize" />
-          &nbsp;
-          {t('avatar.edit')}
+          {!isTabletAndBelow && ` ${t('avatar.edit')}`}
         </Button>
       )}
     </div>

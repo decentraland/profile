@@ -1,9 +1,11 @@
 import React, { useCallback } from 'react'
+import classnames from 'classnames'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
 import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
+import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
 import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
@@ -27,11 +29,14 @@ import styles from './ProfileInformation.module.css'
 const EXPLORER_URL = config.get('EXPLORER_URL', '')
 const PROFILE_URL = config.get('PROFILE_URL', '')
 const ADDRESS_SHORTENED_LENGTH = 24
+const ADDRESS_SHORTENED_LENGTH_MOBILE = 8
 
 const ProfileInformation = (props: Props) => {
   const { profile, isSocialClientReady, loggedInAddress, profileAddress, isBlockedByLoggedUser, hasBlockedLoggedUser, onViewMore } = props
 
   const [hasCopiedAddress, setHasCopied] = useTimer(1200)
+
+  const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
   const avatar = profile?.avatars[0]
 
@@ -74,29 +79,32 @@ const ProfileInformation = (props: Props) => {
   const shouldShowViewMoreButton = hasAboutInformation(avatar) && !isBlocked
 
   return (
-    <div className={styles.ProfileInformation}>
-      <div className={styles.basicRow}>
+    <div className={classnames(styles.ProfileInformation, isTabletAndBelow && styles.ProfileInformationMobile)}>
+      <div className={classnames(styles.basicRow, isTabletAndBelow && styles.basicColumn)}>
         <Profile size="massive" imageOnly address={profileAddress} avatar={avatar} />
-        <div className={styles.avatar}>
+        <div className={styles.avatarInformation}>
           <span className={styles.userNumber}>
             <span className={styles.userName} data-testid={profileAddress}>
               {avatarName.name}
             </span>
             {avatarName.lastPart ? <span>&nbsp; {avatarName.lastPart}</span> : null}
           </span>
-          <div className={styles.wallet}>
-            <img src={Wallet} className={styles.walletIcon} />
-            {profileAddress.slice(0, ADDRESS_SHORTENED_LENGTH)}...
-            <Button basic onClick={handleCopyWallet} className={styles.copyLink}>
-              <CopyIcon />
-            </Button>
-          </div>
-          {isSocialClientReady && (
-            <div className={styles.basicCenteredRow}>
-              {isLoggedInProfile ? <FriendsCounter /> : <MutualFriendsCounter friendAddress={profileAddress} />}
+          <div className={classnames(styles.column, isTabletAndBelow && styles.reverseColumnInformation)}>
+            <div className={styles.wallet}>
+              <img src={Wallet} className={styles.walletIcon} />
+              {profileAddress.slice(0, isTabletAndBelow ? ADDRESS_SHORTENED_LENGTH_MOBILE : ADDRESS_SHORTENED_LENGTH)}...
+              <Button basic onClick={handleCopyWallet} className={styles.copyLink}>
+                <CopyIcon />
+              </Button>
             </div>
-          )}
-          {avatar && <span className={styles.description}>{avatar.description}</span>}
+            {isSocialClientReady && (
+              <div className={styles.basicCenteredRow}>
+                {isLoggedInProfile ? <FriendsCounter /> : <MutualFriendsCounter friendAddress={profileAddress} />}
+              </div>
+            )}
+          </div>
+
+          {avatar && <div className={styles.description}>{avatar.description}</div>}
           {shouldShowViewMoreButton && (
             <div className={styles.basicCenteredRow}>
               <Button basic className={styles.viewMore} onClick={handleViewMore}>
@@ -106,8 +114,8 @@ const ProfileInformation = (props: Props) => {
           )}
         </div>
       </div>
-      <div className={styles.actions}>
-        <div className={styles.buttons}>
+      <div className={classnames(styles.actions, isTabletAndBelow && styles.actionsMobile)}>
+        <div className={classnames(styles.buttons, isTabletAndBelow && styles.buttonsMobile)}>
           {isBlocked && isBlockedByLoggedUser && (
             <Button inverted className={styles.blockedButton} data-testid={blockedButtonTestId}>
               <Icon name="user times" />
@@ -118,7 +126,7 @@ const ProfileInformation = (props: Props) => {
             // The class name is needed to avoid the display block of the div. The div is just for testing purposes
             <div data-testid={actionsForNonBlockedTestId} className={styles.displayContents}>
               {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
-              {loggedInAddress ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
+              {loggedInAddress && !isTabletAndBelow ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
               <Dropdown
                 className={styles.smallButton}
                 icon={

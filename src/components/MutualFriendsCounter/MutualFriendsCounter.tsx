@@ -24,7 +24,7 @@ const MutualFriendsCounter = (props: Props) => {
         <Loader active inline size="mini" />
       ) : (
         <>
-          {count > 0 ? firstMutuals.map(mutual => <Profile address={mutual} imageOnly />) : null}
+          {count > 0 ? firstMutuals.map(mutual => <Profile address={mutual} key={mutual} imageOnly />) : null}
           <span>
             {count} {t('mutual_friends_counter.mutual')}
           </span>

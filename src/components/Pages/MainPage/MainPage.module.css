@@ -12,7 +12,7 @@
   padding: 30px;
 }
 
-.MainPage .infoContainer {
+.infoContainer {
   backdrop-filter: blur(20px);
   background: linear-gradient(151deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.06) 100%);
   border-radius: 10px;
@@ -24,7 +24,38 @@
   padding: 32px;
 }
 
-.MainPage .tab {
+.tab {
   color: var(--text);
   font-weight: 700;
+}
+
+.tabTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.fullPage {
+  height: 60vh;
+}
+
+/* Mobile styles */
+
+.MainPageMobile {
+  align-items: center;
+  flex-direction: column;
+  padding: unset;
+}
+
+.infoContainerMobile {
+  backdrop-filter: unset;
+  background: unset;
+  box-shadow: unset;
+  border: unset;
+  width: 100%;
+  padding: 16px;
+}
+
+.overview {
+  margin-top: 20px;
 }
