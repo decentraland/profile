@@ -61,7 +61,7 @@ function MainPage(props: Props) {
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider />
             {!isBlocked && (
-              <div data-testid="TBD">
+              <>
                 {/* <Tabs>
                   {tabs.map(tab => (
                     <Tabs.Tab key={tab.value} active={selectedTab === tab.value} onClick={() => handleTabChange(tab.value)}>
@@ -71,7 +71,7 @@ function MainPage(props: Props) {
                 </Tabs> */}
                 <span className={styles.tabTitle}>{t('overview.title')}</span>
                 <Overview className={styles.overview} profileAddress={profileAddress ?? loggedInAddress ?? ''} />
-              </div>
+              </>
             )}
             {isBlocked && (
               <BlockedUser profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
