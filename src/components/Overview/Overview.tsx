@@ -8,6 +8,7 @@ import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Med
 import { Button } from 'decentraland-ui'
 import shirt from '../../assets/images/shirt.svg'
 import { config } from '../../modules/config'
+import { getAvatarName } from '../../modules/profile/utils'
 import { Props } from './Overview.types'
 import styles from './Overview.module.css'
 
@@ -19,6 +20,7 @@ const Overview = (props: Props) => {
   const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
   const isLoggedInProfile = profileAddress === loggedInAddress
+  const avatarName = getAvatarName(profile?.avatars[0])
 
   useEffect(() => {
     if (wearableIds.length > 0) {
@@ -42,7 +44,7 @@ const Overview = (props: Props) => {
         <div className={classNames(styles.emptyItems, isTabletAndBelow && styles.emptyItemsMobile)} data-testid="overview-empty">
           <img src={shirt} className={styles.emptyIcon} />
           <span className={styles.title}>
-            {isLoggedInProfile ? t('overview.start_dressing') : `${profile && profile?.avatars[0].name} ${t('overview.no_collectibles')}`}
+            {isLoggedInProfile ? t('overview.start_dressing') : `${avatarName} ${t('overview.no_collectibles')}`}
           </span>
           {isLoggedInProfile && (
             <>
