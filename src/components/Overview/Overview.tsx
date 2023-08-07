@@ -14,9 +14,11 @@ import styles from './Overview.module.css'
 const MARKETPLACE_URL = config.get('MARKETPLACE_URL', '')
 
 const Overview = (props: Props) => {
-  const { isLoading, items, onFetchItems, wearableIds, className } = props
+  const { isLoading, items, onFetchItems, wearableIds, className, profileAddress, loggedInAddress, profile } = props
 
   const isTabletAndBelow = useTabletAndBelowMediaQuery()
+
+  const isLoggedInProfile = profileAddress === loggedInAddress
 
   useEffect(() => {
     if (wearableIds.length > 0) {
@@ -39,11 +41,17 @@ const Overview = (props: Props) => {
       ) : (
         <div className={classNames(styles.emptyItems, isTabletAndBelow && styles.emptyItemsMobile)} data-testid="overview-empty">
           <img src={shirt} className={styles.emptyIcon} />
-          <span className={styles.title}>{t('overview.start_dressing')}</span>
-          <span>{t('overview.get_collectibles')}</span>
-          <Button inverted as="a" href={MARKETPLACE_URL} target="_blank">
-            {t('overview.go_to_marketplace')}
-          </Button>
+          <span className={styles.title}>
+            {isLoggedInProfile ? t('overview.start_dressing') : `${profile && profile?.avatars[0].name} ${t('overview.no_collectibles')}`}
+          </span>
+          {isLoggedInProfile && (
+            <>
+              <span>{t('overview.get_collectibles')}</span>
+              <Button inverted as="a" href={MARKETPLACE_URL} target="_blank">
+                {t('overview.go_to_marketplace')}
+              </Button>
+            </>
+          )}
         </div>
       )}
     </div>
