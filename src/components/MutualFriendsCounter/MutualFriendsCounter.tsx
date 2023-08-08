@@ -13,6 +13,10 @@ const MutualFriendsCounter = (props: Props) => {
     onFetchMutualFriends()
   }, [friendAddress])
 
+  if (!isLoading && count === 0) {
+    return null
+  }
+
   return (
     <div
       className={classNames(styles.counter, className, { [styles.clickable]: count > 0 })}

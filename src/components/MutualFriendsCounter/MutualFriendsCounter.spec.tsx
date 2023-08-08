@@ -25,10 +25,8 @@ describe('when rendering the component with the friends count in zero', () => {
     renderedComponent = renderMutualFriendsCounter({ count: 0 })
   })
 
-  it('should render the component with the friends count without the clickable class', async () => {
-    const button = await renderedComponent.getByTestId('mutual-friends-counter')
-    expect(button).not.toHaveClass('clickable')
-    expect(button).toHaveTextContent('0 mutual')
+  it('should not render the component', () => {
+    expect(renderedComponent.queryByTestId('mutual-friends-counter')).toBeNull()
   })
 })
 
@@ -41,21 +39,6 @@ describe('when rendering the component with the friends count greater than zero'
     const button = renderedComponent.getByTestId('mutual-friends-counter')
     expect(button).toHaveClass('clickable')
     expect(button).toHaveTextContent('3 mutual')
-  })
-})
-
-describe('when clicking the component with a zero count', () => {
-  let onClick: jest.Mock
-
-  beforeEach(() => {
-    onClick = jest.fn()
-    renderedComponent = renderMutualFriendsCounter({ count: 0, onClick })
-    const button = renderedComponent.getByTestId('mutual-friends-counter')
-    fireEvent.click(button)
-  })
-
-  it('should not call the onClick method prop', () => {
-    expect(onClick).not.toHaveBeenCalled()
   })
 })
 
