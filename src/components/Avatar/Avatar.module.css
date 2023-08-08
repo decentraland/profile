@@ -44,11 +44,19 @@
   width: unset;
 }
 
-.editMobile {
+.editButton > img {
+  margin-right: 5px;
+}
+
+.editButtonMobile {
   position: absolute;
   right: 20px;
   top: 399px;
   min-width: unset !important;
   width: unset !important;
   padding: 10px !important;
+}
+
+.editButtonMobile > img {
+  margin-right: unset;
 }

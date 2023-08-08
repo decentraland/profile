@@ -67,7 +67,7 @@ const Avatar = (props: Props) => {
         <Button
           primary
           fluid
-          className={classNames('customIconButton', isTabletAndBelow && styles.editMobile)}
+          className={classNames('customIconButton', styles.editButton, isTabletAndBelow && styles.editButtonMobile)}
           as={Link}
           to={`${EXPLORER_URL}${EDIT_PROFILE_URL}`}
           target="_blank"
