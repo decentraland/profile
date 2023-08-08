@@ -7,7 +7,7 @@ import { config } from '../../modules/config/config'
 import { Avatar } from '../../modules/profile/types'
 import { locations } from '../../modules/routing/locations'
 import { renderWithProviders } from '../../tests/tests'
-import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId } from './constants'
+import { MAX_DESCRIPTION_LENGTH, actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId } from './constants'
 import ProfileInformation from './ProfileInformation'
 import { Props } from './ProfileInformation.types'
 
@@ -241,13 +241,36 @@ describe('ProfileInformation', () => {
 
   describe('when the avatar is loaded', () => {
     describe('and the user has nothing to show in the about modal', () => {
-      it('should not render the view more button', () => {
-        const { queryByText } = renderProfileInformation({
-          profile: {
-            avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description: '' } as Avatar]
-          }
+      let description: string
+
+      describe('and neither the user has a lengthily description', () => {
+        beforeEach(() => {
+          description = 'a'.repeat(MAX_DESCRIPTION_LENGTH + 1)
         })
-        expect(queryByText(t('profile_information.view_more'))).toBeNull()
+
+        it('should render the view more button', () => {
+          const { queryByText } = renderProfileInformation({
+            profile: {
+              avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description } as Avatar]
+            }
+          })
+          expect(queryByText(t('profile_information.view_more'))).not.toBeNull()
+        })
+      })
+
+      describe('and the user has a lengthily description', () => {
+        beforeEach(() => {
+          description = 'a'
+        })
+
+        it('should not render the view more button', () => {
+          const { queryByText } = renderProfileInformation({
+            profile: {
+              avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description } as Avatar]
+            }
+          })
+          expect(queryByText(t('profile_information.view_more'))).not.toBeNull()
+        })
       })
     })
 
