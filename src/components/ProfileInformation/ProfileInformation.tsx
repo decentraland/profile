@@ -188,7 +188,12 @@ const ProfileInformation = (props: Props) => {
               direction="left"
             >
               <Dropdown.Menu>
-                <Dropdown.Item icon={'user'} text={t('profile_information.edit')} href={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} />
+                <Dropdown.Item
+                  icon={'user'}
+                  text={t('profile_information.edit')}
+                  target="_blank"
+                  href={`${EXPLORER_URL}${EDIT_PROFILE_URL}`}
+                />
               </Dropdown.Menu>
             </Dropdown>
           )}
