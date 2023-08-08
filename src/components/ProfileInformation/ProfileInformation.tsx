@@ -6,6 +6,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
+import { Popup } from 'decentraland-ui/dist/components/Popup/Popup'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
 import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
@@ -21,7 +22,7 @@ import FriendsCounter from '../FriendsCounter'
 import FriendshipButton from '../FriendshipButton'
 import MutualFriendsCounter from '../MutualFriendsCounter'
 import WorldsButton from '../WorldsButton'
-import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twitterURL } from './constants'
+import { MAX_DESCRIPTION_LENGTH, actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twitterURL } from './constants'
 import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
@@ -73,7 +74,8 @@ const ProfileInformation = (props: Props) => {
   const avatarName = getAvatarName(avatar)
   const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
   const isBlocked = !isLoggedInProfile && (isBlockedByLoggedUser || hasBlockedLoggedUser)
-  const shouldShowViewMoreButton = hasAboutInformation(avatar) && !isBlocked
+  const shouldShowViewMoreButton =
+    (hasAboutInformation(avatar) || (avatar?.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH) && !isBlocked
 
   return (
     <div className={classnames(styles.ProfileInformation, isTabletAndBelow && styles.ProfileInformationMobile)}>
@@ -100,8 +102,13 @@ const ProfileInformation = (props: Props) => {
               </div>
             )}
           </div>
-
-          {avatar && <div className={styles.description}>{avatar.description}</div>}
+          {avatar && (
+            <div className={styles.description}>
+              {(avatar.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH
+                ? avatar.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...'
+                : avatar.description}
+            </div>
+          )}
           {shouldShowViewMoreButton && (
             <div className={styles.basicCenteredRow}>
               <Button basic className={styles.viewMore} onClick={handleViewMore}>
@@ -123,13 +130,32 @@ const ProfileInformation = (props: Props) => {
             // The class name is needed to avoid the display block of the div. The div is just for testing purposes
             <div data-testid={actionsForNonBlockedTestId} className={styles.displayContents}>
               {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
-              {loggedInAddress && !isTabletAndBelow ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
+              {loggedInAddress && !isTabletAndBelow ? (
+                <Popup
+                  content={t('profile_information.worlds_tooltip')}
+                  position="top center"
+                  disabled={isTabletAndBelow}
+                  trigger={
+                    <span>
+                      <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} />
+                    </span>
+                  }
+                  on="hover"
+                />
+              ) : null}
               <Dropdown
                 className={styles.smallButton}
                 icon={
-                  <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
-                    <img src={Share} className="iconSize" />
-                  </Button>
+                  <Popup
+                    content={t('profile_information.share_tooltip')}
+                    position="top center"
+                    disabled={isTabletAndBelow}
+                    trigger={
+                      <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
+                        <img src={Share} className="iconSize" />
+                      </Button>
+                    }
+                  />
                 }
                 direction="left"
               >
@@ -160,7 +186,7 @@ const ProfileInformation = (props: Props) => {
               direction="left"
             >
               <Dropdown.Menu>
-                <Dropdown.Item icon={'user outline'} text={t('profile_information.edit')} href={getEditAvatarUrl()} />
+                <Dropdown.Item icon={'user'} text={t('profile_information.edit')} href={getEditAvatarUrl()} />
               </Dropdown.Menu>
             </Dropdown>
           )}
