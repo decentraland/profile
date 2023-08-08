@@ -82,7 +82,7 @@ const FriendshipButton = (props: Props) => {
   return (
     <Button
       onClick={handleButtonClick}
-      primary
+      primary={!isInverted}
       disabled={isLoading}
       loading={isLoading}
       inverted={isInverted}
@@ -91,7 +91,7 @@ const FriendshipButton = (props: Props) => {
       onMouseOut={handleOnButtonMouseOut}
       className={classNames(className, styles.button, 'customIconButton', isTabletAndBelow && styles.mobileButton)}
     >
-      <img src={buttonIcon} /> {buttonText}
+      {!isLoading ? <img src={buttonIcon} /> : null} {buttonText}
     </Button>
   )
 }
