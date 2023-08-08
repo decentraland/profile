@@ -18,7 +18,7 @@ const AboutModal = (props: Props) => {
   const avatarFacts = getAvatarFacts(avatar)
 
   return (
-    <Modal onClose={onClose} className={styles.modal} size="medium">
+    <Modal onClose={onClose} className={styles.modal} size="large">
       <ModalNavigation title={t('about_modal.title')} onClose={onClose} data-testid="about-modal" />
       <Modal.Content className={styles.content}>
         {avatar.description && <AvatarFact title="description" value={avatar.description} />}
