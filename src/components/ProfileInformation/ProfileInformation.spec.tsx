@@ -350,13 +350,15 @@ describe('ProfileInformation', () => {
           })
 
           it('should render the view more button and the icons related to the first three links', () => {
-            const { getByTestId, getByText } = renderProfileInformation({
+            const { getByTestId, queryByTestId, getByText } = renderProfileInformation({
               profile
             })
             expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
             expect(getByTestId('twitter')).toBeInTheDocument()
             expect(getByTestId('facebook')).toBeInTheDocument()
             expect(getByTestId('instagram')).toBeInTheDocument()
+            expect(queryByTestId('github')).toBeNull()
+            expect(queryByTestId('linkify')).toBeNull()
           })
         })
       })
