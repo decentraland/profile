@@ -174,3 +174,7 @@
 :global(.ui.dropdown) :global(.menu>.item).copyItem > svg {
   margin-right: 11px;
 }
+
+.userNameLastPart {
+  color: #A09BA8
+}
