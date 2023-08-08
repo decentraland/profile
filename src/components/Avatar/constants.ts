@@ -1,1 +1,0 @@
-export const EDIT_PROFILE_URL = '/?OPEN_AVATAR_EDITOR'
