@@ -13,9 +13,8 @@ import Wallet from '../../assets/icons/Wallet.svg'
 import { Events, ShareType } from '../../modules/analytics/types'
 import { config } from '../../modules/config/config'
 import { getAvatarName, hasAboutInformation } from '../../modules/profile/utils'
-import { locations } from '../../modules/routing/locations'
+import { getEditAvatarUrl, locations } from '../../modules/routing/locations'
 import { useTimer } from '../../utils/timer'
-import { EDIT_PROFILE_URL } from '../Avatar/constants'
 import { AvatarLink } from '../AvatarLink'
 import CopyIcon from '../CopyIcon'
 import FriendsCounter from '../FriendsCounter'
@@ -26,7 +25,6 @@ import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twi
 import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
-const EXPLORER_URL = config.get('EXPLORER_URL', '')
 const PROFILE_URL = config.get('PROFILE_URL', '')
 const MAX_NUMBER_OF_LINKS = 3
 
@@ -162,7 +160,7 @@ const ProfileInformation = (props: Props) => {
               direction="left"
             >
               <Dropdown.Menu>
-                <Dropdown.Item icon={'user outline'} text={t('profile_information.edit')} href={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} />
+                <Dropdown.Item icon={'user outline'} text={t('profile_information.edit')} href={getEditAvatarUrl()} />
               </Dropdown.Menu>
             </Dropdown>
           )}

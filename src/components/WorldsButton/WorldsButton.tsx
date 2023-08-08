@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
 import classNames from 'classnames'
-import { Env } from '@dcl/ui-env'
 import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
@@ -10,14 +9,12 @@ import verifiedIcon from '../../assets/icons/Verified.png'
 import worldIcon from '../../assets/icons/World.png'
 import { Events } from '../../modules/analytics/types'
 import { config } from '../../modules/config'
+import { getJumpToWorldUrl } from '../../modules/routing/locations'
 import { Props } from './WorldsButton.types'
 import styles from './WorldsButton.module.css'
 import type { World } from '../../modules/world/types'
 
-const EXPLORER_URL = config.get('EXPLORER_URL')
 const BUILDER_URL = config.get('BUILDER_URL')
-const WORLDS_CONTENT_SERVER_URL = config.get('WORLDS_CONTENT_SERVER_URL')
-const isDevelopment = config.getEnv() === Env.DEVELOPMENT
 
 const WorldsButton = (props: Props) => {
   const { address, isLoading, isLoggedIn, className, hasNames, worlds, onFetchWorlds } = props
@@ -27,12 +24,7 @@ const WorldsButton = (props: Props) => {
   const handleWorldClick = useCallback((world: World) => {
     getAnalytics().track(Events.GO_TO_WORLD, { world: world.domain })
     const timeout = setTimeout(() => {
-      window.open(
-        isDevelopment
-          ? `${EXPLORER_URL}/?realm=${WORLDS_CONTENT_SERVER_URL}/world/${world.domain}&NETWORK=goerli`
-          : `${EXPLORER_URL}/world/${world.domain}`,
-        '_blank,noreferrer'
-      )
+      window.open(getJumpToWorldUrl(world), '_blank,noreferrer')
     }, 300)
     return () => clearTimeout(timeout)
   }, [])
