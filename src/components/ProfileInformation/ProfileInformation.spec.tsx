@@ -308,12 +308,58 @@ describe('ProfileInformation', () => {
       })
 
       describe('and neither the user nor the profile are blocked', () => {
-        it('should render the view more button and the icons related to those links', () => {
-          const { getByTestId, getByText } = renderProfileInformation({
-            profile
+        describe('and there are less than three links ', () => {
+          it('should render the view more button and the icons related to those links', () => {
+            const { getByTestId, getByText } = renderProfileInformation({
+              profile
+            })
+            expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+            expect(getByTestId('twitter')).toBeInTheDocument()
           })
-          expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
-          expect(getByTestId('twitter')).toBeInTheDocument()
+        })
+
+        describe('and there are exactly three links', () => {
+          beforeEach(() => {
+            profile.avatars[0].links = [
+              { title: 'twitter', url: 'https://twitter.com/decentraland' },
+              { title: 'facebook', url: 'https://facebook.com/decentraland' },
+              { title: 'instagram', url: 'https://instagram.com/decentraland' }
+            ]
+          })
+
+          it('should render the view more button and the icons related to those 3 links', () => {
+            const { getByTestId, getByText } = renderProfileInformation({
+              profile
+            })
+            expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+            expect(getByTestId('twitter')).toBeInTheDocument()
+            expect(getByTestId('facebook')).toBeInTheDocument()
+            expect(getByTestId('instagram')).toBeInTheDocument()
+          })
+        })
+
+        describe('and there are more than three links ', () => {
+          beforeEach(() => {
+            profile.avatars[0].links = [
+              { title: 'twitter', url: 'https://twitter.com/decentraland' },
+              { title: 'facebook', url: 'https://facebook.com/decentraland' },
+              { title: 'instagram', url: 'https://instagram.com/decentraland' },
+              { title: 'github', url: 'https://github.com/decentraland' },
+              { title: 'mastodon', url: 'https://mastodon.com/decentraland' }
+            ]
+          })
+
+          it('should render the view more button and the icons related to the first three links', () => {
+            const { getByTestId, queryByTestId, getByText } = renderProfileInformation({
+              profile
+            })
+            expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+            expect(getByTestId('twitter')).toBeInTheDocument()
+            expect(getByTestId('facebook')).toBeInTheDocument()
+            expect(getByTestId('instagram')).toBeInTheDocument()
+            expect(queryByTestId('github')).toBeNull()
+            expect(queryByTestId('linkify')).toBeNull()
+          })
         })
       })
 
