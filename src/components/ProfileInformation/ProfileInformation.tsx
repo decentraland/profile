@@ -9,7 +9,6 @@ import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Med
 import { Popup } from 'decentraland-ui/dist/components/Popup/Popup'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
 import Share from '../../assets/icons/Share.svg'
-import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
 import { Events, ShareType } from '../../modules/analytics/types'
 import { config } from '../../modules/config/config'
@@ -23,7 +22,14 @@ import FriendsCounter from '../FriendsCounter'
 import FriendshipButton from '../FriendshipButton'
 import MutualFriendsCounter from '../MutualFriendsCounter'
 import WorldsButton from '../WorldsButton'
-import { MAX_DESCRIPTION_LENGTH, actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twitterURL } from './constants'
+import {
+  MAX_DESCRIPTION_LENGTH,
+  actionsForNonBlockedTestId,
+  blockedButtonTestId,
+  shareButtonTestId,
+  twitterURL,
+  walletTestId
+} from './constants'
 import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
@@ -91,9 +97,9 @@ const ProfileInformation = (props: Props) => {
             {avatarName.lastPart ? <span>&nbsp; {avatarName.lastPart}</span> : null}
           </span>
           <div className={classnames(styles.column, isTabletAndBelow && styles.reverseColumnInformation)}>
-            <div className={styles.wallet}>
+            <div className={styles.wallet} data-testid={walletTestId}>
               <img src={Wallet} className={styles.walletIcon} />
-              {profileAddress.slice(0, 6)}...{profileAddress.slice(4, 8)}
+              {profileAddress.slice(0, 6)}...{profileAddress.slice(-4)}
               <Button basic onClick={handleCopyWallet} className={styles.copyLink}>
                 <CopyIcon />
               </Button>
@@ -146,7 +152,7 @@ const ProfileInformation = (props: Props) => {
                 />
               ) : null}
               <Dropdown
-                className={styles.smallButton}
+                className={styles.shareDropdown}
                 icon={
                   <Popup
                     content={t('profile_information.share_tooltip')}
@@ -166,9 +172,10 @@ const ProfileInformation = (props: Props) => {
                     icon={<CopyIcon color="white" />}
                     text={hasCopiedAddress ? ` ${t('profile_information.copied')}` : ` ${t('profile_information.copy_link')}`}
                     onClick={handleCopyLink}
+                    className={styles.copyItem}
                   />
                   <Dropdown.Item
-                    icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
+                    icon="twitter"
                     data-testid="share-on-twitter"
                     text={t('profile_information.share_on_tw')}
                     onClick={handleShareOnTwitter}
