@@ -165,3 +165,12 @@
     height: 100px !important;
   }  
 }
+
+:global(.ui.dropdown) :global(.menu>.item).copyItem {
+  display: flex;
+  align-items: center;
+}
+
+:global(.ui.dropdown) :global(.menu>.item).copyItem > svg {
+  margin-right: 11px;
+}
