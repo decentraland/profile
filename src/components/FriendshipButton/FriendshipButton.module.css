@@ -4,6 +4,14 @@
   margin-right: 10px;
 }
 
+.button:global(.ui.button) {
+  min-width: 230px;
+}
+
+.mobileButton:global(.ui.button) {
+  min-width: unset;
+}
+
 .mobileButton {
   width: 128px;
   padding: 11px !important;
@@ -13,5 +21,4 @@
   .button>img {
     margin-right: 2px;
   }
-
 }
