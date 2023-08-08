@@ -29,6 +29,10 @@
   flex-wrap: wrap;
 }
 
+.modal:global(.ui.modal) > :global(.content) {
+  margin: 32px;
+}
+
 @media only screen and (min-width: 1200px) {
   .content {
     min-width: 800px;
