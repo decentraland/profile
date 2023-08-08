@@ -28,6 +28,7 @@ import styles from './ProfileInformation.module.css'
 
 const EXPLORER_URL = config.get('EXPLORER_URL', '')
 const PROFILE_URL = config.get('PROFILE_URL', '')
+const MAX_NUMBER_OF_LINKS = 3
 
 const ProfileInformation = (props: Props) => {
   const { profile, isSocialClientReady, loggedInAddress, profileAddress, isBlockedByLoggedUser, hasBlockedLoggedUser, onViewMore } = props
@@ -168,7 +169,7 @@ const ProfileInformation = (props: Props) => {
         </div>
         {!isBlocked && (
           <div className={styles.links}>
-            {avatar?.links?.map((link, index) => (
+            {avatar?.links?.slice(0, MAX_NUMBER_OF_LINKS).map((link, index) => (
               <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
             ))}
           </div>
