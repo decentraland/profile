@@ -22,7 +22,7 @@ import FriendsCounter from '../FriendsCounter'
 import FriendshipButton from '../FriendshipButton'
 import MutualFriendsCounter from '../MutualFriendsCounter'
 import WorldsButton from '../WorldsButton'
-import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twitterURL } from './constants'
+import { MAX_DESCRIPTION_LENGTH, actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twitterURL } from './constants'
 import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
@@ -75,7 +75,8 @@ const ProfileInformation = (props: Props) => {
   const avatarName = getAvatarName(avatar)
   const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
   const isBlocked = !isLoggedInProfile && (isBlockedByLoggedUser || hasBlockedLoggedUser)
-  const shouldShowViewMoreButton = hasAboutInformation(avatar) && !isBlocked
+  const shouldShowViewMoreButton =
+    (hasAboutInformation(avatar) || (avatar?.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH) && !isBlocked
 
   return (
     <div className={classnames(styles.ProfileInformation, isTabletAndBelow && styles.ProfileInformationMobile)}>
@@ -102,8 +103,13 @@ const ProfileInformation = (props: Props) => {
               </div>
             )}
           </div>
-
-          {avatar && <div className={styles.description}>{avatar.description}</div>}
+          {avatar && (
+            <div className={styles.description}>
+              {(avatar.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH
+                ? avatar.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...'
+                : avatar.description}
+            </div>
+          )}
           {shouldShowViewMoreButton && (
             <div className={styles.basicCenteredRow}>
               <Button basic className={styles.viewMore} onClick={handleViewMore}>
