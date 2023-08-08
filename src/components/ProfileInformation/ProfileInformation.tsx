@@ -6,6 +6,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
+import { Popup } from 'decentraland-ui/dist/components/Popup/Popup'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
 import Share from '../../assets/icons/Share.svg'
 import Twitter from '../../assets/icons/Twitter.svg'
@@ -131,13 +132,32 @@ const ProfileInformation = (props: Props) => {
             // The class name is needed to avoid the display block of the div. The div is just for testing purposes
             <div data-testid={actionsForNonBlockedTestId} className={styles.displayContents}>
               {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
-              {loggedInAddress && !isTabletAndBelow ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
+              {loggedInAddress && !isTabletAndBelow ? (
+                <Popup
+                  content={t('profile_information.worlds_tooltip')}
+                  position="top center"
+                  disabled={isTabletAndBelow}
+                  trigger={
+                    <span>
+                      <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} />
+                    </span>
+                  }
+                  on="hover"
+                />
+              ) : null}
               <Dropdown
                 className={styles.smallButton}
                 icon={
-                  <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
-                    <img src={Share} className="iconSize" />
-                  </Button>
+                  <Popup
+                    content={t('profile_information.share_tooltip')}
+                    position="top center"
+                    disabled={isTabletAndBelow}
+                    trigger={
+                      <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
+                        <img src={Share} className="iconSize" />
+                      </Button>
+                    }
+                  />
                 }
                 direction="left"
               >

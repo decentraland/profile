@@ -11,7 +11,9 @@
     "share_on_tw": "Compartir en Twitter",
     "tw_message": "Oye, revisa mi perfil en Decentraland\n",
     "view_more": "Ver Más",
-    "blocked": "Bloqueado"
+    "blocked": "Bloqueado",
+    "worlds_tooltip": "Mundos",
+    "share_tooltip": "Compartir"
   },
   "blocked": {
     "blocked_logged_user_title": "{name} te ha bloqueado",
