@@ -20,7 +20,7 @@ const Overview = (props: Props) => {
   const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
   const isLoggedInProfile = profileAddress === loggedInAddress
-  const avatarName = getAvatarName(profile?.avatars[0])
+  const avatarName = getAvatarName(profile?.avatars[0]).name
 
   useEffect(() => {
     if (wearableIds.length > 0) {
