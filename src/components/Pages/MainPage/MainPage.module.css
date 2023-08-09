@@ -20,8 +20,8 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 98%;
   padding: 32px;
+  min-height: 80vh;
 }
 
 .tab {
@@ -37,6 +37,12 @@
 
 .fullPage {
   height: 60vh;
+}
+
+.avatarContainer {
+  position: relative;
+  width: 15%;
+  min-width: 260px;
 }
 
 /* Mobile styles */
@@ -58,4 +64,8 @@
 
 .divider {
   margin-bottom: 12px;
+}
+
+.avatarContainerMobile {
+  position: static;
 }
