@@ -72,5 +72,20 @@
     "real_name_label": "Nombre real",
     "hobbies_label": "Aficiones",
     "links_label": "Enlaces"
+  },
+  "confirmation_modal": {
+    "pending_request": {
+      "title": "¿Estás seguro de que deseas cancelar la solicitud?",
+      "subtitle": "Recuerda que puedes reenviar la solicitud cuando quieras.",
+      "confirmation": "cancelar solicitud",
+      "cancel": "volver atrás"
+    },
+    "friend": {
+      "title": "¿Estás seguro de que deseas eliminar a {avatarName} como amigo?",
+      "subtitle": "Recuerda que puedes reenviar la solicitud cuando quieras.",
+      "confirmation": "sí, eliminar amigo",
+      "cancel": "cancelar",
+      "unfriend": "Eliminar amigo {avatarName}"
+    }
   }
 }
