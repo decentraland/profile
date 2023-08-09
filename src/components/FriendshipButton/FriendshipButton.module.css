@@ -4,10 +4,6 @@
   margin-right: 10px;
 }
 
-.mobileButton:global(.ui.button) {
-  min-width: unset;
-}
-
 .mobileButton {
   width: 128px;
   padding: 11px !important;
