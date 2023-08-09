@@ -135,7 +135,7 @@ const ProfileInformation = (props: Props) => {
           {!isBlocked && (
             // The class name is needed to avoid the display block of the div. The div is just for testing purposes
             <div data-testid={actionsForNonBlockedTestId} className={styles.displayContents}>
-              {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
+              {shouldShowFriendsButton ? <FriendshipButton className={styles.friendsButton} friendAddress={profileAddress} /> : null}
               {loggedInAddress && !isTabletAndBelow ? (
                 <Popup
                   content={t('profile_information.worlds_tooltip')}
