@@ -92,7 +92,7 @@ const ProfileInformation = (props: Props) => {
             <span className={styles.userName} data-testid={profileAddress}>
               {avatarName.name}
             </span>
-            {avatarName.lastPart ? <span>&nbsp; {avatarName.lastPart}</span> : null}
+            {avatarName.lastPart ? <span className={styles.userNameLastPart}>&nbsp; {avatarName.lastPart}</span> : null}
           </span>
           <div className={classnames(styles.column, isTabletAndBelow && styles.reverseColumnInformation)}>
             <div className={styles.wallet} data-testid={walletTestId}>
