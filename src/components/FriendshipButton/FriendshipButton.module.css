@@ -1,11 +1,7 @@
-.button>img {
+.button > img {
   height: 24px;
   width: 24px;
   margin-right: 10px;
-}
-
-.button:global(.ui.button) {
-  min-width: 230px;
 }
 
 .mobileButton:global(.ui.button) {
@@ -18,7 +14,7 @@
 }
 
 @media (max-width: 991px) {
-  .button>img {
+  .button > img {
     margin-right: 2px;
   }
 }
