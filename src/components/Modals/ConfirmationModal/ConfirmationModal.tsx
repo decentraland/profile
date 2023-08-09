@@ -24,11 +24,11 @@ const ConfirmationModal = (props: Props) => {
         onClose={onClose}
       />
       <Modal.Content className={styles.subtitle}>
-        {/* {type === FriendshipStatus.PENDING_REQUEST && isTabletAndBelow && (
+        {type === FriendshipStatus.PENDING_REQUEST && isTabletAndBelow && (
           <span className={styles.subtitleMobile}>
             {t(`confirmation_modal.${type}.title`, { avatarName })} <br /> <br />
           </span>
-        )} */}
+        )}
         {t(`confirmation_modal.${type}.subtitle`)}
       </Modal.Content>
       <Modal.Actions>
