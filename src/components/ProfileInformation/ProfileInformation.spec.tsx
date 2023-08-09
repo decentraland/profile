@@ -7,7 +7,7 @@ import { config } from '../../modules/config/config'
 import { Avatar } from '../../modules/profile/types'
 import { locations } from '../../modules/routing/locations'
 import { renderWithProviders } from '../../tests/tests'
-import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId } from './constants'
+import { MAX_DESCRIPTION_LENGTH, actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, walletTestId } from './constants'
 import ProfileInformation from './ProfileInformation'
 import { Props } from './ProfileInformation.types'
 
@@ -241,13 +241,36 @@ describe('ProfileInformation', () => {
 
   describe('when the avatar is loaded', () => {
     describe('and the user has nothing to show in the about modal', () => {
-      it('should not render the view more button', () => {
-        const { queryByText } = renderProfileInformation({
-          profile: {
-            avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description: '' } as Avatar]
-          }
+      let description: string
+
+      describe('and neither the user has a lengthily description', () => {
+        beforeEach(() => {
+          description = 'a'.repeat(MAX_DESCRIPTION_LENGTH + 1)
         })
-        expect(queryByText(t('profile_information.view_more'))).toBeNull()
+
+        it('should render the view more button', () => {
+          const { queryByText } = renderProfileInformation({
+            profile: {
+              avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description } as Avatar]
+            }
+          })
+          expect(queryByText(t('profile_information.view_more'))).not.toBeNull()
+        })
+      })
+
+      describe('and the user has a lengthily description', () => {
+        beforeEach(() => {
+          description = 'a'
+        })
+
+        it('should not render the view more button', () => {
+          const { queryByText } = renderProfileInformation({
+            profile: {
+              avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description } as Avatar]
+            }
+          })
+          expect(queryByText(t('profile_information.view_more'))).not.toBeNull()
+        })
       })
     })
 
@@ -308,12 +331,58 @@ describe('ProfileInformation', () => {
       })
 
       describe('and neither the user nor the profile are blocked', () => {
-        it('should render the view more button and the icons related to those links', () => {
-          const { getByTestId, getByText } = renderProfileInformation({
-            profile
+        describe('and there are less than three links ', () => {
+          it('should render the view more button and the icons related to those links', () => {
+            const { getByTestId, getByText } = renderProfileInformation({
+              profile
+            })
+            expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+            expect(getByTestId('twitter')).toBeInTheDocument()
           })
-          expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
-          expect(getByTestId('twitter')).toBeInTheDocument()
+        })
+
+        describe('and there are exactly three links', () => {
+          beforeEach(() => {
+            profile.avatars[0].links = [
+              { title: 'twitter', url: 'https://twitter.com/decentraland' },
+              { title: 'facebook', url: 'https://facebook.com/decentraland' },
+              { title: 'instagram', url: 'https://instagram.com/decentraland' }
+            ]
+          })
+
+          it('should render the view more button and the icons related to those 3 links', () => {
+            const { getByTestId, getByText } = renderProfileInformation({
+              profile
+            })
+            expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+            expect(getByTestId('twitter')).toBeInTheDocument()
+            expect(getByTestId('facebook')).toBeInTheDocument()
+            expect(getByTestId('instagram')).toBeInTheDocument()
+          })
+        })
+
+        describe('and there are more than three links ', () => {
+          beforeEach(() => {
+            profile.avatars[0].links = [
+              { title: 'twitter', url: 'https://twitter.com/decentraland' },
+              { title: 'facebook', url: 'https://facebook.com/decentraland' },
+              { title: 'instagram', url: 'https://instagram.com/decentraland' },
+              { title: 'github', url: 'https://github.com/decentraland' },
+              { title: 'mastodon', url: 'https://mastodon.com/decentraland' }
+            ]
+          })
+
+          it('should render the view more button and the icons related to the first three links', () => {
+            const { getByTestId, queryByTestId, getByText } = renderProfileInformation({
+              profile
+            })
+            expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+            expect(getByTestId('twitter')).toBeInTheDocument()
+            expect(getByTestId('facebook')).toBeInTheDocument()
+            expect(getByTestId('instagram')).toBeInTheDocument()
+            expect(queryByTestId('github')).toBeNull()
+            expect(queryByTestId('linkify')).toBeNull()
+          })
         })
       })
 
@@ -372,6 +441,20 @@ describe('ProfileInformation', () => {
 
       jest.runAllTimers()
       expect(window.open).toHaveBeenCalledWith(twitterURL, '_blank,noreferrer')
+    })
+  })
+
+  describe('when the component is rendered', () => {
+    beforeEach(() => {
+      renderedComponent = renderProfileInformation({
+        profileAddress: anAddress,
+        isSocialClientReady: false
+      })
+    })
+
+    it("should show the user's address first and last fourth characters", () => {
+      const { getByTestId } = renderedComponent
+      expect(getByTestId(walletTestId).textContent).toContain(`${anAddress.slice(0, 6)}...${anAddress.slice(-4)}`)
     })
   })
 })

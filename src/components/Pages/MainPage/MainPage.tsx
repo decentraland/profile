@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { locations } from '../../../modules/routing/locations'
@@ -59,7 +58,7 @@ function MainPage(props: Props) {
           <Avatar view={view} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
           <div className={classNames(styles.infoContainer, isTabletAndBelow && styles.infoContainerMobile)}>
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
-            <Divider />
+            <Divider className={styles.divider} />
             {!isBlocked && (
               <>
                 {/* <Tabs>
@@ -69,8 +68,7 @@ function MainPage(props: Props) {
                     </Tabs.Tab>
                   ))}
                 </Tabs> */}
-                <span className={styles.tabTitle}>{t('overview.title')}</span>
-                <Overview className={styles.overview} profileAddress={profileAddress ?? loggedInAddress ?? ''} />
+                <Overview loggedInAddress={loggedInAddress} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
               </>
             )}
             {isBlocked && (

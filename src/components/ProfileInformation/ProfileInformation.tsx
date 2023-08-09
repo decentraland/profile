@@ -6,30 +6,34 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
+import { Popup } from 'decentraland-ui/dist/components/Popup/Popup'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
 import Share from '../../assets/icons/Share.svg'
-import Twitter from '../../assets/icons/Twitter.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
 import { Events, ShareType } from '../../modules/analytics/types'
 import { config } from '../../modules/config/config'
 import { getAvatarName, hasAboutInformation } from '../../modules/profile/utils'
-import { locations } from '../../modules/routing/locations'
+import { getEditAvatarUrl, locations } from '../../modules/routing/locations'
 import { useTimer } from '../../utils/timer'
-import { EDIT_PROFILE_URL } from '../Avatar/constants'
 import { AvatarLink } from '../AvatarLink'
 import CopyIcon from '../CopyIcon'
 import FriendsCounter from '../FriendsCounter'
 import FriendshipButton from '../FriendshipButton'
 import MutualFriendsCounter from '../MutualFriendsCounter'
 import WorldsButton from '../WorldsButton'
-import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twitterURL } from './constants'
+import {
+  MAX_DESCRIPTION_LENGTH,
+  actionsForNonBlockedTestId,
+  blockedButtonTestId,
+  shareButtonTestId,
+  twitterURL,
+  walletTestId
+} from './constants'
 import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
-const EXPLORER_URL = config.get('EXPLORER_URL', '')
 const PROFILE_URL = config.get('PROFILE_URL', '')
-const ADDRESS_SHORTENED_LENGTH = 24
-const ADDRESS_SHORTENED_LENGTH_MOBILE = 8
+const MAX_NUMBER_OF_LINKS = 3
 
 const ProfileInformation = (props: Props) => {
   const { profile, isSocialClientReady, loggedInAddress, profileAddress, isBlockedByLoggedUser, hasBlockedLoggedUser, onViewMore } = props
@@ -76,7 +80,8 @@ const ProfileInformation = (props: Props) => {
   const avatarName = getAvatarName(avatar)
   const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
   const isBlocked = !isLoggedInProfile && (isBlockedByLoggedUser || hasBlockedLoggedUser)
-  const shouldShowViewMoreButton = hasAboutInformation(avatar) && !isBlocked
+  const shouldShowViewMoreButton =
+    (hasAboutInformation(avatar) || (avatar?.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH) && !isBlocked
 
   return (
     <div className={classnames(styles.ProfileInformation, isTabletAndBelow && styles.ProfileInformationMobile)}>
@@ -90,9 +95,9 @@ const ProfileInformation = (props: Props) => {
             {avatarName.lastPart ? <span>&nbsp; {avatarName.lastPart}</span> : null}
           </span>
           <div className={classnames(styles.column, isTabletAndBelow && styles.reverseColumnInformation)}>
-            <div className={styles.wallet}>
+            <div className={styles.wallet} data-testid={walletTestId}>
               <img src={Wallet} className={styles.walletIcon} />
-              {profileAddress.slice(0, isTabletAndBelow ? ADDRESS_SHORTENED_LENGTH_MOBILE : ADDRESS_SHORTENED_LENGTH)}...
+              {profileAddress.slice(0, 6)}...{profileAddress.slice(-4)}
               <Button basic onClick={handleCopyWallet} className={styles.copyLink}>
                 <CopyIcon />
               </Button>
@@ -103,8 +108,13 @@ const ProfileInformation = (props: Props) => {
               </div>
             )}
           </div>
-
-          {avatar && <div className={styles.description}>{avatar.description}</div>}
+          {avatar && (
+            <div className={styles.description}>
+              {(avatar.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH
+                ? avatar.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...'
+                : avatar.description}
+            </div>
+          )}
           {shouldShowViewMoreButton && (
             <div className={styles.basicCenteredRow}>
               <Button basic className={styles.viewMore} onClick={handleViewMore}>
@@ -126,13 +136,32 @@ const ProfileInformation = (props: Props) => {
             // The class name is needed to avoid the display block of the div. The div is just for testing purposes
             <div data-testid={actionsForNonBlockedTestId} className={styles.displayContents}>
               {shouldShowFriendsButton ? <FriendshipButton friendAddress={profileAddress} /> : null}
-              {loggedInAddress && !isTabletAndBelow ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
+              {loggedInAddress && !isTabletAndBelow ? (
+                <Popup
+                  content={t('profile_information.worlds_tooltip')}
+                  position="top center"
+                  disabled={isTabletAndBelow}
+                  trigger={
+                    <span>
+                      <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} />
+                    </span>
+                  }
+                  on="hover"
+                />
+              ) : null}
               <Dropdown
-                className={styles.smallButton}
+                className={styles.shareDropdown}
                 icon={
-                  <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
-                    <img src={Share} className="iconSize" />
-                  </Button>
+                  <Popup
+                    content={t('profile_information.share_tooltip')}
+                    position="top center"
+                    disabled={isTabletAndBelow}
+                    trigger={
+                      <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
+                        <img src={Share} className="iconSize" />
+                      </Button>
+                    }
+                  />
                 }
                 direction="left"
               >
@@ -141,9 +170,10 @@ const ProfileInformation = (props: Props) => {
                     icon={<CopyIcon color="white" />}
                     text={hasCopiedAddress ? ` ${t('profile_information.copied')}` : ` ${t('profile_information.copy_link')}`}
                     onClick={handleCopyLink}
+                    className={styles.copyItem}
                   />
                   <Dropdown.Item
-                    icon={<img src={Twitter} className={styles.dropdownMenuIcon} />}
+                    icon="twitter"
                     data-testid="share-on-twitter"
                     text={t('profile_information.share_on_tw')}
                     onClick={handleShareOnTwitter}
@@ -163,14 +193,14 @@ const ProfileInformation = (props: Props) => {
               direction="left"
             >
               <Dropdown.Menu>
-                <Dropdown.Item icon={'user outline'} text={t('profile_information.edit')} href={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} />
+                <Dropdown.Item as="a" icon={'user'} text={t('profile_information.edit')} href={getEditAvatarUrl()} target="_blank" />
               </Dropdown.Menu>
             </Dropdown>
           )}
         </div>
         {!isBlocked && (
           <div className={styles.links}>
-            {avatar?.links?.map((link, index) => (
+            {avatar?.links?.slice(0, MAX_NUMBER_OF_LINKS).map((link, index) => (
               <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
             ))}
           </div>

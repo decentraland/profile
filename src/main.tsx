@@ -3,7 +3,7 @@ import 'semantic-ui-css/semantic.min.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
@@ -18,16 +18,16 @@ import './index.css'
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <MainPage />
-  },
-  {
     path: '/accounts/:profileAddress?',
     element: <MainPage />
   },
   {
     path: 'sign-in',
     element: <SignInPage />
+  },
+  {
+    path: '*',
+    element: <Navigate to="/accounts" replace={true} />
   }
 ])
 

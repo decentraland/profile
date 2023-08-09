@@ -9,12 +9,10 @@ import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Med
 import { WearablePreview } from 'decentraland-ui/dist/components/WearablePreview/WearablePreview'
 import Edit from '../../assets/icons/Edit.svg'
 import { config } from '../../modules/config'
+import { getEditAvatarUrl } from '../../modules/routing/locations'
 import { View } from '../../utils/view'
-import { EDIT_PROFILE_URL } from './constants'
 import { Props } from './Avatar.types'
 import styles from './Avatar.module.css'
-
-const EXPLORER_URL = config.get('EXPLORER_URL', '')
 
 const Avatar = (props: Props) => {
   const { profile, profileAddress, view } = props
@@ -67,9 +65,9 @@ const Avatar = (props: Props) => {
         <Button
           primary
           fluid
-          className={classNames('customIconButton', isTabletAndBelow && styles.editMobile)}
+          className={classNames('customIconButton', styles.editButton, isTabletAndBelow && styles.editButtonMobile)}
           as={Link}
-          to={`${EXPLORER_URL}${EDIT_PROFILE_URL}`}
+          to={getEditAvatarUrl()}
           target="_blank"
         >
           <img src={Edit} className="iconSize" />

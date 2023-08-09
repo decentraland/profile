@@ -29,19 +29,22 @@ const Overview = (props: Props) => {
   }, [wearableIds])
 
   return (
-    <div className={classNames(className)}>
+    <div className={classNames(className, styles.Overview)}>
       {isLoading ? (
         <Loader active />
       ) : items.length > 0 ? (
-        <div className={classNames(styles.Overview, isTabletAndBelow && styles.OverviewMobile)}>
-          {items.map((item: Item) => (
-            <a href={`${MARKETPLACE_URL}${item.url}`} rel="noopener noreferrer" target="_blank" key={item.id}>
-              <AssetCard asset={item} assetFilters={{} as AssetCardFilters} />
-            </a>
-          ))}
-        </div>
+        <>
+          <div className={styles.tabTitle}>{t('overview.title')}</div>
+          <div className={classNames(styles.OverviewWithItems, isTabletAndBelow && styles.OverviewMobile)}>
+            {items.map((item: Item) => (
+              <a href={`${MARKETPLACE_URL}${item.url}`} target="_blank" key={item.id}>
+                <AssetCard asset={item} assetFilters={{} as AssetCardFilters} />
+              </a>
+            ))}
+          </div>
+        </>
       ) : (
-        <div className={classNames(styles.emptyItems, isTabletAndBelow && styles.emptyItemsMobile)} data-testid="overview-empty">
+        <div className={classNames(styles.EmptyOverview, isTabletAndBelow && styles.EmptyOverviewMobile)} data-testid="overview-empty">
           <img src={shirt} className={styles.emptyIcon} />
           <span className={styles.title}>
             {isLoggedInProfile ? t('overview.start_dressing') : `${avatarName} ${t('overview.no_collectibles')}`}

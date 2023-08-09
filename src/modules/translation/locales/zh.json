@@ -11,7 +11,9 @@
     "share_on_tw": "在 Twitter 上分享",
     "tw_message": "嘿，查看我在 decentraland 中的個人資料\n",
     "view_more": "查看更多",
-    "blocked": "被阻止"
+    "blocked": "被阻止",
+    "worlds_tooltip": "世界",
+    "share_tooltip": "分享"
   },
   "blocked": {
     "blocked_logged_user_title": "{name} 阻止了你",
