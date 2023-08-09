@@ -116,7 +116,6 @@
   display: flex;
   flex-direction: column;
   margin-top: 8px;
-
 }
 
 /* Mobile styles */
@@ -134,7 +133,6 @@
 
 .ProfileInformationMobile {
   margin-top: -50px;
-
 }
 
 .basicColumn {
@@ -163,18 +161,18 @@
   .ProfileInformation :global(.Profile.massive.inline .dcl.avatar-face) {
     width: 100px !important;
     height: 100px !important;
-  }  
+  }
 }
 
-:global(.ui.dropdown) :global(.menu>.item).copyItem {
+:global(.ui.dropdown) :global(.menu > .item).copyItem {
   display: flex;
   align-items: center;
 }
 
-:global(.ui.dropdown) :global(.menu>.item).copyItem > svg {
+:global(.ui.dropdown) :global(.menu > .item).copyItem > svg {
   margin-right: 11px;
 }
 
 .userNameLastPart {
-  color: #A09BA8
+  color: var(--light-gray);
 }
