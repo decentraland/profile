@@ -1,0 +1,9 @@
+@media (max-width: 991px) {
+  .signIn :global(.SignIn.center) {
+    position: unset;
+  }
+
+  .signIn :global(.SignIn.center .message) {
+    color: var(--text);
+  }
+}
