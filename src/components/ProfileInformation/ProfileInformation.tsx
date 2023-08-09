@@ -152,7 +152,7 @@ const ProfileInformation = (props: Props) => {
                   on="hover"
                 />
               ) : null}
-              {!hasCopiedLink && <span className={styles.copiedLink}>{t('profile_information.copied')}</span>}
+              {hasCopiedLink && <span className={styles.copiedLink}>{t('profile_information.copied')}</span>}
               <Dropdown
                 className={styles.shareDropdown}
                 icon={
