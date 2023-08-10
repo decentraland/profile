@@ -1,10 +1,12 @@
 .Avatar {
   display: flex;
   flex-direction: column;
-  height: 80vh;
-  width: 15%;
+  width: inherit;
   min-width: 260px;
+  height: 80vh;
   align-items: center;
+  position: fixed;
+  top: 10vh;
 }
 
 .noProfile iframe {
@@ -46,6 +48,7 @@
   .Avatar {
     height: 399px;
     width: unset;
+    position: static;
   }
 
   .editButton {
