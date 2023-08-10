@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
-import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { locations } from '../../../modules/routing/locations'
 import { getView } from '../../../utils/view'
 import { Avatar } from '../../Avatar'
@@ -18,8 +17,6 @@ import styles from './MainPage.module.css'
 function MainPage(props: Props) {
   const { isLoading, profileAddress, loggedInAddress, isBlocked, onFetchProfile } = props
   const view = getView(loggedInAddress, profileAddress)
-
-  const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
   //  TODO: use this on tabs implementation
   // const tabs: { displayValue: string; value: string }[] = [{ displayValue: t('tabs.overview'), value: t('tabs.overview') }]
@@ -52,11 +49,13 @@ function MainPage(props: Props) {
           <Loader active />
         </div>
       ) : (
-        <div className={classNames(styles.MainPage, isTabletAndBelow && styles.MainPageMobile)}>
+        <div className={classNames(styles.MainPage)}>
           {/* TODO: use this on tabs implementation
           {selectedTab === tabs[0].value && <Avatar view={view} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />} */}
-          <Avatar view={view} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
-          <div className={classNames(styles.infoContainer, isTabletAndBelow && styles.infoContainerMobile)}>
+          <div className={classNames(styles.avatarContainer)}>
+            <Avatar view={view} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
+          </div>
+          <div className={classNames(styles.infoContainer)}>
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider className={styles.divider} />
             {!isBlocked && (
