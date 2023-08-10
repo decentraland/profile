@@ -21,14 +21,15 @@
   flex-shrink: 0;
 }
 
-/* Mobile styles */
-.contentMobile {
-  padding: 0;
-}
+@media (max-width: 991px) {
+  .content {
+    padding: 0;
+  }
 
-.pageMobile {
-  background-size: 100% 480px;
-  background-color: black;
-  background-position: initial;
-  position: unset;
+  .page {
+    background-size: 100% 480px;
+    background-color: black;
+    background-position: initial;
+    position: unset;
+  }
 }
