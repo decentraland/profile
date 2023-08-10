@@ -1,5 +1,6 @@
 import { call, put, race, select, take, takeEvery } from 'redux-saga/effects'
 import { AuthIdentity } from '@dcl/crypto'
+import { getIdentity, storeIdentity, clearIdentity } from '@dcl/single-sign-on-client'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import {
   CONNECT_WALLET_FAILURE,
@@ -16,7 +17,6 @@ import {
   DISCONNECT_WALLET
 } from 'decentraland-dapps/dist/modules/wallet/actions'
 import { isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { getIdentity, storeIdentity, clearIdentity } from '@dcl/single-sign-on-client'
 import { LoginRequestAction, loginFailure, loginRequest, loginSuccess, logout } from './action'
 import { generateIdentity } from './utils'
 
