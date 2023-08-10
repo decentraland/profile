@@ -55,7 +55,9 @@ function MainPage(props: Props) {
         <div className={classNames(styles.MainPage, isTabletAndBelow && styles.MainPageMobile)}>
           {/* TODO: use this on tabs implementation
           {selectedTab === tabs[0].value && <Avatar view={view} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />} */}
-          <Avatar view={view} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
+          <div className={classNames(styles.avatarContainer, isTabletAndBelow && styles.avatarContainerMobile)}>
+            <Avatar view={view} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
+          </div>
           <div className={classNames(styles.infoContainer, isTabletAndBelow && styles.infoContainerMobile)}>
             <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
             <Divider className={styles.divider} />
