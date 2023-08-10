@@ -92,7 +92,7 @@ describe('when clicking the button for a friend with the status "FRIEND"', () =>
   })
 
   it('should open the confirmation modal', () => {
-    expect(renderedComponent.getByText(t('confirmation_modal.friend.title', { avatarName: 'Unnamed' }))).toBeInTheDocument()
+    expect(renderedComponent.getByText(t('confirmation_modal.friend_title', { avatarName: 'Unnamed' }))).toBeInTheDocument()
   })
 })
 
@@ -126,6 +126,6 @@ describe('when click the button for a friend with the status "PENDING_REQUEST"',
   })
 
   it('should open the confirmation modal', () => {
-    expect(renderedComponent.getByText(t('confirmation_modal.pending_request.title'))).toBeInTheDocument()
+    expect(renderedComponent.getByText(t('confirmation_modal.pending_request_title'))).toBeInTheDocument()
   })
 })

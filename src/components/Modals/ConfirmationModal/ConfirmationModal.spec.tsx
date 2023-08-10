@@ -36,8 +36,8 @@ describe(`when rendering the confirmation modal with friendship status = ${Frien
   })
 
   it('should render the cancel pending status texts', async () => {
-    expect(await renderedComponent.getByText(t('confirmation_modal.pending_request.title'))).toBeInTheDocument()
-    expect(await renderedComponent.findByText(t('confirmation_modal.pending_request.subtitle'))).toBeInTheDocument()
+    expect(await renderedComponent.getByText(t('confirmation_modal.pending_request_title'))).toBeInTheDocument()
+    expect(await renderedComponent.findByText(t('confirmation_modal.pending_request_subtitle'))).toBeInTheDocument()
   })
 })
 
@@ -47,7 +47,7 @@ describe(`when rendering the confirmation modal with friendship status = ${Frien
   })
 
   it('should render the cancel pending status texts', async () => {
-    expect(await renderedComponent.findByText(t('confirmation_modal.friend.title', { avatarName })))
-    expect(await renderedComponent.findByText(t('confirmation_modal.friend.subtitle')))
+    expect(await renderedComponent.findByText(t('confirmation_modal.friend_title', { avatarName })))
+    expect(await renderedComponent.findByText(t('confirmation_modal.friend_subtitle')))
   })
 })
