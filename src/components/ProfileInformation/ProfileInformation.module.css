@@ -130,8 +130,15 @@
   border-radius: 10px;
   padding: 10px;
   z-index: 10;
-  top: 68px;
+  top: 70px;
   right: 63px;
+}
+
+@media(max-width: 991px) {
+  .copiedLink {
+    position: static;
+    padding: 8px;
+  }
 }
 
 /* Mobile styles */
