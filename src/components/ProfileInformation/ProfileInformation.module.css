@@ -118,7 +118,6 @@
   margin-top: 8px;
 }
 
-/* Mobile styles */
 
 .ProfileInformation .blockedButton {
   display: flex;
@@ -131,32 +130,6 @@
   display: contents;
 }
 
-.ProfileInformationMobile {
-  margin-top: -50px;
-}
-
-.basicColumn {
-  flex-direction: column;
-  width: 100%;
-  gap: 8px;
-}
-
-.actionsMobile {
-  position: absolute;
-  right: 16px;
-  top: 470px;
-}
-
-.reverseColumnInformation {
-  flex-direction: column-reverse;
-  display: flex;
-  gap: 8px;
-}
-
-.actions .buttonsMobile {
-  column-gap: 6px;
-}
-
 .friendsButton {
   min-width: 230px !important;
 }
@@ -166,6 +139,34 @@
     width: 100px !important;
     height: 100px !important;
   }
+
+  .ProfileInformation {
+    margin-top: -50px;
+  }
+
+  .actions .buttons {
+    column-gap: 6px;
+  }
+
+  .actions {
+    position: absolute;
+    right: 16px;
+    top: 470px;
+  }
+
+  .basicRow {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .column {
+    flex-direction: column-reverse;
+    display: flex;
+    gap: 8px;
+  }
+
+
 }
 
 :global(.ui.dropdown) :global(.menu > .item).copyItem {
@@ -173,7 +174,7 @@
   align-items: center;
 }
 
-:global(.ui.dropdown) :global(.menu > .item).copyItem > svg {
+:global(.ui.dropdown) :global(.menu > .item).copyItem>svg {
   margin-right: 11px;
 }
 

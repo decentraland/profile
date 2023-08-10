@@ -2,7 +2,6 @@ import React, { useCallback, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
-import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import addUserIcon from '../../assets/icons/AddUser.png'
 import blockedUserIcon from '../../assets/icons/BlockUser.png'
 import pendingRequestIcon from '../../assets/icons/PendingRequest.png'
@@ -21,7 +20,6 @@ const FriendshipButton = (props: Props) => {
   const [isHovering, setIsHovering] = useState(false)
   const [isOpenModal, setIsOpenModal] = useState(false)
 
-  const isTabletAndBelow = useTabletAndBelowMediaQuery()
   const avatarName = getAvatarName(profile?.avatars[0]).name
 
   const handleButtonClick = useCallback(() => {
@@ -114,7 +112,7 @@ const FriendshipButton = (props: Props) => {
         data-testid="FriendshipButton"
         onMouseOver={handleOnButtonMouseOver}
         onMouseOut={handleOnButtonMouseOut}
-        className={classNames(className, styles.button, 'customIconButton', isTabletAndBelow && styles.mobileButton)}
+        className={classNames(className, styles.button, 'customIconButton')}
       >
         {!isLoading ? <img src={buttonIcon} /> : null} {buttonText}
       </Button>
