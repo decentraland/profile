@@ -66,6 +66,14 @@ export function* identitySaga() {
     }
   }
 
+  // Persist the address of the connected wallet.
+  // This is a workaround for when the user disconnects as there is no selector that provides the address at that point
+  let auxAddress: string | null = null
+
+  function setAuxAddress(address: string | null) {
+    auxAddress = address
+  }
+
   function* handleDisconnectWallet() {
     if (auxAddress) {
       yield put(logout(auxAddress))
@@ -92,12 +100,4 @@ export function* identitySaga() {
 
     yield put(loginSuccess({ address: wallet.address, identity }))
   }
-}
-
-// Persist the address of the connected wallet.
-// This is a workaround for when the user disconnects as there is no selector that provides the address at that point
-let auxAddress: string | null = null
-
-function setAuxAddress(address: string | null) {
-  auxAddress = address
 }
