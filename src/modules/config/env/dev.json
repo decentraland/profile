@@ -11,5 +11,6 @@
   "PROFILE_URL": "https://profile.decentraland.zone",
   "MARKETPLACE_URL": "https://market.decentraland.zone",
   "NFT_SERVER_URL": "https://nft-api.decentraland.zone/v1",
-  "SEGMENT_API_KEY": "69qQIHhaX2FkM9KP233SYNQNuPjpY0JG"
+  "SEGMENT_API_KEY": "69qQIHhaX2FkM9KP233SYNQNuPjpY0JG",
+  "SSO_URL": "https://id.decentraland.zone"
 }
