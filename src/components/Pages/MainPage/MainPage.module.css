@@ -39,25 +39,23 @@
   height: 60vh;
 }
 
-.divider {
-  margin-bottom: 12px;
+/* Mobile styles */
+
+.MainPageMobile {
+  align-items: center;
+  flex-direction: column;
+  padding: unset;
 }
 
-@media (max-width: 991px) {
-  .MainPage {
-    align-items: center;
-    flex-direction: column;
-    padding: unset;
-  }
+.infoContainerMobile {
+  backdrop-filter: unset;
+  background: unset;
+  box-shadow: unset;
+  border: unset;
+  width: 100%;
+  padding: 16px;
+}
 
-  .infoContainer {
-    backdrop-filter: unset;
-    background: unset;
-    box-shadow: unset;
-    border: unset;
-    width: 100%;
-    padding: 16px;
-  }
-
-
+.divider {
+  margin-bottom: 12px;
 }

@@ -18,15 +18,14 @@
   letter-spacing: 0px;
 }
 
+/* Mobile styles */
 
-@media (max-width: 991px) {
-  .Blocked {
-    padding: 64px 0px 64px 0px;
-    gap: 20px;
-    font-size: 14px;
-  }
+.BlockedMobile {
+  padding: 64px 0px 64px 0px;
+  gap: 20px;
+  font-size: 14px;
+}
 
-  .title {
-    font-size: 18px;
-  }
+.titleMobile {
+  font-size: 18px;
 }

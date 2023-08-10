@@ -4,6 +4,7 @@ import { Item } from '@dcl/schemas'
 import { AssetCardFilters, AssetCard } from 'decentraland-dapps/dist/containers/AssetCard/AssetCard'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
+import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { Button } from 'decentraland-ui'
 import shirt from '../../assets/images/shirt.svg'
 import { config } from '../../modules/config'
@@ -15,6 +16,8 @@ const MARKETPLACE_URL = config.get('MARKETPLACE_URL', '')
 
 const Overview = (props: Props) => {
   const { isLoading, items, onFetchItems, wearableIds, className, profileAddress, loggedInAddress, profile } = props
+
+  const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
   const isLoggedInProfile = profileAddress === loggedInAddress
   const avatarName = getAvatarName(profile?.avatars[0]).name
@@ -32,7 +35,7 @@ const Overview = (props: Props) => {
       ) : items.length > 0 ? (
         <>
           <div className={styles.tabTitle}>{t('overview.title')}</div>
-          <div className={classNames(styles.OverviewWithItems)}>
+          <div className={classNames(styles.OverviewWithItems, isTabletAndBelow && styles.OverviewMobile)}>
             {items.map((item: Item) => (
               <a href={`${MARKETPLACE_URL}${item.url}`} target="_blank" key={item.id}>
                 <AssetCard asset={item} assetFilters={{} as AssetCardFilters} />
@@ -41,7 +44,7 @@ const Overview = (props: Props) => {
           </div>
         </>
       ) : (
-        <div className={classNames(styles.EmptyOverview)} data-testid="overview-empty">
+        <div className={classNames(styles.EmptyOverview, isTabletAndBelow && styles.EmptyOverviewMobile)} data-testid="overview-empty">
           <img src={shirt} className={styles.emptyIcon} />
           <span className={styles.title}>
             {isLoggedInProfile ? t('overview.start_dressing') : `${avatarName} ${t('overview.no_collectibles')}`}

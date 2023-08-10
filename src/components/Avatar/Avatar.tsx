@@ -32,7 +32,13 @@ const Avatar = (props: Props) => {
   }, [setIsLoadingWearablePreview])
 
   return (
-    <div className={classNames(styles.Avatar, { [styles.loading]: isLoadingWearablePreview, [styles.noProfile]: !profile })}>
+    <div
+      className={classNames(
+        styles.Avatar,
+        { [styles.loading]: isLoadingWearablePreview, [styles.noProfile]: !profile },
+        isTabletAndBelow && styles.AvatarMobile
+      )}
+    >
       {isLoadingWearablePreview ? (
         <div className={styles.loaderOverlay}>
           <Loader active inline size="huge" />
@@ -59,7 +65,7 @@ const Avatar = (props: Props) => {
         <Button
           primary
           fluid
-          className={classNames('customIconButton', styles.editButton)}
+          className={classNames('customIconButton', styles.editButton, isTabletAndBelow && styles.editButtonMobile)}
           as={Link}
           to={getEditAvatarUrl()}
           target="_blank"
