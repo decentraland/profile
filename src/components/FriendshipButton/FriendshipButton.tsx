@@ -7,23 +7,31 @@ import blockedUserIcon from '../../assets/icons/BlockUser.png'
 import pendingRequestIcon from '../../assets/icons/PendingRequest.png'
 import unfriendUserIcon from '../../assets/icons/UnfriendUser.png'
 import userIcon from '../../assets/icons/User.png'
+import { getAvatarName } from '../../modules/profile/utils'
 import { FriendshipStatus } from '../../modules/social/types'
+import ConfirmationModal from '../Modals/ConfirmationModal'
 import { Props } from './FriendshipButton.types'
 import styles from './FriendshipButton.module.css'
 
 const FriendshipButton = (props: Props) => {
-  const { friendshipStatus, className, isLoading, onAddFriend, onCancelFriendRequest, onAcceptFriendRequest, onRemoveFriend } = props
+  const { friendshipStatus, className, isLoading, onAddFriend, onCancelFriendRequest, onAcceptFriendRequest, onRemoveFriend, profile } =
+    props
 
   const [isHovering, setIsHovering] = useState(false)
+  const [isOpenModal, setIsOpenModal] = useState(false)
+
+  const avatarName = getAvatarName(profile?.avatars[0]).name
 
   const handleButtonClick = useCallback(() => {
     switch (friendshipStatus) {
       case FriendshipStatus.FRIEND:
-        return onRemoveFriend()
+        setIsOpenModal(true)
+        break
       case FriendshipStatus.NOT_FRIEND:
         return onAddFriend()
       case FriendshipStatus.PENDING_REQUEST:
-        return onCancelFriendRequest()
+        setIsOpenModal(true)
+        break
       case FriendshipStatus.PENDING_RESPONSE:
         return onAcceptFriendRequest()
     }
@@ -63,6 +71,23 @@ const FriendshipButton = (props: Props) => {
     }
   }, [friendshipStatus, isHovering])
 
+  const handleCloseModal = useCallback(() => {
+    setIsOpenModal(false)
+  }, [setIsOpenModal])
+
+  const handleOnConfirm = useCallback(() => {
+    switch (friendshipStatus) {
+      case FriendshipStatus.FRIEND:
+        onRemoveFriend()
+        handleCloseModal()
+        break
+      case FriendshipStatus.PENDING_REQUEST:
+        onCancelFriendRequest()
+        handleCloseModal()
+        break
+    }
+  }, [handleCloseModal])
+
   const handleOnButtonMouseOver = useCallback(() => {
     setIsHovering(true)
   }, [])
@@ -77,19 +102,30 @@ const FriendshipButton = (props: Props) => {
     friendshipStatus === FriendshipStatus.BLOCKED
 
   return (
-    <Button
-      onClick={handleButtonClick}
-      primary={!isInverted}
-      disabled={isLoading}
-      loading={isLoading}
-      inverted={isInverted}
-      data-testid="FriendshipButton"
-      onMouseOver={handleOnButtonMouseOver}
-      onMouseOut={handleOnButtonMouseOut}
-      className={classNames(className, styles.button, 'customIconButton')}
-    >
-      {!isLoading ? <img src={buttonIcon} /> : null} {buttonText}
-    </Button>
+    <>
+      <Button
+        onClick={handleButtonClick}
+        primary={!isInverted}
+        disabled={isLoading}
+        loading={isLoading}
+        inverted={isInverted}
+        data-testid="FriendshipButton"
+        onMouseOver={handleOnButtonMouseOver}
+        onMouseOut={handleOnButtonMouseOut}
+        className={classNames(className, styles.button, 'customIconButton')}
+      >
+        {!isLoading ? <img src={buttonIcon} /> : null} {buttonText}
+      </Button>
+      {friendshipStatus && (
+        <ConfirmationModal
+          type={friendshipStatus}
+          onConfirm={handleOnConfirm}
+          isOpen={isOpenModal}
+          onClose={handleCloseModal}
+          avatarName={avatarName}
+        />
+      )}
+    </>
   )
 }
 

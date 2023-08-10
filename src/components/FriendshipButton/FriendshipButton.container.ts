@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+// import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
+import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
 import { RootState } from '../../modules/reducer'
 import {
   removeFriendRequest,
@@ -29,7 +31,8 @@ const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
       isRequestingFriendship(state, ownProps.friendAddress) ||
       isRemovingFriend(state, ownProps.friendAddress) ||
       isAcceptingFriendRequest(state, ownProps.friendAddress),
-    friendshipStatus: getFriendshipStatus(state, ownProps.friendAddress)
+    friendshipStatus: getFriendshipStatus(state, ownProps.friendAddress),
+    profile: getProfileOfAddress(state, ownProps.friendAddress)
   }
 }
 
