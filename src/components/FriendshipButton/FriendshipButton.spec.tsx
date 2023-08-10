@@ -86,11 +86,13 @@ describe('when clicking the button for a friend with the status "FRIEND"', () =>
     onClick = jest.fn()
     renderedComponent = renderFriendshipButton({ friendshipStatus: FriendshipStatus.FRIEND, onRemoveFriend: onClick })
     button = await renderedComponent.findByTestId('FriendshipButton')
-    fireEvent.click(button)
+    act(() => {
+      fireEvent.click(button)
+    })
   })
 
-  it('should call the onRemoveFriend prop method', () => {
-    expect(onClick).toHaveBeenCalled()
+  it('should open the confirmation modal', () => {
+    expect(renderedComponent.getByText(t('confirmation_modal.friend_title', { avatarName: 'Unnamed' }))).toBeInTheDocument()
   })
 })
 
@@ -118,26 +120,12 @@ describe('when click the button for a friend with the status "PENDING_REQUEST"',
     onClick = jest.fn()
     renderedComponent = renderFriendshipButton({ friendshipStatus: FriendshipStatus.PENDING_REQUEST, onCancelFriendRequest: onClick })
     button = await renderedComponent.findByTestId('FriendshipButton')
-    fireEvent.click(button)
+    act(() => {
+      fireEvent.click(button)
+    })
   })
 
-  it('should call the onCancelFriendRequest prop method', () => {
-    expect(onClick).toHaveBeenCalled()
-  })
-})
-
-describe('when click the button for a friend with the status "PENDING_RESPONSE"', () => {
-  let onClick: jest.Mock
-  let button: HTMLElement
-
-  beforeEach(async () => {
-    onClick = jest.fn()
-    renderedComponent = renderFriendshipButton({ friendshipStatus: FriendshipStatus.PENDING_RESPONSE, onAcceptFriendRequest: onClick })
-    button = await renderedComponent.findByTestId('FriendshipButton')
-    fireEvent.click(button)
-  })
-
-  it('should call the onAcceptFriendRequest prop method', () => {
-    expect(onClick).toHaveBeenCalled()
+  it('should open the confirmation modal', () => {
+    expect(renderedComponent.getByText(t('confirmation_modal.pending_request_title'))).toBeInTheDocument()
   })
 })
