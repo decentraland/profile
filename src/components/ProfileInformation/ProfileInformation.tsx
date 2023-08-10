@@ -86,8 +86,8 @@ const ProfileInformation = (props: Props) => {
     (hasAboutInformation(avatar) || (avatar?.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH) && !isBlocked
 
   return (
-    <div className={classnames(styles.ProfileInformation, isTabletAndBelow && styles.ProfileInformationMobile)}>
-      <div className={classnames(styles.basicRow, isTabletAndBelow && styles.basicColumn)}>
+    <div className={classnames(styles.ProfileInformation)}>
+      <div className={classnames(styles.basicRow)}>
         <Profile size="massive" imageOnly address={profileAddress} avatar={avatar} />
         <div className={styles.avatarInformation}>
           <span className={styles.userNumber}>
@@ -96,7 +96,7 @@ const ProfileInformation = (props: Props) => {
             </span>
             {avatarName.lastPart ? <span className={styles.userNameLastPart}>&nbsp; {avatarName.lastPart}</span> : null}
           </span>
-          <div className={classnames(styles.column, isTabletAndBelow && styles.reverseColumnInformation)}>
+          <div className={classnames(styles.column)}>
             <div className={styles.wallet} data-testid={walletTestId}>
               <img src={Wallet} className={styles.walletIcon} />
               {profileAddress.slice(0, 6)}...{profileAddress.slice(-4)}
@@ -127,8 +127,8 @@ const ProfileInformation = (props: Props) => {
           )}
         </div>
       </div>
-      <div className={classnames(styles.actions, isTabletAndBelow && styles.actionsMobile)}>
-        <div className={classnames(styles.buttons, isTabletAndBelow && styles.buttonsMobile)}>
+      <div className={classnames(styles.actions)}>
+        <div className={classnames(styles.buttons)}>
           {isBlocked && isBlockedByLoggedUser && (
             <Button inverted className={styles.blockedButton} data-testid={blockedButtonTestId}>
               <Icon name="user times" />

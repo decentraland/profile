@@ -1,10 +1,12 @@
 .Avatar {
   display: flex;
   flex-direction: column;
-  height: 80vh;
-  width: 15%;
+  width: inherit;
   min-width: 260px;
+  height: 80vh;
   align-items: center;
+  position: fixed;
+  top: 10vh;
 }
 
 .noProfile iframe {
@@ -37,26 +39,28 @@
   position: relative;
 }
 
-/* Mobile styles */
-
-.AvatarMobile {
-  height: 399px;
-  width: unset;
-}
-
-.editButton > img {
+.editButton>img {
   margin-right: 5px;
 }
 
-.editButtonMobile {
-  position: absolute;
-  right: 20px;
-  top: 399px;
-  min-width: unset !important;
-  width: unset !important;
-  padding: 10px !important;
-}
 
-.editButtonMobile > img {
-  margin-right: unset;
+@media (max-width: 991px) {
+  .Avatar {
+    height: 399px;
+    width: unset;
+    position: static;
+  }
+
+  .editButton {
+    position: absolute;
+    right: 20px;
+    top: 399px;
+    min-width: unset !important;
+    width: unset !important;
+    padding: 10px !important;
+  }
+
+  .editButton>img {
+    margin-right: unset;
+  }
 }

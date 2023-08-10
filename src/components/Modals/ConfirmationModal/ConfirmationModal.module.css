@@ -1,0 +1,14 @@
+.ConfirmationModal:global(.ui.modal>.content) {
+    font-size: 14px;
+    justify-self: center;
+}
+
+/* Mobile styles */
+
+.actionButtonsMobile {
+    width: 100%;
+}
+
+.subtitleMobile {
+    font-size: 18px;
+}
