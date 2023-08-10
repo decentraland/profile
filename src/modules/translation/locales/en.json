@@ -76,18 +76,14 @@
     "links_label": "Links"
   },
   "confirmation_modal": {
-    "pending_request": {
-      "title": "Are you sure you want to cancel the request?",
-      "subtitle": "Remember that you can resend the request whenever you want.",
-      "confirmation": "cancel request",
-      "cancel": "go back"
-    },
-    "friend": {
-      "title": "Are you sure you want to unfriend {avatarName}?",
-      "subtitle": "Remember that you can resend the request whenever you want.",
-      "confirmation": "yes, unfriend",
-      "cancel": "cancel",
-      "unfriend": "Unfriend {avatarName}"
-    }
+    "pending_request_title": "Are you sure you want to cancel the request?",
+    "pending_request_subtitle": "Remember that you can resend the request whenever you want.",
+    "pending_request_confirmation": "cancel request",
+    "pending_request_cancel": "go back",
+    "friend_title": "Are you sure you want to unfriend {avatarName}?",
+    "friend_subtitle": "Remember that you can resend the request whenever you want.",
+    "friend_confirmation": "yes, unfriend",
+    "friend_cancel": "cancel",
+    "friend_unfriend": "Unfriend {avatarName}"
   }
 }

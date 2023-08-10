@@ -18,25 +18,25 @@ const ConfirmationModal = (props: Props) => {
       <ModalNavigation
         title={
           type === FriendshipStatus.FRIEND && isTabletAndBelow
-            ? t(`confirmation_modal.${type}.unfriend`, { avatarName })
-            : t(`confirmation_modal.${type}.title`, { avatarName })
+            ? t(`${type}_confirmation_modal.unfriend`, { avatarName })
+            : t(`${type}_confirmation_modal.title`, { avatarName })
         }
         onClose={onClose}
       />
       <Modal.Content className={styles.subtitle}>
         {type === FriendshipStatus.PENDING_REQUEST && isTabletAndBelow && (
           <span className={styles.subtitleMobile}>
-            {t(`confirmation_modal.${type}.title`, { avatarName })} <br /> <br />
+            {t(`${type}_confirmation_modal.title`, { avatarName })} <br /> <br />
           </span>
         )}
-        {t(`confirmation_modal.${type}.subtitle`)}
+        {t(`${type}_confirmation_modal.subtitle`)}
       </Modal.Content>
       <Modal.Actions>
         <Button onClick={onClose} className={isTabletAndBelow ? styles.actionButtonsMobile : ''}>
-          {t(`confirmation_modal.${type}.cancel`)}
+          {t(`${type}_confirmation_modal.cancel`)}
         </Button>
         <Button primary rel="noopener noreferrer" onClick={onConfirm} className={isTabletAndBelow ? styles.actionButtonsMobile : ''}>
-          {t(`confirmation_modal.${type}.confirmation`)}
+          {t(`${type}_confirmation_modal.confirmation`)}
         </Button>
       </Modal.Actions>
     </Modal>

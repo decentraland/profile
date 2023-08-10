@@ -76,18 +76,14 @@
     "links_label": "Enlaces"
   },
   "confirmation_modal": {
-    "pending_request": {
-      "title": "¿Estás seguro de que deseas cancelar la solicitud?",
-      "subtitle": "Recuerda que puedes reenviar la solicitud cuando quieras.",
-      "confirmation": "cancelar solicitud",
-      "cancel": "volver atrás"
-    },
-    "friend": {
-      "title": "¿Estás seguro de que deseas eliminar a {avatarName} como amigo?",
-      "subtitle": "Recuerda que puedes reenviar la solicitud cuando quieras.",
-      "confirmation": "sí, eliminar amigo",
-      "cancel": "cancelar",
-      "unfriend": "Eliminar amigo {avatarName}"
-    }
+    "pending_request_title": "¿Estás seguro de que deseas cancelar la solicitud?",
+    "pending_request_subtitle": "Recuerda que puedes reenviar la solicitud cuando quieras.",
+    "pending_request_confirmation": "cancelar solicitud",
+    "pending_request_cancel": "volver atrás",
+    "friend_title": "¿Estás seguro de que deseas eliminar a {avatarName} como amigo?",
+    "friend_subtitle": "Recuerda que puedes reenviar la solicitud cuando quieras.",
+    "friend_confirmation": "sí, eliminar amigo",
+    "friend_cancel": "cancelar",
+    "friend_unfriend": "Eliminar amigo {avatarName}"
   }
 }

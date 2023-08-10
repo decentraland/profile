@@ -76,18 +76,14 @@
     "links_label": "链接"
   },
   "confirmation_modal": {
-    "pending_request": {
-      "title": "您确定要取消请求吗？",
-      "subtitle": "请记住，您随时可以重新发送好友请求。",
-      "confirmation": "取消请求",
-      "cancel": "返回"
-    },
-    "friend": {
-      "title": "您确定要解除与{avatarName}的好友关系吗？",
-      "subtitle": "请记住，您随时可以重新发送好友请求。",
-      "confirmation": "是的，解除好友关系",
-      "cancel": "取消",
-      "unfriend": "解除与{avatarName}的好友关系"
-    }
+    "pending_request_title": "您确定要取消请求吗？",
+    "pending_request_subtitle": "请记住，您随时可以重新发送请求。",
+    "pending_request_confirmation": "取消请求",
+    "pending_request_cancel": "返回",
+    "friend_title": "您确定要解除与{avatarName}的好友关系吗？",
+    "friend_subtitle": "请记住，您随时可以重新发送请求。",
+    "friend_confirmation": "是的，解除好友关系",
+    "friend_cancel": "取消",
+    "friend_unfriend": "解除好友关系 {avatarName}"
   }
 }
