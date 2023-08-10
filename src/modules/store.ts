@@ -20,8 +20,8 @@ export function initStore() {
   const analyticsMiddleware = createAnalyticsMiddleware(config.get('SEGMENT_API_KEY'))
   const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
     storageKey: 'profile', // this is the key used to save the state in localStorage (required)
-    paths: [['identity', 'data']], // array of paths from state to be persisted (optional)
-    actions: ['[Success] Login', 'Logout'], // array of actions types that will trigger a SAVE (optional)
+    paths: [], // array of paths from state to be persisted (optional)
+    actions: [], // array of actions types that will trigger a SAVE (optional)
     migrations: {} // migration object that will migrate your localstorage (optional)
   })
   const store = createRootReducer([sagasMiddleware, loggerMiddleware, analyticsMiddleware, storageMiddleware])

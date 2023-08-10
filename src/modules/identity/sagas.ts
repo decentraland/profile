@@ -1,5 +1,6 @@
 import { call, put, race, select, take, takeEvery } from 'redux-saga/effects'
 import { AuthIdentity } from '@dcl/crypto'
+import { getIdentity, storeIdentity, clearIdentity } from '@dcl/single-sign-on-client'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import {
   CONNECT_WALLET_FAILURE,
@@ -15,15 +16,14 @@ import {
   enableWalletRequest,
   DISCONNECT_WALLET
 } from 'decentraland-dapps/dist/modules/wallet/actions'
-import { getAddress, isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { LoginRequestAction, loginFailure, loginRequest, loginSuccess, logout } from './action'
-import { getCurrentIdentity, isLoggingIn } from './selector'
 import { generateIdentity } from './utils'
 
 export function* identitySaga() {
   yield takeEvery(loginRequest.type, handleLogin)
-  yield takeEvery(CHANGE_ACCOUNT, handleChangeAccount)
-  yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
+  yield takeEvery(CHANGE_ACCOUNT, handleConnectWalletSuccessAndChangeAccount)
+  yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccessAndChangeAccount)
   yield takeEvery(DISCONNECT_WALLET, handleDisconnectWallet)
 
   function* handleLogin(action: LoginRequestAction) {
@@ -50,6 +50,7 @@ export function* identitySaga() {
         }
 
         // connect wallet (a CONNECT_WALLET_REQUEST is dispatched automatically after ENABLE_WALLET_SUCCESS, so we just wait for it to resolve)
+        // The loginSuccess will be dispatched by handleConnectWalletSuccessAndChangeAccount function.
         const connectWallet: { success: ConnectWalletSuccessAction; failure: ConnectWalletFailureAction } = yield race({
           success: take(CONNECT_WALLET_SUCCESS),
           failure: take(CONNECT_WALLET_FAILURE)
@@ -60,41 +61,39 @@ export function* identitySaga() {
           return
         }
       }
-
-      let identity: AuthIdentity = yield select(getCurrentIdentity)
-      const address: string = yield select(getAddress)
-      // Check if we need  to generate a new identity
-      if (!identity) {
-        identity = yield call(generateIdentity, address)
-      }
-
-      yield put(loginSuccess({ address, identity }))
     } catch (error) {
       yield put(loginFailure(isErrorWithMessage(error) ? error.message : 'Unknown error'))
     }
   }
 
+  // Persist the address of the connected wallet.
+  // This is a workaround for when the user disconnects as there is no selector that provides the address at that point
+  let auxAddress = ''
+
   function* handleDisconnectWallet() {
-    const address: string = yield select(getAddress)
-    yield put(logout(address))
+    if (auxAddress) {
+      yield put(logout(auxAddress))
+      yield call(clearIdentity, auxAddress)
+    }
   }
 
-  function* handleConnectWalletSuccess(action: ConnectWalletSuccessAction) {
+  function* handleConnectWalletSuccessAndChangeAccount(action: ConnectWalletSuccessAction | ChangeAccountAction) {
     const { wallet } = action.payload
-    const isLoggingInUser: boolean = yield select(isLoggingIn)
-    let identity: AuthIdentity = yield select(getCurrentIdentity)
-    if (!isLoggingInUser && !identity) {
-      identity = yield call(generateIdentity, wallet.address)
-    }
-    yield put(loginSuccess({ address: wallet.address, identity }))
-  }
+    const { address } = wallet
 
-  function* handleChangeAccount(action: ChangeAccountAction) {
-    const { wallet } = action.payload
-    let identity: AuthIdentity = yield select(getCurrentIdentity)
-    if (!identity) {
-      identity = yield call(generateIdentity, wallet.address)
+    auxAddress = address
+
+    let identity: AuthIdentity
+
+    const ssoIdentity: AuthIdentity | null = yield call(getIdentity, address)
+
+    if (!ssoIdentity) {
+      identity = yield call(generateIdentity, address)
+      yield call(storeIdentity, address, identity)
+    } else {
+      identity = ssoIdentity
     }
+
     yield put(loginSuccess({ address: wallet.address, identity }))
   }
 }
