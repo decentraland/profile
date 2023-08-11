@@ -187,6 +187,11 @@
     padding: 8px;
   }
 
+  .friendsButton {
+    min-width: unset !important;
+
+  }
+
   .description {
     font-size: 14px;
   }
