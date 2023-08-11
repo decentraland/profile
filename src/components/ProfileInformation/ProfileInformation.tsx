@@ -146,7 +146,7 @@ const ProfileInformation = (props: Props) => {
                   disabled={isTabletAndBelow}
                   trigger={
                     <span>
-                      <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} />
+                      <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null
                     </span>
                   }
                   on="hover"

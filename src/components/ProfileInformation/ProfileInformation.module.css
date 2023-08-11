@@ -153,6 +153,7 @@
   .ProfileInformation :global(.Profile.massive.inline .dcl.avatar-face) {
     width: 100px !important;
     height: 100px !important;
+    border: 2px solid #43404a;
   }
 
   .ProfileInformation {
@@ -186,6 +187,9 @@
     padding: 8px;
   }
 
+  .description {
+    font-size: 14px;
+  }
 }
 
 :global(.ui.dropdown) :global(.menu > .item).copyItem {
