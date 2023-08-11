@@ -118,6 +118,22 @@
   margin-top: 8px;
 }
 
+.copied {
+  background-color: var(--card);
+  border-radius: 10px;
+  padding: 10px
+}
+
+.copiedLink {
+  position: fixed;
+  background-color: var(--card);
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 10;
+  top: 70px;
+  right: 63px;
+}
+
 .ProfileInformation .blockedButton {
   display: flex;
   align-items: center;
@@ -166,8 +182,14 @@
     gap: 8px;
   }
 
+  .copiedLink {
+    position: static;
+    padding: 8px;
+  }
+
   .friendsButton {
     min-width: unset !important;
+
   }
 
   .description {

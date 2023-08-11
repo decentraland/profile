@@ -38,7 +38,8 @@ const MAX_NUMBER_OF_LINKS = 3
 const ProfileInformation = (props: Props) => {
   const { profile, isSocialClientReady, loggedInAddress, profileAddress, isBlockedByLoggedUser, hasBlockedLoggedUser, onViewMore } = props
 
-  const [hasCopiedAddress, setHasCopied] = useTimer(1200)
+  const [hasCopiedLink, setHasCopiedLink] = useTimer(1200)
+  const [hasCopiedWallet, setHasCopiedWallet] = useTimer(1200)
 
   const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
@@ -47,14 +48,15 @@ const ProfileInformation = (props: Props) => {
   const handleCopyLink = useCallback(() => {
     const url = `${PROFILE_URL}${locations.account(profileAddress)}`
     navigator.clipboard.writeText(url)
-    setHasCopied()
+    setHasCopiedLink()
     getAnalytics().track(Events.SHARE_PROFILE, { type: ShareType.COPY_LINK })
-  }, [setHasCopied, profileAddress])
+  }, [setHasCopiedLink, profileAddress])
 
   const handleCopyWallet = useCallback(() => {
     navigator.clipboard.writeText(profileAddress)
+    setHasCopiedWallet()
     getAnalytics().track(Events.COPY_WALLET_ADDRESS)
-  }, [profileAddress])
+  }, [profileAddress, hasCopiedLink])
 
   const handleShareOnTwitter = useCallback(() => {
     const url = `${twitterURL}${encodeURIComponent(
@@ -101,6 +103,7 @@ const ProfileInformation = (props: Props) => {
               <Button basic onClick={handleCopyWallet} className={styles.copyLink}>
                 <CopyIcon />
               </Button>
+              {hasCopiedWallet && <span className={styles.copied}>{t('profile_information.copied')}</span>}
             </div>
             {isSocialClientReady && (
               <div className={styles.basicCenteredRow}>
@@ -136,7 +139,20 @@ const ProfileInformation = (props: Props) => {
             // The class name is needed to avoid the display block of the div. The div is just for testing purposes
             <div data-testid={actionsForNonBlockedTestId} className={styles.displayContents}>
               {shouldShowFriendsButton ? <FriendshipButton className={styles.friendsButton} friendAddress={profileAddress} /> : null}
-              {loggedInAddress && !isTabletAndBelow ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
+              {loggedInAddress && !isTabletAndBelow ? (
+                <Popup
+                  content={t('profile_information.worlds_tooltip')}
+                  position="top center"
+                  disabled={isTabletAndBelow}
+                  trigger={
+                    <span>
+                      <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null
+                    </span>
+                  }
+                  on="hover"
+                />
+              ) : null}
+              {hasCopiedLink && <span className={styles.copiedLink}>{t('profile_information.copied')}</span>}
               <Dropdown
                 className={styles.shareDropdown}
                 icon={
@@ -156,7 +172,7 @@ const ProfileInformation = (props: Props) => {
                 <Dropdown.Menu>
                   <Dropdown.Item
                     icon={<CopyIcon color="white" />}
-                    text={hasCopiedAddress ? ` ${t('profile_information.copied')}` : ` ${t('profile_information.copy_link')}`}
+                    text={t('profile_information.copy_link')}
                     onClick={handleCopyLink}
                     className={styles.copyItem}
                   />
