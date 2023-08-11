@@ -22,7 +22,7 @@ import { generateIdentity } from './utils'
 
 export function* identitySaga() {
   yield takeEvery(loginRequest.type, handleLogin)
-  yield takeEvery(CHANGE_ACCOUNT, handleConnectWalletSuccessAndChangeAccount)
+  yield takeEvery(CHANGE_ACCOUNT, handleChangeAccount)
   yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccessAndChangeAccount)
   yield takeEvery(DISCONNECT_WALLET, handleDisconnectWallet)
 
@@ -75,6 +75,10 @@ export function* identitySaga() {
       yield put(logout(auxAddress))
       yield call(clearIdentity, auxAddress)
     }
+  }
+
+  function* handleChangeAccount() {
+    yield location.reload()
   }
 
   function* handleConnectWalletSuccessAndChangeAccount(action: ConnectWalletSuccessAction | ChangeAccountAction) {
