@@ -166,6 +166,10 @@
     gap: 8px;
   }
 
+  .friendsButton {
+    min-width: unset !important;
+  }
+
   .description {
     font-size: 14px;
   }
@@ -176,7 +180,7 @@
   align-items: center;
 }
 
-:global(.ui.dropdown) :global(.menu > .item).copyItem > svg {
+:global(.ui.dropdown) :global(.menu > .item).copyItem>svg {
   margin-right: 11px;
 }
 
