@@ -80,10 +80,11 @@
     "pending_request_subtitle": "Remember that you can resend the request whenever you want.",
     "pending_request_confirmation": "cancel request",
     "pending_request_cancel": "go back",
+    "pending_request_title_mobile": "Cancel request",
     "friend_title": "Are you sure you want to unfriend {avatarName}?",
     "friend_subtitle": "Remember that you can resend the request whenever you want.",
     "friend_confirmation": "yes, unfriend",
     "friend_cancel": "cancel",
-    "friend_unfriend": "Unfriend {avatarName}"
+    "friend_title_mobile": "Unfriend {avatarName}"
   }
 }
