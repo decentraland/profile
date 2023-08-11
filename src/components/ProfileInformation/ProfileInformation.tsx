@@ -139,19 +139,7 @@ const ProfileInformation = (props: Props) => {
             // The class name is needed to avoid the display block of the div. The div is just for testing purposes
             <div data-testid={actionsForNonBlockedTestId} className={styles.displayContents}>
               {shouldShowFriendsButton ? <FriendshipButton className={styles.friendsButton} friendAddress={profileAddress} /> : null}
-              {loggedInAddress && !isTabletAndBelow ? (
-                <Popup
-                  content={t('profile_information.worlds_tooltip')}
-                  position="top center"
-                  disabled={isTabletAndBelow}
-                  trigger={
-                    <span>
-                      <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} />
-                    </span>
-                  }
-                  on="hover"
-                />
-              ) : null}
+              {loggedInAddress && !isTabletAndBelow ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
               {hasCopiedLink && <span className={styles.copiedLink}>{t('profile_information.copied')}</span>}
               <Dropdown
                 className={styles.shareDropdown}
