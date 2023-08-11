@@ -1,12 +1,11 @@
-.button>img {
+.button > img {
   height: 24px;
   width: 24px;
   margin-right: 10px;
 }
 
-
 @media (max-width: 991px) {
-  .button>img {
+  .button > img {
     margin-right: 2px;
   }
 
@@ -14,5 +13,4 @@
     width: 128px;
     padding: 11px !important;
   }
-
 }

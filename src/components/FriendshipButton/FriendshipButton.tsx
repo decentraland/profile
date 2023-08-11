@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
+import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import addUserIcon from '../../assets/icons/AddUser.png'
 import blockedUserIcon from '../../assets/icons/BlockUser.png'
 import pendingRequestIcon from '../../assets/icons/PendingRequest.png'
@@ -19,6 +20,7 @@ const FriendshipButton = (props: Props) => {
 
   const [isHovering, setIsHovering] = useState(false)
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const isTableAndBelow = useTabletAndBelowMediaQuery()
 
   const avatarName = getAvatarName(profile?.avatars[0]).name
 
@@ -86,14 +88,18 @@ const FriendshipButton = (props: Props) => {
         handleCloseModal()
         break
     }
-  }, [handleCloseModal])
+  }, [handleCloseModal, onRemoveFriend, onCancelFriendRequest, friendshipStatus])
 
   const handleOnButtonMouseOver = useCallback(() => {
-    setIsHovering(true)
+    if (!isTableAndBelow) {
+      setIsHovering(true)
+    }
   }, [])
 
   const handleOnButtonMouseOut = useCallback(() => {
-    setIsHovering(false)
+    if (!isTableAndBelow) {
+      setIsHovering(false)
+    }
   }, [])
 
   const isInverted =
@@ -105,6 +111,7 @@ const FriendshipButton = (props: Props) => {
     <>
       <Button
         onClick={handleButtonClick}
+        onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault()}
         primary={!isInverted}
         disabled={isLoading}
         loading={isLoading}
@@ -116,7 +123,7 @@ const FriendshipButton = (props: Props) => {
       >
         {!isLoading ? <img src={buttonIcon} /> : null} {buttonText}
       </Button>
-      {friendshipStatus && (
+      {(friendshipStatus === FriendshipStatus.PENDING_REQUEST || friendshipStatus === FriendshipStatus.FRIEND) && (
         <ConfirmationModal
           type={friendshipStatus}
           onConfirm={handleOnConfirm}
