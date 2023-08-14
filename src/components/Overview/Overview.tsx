@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import { Item } from '@dcl/schemas'
-import { AssetCardFilters, AssetCard } from 'decentraland-dapps/dist/containers/AssetCard/AssetCard'
+import { AssetCard } from 'decentraland-dapps/dist/containers/AssetCard/AssetCard'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { Button } from 'decentraland-ui'
@@ -35,7 +35,7 @@ const Overview = (props: Props) => {
           <div className={classNames(styles.OverviewWithItems)}>
             {items.map((item: Item) => (
               <a href={`${MARKETPLACE_URL}${item.url}`} target="_blank" key={item.id}>
-                <AssetCard asset={item} assetFilters={{} as AssetCardFilters} />
+                <AssetCard asset={item} />
               </a>
             ))}
           </div>

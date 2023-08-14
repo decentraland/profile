@@ -44,6 +44,8 @@ const Avatar = (props: Props) => {
             onLoad={handleOnLoad}
             onError={handleError}
             onUpdate={handleOnLoad}
+            panning={false}
+            lockBeta={true}
             dev={config.getEnv() === Env.DEVELOPMENT}
             disableBackground={true}
             profile={profileAddress}
