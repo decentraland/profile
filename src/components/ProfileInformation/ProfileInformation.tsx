@@ -149,7 +149,7 @@ const ProfileInformation = (props: Props) => {
                     position="top center"
                     disabled={isTabletAndBelow}
                     trigger={
-                      <Button primary className={styles.smallButton} data-testid={shareButtonTestId}>
+                      <Button inverted className={classnames(styles.smallButton, styles.shareButton)} data-testid={shareButtonTestId}>
                         <img src={Share} className="iconSize" />
                       </Button>
                     }
