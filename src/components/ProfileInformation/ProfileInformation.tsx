@@ -59,9 +59,11 @@ const ProfileInformation = (props: Props) => {
   }, [profileAddress, hasCopiedLink])
 
   const handleShareOnTwitter = useCallback(() => {
-    const url = `${twitterURL}${encodeURIComponent(
-      `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(profileAddress)}`
-    )}`
+    const message =
+      loggedInAddress === profileAddress
+        ? t('profile_information.share_my_profile_tw_message')
+        : t('profile_information.share_others_profile_tw_message')
+    const url = `${twitterURL}${encodeURIComponent(`${message}${PROFILE_URL}${locations.account(profileAddress)}`)}`
     getAnalytics().track(Events.SHARE_PROFILE, {
       type: ShareType.TWITTER
     })
@@ -71,7 +73,7 @@ const ProfileInformation = (props: Props) => {
     }, 300)
 
     return () => clearTimeout(timeout)
-  }, [profileAddress])
+  }, [profileAddress, loggedInAddress])
 
   const handleViewMore = useCallback(() => {
     avatar && onViewMore && onViewMore(avatar)

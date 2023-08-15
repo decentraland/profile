@@ -102,6 +102,39 @@ describe('ProfileInformation', () => {
 
         expect(queryByTestId(blockedButtonTestId)).toBeNull()
       })
+
+      describe('and the share on twitter button is clicked', () => {
+        beforeEach(() => {
+          renderedComponent = renderProfileInformation({
+            profileAddress: anAddress,
+            loggedInAddress: anAddress,
+            profile: aProfile,
+            isSocialClientReady: false
+          })
+          jest.useFakeTimers()
+        })
+
+        afterEach(() => {
+          jest.useRealTimers()
+        })
+
+        it('should open a new page with a twitter message to share its own profile', () => {
+          jest.spyOn(window, 'open').mockImplementation(() => null)
+          const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            `${t('profile_information.share_my_profile_tw_message')}${PROFILE_URL}${locations.account(anAddress)}`
+          )}`
+
+          const { getByTestId, getByText } = renderedComponent
+          const dropdownButton = getByTestId(shareButtonTestId)
+          const shareItem = getByText(t('profile_information.share_on_tw'))
+          expect(dropdownButton).toBeInTheDocument()
+          fireEvent.click(dropdownButton)
+          fireEvent.click(shareItem)
+
+          jest.runAllTimers()
+          expect(window.open).toHaveBeenCalledWith(twitterURL, '_blank,noreferrer')
+        })
+      })
     })
 
     describe('and the user is checking other profile', () => {
@@ -192,6 +225,39 @@ describe('ProfileInformation', () => {
           })
 
           expect(queryByTestId(actionsForNonBlockedTestId)).toBeNull()
+        })
+      })
+
+      describe('and the share on twitter button is clicked', () => {
+        beforeEach(() => {
+          renderedComponent = renderProfileInformation({
+            profileAddress: anAddress,
+            loggedInAddress: anotherAddress,
+            profile: aProfile,
+            isSocialClientReady: false
+          })
+          jest.useFakeTimers()
+        })
+
+        afterEach(() => {
+          jest.useRealTimers()
+        })
+
+        it('should open a new page with a twitter message to share its own profile', () => {
+          jest.spyOn(window, 'open').mockImplementation(() => null)
+          const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            `${t('profile_information.share_others_profile_tw_message')}${PROFILE_URL}${locations.account(anAddress)}`
+          )}`
+
+          const { getByTestId, getByText } = renderedComponent
+          const dropdownButton = getByTestId(shareButtonTestId)
+          const shareItem = getByText(t('profile_information.share_on_tw'))
+          expect(dropdownButton).toBeInTheDocument()
+          fireEvent.click(dropdownButton)
+          fireEvent.click(shareItem)
+
+          jest.runAllTimers()
+          expect(window.open).toHaveBeenCalledWith(twitterURL, '_blank,noreferrer')
         })
       })
     })
@@ -408,39 +474,6 @@ describe('ProfileInformation', () => {
           expect(queryByTestId('twitter')).toBeNull()
         })
       })
-    })
-  })
-
-  describe('when the share on twitter button is clicked', () => {
-    beforeEach(() => {
-      renderedComponent = renderProfileInformation({
-        profileAddress: anAddress,
-        loggedInAddress: anAddress,
-        profile: aProfile,
-        isSocialClientReady: false
-      })
-      jest.useFakeTimers()
-    })
-
-    afterEach(() => {
-      jest.useRealTimers()
-    })
-
-    it('should open a new page with a twitter message', () => {
-      jest.spyOn(window, 'open').mockImplementation(() => null)
-      const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        `${t('profile_information.tw_message')}${PROFILE_URL}${locations.account(anAddress)}`
-      )}`
-
-      const { getByTestId, getByText } = renderedComponent
-      const dropdownButton = getByTestId(shareButtonTestId)
-      const shareItem = getByText(t('profile_information.share_on_tw'))
-      expect(dropdownButton).toBeInTheDocument()
-      fireEvent.click(dropdownButton)
-      fireEvent.click(shareItem)
-
-      jest.runAllTimers()
-      expect(window.open).toHaveBeenCalledWith(twitterURL, '_blank,noreferrer')
     })
   })
 
