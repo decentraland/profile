@@ -21,7 +21,7 @@
   margin: 0 1em 0 0;
 }
 
-.worldButton:global(.ui.primary.button) {
+.worldButton:global(.ui.button) {
   padding: 5px 20px;
   min-width: 230px;
 }
@@ -30,7 +30,7 @@
   margin-right: 10px;
 }
 
-.smallButton:global(.ui.primary.button) {
+.smallButton:global(.ui.button) {
   align-items: center;
   display: flex;
   height: 34px;

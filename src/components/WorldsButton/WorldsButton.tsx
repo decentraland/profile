@@ -21,6 +21,9 @@ const WorldsButton = (props: Props) => {
   const { address, isLoading, isLoggedIn, className, hasNames, worlds, onFetchWorlds } = props
 
   const hasWorlds = worlds.length > 0
+  const promptUserToGetAName = !isLoading && !hasNames && !hasWorlds && isLoggedIn
+  const promptUserToActivateWorld = hasNames && !hasWorlds && !isLoading && isLoggedIn
+  const showUserWorlds = !isLoading && (hasWorlds || !isLoggedIn)
 
   const handleWorldClick = useCallback((world: World) => {
     getAnalytics().track(Events.GO_TO_WORLD, { world: world.domain })
@@ -57,7 +60,7 @@ const WorldsButton = (props: Props) => {
     <Popup
       content={t('profile_information.worlds_tooltip')}
       position="top center"
-      disabled={!isLoading && !hasWorlds}
+      disabled={isLoading || !hasWorlds}
       trigger={
         <Dropdown
           className={classNames(className, styles.worldDropdown)}
@@ -66,27 +69,28 @@ const WorldsButton = (props: Props) => {
           open={!hasNames || (hasNames && !hasWorlds) ? false : undefined}
           trigger={
             <Button
-              primary
+              primary={promptUserToGetAName || promptUserToActivateWorld}
               disabled={isLoading}
               loading={isLoading}
+              inverted={showUserWorlds}
               onClick={handleButtonClick}
               className={classNames(
                 className,
                 styles.worldButton,
                 'customIconButton',
-                { [styles.smallButton]: isLoading || hasWorlds || !isLoggedIn },
+                { [styles.smallButton]: isLoading || showUserWorlds },
                 styles.actionButton
               )}
             >
-              {!hasNames && !isLoading && isLoggedIn ? (
+              {promptUserToGetAName ? (
                 <>
                   <img src={verifiedIcon} /> {t('worlds_button.get_a_name')}
                 </>
-              ) : hasNames && !hasWorlds && !isLoading && isLoggedIn ? (
+              ) : promptUserToActivateWorld ? (
                 <>
                   <img src={worldIcon} /> {t('worlds_button.activate_world')}
                 </>
-              ) : !isLoading && (hasWorlds || !isLoggedIn) ? (
+              ) : showUserWorlds ? (
                 <img src={worldIcon} />
               ) : null}
             </Button>

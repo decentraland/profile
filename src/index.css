@@ -139,3 +139,15 @@ code {
     margin-right: unset;
   }
 }
+
+.ui.button.inverted:focus {
+  background: none;
+  color: white;
+  border: 1px solid white;
+  box-shadow: none;
+}
+
+.ui.button.inverted:hover {
+  border: 1px solid white;
+  box-shadow: none;
+}
