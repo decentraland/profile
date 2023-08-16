@@ -83,13 +83,13 @@ export function* socialSagas() {
       const requestEvents: Awaited<ReturnType<SocialClient['getRequestEvents']>> = yield call([client, 'getRequestEvents'])
       const incoming: RequestEvent[] =
         requestEvents?.incoming?.items.map(event => ({
-          address: event.user?.address ?? 'Unknown',
+          address: event.user?.address.toLowerCase() ?? 'Unknown',
           createdAt: event.createdAt,
           message: event.message
         })) ?? []
       const outgoing: RequestEvent[] =
         requestEvents?.outgoing?.items.map(event => ({
-          address: event.user?.address ?? 'Unknown',
+          address: event.user?.address.toLowerCase() ?? 'Unknown',
           createdAt: event.createdAt,
           message: event.message
         })) ?? []

@@ -23,7 +23,7 @@ import { generateIdentity } from './utils'
 export function* identitySaga() {
   yield takeEvery(loginRequest.type, handleLogin)
   yield takeEvery(CHANGE_ACCOUNT, handleChangeAccount)
-  yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccessAndChangeAccount)
+  yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
   yield takeEvery(DISCONNECT_WALLET, handleDisconnectWallet)
 
   function* handleLogin(action: LoginRequestAction) {
@@ -81,23 +81,24 @@ export function* identitySaga() {
     yield location.reload()
   }
 
-  function* handleConnectWalletSuccessAndChangeAccount(action: ConnectWalletSuccessAction | ChangeAccountAction) {
+  function* handleConnectWalletSuccess(action: ConnectWalletSuccessAction | ChangeAccountAction) {
     const { wallet } = action.payload
     const { address } = wallet
+    const lowerCasedAddress = address.toLowerCase()
 
-    auxAddress = address
+    auxAddress = lowerCasedAddress
 
     let identity: AuthIdentity
 
-    const ssoIdentity: AuthIdentity | null = yield call(getIdentity, address)
+    const ssoIdentity: AuthIdentity | null = yield call(getIdentity, lowerCasedAddress)
 
     if (!ssoIdentity) {
-      identity = yield call(generateIdentity, address)
-      yield call(storeIdentity, address, identity)
+      identity = yield call(generateIdentity, lowerCasedAddress)
+      yield call(storeIdentity, lowerCasedAddress, identity)
     } else {
       identity = ssoIdentity
     }
 
-    yield put(loginSuccess({ address: wallet.address, identity }))
+    yield put(loginSuccess({ address: lowerCasedAddress, identity }))
   }
 }
