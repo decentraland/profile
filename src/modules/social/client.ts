@@ -10,7 +10,7 @@ const SOCIAL_RPC_URL = config.get('SOCIAL_RPC_URL')
 let socialClient: SocialClient | undefined
 
 export const initiateSocialClient = async (address: string, identity: AuthIdentity): Promise<SocialClient> => {
-  socialClient = await createSocialClient(SYNAPSE_URL, SOCIAL_RPC_URL, address, identity)
+  socialClient = await createSocialClient(SYNAPSE_URL, SOCIAL_RPC_URL, address.toLowerCase(), identity)
   return socialClient
 }
 

@@ -69,14 +69,14 @@ describe('when handling the fetch friends requests action', () => {
     beforeEach(() => {
       incomingEvents = [
         {
-          address: '0x1',
+          address: '0x1b',
           createdAt: 123456789,
           message: undefined
         }
       ]
       outgoingEvents = [
         {
-          address: '0x2',
+          address: '0x2b',
           createdAt: 123456789,
           message: undefined
         }
@@ -92,11 +92,11 @@ describe('when handling the fetch friends requests action', () => {
               getRequestEvents: () =>
                 Promise.resolve({
                   incoming: {
-                    items: [{ user: { address: incomingEvents[0].address }, createdAt: incomingEvents[0].createdAt }],
+                    items: [{ user: { address: incomingEvents[0].address.toUpperCase() }, createdAt: incomingEvents[0].createdAt }],
                     total: incomingEvents.length
                   },
                   outgoing: {
-                    items: [{ user: { address: outgoingEvents[0].address }, createdAt: outgoingEvents[0].createdAt }],
+                    items: [{ user: { address: outgoingEvents[0].address.toUpperCase() }, createdAt: outgoingEvents[0].createdAt }],
                     total: outgoingEvents.length
                   }
                 })
@@ -147,7 +147,7 @@ describe('when handing the login success action', () => {
         .put(initializeSocialClientRequest())
         .call.like({
           fn: initiateSocialClient,
-          args: [address, identity]
+          args: [address.toLocaleLowerCase(), identity]
         })
         .put(initializeSocialClientSuccess())
         .dispatch(loginSuccess({ address, identity }))
