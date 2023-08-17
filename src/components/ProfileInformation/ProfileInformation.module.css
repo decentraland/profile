@@ -2,14 +2,37 @@
   color: var(--text);
   gap: 36px;
   display: flex;
+  /* justify-content: space-between; */
+  width: 100%;
+}
+
+.avatarInformation {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
+}
+
+.avatarTopContent {
   width: 100%;
 }
 
 .actions {
   display: flex;
   flex-direction: column;
-  row-gap: 75px;
+}
+
+.avatarInformationContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 9px;
+}
+
+.avatarInformationGap {
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
 }
 
 .actions .buttons {
@@ -38,7 +61,6 @@
 }
 
 .description {
-  margin-top: 8px;
   font-size: 12px;
 }
 
@@ -74,6 +96,8 @@
 .copyLink:global(.ui.button.basic),
 .viewMore:global(.ui.button.basic) {
   padding: unset;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .smallButton:global(.ui.button) {
@@ -152,17 +176,20 @@
   }
 
   .ProfileInformation {
-    margin-top: -50px;
+    margin-top: -25px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mobileTopContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
   }
 
   .actions .buttons {
     column-gap: 6px;
-  }
-
-  .actions {
-    position: absolute;
-    right: 16px;
-    top: 470px;
   }
 
   .basicRow {
@@ -188,6 +215,15 @@
 
   .description {
     font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .avatarInformationContainer,
+  .avatarInformationGap {
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -196,7 +232,7 @@
   align-items: center;
 }
 
-:global(.ui.dropdown) :global(.menu > .item).copyItem > svg {
+:global(.ui.dropdown) :global(.menu > .item).copyItem>svg {
   margin-right: 11px;
 }
 
