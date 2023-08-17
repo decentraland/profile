@@ -31,5 +31,12 @@
     background-color: black;
     background-position: initial;
     position: unset;
+    background-image: url(../../assets/images/background-tablet.webp);
+  }
+}
+
+@media (max-width: 767px) {
+  .page {
+    background-image: url(../../assets/images/background-mobile.webp);
   }
 }
