@@ -87,6 +87,18 @@ const ProfileInformation = (props: Props) => {
   const shouldShowViewMoreButton =
     (hasAboutInformation(avatar) || (avatar?.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH) && !isBlocked
 
+  const renderLinks = useCallback(
+    () =>
+      !isBlocked && (
+        <div className={styles.links}>
+          {avatar?.links?.slice(0, MAX_NUMBER_OF_LINKS).map((link, index) => (
+            <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
+          ))}
+        </div>
+      ),
+    [isBlocked, avatar]
+  )
+
   const renderActions = useCallback(
     () => (
       <div className={classnames(styles.actions)}>
@@ -152,16 +164,19 @@ const ProfileInformation = (props: Props) => {
             </Dropdown>
           )}
         </div>
-        {!isBlocked && (
-          <div className={styles.links}>
-            {avatar?.links?.slice(0, MAX_NUMBER_OF_LINKS).map((link, index) => (
-              <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
-            ))}
-          </div>
-        )}
       </div>
     ),
-    []
+    [
+      avatar,
+      profileAddress,
+      avatarName,
+      isBlocked,
+      isBlockedByLoggedUser,
+      loggedInAddress,
+      shouldShowFriendsButton,
+      isTabletAndBelow,
+      hasCopiedLink
+    ]
   )
 
   return (
@@ -187,13 +202,16 @@ const ProfileInformation = (props: Props) => {
               </Button>
               {hasCopiedWallet && <span className={styles.copied}>{t('profile_information.copied')}</span>}
             </div>
-            {isSocialClientReady && (
-              <div className={styles.basicCenteredRow}>
-                {isLoggedInProfile ? <FriendsCounter /> : <MutualFriendsCounter friendAddress={profileAddress} />}
-              </div>
-            )}
           </div>
           {!isTabletAndBelow && renderActions()}
+        </div>
+        <div className={styles.friendsContainer}>
+          {isSocialClientReady && (
+            <div className={styles.basicCenteredRow}>
+              {isLoggedInProfile ? <FriendsCounter /> : <MutualFriendsCounter friendAddress={profileAddress} />}
+            </div>
+          )}
+          {isTabletAndBelow && <>| {renderLinks()}</>}
         </div>
         {avatar && (
           <div className={styles.description}>
@@ -201,9 +219,12 @@ const ProfileInformation = (props: Props) => {
               ? avatar.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...'
               : avatar.description}
             {shouldShowViewMoreButton && (
-              <Button basic className={styles.viewMore} onClick={handleViewMore}>
-                {t('profile_information.view_more')}
-              </Button>
+              <div className={styles.buttonsContainer}>
+                <Button basic className={styles.viewMore} onClick={handleViewMore}>
+                  {t('profile_information.view_more')}
+                </Button>
+                {!isTabletAndBelow && renderLinks()}
+              </div>
             )}
           </div>
         )}
