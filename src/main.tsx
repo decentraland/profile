@@ -3,7 +3,7 @@ import 'semantic-ui-css/semantic.min.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
@@ -14,6 +14,8 @@ import SignInPage from './components/Pages/SignInPage'
 import { initStore } from './modules/store'
 import * as locales from './modules/translation/locales'
 import { config } from './modules/config'
+import WithProfile from './components/HOC/WithProfile'
+import ConnectAndRedirect from './components/HOC/ConnectAndRedirect'
 import './modules/analytics/track'
 // These CSS styles must be defined last to avoid overriding other styles
 import 'decentraland-ui/dist/themes/alternative/dark-theme.css'
@@ -23,8 +25,8 @@ SSO.init(config.get('SSO_URL'))
 
 const router = createBrowserRouter([
   {
-    path: '/accounts/:profileAddress?',
-    element: <MainPage />
+    path: '/accounts/:profileAddress',
+    element: <WithProfile component={MainPage} />
   },
   {
     path: 'sign-in',
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: <Navigate to="/accounts" replace={true} />
+    element: <ConnectAndRedirect />
   }
 ])
 

@@ -264,8 +264,8 @@ describe('when getting if loading a profile with an address or name has failed',
       state.profile.enhancedProfileFetchErrors = {}
     })
 
-    it('should return undefined', () => {
-      expect(getErrorLoadingProfile(state, name)).toBeUndefined()
+    it('should return null', () => {
+      expect(getErrorLoadingProfile(state, name)).toBe(null)
     })
   })
 
@@ -276,7 +276,7 @@ describe('when getting if loading a profile with an address or name has failed',
       }
     })
 
-    it('should return true', () => {
+    it('should return the error', () => {
       expect(getErrorLoadingProfile(state, name)).toBe(state.profile.enhancedProfileFetchErrors[name])
     })
   })

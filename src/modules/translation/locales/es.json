@@ -87,5 +87,9 @@
     "friend_confirmation": "sí, eliminar amigo",
     "friend_cancel": "cancelar",
     "friend_title_mobile": "Eliminar amigo {avatarName}"
+  },
+  "not_found_page": {
+    "title": "¡Parece que hasta los exploradores pueden perderse!<br></br>No pudimos encontrar ésta dirección o nombre en Decentraland.",
+    "message": "Por favor revísalo e intenta nuevamente"
   }
 }

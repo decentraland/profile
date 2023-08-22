@@ -41,4 +41,4 @@ export const hasBlockedLoggedUser = createSelector(
   }
 )
 
-export const getErrorLoadingProfile = (state: RootState, address: string) => state.profile.enhancedProfileFetchErrors[address]
+export const getErrorLoadingProfile = (state: RootState, address: string) => state.profile.enhancedProfileFetchErrors[address] ?? null
