@@ -1,6 +1,7 @@
 import { createFetchComponent } from '@well-known-components/fetch-component'
 import { createContentClient } from 'dcl-catalyst-client'
 import createSagasMiddleware from 'redux-saga'
+import { PeerAPI } from 'decentraland-dapps/dist/lib/peer'
 import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
 import { MarketplaceGraphClient } from '../lib/MarketplaceGraphClient'
 import { createRootReducer } from '../modules/reducer'
@@ -17,7 +18,8 @@ export function initTestStore(preloadedState = {}) {
   const store = createRootReducer([sagasMiddleware, storageMiddleware], preloadedState)
   const worldsContentClient = createContentClient({ url: 'WORLDS_CONTENT_SERVER_URL', fetcher: createFetchComponent() })
   const marketplaceGraphClient = new MarketplaceGraphClient('MARKETPLACE_GRAPH_URL')
-  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient)
+  const peerApi = new PeerAPI('PEER_URL')
+  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi)
   loadStorageMiddleware(store)
 
   return store

@@ -87,5 +87,9 @@
     "friend_confirmation": "是的，解除好友关系",
     "friend_cancel": "取消",
     "friend_title_mobile": "解除好友关系 {avatarName}"
+  },
+  "not_found_page": {
+    "title": "看来即使是探险家也会迷路！<br></br>在 Decentraland 中找不到此地址或名称。",
+    "message": "请仔细检查并重试"
   }
 }
