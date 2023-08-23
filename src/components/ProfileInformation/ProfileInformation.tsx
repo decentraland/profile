@@ -206,7 +206,7 @@ const ProfileInformation = (props: Props) => {
           {!isTabletAndBelow && renderActions()}
         </div>
         <div className={styles.friendsContainer}>
-          {isSocialClientReady && (
+          {isSocialClientReady && Boolean(loggedInAddress) && (
             <div className={styles.basicCenteredRow}>
               {isLoggedInProfile ? <FriendsCounter /> : <MutualFriendsCounter friendAddress={profileAddress} />}
             </div>
