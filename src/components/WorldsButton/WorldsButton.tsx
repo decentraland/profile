@@ -23,7 +23,7 @@ const WorldsButton = (props: Props) => {
   const hasWorlds = worlds.length > 0
   const promptUserToGetAName = !isLoading && !hasNames && !hasWorlds && isLoggedIn
   const promptUserToActivateWorld = hasNames && !hasWorlds && !isLoading && isLoggedIn
-  const showUserWorlds = !isLoading && (hasWorlds || !isLoggedIn)
+  const showUserWorlds = !isLoading && hasWorlds
 
   const handleWorldClick = useCallback((world: World) => {
     getAnalytics().track(Events.GO_TO_WORLD, { world: world.domain })
@@ -56,7 +56,7 @@ const WorldsButton = (props: Props) => {
     onFetchWorlds(address)
   }, [address])
 
-  return (
+  return showUserWorlds || isLoggedIn || isLoading ? (
     <Popup
       content={t('profile_information.worlds_tooltip')}
       position="top center"
@@ -90,7 +90,7 @@ const WorldsButton = (props: Props) => {
                 <>
                   <img src={worldIcon} /> {t('worlds_button.activate_world')}
                 </>
-              ) : showUserWorlds ? (
+              ) : !isLoading ? (
                 <img src={worldIcon} />
               ) : null}
             </Button>
@@ -107,7 +107,7 @@ const WorldsButton = (props: Props) => {
       }
       on="hover"
     />
-  )
+  ) : null
 }
 
 export default WorldsButton
