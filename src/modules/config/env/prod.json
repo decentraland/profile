@@ -12,5 +12,7 @@
   "MARKETPLACE_URL": "https://market.decentraland.org",
   "NFT_SERVER_URL": "https://nft-api.decentraland.org/v1",
   "SEGMENT_API_KEY": "AGaiQumreF5ubucC71RoGA1rkDAnVocy",
-  "SSO_URL": "https://id.decentraland.org"
+  "SSO_URL": "https://id.decentraland.org",
+  "ENVIRONMENT": "production",
+  "SENTRY_DSN": "https://d2d3f81155656b53fe7746a0b69b6e0e@o4504361728212992.ingest.sentry.io/4505748385169408"
 }
