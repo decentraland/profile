@@ -11,6 +11,7 @@ import LoadingPage from '../LoadingPage'
 import { nullAddress } from './constants'
 import { Props } from './MainPage.types'
 import styles from './MainPage.module.css'
+import usePageTracking from '../../../hooks/usePageTracking'
 
 function MainPage(props: Props) {
   const { isLoading, profileAddress, loggedInAddress, isBlocked } = props
@@ -25,6 +26,8 @@ function MainPage(props: Props) {
   //   },
   //   [setSelectedTab]
   // )
+
+  usePageTracking()
 
   return isLoading ? (
     <LoadingPage />
