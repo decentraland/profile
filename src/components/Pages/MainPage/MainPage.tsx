@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
+import usePageTracking from '../../../hooks/usePageTracking'
 import { getView } from '../../../utils/view'
 import { Avatar } from '../../Avatar'
 import { BlockedUser } from '../../BlockedUser'
@@ -25,6 +26,8 @@ function MainPage(props: Props) {
   //   },
   //   [setSelectedTab]
   // )
+
+  usePageTracking()
 
   return isLoading ? (
     <LoadingPage />
