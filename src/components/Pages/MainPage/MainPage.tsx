@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
+import usePageTracking from '../../../hooks/usePageTracking'
 import { getView } from '../../../utils/view'
 import { Avatar } from '../../Avatar'
 import { BlockedUser } from '../../BlockedUser'
@@ -11,7 +12,6 @@ import LoadingPage from '../LoadingPage'
 import { nullAddress } from './constants'
 import { Props } from './MainPage.types'
 import styles from './MainPage.module.css'
-import usePageTracking from '../../../hooks/usePageTracking'
 
 function MainPage(props: Props) {
   const { isLoading, profileAddress, loggedInAddress, isBlocked } = props
