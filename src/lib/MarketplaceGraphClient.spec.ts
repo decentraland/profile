@@ -1,5 +1,5 @@
-import { MarketplaceGraphClient } from './MarketplaceGraphClient'
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
+import { MarketplaceGraphClient } from './MarketplaceGraphClient'
 
 jest.mock('decentraland-dapps/dist/lib/graph')
 
