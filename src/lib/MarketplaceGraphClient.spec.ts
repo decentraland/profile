@@ -12,11 +12,12 @@ describe('when fetching an ens name owner', () => {
   beforeEach(() => {
     url = 'https://some-graph.com'
     name = 'some-name'
+
+    mockGraphql.mockResolvedValueOnce({ nfts: [] })
   })
 
   it('should call the graph providing the ens name as parameter in the query', async () => {
     const client = new MarketplaceGraphClient(url)
-    mockGraphql.mockResolvedValueOnce({ nfts: [] })
     await client.fetchENSNameOwner(name)
 
     expect(mockGraphql).toHaveBeenCalledWith(
