@@ -3,11 +3,11 @@ import { graphql } from 'decentraland-dapps/dist/lib/graph'
 const BATCH_SIZE = 1000
 
 const getSubdomainByNameQuery = (name: string) => `{
-  nfts(where: {ens_: {subdomain: "${name}"}}) {
-    owner {
-      address
+    nfts(where:{ name_starts_with_nocase: "${name}", name_ends_with_nocase: "${name}" }) {
+      owner {
+        address
+      }
     }
-  }
 }`
 
 const getSubdomainQuery = (owner: string, offset: number) => `{
