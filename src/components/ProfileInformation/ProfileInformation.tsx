@@ -37,6 +37,7 @@ const PROFILE_URL = config.get('PROFILE_URL', '')
 
 const ProfileInformation = (props: Props) => {
   const { profile, isSocialClientReady, loggedInAddress, profileAddress, isBlockedByLoggedUser, hasBlockedLoggedUser, onViewMore } = props
+  console.log({ loggedInAddress, profileAddress, profile })
 
   const [hasCopiedLink, setHasCopiedLink] = useTimer(1200)
   const [hasCopiedWallet, setHasCopiedWallet] = useTimer(1200)
@@ -82,7 +83,7 @@ const ProfileInformation = (props: Props) => {
 
   const isLoggedInProfile = loggedInAddress === profileAddress
   const avatarName = getAvatarName(avatar)
-  const shouldShowFriendsButton = !isLoggedInProfile && loggedInAddress && isSocialClientReady
+  const shouldShowFriendsButton = (loggedInAddress && !isLoggedInProfile && isSocialClientReady) || !loggedInAddress
   const isBlocked = !isLoggedInProfile && (isBlockedByLoggedUser || hasBlockedLoggedUser)
   const shouldShowViewMoreButton =
     (hasAboutInformation(avatar) || (avatar?.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH) && !isBlocked
@@ -112,7 +113,9 @@ const ProfileInformation = (props: Props) => {
           {!isBlocked && (
             // The class name is needed to avoid the display block of the div. The div is just for testing purposes
             <div data-testid={actionsForNonBlockedTestId} className={styles.displayContents}>
-              {shouldShowFriendsButton ? <FriendshipButton className={styles.friendsButton} friendAddress={profileAddress} /> : null}
+              {shouldShowFriendsButton ? (
+                <FriendshipButton className={styles.friendsButton} friendAddress={profileAddress} isLoggedIn={Boolean(loggedInAddress)} />
+              ) : null}
               {loggedInAddress && !isTabletAndBelow ? <WorldsButton isLoggedIn={isLoggedInProfile} address={profileAddress} /> : null}
               {hasCopiedLink && <span className={styles.copiedLink}>{t('profile_information.copied')}</span>}
               <Dropdown

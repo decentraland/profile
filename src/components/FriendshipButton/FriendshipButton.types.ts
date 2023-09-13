@@ -1,5 +1,4 @@
 import { Dispatch } from '@reduxjs/toolkit'
-// import { OpenModalAction, openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import {
   CancelFriendshipRequestRequestAction,
@@ -7,7 +6,8 @@ import {
   RequestFriendshipRequestAction,
   AcceptFriendshipRequestAction,
   FetchFriendRequestsEventsRequestAction,
-  FetchFriendsRequestAction
+  FetchFriendsRequestAction,
+  LogInAndRequestFriendshipRequestAction
 } from '../../modules/social/actions'
 import { FriendshipStatus } from '../../modules/social/types'
 
@@ -21,9 +21,10 @@ export type Props = {
   friendshipStatus?: FriendshipStatus
   className?: string
   profile?: Profile
+  isLoggedIn?: boolean
 }
 
-export type OwnProps = Pick<Props, 'friendAddress' | 'className'>
+export type OwnProps = Pick<Props, 'friendAddress' | 'className' | 'isLoggedIn'>
 export type MapStateProps = Pick<Props, 'isLoading' | 'friendshipStatus' | 'profile'>
 export type MapDispatchProps = Pick<Props, 'onRemoveFriend' | 'onAcceptFriendRequest' | 'onCancelFriendRequest' | 'onAddFriend'>
 export type MapDispatch = Dispatch<
@@ -35,4 +36,5 @@ export type MapDispatch = Dispatch<
   | RequestFriendshipRequestAction
   | RemoveFriendRequestAction
   | AcceptFriendshipRequestAction
+  | LogInAndRequestFriendshipRequestAction
 >

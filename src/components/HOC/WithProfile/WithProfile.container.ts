@@ -33,7 +33,7 @@ const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps =>
 }
 
 const mapDispatch = (dispatch: MapDispatch, ownProps: OwnProps) => ({
-  onFetchProfile: () => dispatch(enhancedFetchProfileRequest(ownProps.router.params.profileAddress as string))
+  onFetchProfile: () => dispatch(enhancedFetchProfileRequest(ownProps.router.params.profileAddress?.toLowerCase() as string))
 })
 
 export default WithRouter(connect(mapStateToProps, mapDispatch)(WithProfile))

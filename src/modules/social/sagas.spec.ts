@@ -1,7 +1,10 @@
-import { call } from 'redux-saga/effects'
+import { call, put, race, select, take } from 'redux-saga/effects'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 import { AuthIdentity } from '@dcl/crypto'
+import { CLOSE_MODAL, CloseModalAction, closeModal } from 'decentraland-dapps/dist/modules/modal/actions'
+import { CONNECT_WALLET_SUCCESS, ConnectWalletSuccessAction, connectWalletSuccess } from 'decentraland-dapps/dist/modules/wallet/actions'
+import { Wallet } from 'decentraland-dapps/dist/modules/wallet/types'
 import { loginSuccess } from '../identity/action'
 import {
   cancelFriendshipRequestFailure,
@@ -30,11 +33,17 @@ import {
   requestFriendshipSuccess,
   rejectFriendshipFailure,
   rejectFriendshipRequest,
-  rejectFriendshipSuccess
+  rejectFriendshipSuccess,
+  logInAndRequestFriendshipRequest,
+  InitializeSocialClientSuccessAction,
+  InitializeSocialClientFailureAction,
+  FetchFriendsSuccessAction,
+  FetchFriendsFailureAction
 } from './actions'
 import { getClient, getFriends, getMutualFriends, initiateSocialClient } from './client'
 import { socialSagas } from './sagas'
-import { RequestEvent, SocialClient } from './types'
+import { getFriendshipStatus } from './selectors'
+import { FriendshipStatus, RequestEvent, SocialClient } from './types'
 
 describe('when handling the fetch friends action', () => {
   describe('and getting the friends succeeds', () => {
@@ -380,6 +389,229 @@ describe('when handling the cancel friendship request action', () => {
         .put(cancelFriendshipRequestSuccess('anAddress'.toLowerCase()))
         .dispatch(cancelFriendshipRequestRequest('anAddress'))
         .silentRun()
+    })
+  })
+})
+
+describe('when handling the log in and request friendship action', () => {
+  let connectionModalRaceResult: { success: ConnectWalletSuccessAction } | { close: CloseModalAction }
+  let friendAddress: string
+
+  beforeEach(() => {
+    friendAddress = '0x0'
+  })
+
+  describe('and the log in modal is closed', () => {
+    beforeEach(() => {
+      connectionModalRaceResult = { close: closeModal('LoginModal') }
+    })
+
+    it('should finish the saga without requesting the friendship', () => {
+      return expectSaga(socialSagas)
+        .provide([
+          [
+            race({
+              success: take(CONNECT_WALLET_SUCCESS),
+              close: take(CLOSE_MODAL)
+            }),
+            connectionModalRaceResult
+          ]
+        ])
+        .not.put(requestFriendshipRequest(friendAddress))
+        .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+        .silentRun()
+    })
+  })
+
+  describe('and the wallet connection succeeds', () => {
+    describe('and the friendship requested is for the same logged in user', () => {
+      beforeEach(() => {
+        connectionModalRaceResult = { success: connectWalletSuccess({ address: friendAddress } as Wallet) }
+      })
+
+      it('should finish the saga without requesting the friendship', () => {
+        return expectSaga(socialSagas)
+          .provide([
+            [
+              race({
+                success: take(CONNECT_WALLET_SUCCESS),
+                close: take(CLOSE_MODAL)
+              }),
+              connectionModalRaceResult
+            ]
+          ])
+          .not.put(requestFriendshipRequest(friendAddress))
+          .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+          .silentRun()
+      })
+    })
+
+    describe('and the friendship requested is for another user', () => {
+      let socialClientInitializationRaceResult:
+        | { initializeSocialClientSuccess: InitializeSocialClientSuccessAction }
+        | { initializeSocialClientFailure: InitializeSocialClientFailureAction }
+
+      beforeEach(() => {
+        connectionModalRaceResult = { success: connectWalletSuccess({ address: '0x1' } as Wallet) }
+      })
+
+      describe('and the social client failed to be initialized', () => {
+        beforeEach(() => {
+          socialClientInitializationRaceResult = { initializeSocialClientFailure: initializeSocialClientFailure('anErrorMessage') }
+        })
+
+        it('should finish the saga without requesting the friendship', () => {
+          return expectSaga(socialSagas)
+            .provide([
+              [
+                race({
+                  success: take(CONNECT_WALLET_SUCCESS),
+                  close: take(CLOSE_MODAL)
+                }),
+                connectionModalRaceResult
+              ],
+              [
+                race({
+                  initializeSocialClientSuccess: take(initializeSocialClientSuccess.type),
+                  initializeSocialClientFailure: take(initializeSocialClientFailure.type)
+                }),
+                socialClientInitializationRaceResult
+              ]
+            ])
+            .not.put(requestFriendshipRequest(friendAddress))
+            .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+            .silentRun()
+        })
+      })
+
+      describe('and the social client was initialized', () => {
+        let fetchFriendsRaceResult:
+          | { successFetchingFriends: FetchFriendsSuccessAction }
+          | { failureFetchingFriends: FetchFriendsFailureAction }
+
+        beforeEach(() => {
+          socialClientInitializationRaceResult = { initializeSocialClientSuccess: initializeSocialClientSuccess() }
+        })
+
+        describe('and fetching friends failed', () => {
+          beforeEach(() => {
+            fetchFriendsRaceResult = { failureFetchingFriends: fetchFriendsFailure('anErrorMessage') }
+          })
+
+          it('should finish the saga without requesting the friendship', () => {
+            return expectSaga(socialSagas)
+              .provide([
+                [
+                  race({
+                    success: take(CONNECT_WALLET_SUCCESS),
+                    close: take(CLOSE_MODAL)
+                  }),
+                  connectionModalRaceResult
+                ],
+                [
+                  race({
+                    initializeSocialClientSuccess: take(initializeSocialClientSuccess.type),
+                    initializeSocialClientFailure: take(initializeSocialClientFailure.type)
+                  }),
+                  socialClientInitializationRaceResult
+                ],
+                [
+                  race({
+                    successFetchingFriends: take(fetchFriendsSuccess.type),
+                    failureFetchingFriends: take(fetchFriendsFailure.type)
+                  }),
+                  fetchFriendsRaceResult
+                ]
+              ])
+              .not.put(requestFriendshipRequest(friendAddress))
+              .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+              .silentRun()
+          })
+        })
+
+        describe('and fetching friends succeeded', () => {
+          let friendshipStatus: FriendshipStatus
+
+          beforeEach(() => {
+            fetchFriendsRaceResult = { successFetchingFriends: fetchFriendsSuccess([]) }
+          })
+
+          describe('and the logged in user is a friend, has a pending request or is blocked by the requested user', () => {
+            beforeEach(() => {
+              friendshipStatus = FriendshipStatus.FRIEND
+            })
+
+            it('should finish the saga without requesting the friendship', () => {
+              return expectSaga(socialSagas)
+                .provide([
+                  [
+                    race({
+                      success: take(CONNECT_WALLET_SUCCESS),
+                      close: take(CLOSE_MODAL)
+                    }),
+                    connectionModalRaceResult
+                  ],
+                  [
+                    race({
+                      initializeSocialClientSuccess: take(initializeSocialClientSuccess.type),
+                      initializeSocialClientFailure: take(initializeSocialClientFailure.type)
+                    }),
+                    socialClientInitializationRaceResult
+                  ],
+                  [
+                    race({
+                      successFetchingFriends: take(fetchFriendsSuccess.type),
+                      failureFetchingFriends: take(fetchFriendsFailure.type)
+                    }),
+                    fetchFriendsRaceResult
+                  ],
+                  [select(getFriendshipStatus, friendAddress), friendshipStatus]
+                ])
+                .not.put(requestFriendshipRequest(friendAddress))
+                .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+                .silentRun()
+            })
+          })
+
+          describe('and the logged in user is not a friend of the requested user', () => {
+            beforeEach(() => {
+              friendshipStatus = FriendshipStatus.NOT_FRIEND
+            })
+
+            it('should put the friend request action', () => {
+              return expectSaga(socialSagas)
+                .provide([
+                  [
+                    race({
+                      success: take(CONNECT_WALLET_SUCCESS),
+                      close: take(CLOSE_MODAL)
+                    }),
+                    connectionModalRaceResult
+                  ],
+                  [
+                    race({
+                      initializeSocialClientSuccess: take(initializeSocialClientSuccess.type),
+                      initializeSocialClientFailure: take(initializeSocialClientFailure.type)
+                    }),
+                    socialClientInitializationRaceResult
+                  ],
+                  [
+                    race({
+                      successFetchingFriends: take(fetchFriendsSuccess.type),
+                      failureFetchingFriends: take(fetchFriendsFailure.type)
+                    }),
+                    fetchFriendsRaceResult
+                  ],
+                  [select(getFriendshipStatus, friendAddress), friendshipStatus],
+                  [put(requestFriendshipRequest(friendAddress)), undefined]
+                ])
+                .put(requestFriendshipRequest(friendAddress))
+                .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+                .silentRun()
+            })
+          })
+        })
+      })
     })
   })
 })
