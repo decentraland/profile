@@ -17,6 +17,7 @@ import { config } from './modules/config'
 import WithProfile from './components/HOC/WithProfile'
 import ConnectAndRedirect from './components/HOC/ConnectAndRedirect'
 import './modules/analytics/track'
+import './modules/analytics/sentry'
 // These CSS styles must be defined last to avoid overriding other styles
 import 'decentraland-ui/dist/themes/alternative/dark-theme.css'
 import './index.css'
