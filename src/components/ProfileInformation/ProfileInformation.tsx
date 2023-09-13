@@ -37,7 +37,6 @@ const PROFILE_URL = config.get('PROFILE_URL', '')
 
 const ProfileInformation = (props: Props) => {
   const { profile, isSocialClientReady, loggedInAddress, profileAddress, isBlockedByLoggedUser, hasBlockedLoggedUser, onViewMore } = props
-  console.log({ loggedInAddress, profileAddress, profile })
 
   const [hasCopiedLink, setHasCopiedLink] = useTimer(1200)
   const [hasCopiedWallet, setHasCopiedWallet] = useTimer(1200)
