@@ -87,5 +87,8 @@
     "friend_confirmation": "yes, unfriend",
     "friend_cancel": "cancel",
     "friend_title_mobile": "Unfriend {avatarName}"
+  },
+  "navbar": {
+    "sign_in": "sign in"
   }
 }

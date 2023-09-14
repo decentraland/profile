@@ -87,5 +87,8 @@
     "friend_confirmation": "sí, eliminar amigo",
     "friend_cancel": "cancelar",
     "friend_title_mobile": "Eliminar amigo {avatarName}"
+  },
+  "navbar": {
+    "sign_in": "iniciar sesión"
   }
 }

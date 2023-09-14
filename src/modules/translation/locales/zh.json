@@ -87,5 +87,8 @@
     "friend_confirmation": "是的，解除好友关系",
     "friend_cancel": "取消",
     "friend_title_mobile": "解除好友关系 {avatarName}"
+  },
+  "navbar": {
+    "sign_in": "登入"
   }
 }
