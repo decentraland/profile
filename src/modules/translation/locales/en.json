@@ -88,6 +88,9 @@
     "friend_cancel": "cancel",
     "friend_title_mobile": "Unfriend {avatarName}"
   },
+  "navbar": {
+    "sign_in": "sign in"
+  },
   "not_found_page": {
     "title": "Looks like even explorers can get lost!<br></br>Can't find this address or name in Decentraland.",
     "message": "Please double-check and try again"

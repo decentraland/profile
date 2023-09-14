@@ -6,6 +6,14 @@
   color: var(--primary);
 }
 
+.dcl.navbar-account .ui.button.primary {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  width: 122px;
+  justify-content: center;
+  min-width: unset;
+}
 
 
 .dcl.account-wrapper .dcl.mana {
@@ -14,23 +22,23 @@
 
 
 @media (max-width: 991px) {
-    .dcl.navbar .dcl.account-wrapper {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .dcl.navbar .dcl.account-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .dcl.account-wrapper .dcl.mana + .dcl.mana {
-        padding: 0;
-    }
+  .dcl.account-wrapper .dcl.mana+.dcl.mana {
+    padding: 0;
+  }
 }
 
 .dcl.navbar .ui.menu .item .bell.pending:after {
-    content: '';
-    width: 5px;
-    height: 5px;
-    background-color: var(--primary);
-    position: absolute;
-    border-radius: 100%;
-    top: -5px;
-    right: -5px;
+  content: '';
+  width: 5px;
+  height: 5px;
+  background-color: var(--primary);
+  position: absolute;
+  border-radius: 100%;
+  top: -5px;
+  right: -5px;
 }
