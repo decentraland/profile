@@ -22,7 +22,7 @@
     "description": "This means that you can't see this person's profile, send a friend request, messages and see their status."
   },
   "worlds_button": {
-    "get_a_name": "Get an unique name",
+    "get_a_name": "Get a unique name",
     "activate_world": "Activate my world",
     "jump": "Jump to \"{domain}\" World"
   },
@@ -90,5 +90,9 @@
   },
   "navbar": {
     "sign_in": "sign in"
+  },
+  "not_found_page": {
+    "title": "Looks like even explorers can get lost!<br></br>Can't find this address or name in Decentraland.",
+    "message": "Please double-check and try again"
   }
 }

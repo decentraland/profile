@@ -1,6 +1,7 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '../../tests/tests'
+import { MUTUALS_COUNTER_DATA_TEST_ID } from './constants'
 import MutualFriendsCounter from './MutualFriendsCounter'
 import { Props } from './MutualFriendsCounter.types'
 
@@ -26,7 +27,7 @@ describe('when rendering the component with the friends count in zero', () => {
   })
 
   it('should not render the component', () => {
-    expect(renderedComponent.queryByTestId('mutual-friends-counter')).toBeNull()
+    expect(renderedComponent.queryByTestId(MUTUALS_COUNTER_DATA_TEST_ID)).toBeNull()
   })
 })
 
@@ -36,7 +37,7 @@ describe('when rendering the component with the friends count greater than zero'
   })
 
   it('should render the component with the friends count without the clickable class', () => {
-    const button = renderedComponent.getByTestId('mutual-friends-counter')
+    const button = renderedComponent.getByTestId(MUTUALS_COUNTER_DATA_TEST_ID)
     expect(button).toHaveClass('clickable')
     expect(button).toHaveTextContent('3 mutual')
   })
@@ -48,7 +49,7 @@ describe('when clicking the component with a greater than zero count', () => {
   beforeEach(() => {
     onClick = jest.fn()
     renderedComponent = renderMutualFriendsCounter({ count: 3, onClick })
-    const button = renderedComponent.getByTestId('mutual-friends-counter')
+    const button = renderedComponent.getByTestId(MUTUALS_COUNTER_DATA_TEST_ID)
     fireEvent.click(button)
   })
 
@@ -76,7 +77,7 @@ describe('when rendering the component in its loading state', () => {
   })
 
   it('should render the component with a loader', () => {
-    expect(renderedComponent.getByTestId('mutual-friends-counter').querySelector('.loader')).not.toBeNull()
+    expect(renderedComponent.getByTestId(MUTUALS_COUNTER_DATA_TEST_ID).querySelector('.loader')).not.toBeNull()
   })
 })
 

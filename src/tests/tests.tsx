@@ -1,6 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { MemoryRouterProps, RouterProvider, createMemoryRouter, useLocation } from 'react-router-dom'
 import { render } from '@testing-library/react'
 import flatten from 'flat'
 import { Store } from 'redux'
@@ -11,9 +11,11 @@ import { RootState } from '../modules/reducer'
 import * as locales from '../modules/translation/locales'
 import { initTestStore } from './store'
 
+export const LOCATION_DISPLAY_TEST_ID = 'location-display'
+
 export function renderWithProviders(
   component: JSX.Element,
-  { preloadedState, store }: { preloadedState?: Partial<RootState>; store?: Store } = {}
+  { preloadedState, store, router }: { preloadedState?: Partial<RootState>; store?: Store; router?: MemoryRouterProps } = {}
 ) {
   const initializedStore =
     store ||
@@ -26,19 +28,36 @@ export function renderWithProviders(
       }
     })
 
-  const router = (component: React.ReactNode) =>
-    createBrowserRouter([
+  const LocationDisplay = () => {
+    const location = useLocation()
+
+    return <div data-testid={LOCATION_DISPLAY_TEST_ID}>{location.pathname}</div>
+  }
+
+  const memoryRouter = (component: React.ReactNode) =>
+    createMemoryRouter(
+      [
+        {
+          path: '*',
+          element: (
+            <>
+              {component}
+              <LocationDisplay />
+            </>
+          )
+        }
+      ],
       {
-        path: '*',
-        element: component
+        initialEntries: router?.initialEntries ?? ['/'],
+        initialIndex: router?.initialIndex ?? 1
       }
-    ])
+    )
 
   function AppProviders({ children }: { children: React.ReactNode }) {
     return (
       <Provider store={initializedStore}>
         <TranslationProvider locales={['en']}>
-          <RouterProvider router={router(children)} />
+          <RouterProvider router={memoryRouter(children)} />
         </TranslationProvider>
       </Provider>
     )

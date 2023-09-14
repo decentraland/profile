@@ -23,3 +23,8 @@ config({ path: path.resolve(process.cwd(), '.env.example') })
 Object.assign(globalThis, { TextDecoder, TextEncoder })
 
 setCurrentLocale('en', mergeTranslations(flatten(dappsEn), flatten(locales.en)))
+
+if (!globalThis.fetch) {
+  globalThis.fetch = jest.fn()
+  globalThis.Request = jest.fn()
+}

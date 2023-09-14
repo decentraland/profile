@@ -27,13 +27,13 @@ import {
   blockedButtonTestId,
   shareButtonTestId,
   twitterURL,
-  walletTestId
+  walletTestId,
+  MAX_NUMBER_OF_LINKS
 } from './constants'
 import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
 const PROFILE_URL = config.get('PROFILE_URL', '')
-const MAX_NUMBER_OF_LINKS = 3
 
 const ProfileInformation = (props: Props) => {
   const { profile, isSocialClientReady, loggedInAddress, profileAddress, isBlockedByLoggedUser, hasBlockedLoggedUser, onViewMore } = props
@@ -87,48 +87,20 @@ const ProfileInformation = (props: Props) => {
   const shouldShowViewMoreButton =
     (hasAboutInformation(avatar) || (avatar?.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH) && !isBlocked
 
-  return (
-    <div className={classnames(styles.ProfileInformation)}>
-      <div className={classnames(styles.basicRow)}>
-        <Profile size="massive" imageOnly address={profileAddress} avatar={avatar} />
-        <div className={styles.avatarInformation}>
-          <span className={styles.userNumber}>
-            <span className={styles.userName} data-testid={profileAddress}>
-              {avatarName.name}
-            </span>
-            {avatarName.lastPart ? <span className={styles.userNameLastPart}>&nbsp; {avatarName.lastPart}</span> : null}
-          </span>
-          <div className={classnames(styles.column)}>
-            <div className={styles.wallet} data-testid={walletTestId}>
-              <img src={Wallet} className={styles.walletIcon} />
-              {profileAddress.slice(0, 6)}...{profileAddress.slice(-4)}
-              <Button basic onClick={handleCopyWallet} className={styles.copyLink}>
-                <CopyIcon />
-              </Button>
-              {hasCopiedWallet && <span className={styles.copied}>{t('profile_information.copied')}</span>}
-            </div>
-            {isSocialClientReady && (
-              <div className={styles.basicCenteredRow}>
-                {isLoggedInProfile ? <FriendsCounter /> : <MutualFriendsCounter friendAddress={profileAddress} />}
-              </div>
-            )}
-          </div>
-          {avatar && (
-            <div className={styles.description}>
-              {(avatar.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH
-                ? avatar.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...'
-                : avatar.description}
-            </div>
-          )}
-          {shouldShowViewMoreButton && (
-            <div className={styles.basicCenteredRow}>
-              <Button basic className={styles.viewMore} onClick={handleViewMore}>
-                {t('profile_information.view_more')}
-              </Button>
-            </div>
-          )}
+  const renderLinks = useCallback(
+    () =>
+      !isBlocked && (
+        <div className={styles.links}>
+          {avatar?.links?.slice(0, MAX_NUMBER_OF_LINKS).map((link, index) => (
+            <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
+          ))}
         </div>
-      </div>
+      ),
+    [isBlocked, avatar]
+  )
+
+  const renderActions = useCallback(
+    () => (
       <div className={classnames(styles.actions)}>
         <div className={classnames(styles.buttons)}>
           {isBlocked && isBlockedByLoggedUser && (
@@ -192,11 +164,68 @@ const ProfileInformation = (props: Props) => {
             </Dropdown>
           )}
         </div>
-        {!isBlocked && (
-          <div className={styles.links}>
-            {avatar?.links?.slice(0, MAX_NUMBER_OF_LINKS).map((link, index) => (
-              <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
-            ))}
+      </div>
+    ),
+    [
+      avatar,
+      profileAddress,
+      avatarName,
+      isBlocked,
+      isBlockedByLoggedUser,
+      loggedInAddress,
+      shouldShowFriendsButton,
+      isTabletAndBelow,
+      hasCopiedLink
+    ]
+  )
+
+  return (
+    <div className={classnames(styles.ProfileInformation)}>
+      <div className={styles.mobileTopContainer}>
+        <Profile size="massive" imageOnly address={profileAddress} avatar={avatar} />
+        {isTabletAndBelow && renderActions()}
+      </div>
+      <div className={styles.avatarInformationContainer}>
+        <div className={styles.avatarInformation}>
+          <div className={styles.avatarInformationGap}>
+            <span className={styles.userNumber}>
+              <span className={styles.userName} data-testid={profileAddress}>
+                {avatarName.name}
+              </span>
+              {avatarName.lastPart ? <span className={styles.userNameLastPart}>&nbsp; {avatarName.lastPart}</span> : null}
+            </span>
+            <div className={styles.wallet} data-testid={walletTestId}>
+              <img src={Wallet} className={styles.walletIcon} />
+              {profileAddress.slice(0, 6)}...{profileAddress.slice(-4)}
+              <Button basic onClick={handleCopyWallet} className={styles.copyLink}>
+                <CopyIcon />
+              </Button>
+              {hasCopiedWallet && <span className={styles.copied}>{t('profile_information.copied')}</span>}
+            </div>
+          </div>
+          {!isTabletAndBelow && renderActions()}
+        </div>
+        <div className={styles.friendsContainer}>
+          {isSocialClientReady && Boolean(loggedInAddress) && (
+            <div className={styles.basicCenteredRow}>
+              {isLoggedInProfile ? <FriendsCounter /> : <MutualFriendsCounter friendAddress={profileAddress} />}
+            </div>
+          )}
+          {isTabletAndBelow && <>| {renderLinks()}</>}
+        </div>
+        {avatar && (
+          <div className={styles.description}>
+            {(avatar.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH
+              ? avatar.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...'
+              : avatar.description}
+            {shouldShowViewMoreButton && (
+              <div className={styles.buttonsContainer}>
+                <Button basic className={styles.viewMore} onClick={handleViewMore}>
+                  {t('profile_information.view_more')}
+                </Button>
+                {!isTabletAndBelow && renderLinks()}
+              </div>
+            )}
           </div>
         )}
       </div>
