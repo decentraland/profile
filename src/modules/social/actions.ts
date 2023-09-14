@@ -8,8 +8,8 @@ export const fetchFriendsSuccess = createAction<string[]>('[Success] Fetch Frien
 export const fetchFriendsFailure = createAction<string>('[Failure] Fetch Friends')
 
 export type FetchFriendsRequestAction = ReturnType<typeof fetchFriendsRequest>
-export type FetchFriendsSuccess = ReturnType<typeof fetchFriendsSuccess>
-export type FetchFriendsFailure = ReturnType<typeof fetchFriendsFailure>
+export type FetchFriendsSuccessAction = ReturnType<typeof fetchFriendsSuccess>
+export type FetchFriendsFailureAction = ReturnType<typeof fetchFriendsFailure>
 
 // Fetch friend requests events actions
 
@@ -52,6 +52,7 @@ export const fetchMutualFriendsFailure = createAction<string>('[Failure] Fetch M
 export type FetchMutualFriendsRequestAction = ReturnType<typeof fetchMutualFriendsRequest>
 export type FetchMutualFriendsSuccessAction = ReturnType<typeof fetchMutualFriendsSuccess>
 export type FetchMutualFriendsFailureAction = ReturnType<typeof fetchMutualFriendsFailure>
+
 // Request friendship
 
 export const requestFriendshipRequest = createAction<string>('[Request] Request Friendship')
@@ -61,6 +62,12 @@ export const requestFriendshipFailure = createAction<string>('[Failure] Request 
 export type RequestFriendshipRequestAction = ReturnType<typeof requestFriendshipRequest>
 export type RequestFriendshipSuccessAction = ReturnType<typeof requestFriendshipSuccess>
 export type RequestFriendshipFailureAction = ReturnType<typeof requestFriendshipFailure>
+
+// Log in and request friendship
+
+export const logInAndRequestFriendshipRequest = createAction<string>('[Request] Log In And Request Friendship')
+
+export type LogInAndRequestFriendshipRequestAction = ReturnType<typeof logInAndRequestFriendshipRequest>
 
 // Remove friends
 
