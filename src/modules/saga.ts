@@ -2,6 +2,7 @@ import { all } from 'redux-saga/effects'
 import type { PeerAPI } from 'decentraland-dapps/dist/lib/peer'
 import { createAnalyticsSaga } from 'decentraland-dapps/dist/modules/analytics/sagas'
 import { featuresSaga } from 'decentraland-dapps/dist/modules/features/sagas'
+import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
 import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { config } from './config'
 import { identitySaga } from './identity/sagas'
@@ -38,9 +39,7 @@ export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphCl
     createProfileSaga(marketplaceGraphClient, peerApi)(),
     featuresSaga({
       polling: {
-        apps: [
-          /* Application name here */
-        ],
+        apps: [ApplicationName.PROFILE],
         delay: 60000 /** 60 seconds */
       }
     })

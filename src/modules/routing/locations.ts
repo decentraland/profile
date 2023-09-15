@@ -1,13 +1,18 @@
 import { Env } from '@dcl/ui-env'
 import { config } from '../config'
 import { World } from '../world/types'
+import { AccountTabs } from './types'
 
 export const locations = {
   root: () => '/',
-  account: (address: string) => `/accounts/${address}`,
+  account: (address: string, tab?: AccountTabs) => `/accounts/${address}${tab ? `/${tab}` : ''}`,
   signIn: (redirectTo?: string) => {
     return `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`
   }
+}
+
+export const isTabValid = (tab: string | undefined) => {
+  return tab === undefined || Object.values(AccountTabs).includes(tab as AccountTabs)
 }
 
 export const getJumpToWorldUrl = (world: World) => {
