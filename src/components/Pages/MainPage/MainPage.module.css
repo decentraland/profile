@@ -49,6 +49,13 @@
   margin-bottom: 12px;
 }
 
+@media only screen and (min-width: 1200px) {
+  .MainPage :global(.dcl.tabs .ui.container) {
+    margin-left: unset !important;
+    margin-right: unset !important;
+  }
+}
+
 @media (max-width: 991px) {
   .MainPage {
     align-items: center;

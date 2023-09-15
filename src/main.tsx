@@ -26,7 +26,7 @@ SSO.init(config.get('SSO_URL'))
 
 const router = createBrowserRouter([
   {
-    path: '/accounts/:profileAddress',
+    path: '/accounts/:profileAddress/:tab?',
     element: <WithProfile component={MainPage} />
   },
   {
