@@ -105,8 +105,7 @@ describe('when reducing the request action to fetch creations', () => {
       expect(itemsReducer(state, fetchCreationsRequest(options))).toEqual({
         ...state,
         loading: [fetchCreationsRequest(options)],
-        error: null,
-        data: { ...state.data, items: [] }
+        error: null
       })
     })
   })

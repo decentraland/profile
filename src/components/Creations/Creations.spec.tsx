@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent } from '@testing-library/react'
+import { fireEvent, act } from '@testing-library/react'
 import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { renderWithProviders } from '../../tests/tests'
@@ -103,7 +103,9 @@ describe('when changing the category', () => {
 
   it('should re-trigger the creations fetch', () => {
     const { getByText } = renderedComponent
-    fireEvent.click(getByText(t('categories.wearables_head')))
-    expect(onFetchCreations).toHaveBeenCalledWith({ profileAddress: '0x1', first: 24, skip: 0, category: 'wearables_head' })
+    act(() => {
+      fireEvent.click(getByText(t('categories.wearables_head')))
+    })
+    expect(onFetchCreations).toHaveBeenCalledWith({ creator: '0x1', first: 24, skip: 0, category: 'wearables_head' })
   })
 })
