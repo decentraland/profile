@@ -26,7 +26,10 @@ Object.assign(globalThis, { TextDecoder, TextEncoder })
 setCurrentLocale('en', mergeTranslations(flatten(dappsEn), flatten(locales.en)))
 
 if (!globalThis.fetch) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   globalThis.fetch = fetch as any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   globalThis.Request = Request as any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   globalThis.Response = Response as any
 }
