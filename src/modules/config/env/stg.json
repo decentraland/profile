@@ -10,5 +10,9 @@
   "SYNAPSE_URL": "https://social.decentraland.today",
   "PROFILE_URL": "https://profile.decentraland.today",
   "MARKETPLACE_URL": "https://market.decentraland.today",
-  "NFT_SERVER_URL": "https://nft-api.decentraland.today/v1"
+  "NFT_SERVER_URL": "https://nft-api.decentraland.today/v1",
+  "SEGMENT_API_KEY": "AGaiQumreF5ubucC71RoGA1rkDAnVocy",
+  "SSO_URL": "https://id.decentraland.today",
+  "ENVIRONMENT": "staging",
+  "SENTRY_DSN": "https://d2d3f81155656b53fe7746a0b69b6e0e@o4504361728212992.ingest.sentry.io/4505748385169408"
 }

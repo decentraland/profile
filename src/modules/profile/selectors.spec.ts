@@ -1,7 +1,9 @@
+import { LoadProfileRequestAction, loadProfileRequest } from 'decentraland-dapps/dist/modules/profile/actions'
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { Wallet } from 'decentraland-dapps/dist/modules/wallet/types'
 import { RootState } from '../reducer'
-import { isBlockedByLoggedUser, hasBlockedLoggedUser } from './selectors'
+import { EnhancedFetchProfileRequestAction, enhancedFetchProfileRequest } from './action'
+import { isBlockedByLoggedUser, hasBlockedLoggedUser, isLoadingProfile, getProfileWithName, getErrorLoadingProfile } from './selectors'
 import { Avatar } from './types'
 
 let profileAddress: string
@@ -156,6 +158,126 @@ describe('when selecting if the logged user is blocked by the profile being view
           expect(hasBlockedLoggedUser(state, profileAddress)).toBe(true)
         })
       })
+    })
+  })
+})
+
+describe('when selecting if a profile is being loaded', () => {
+  let action: EnhancedFetchProfileRequestAction | LoadProfileRequestAction
+  let address: string
+
+  beforeEach(() => {
+    address = '0xca8fa8f0b631ecdb18cda619c4fc9d197c8affca'
+  })
+
+  describe('and the profile is being loaded through the load profile action', () => {
+    beforeEach(() => {
+      action = loadProfileRequest(address)
+    })
+
+    describe('and the profile is not being loaded', () => {
+      beforeEach(() => {
+        state.profile.loading = [loadProfileRequest('anotherAddress')]
+      })
+
+      it('should return false', () => {
+        expect(isLoadingProfile(state, address)).toBe(false)
+      })
+    })
+
+    describe('and the profile is being loaded', () => {
+      beforeEach(() => {
+        state.profile.loading = [action]
+      })
+
+      it('should return true', () => {
+        expect(isLoadingProfile(state, address)).toBe(true)
+      })
+    })
+  })
+
+  describe('and the profile is being loaded through the enhanced fetch profile action', () => {
+    beforeEach(() => {
+      action = enhancedFetchProfileRequest(address)
+    })
+
+    describe('and the profile is not being loaded', () => {
+      beforeEach(() => {
+        state.profile.loading = [enhancedFetchProfileRequest('anotherAddress')]
+      })
+
+      it('should return false', () => {
+        expect(isLoadingProfile(state, address)).toBe(false)
+      })
+    })
+
+    describe('and the profile is being loaded', () => {
+      beforeEach(() => {
+        state.profile.loading = [action]
+      })
+
+      it('should return true', () => {
+        expect(isLoadingProfile(state, address)).toBe(true)
+      })
+    })
+  })
+})
+
+describe('when getting a profile by name', () => {
+  let name: string
+  beforeEach(() => {
+    name = 'name'
+    state.profile.data[name] = profile
+  })
+
+  describe("and there's no profile with the same active name", () => {
+    beforeEach(() => {
+      state.profile.data[name].avatars[0].name = name
+      state.profile.data[name].avatars[0].hasClaimedName = false
+    })
+
+    it('should return undefined', () => {
+      expect(getProfileWithName(state, name)).toBeUndefined()
+    })
+  })
+
+  describe("and there's a profile with the same active name", () => {
+    beforeEach(() => {
+      state.profile.data[name].avatars[0].name = name
+      state.profile.data[name].avatars[0].hasClaimedName = true
+    })
+
+    it('should return the profile', () => {
+      expect(getProfileWithName(state, name)).toBe(profile)
+    })
+  })
+})
+
+describe('when getting if loading a profile with an address or name has failed', () => {
+  let name: string
+  beforeEach(() => {
+    name = 'name'
+  })
+
+  describe('and there are no errors for the given address or name', () => {
+    beforeEach(() => {
+      state.profile.enhancedProfileFetchErrors = {}
+    })
+
+    it('should return null', () => {
+      expect(getErrorLoadingProfile(state, name)).toBe(null)
+    })
+  })
+
+  describe('and there are errors for the given address or name', () => {
+    beforeEach(() => {
+      state.profile.enhancedProfileFetchErrors = {
+        [name]: 'anError'
+      }
+    })
+
+    it('should return the error', () => {
+      expect(getErrorLoadingProfile(state, name)).toBe(state.profile.enhancedProfileFetchErrors[name])
     })
   })
 })

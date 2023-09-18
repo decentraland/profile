@@ -5,6 +5,8 @@
   --superGray: #37333d;
   --superGrayHovered: #3d3a45;
   --sidebar-width: 320px;
+  --light-gray: #a09ba8;
+  --profile-border: #43404a;
 }
 
 #root {
@@ -136,4 +138,16 @@ code {
     margin-bottom: 20px;
     margin-right: unset;
   }
+}
+
+.ui.button.inverted:focus {
+  background: none;
+  color: white;
+  border: 1px solid white;
+  box-shadow: none;
+}
+
+.ui.button.inverted:hover {
+  border: 1px solid white;
+  box-shadow: none;
 }

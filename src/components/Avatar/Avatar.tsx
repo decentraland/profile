@@ -5,20 +5,22 @@ import { Env } from '@dcl/ui-env'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
+import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { WearablePreview } from 'decentraland-ui/dist/components/WearablePreview/WearablePreview'
 import Edit from '../../assets/icons/Edit.svg'
 import { config } from '../../modules/config'
+import { getEditAvatarUrl } from '../../modules/routing/locations'
 import { View } from '../../utils/view'
-import { EDIT_PROFILE_URL } from './constants'
 import { Props } from './Avatar.types'
 import styles from './Avatar.module.css'
 
-const EXPLORER_URL = config.get('EXPLORER_URL', '')
-
 const Avatar = (props: Props) => {
   const { profile, profileAddress, view } = props
+
   const [isLoadingWearablePreview, setIsLoadingWearablePreview] = useState(true)
   const [isError, setIsError] = useState(false)
+
+  const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
   const handleOnLoad = useCallback(() => {
     setIsLoadingWearablePreview(false)
@@ -42,6 +44,8 @@ const Avatar = (props: Props) => {
             onLoad={handleOnLoad}
             onError={handleError}
             onUpdate={handleOnLoad}
+            panning={false}
+            lockBeta={true}
             dev={config.getEnv() === Env.DEVELOPMENT}
             disableBackground={true}
             profile={profileAddress}
@@ -54,10 +58,16 @@ const Avatar = (props: Props) => {
         </div>
       ) : null}
       {view === View.OWN && (
-        <Button primary fluid className="customIconButton" as={Link} to={`${EXPLORER_URL}${EDIT_PROFILE_URL}`} target="_blank">
+        <Button
+          primary
+          fluid
+          className={classNames('customIconButton', styles.editButton)}
+          as={Link}
+          to={getEditAvatarUrl()}
+          target="_blank"
+        >
           <img src={Edit} className="iconSize" />
-          &nbsp;
-          {t('avatar.edit')}
+          {!isTabletAndBelow && ` ${t('avatar.edit')}`}
         </Button>
       )}
     </div>

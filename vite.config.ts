@@ -42,7 +42,8 @@ export default defineConfig(({ command, mode }) => {
             },
             rollupOptions: {
               plugins: [rollupNodePolyFill()]
-            }
+            },
+            sourcemap: true
           }
         }
       : undefined)

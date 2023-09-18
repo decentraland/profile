@@ -9,9 +9,12 @@
     "copied": "Copied",
     "copy_link": "Copy Link",
     "share_on_tw": "Share on Twitter",
-    "tw_message": "Hey, checkout my profile in decentraland\n",
+    "share_my_profile_tw_message": "Discover more about me through my Decentraland profile! #DCLProfiles\n",
+    "share_others_profile_tw_message": "Found an awesome Decentraland profile. Take a look! #DCLProfiles\n",
     "view_more": "View More",
-    "blocked": "Blocked"
+    "blocked": "Blocked",
+    "worlds_tooltip": "Worlds",
+    "share_tooltip": "Share"
   },
   "blocked": {
     "blocked_logged_user_title": "{name} blocked you",
@@ -19,7 +22,7 @@
     "description": "This means that you can't see this person's profile, send a friend request, messages and see their status."
   },
   "worlds_button": {
-    "get_a_name": "Get an unique name",
+    "get_a_name": "Get a unique name",
     "activate_world": "Activate my world",
     "jump": "Jump to \"{domain}\" World"
   },
@@ -51,9 +54,11 @@
     "mutual": "mutual"
   },
   "overview": {
+    "title": "Equipped Collectibles",
     "start_dressing": "Start dressing in ways beyond your imagination ",
     "get_collectibles": "Get your first collectible wereable and rock it in Decentraland!",
-    "go_to_marketplace": "go to marketplace"
+    "go_to_marketplace": "go to marketplace",
+    "no_collectibles": " doesn't have any collectible wearables yet."
   },
   "about_modal": {
     "title": "About",
@@ -70,5 +75,24 @@
     "real_name_label": "Real Name",
     "hobbies_label": "Hobbies",
     "links_label": "Links"
+  },
+  "confirmation_modal": {
+    "pending_request_title": "Are you sure you want to cancel the request?",
+    "pending_request_subtitle": "Remember that you can resend the request whenever you want.",
+    "pending_request_confirmation": "cancel request",
+    "pending_request_cancel": "go back",
+    "pending_request_title_mobile": "Cancel request",
+    "friend_title": "Are you sure you want to unfriend {avatarName}?",
+    "friend_subtitle": "Remember that you can resend the request whenever you want.",
+    "friend_confirmation": "yes, unfriend",
+    "friend_cancel": "cancel",
+    "friend_title_mobile": "Unfriend {avatarName}"
+  },
+  "navbar": {
+    "sign_in": "sign in"
+  },
+  "not_found_page": {
+    "title": "Looks like even explorers can get lost!<br></br>Can't find this address or name in Decentraland.",
+    "message": "Please double-check and try again"
   }
 }

@@ -1,11 +1,14 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
+import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { config } from '../../modules/config/config'
 import { Avatar } from '../../modules/profile/types'
+import { locations } from '../../modules/routing/locations'
 import { renderWithProviders } from '../../tests/tests'
-import { actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, twitterURL as twitterLink } from './constants'
+import { FRIENDS_COUNTER_DATA_TEST_ID } from '../FriendsCounter'
+import { MAX_DESCRIPTION_LENGTH, actionsForNonBlockedTestId, blockedButtonTestId, shareButtonTestId, walletTestId } from './constants'
 import ProfileInformation from './ProfileInformation'
 import { Props } from './ProfileInformation.types'
 
@@ -18,6 +21,9 @@ jest.mock('decentraland-ui/dist/components/Profile/Profile', () => {
     Profile: () => <div></div>
   }
 })
+jest.mock('decentraland-dapps/dist/modules/analytics/utils')
+
+const getAnalyticsMock = getAnalytics as jest.Mock
 
 describe('ProfileInformation', () => {
   const anAddress = 'anAddress'
@@ -25,7 +31,7 @@ describe('ProfileInformation', () => {
   const avatarName = 'anAvatarName'
   const anotherAvatarName = 'anotherAvatarName'
 
-  const renderProfileInformation = (props: Partial<Props> = {}) => {
+  const renderProfileInformation = (props: Partial<Props> = {}, preloadedState = {}) => {
     return renderWithProviders(
       <ProfileInformation
         profileAddress={anAddress}
@@ -35,14 +41,21 @@ describe('ProfileInformation', () => {
         hasBlockedLoggedUser={false}
         onViewMore={jest.fn()}
         {...props}
-      />
+      />,
+      { preloadedState }
     )
   }
 
   let aProfile: Profile
   let anotherProfile: Profile
+  let renderedComponent: ReturnType<typeof renderProfileInformation>
 
   beforeEach(() => {
+    getAnalyticsMock.mockReturnValue({
+      page: jest.fn(),
+      track: jest.fn()
+    })
+
     aProfile = {
       avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress } as Avatar]
     }
@@ -51,26 +64,28 @@ describe('ProfileInformation', () => {
     }
   })
 
+  let props: Partial<Props>
+
   describe('when the user is logged in', () => {
+    beforeEach(() => {
+      props = {
+        loggedInAddress: anAddress
+      }
+    })
+
     describe('and the user is checking on its own profile', () => {
+      beforeEach(() => {
+        props = { ...props, profileAddress: anAddress, profile: aProfile }
+      })
+
       it('should render the users data', () => {
-        const { getByText, getByTestId } = renderProfileInformation({
-          profileAddress: anAddress,
-          loggedInAddress: anAddress,
-          profile: aProfile,
-          isSocialClientReady: false
-        })
+        const { getByText, getByTestId } = renderProfileInformation(props)
         expect(getByText(avatarName)).toBeInTheDocument()
         expect(getByTestId(anAddress)).toBeInTheDocument()
       })
 
       it('should render the actions buttons', () => {
-        const { getByTestId, getByText } = renderProfileInformation({
-          profileAddress: anAddress,
-          loggedInAddress: anAddress,
-          profile: aProfile,
-          isSocialClientReady: false
-        })
+        const { getByTestId, getByText } = renderProfileInformation(props)
         const shareButton = getByTestId(shareButtonTestId)
         fireEvent.click(shareButton)
 
@@ -79,51 +94,82 @@ describe('ProfileInformation', () => {
         expect(getByText(t('profile_information.edit'))).toBeInTheDocument()
       })
 
-      it('should open twitter with the correct URL', () => {
-        const { getByTestId, getByRole } = renderProfileInformation({
-          profileAddress: anAddress,
-          loggedInAddress: anAddress,
-          profile: aProfile,
-          isSocialClientReady: false
-        })
-
-        const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-          `${twitterLink}${encodeURIComponent(`${t('profile_information.tw_message')} ${PROFILE_URL}${anAddress}`)}`
-        )}`
-
-        const shareButton = getByTestId(shareButtonTestId)
-        fireEvent.click(shareButton)
-
-        const twitterShareButton = getByRole('option', {
-          name: t('profile_information.share_on_tw')
-        })
-
-        expect(twitterShareButton.hasAttributeNS('href', twitterURL))
-      })
-
       it('should not render the blocked button', () => {
-        const { queryByTestId } = renderProfileInformation({
-          profileAddress: anAddress,
-          loggedInAddress: anAddress,
-          profile: aProfile,
-          isSocialClientReady: false,
-          isBlockedByLoggedUser: true,
-          hasBlockedLoggedUser: true
-        })
+        const { queryByTestId } = renderProfileInformation({ ...props, isBlockedByLoggedUser: true, hasBlockedLoggedUser: true })
 
         expect(queryByTestId(blockedButtonTestId)).toBeNull()
+      })
+
+      describe('and the social client is ready', () => {
+        beforeEach(() => {
+          props = { ...props, isSocialClientReady: true }
+        })
+
+        it('should render the friends counter', () => {
+          const { getByTestId } = renderProfileInformation(props)
+
+          expect(getByTestId(FRIENDS_COUNTER_DATA_TEST_ID)).toBeInTheDocument()
+        })
+      })
+
+      describe('and the social client is not ready', () => {
+        beforeEach(() => {
+          props = { ...props, isSocialClientReady: false }
+        })
+
+        it('should not render the friends component', () => {
+          const { queryByTestId } = renderProfileInformation(props)
+
+          expect(queryByTestId(FRIENDS_COUNTER_DATA_TEST_ID)).toBeNull()
+        })
+      })
+
+      describe('and the share on twitter button is clicked', () => {
+        beforeEach(() => {
+          renderedComponent = renderProfileInformation({
+            profileAddress: anAddress,
+            loggedInAddress: anAddress,
+            profile: aProfile,
+            isSocialClientReady: false
+          })
+          jest.useFakeTimers()
+        })
+
+        afterEach(() => {
+          jest.useRealTimers()
+        })
+
+        it('should open a new page with a twitter message to share its own profile', () => {
+          jest.spyOn(window, 'open').mockImplementation(() => null)
+          const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            `${t('profile_information.share_my_profile_tw_message')}${PROFILE_URL}${locations.account(anAddress)}`
+          )}`
+
+          const { getByTestId, getByText } = renderedComponent
+          const dropdownButton = getByTestId(shareButtonTestId)
+          const shareItem = getByText(t('profile_information.share_on_tw'))
+          expect(dropdownButton).toBeInTheDocument()
+          fireEvent.click(dropdownButton)
+          fireEvent.click(shareItem)
+
+          jest.runAllTimers()
+          expect(window.open).toHaveBeenCalledWith(twitterURL, '_blank,noreferrer')
+        })
       })
     })
 
     describe('and the user is checking other profile', () => {
+      beforeEach(() => {
+        props = { ...props, profileAddress: anotherAddress, profile: anotherProfile }
+      })
+
       describe('and the user is not blocked by the profile nor has blocked it', () => {
+        beforeEach(() => {
+          props = { ...props, isBlockedByLoggedUser: false, hasBlockedLoggedUser: false }
+        })
+
         it('should render the other profile data, not the logged in', () => {
-          const { queryByText, queryByTestId } = renderProfileInformation({
-            profileAddress: anotherAddress,
-            loggedInAddress: anAddress,
-            profile: anotherProfile,
-            isSocialClientReady: false
-          })
+          const { queryByText, queryByTestId } = renderProfileInformation(props)
           expect(queryByText(avatarName)).not.toBeInTheDocument()
           expect(queryByTestId(anAddress)).toBeNull()
           expect(queryByTestId(blockedButtonTestId)).toBeNull()
@@ -133,26 +179,19 @@ describe('ProfileInformation', () => {
         })
 
         it('should render the actions for non-blocked users', () => {
-          const { getByTestId } = renderProfileInformation({
-            profileAddress: anotherAddress,
-            loggedInAddress: anAddress,
-            profile: anotherProfile,
-            isSocialClientReady: false
-          })
+          const { getByTestId } = renderProfileInformation(props)
 
           expect(getByTestId(actionsForNonBlockedTestId)).toBeInTheDocument()
         })
       })
 
       describe('and the user has blocked the profile', () => {
+        beforeEach(() => {
+          props = { ...props, isBlockedByLoggedUser: true, hasBlockedLoggedUser: false }
+        })
+
         it('should render some of the other profile data with a button to unblock the profile', () => {
-          const { getByTestId, queryByText, queryByTestId } = renderProfileInformation({
-            profileAddress: anotherAddress,
-            loggedInAddress: anAddress,
-            profile: anotherProfile,
-            isSocialClientReady: false,
-            isBlockedByLoggedUser: true
-          })
+          const { getByTestId, queryByText, queryByTestId } = renderProfileInformation(props)
 
           expect(queryByText(avatarName)).not.toBeInTheDocument()
           expect(queryByTestId(anAddress)).toBeNull()
@@ -163,27 +202,19 @@ describe('ProfileInformation', () => {
         })
 
         it('should not render the actions for non-blocked users', () => {
-          const { queryByTestId } = renderProfileInformation({
-            profileAddress: anotherAddress,
-            loggedInAddress: anAddress,
-            profile: anotherProfile,
-            isSocialClientReady: false,
-            isBlockedByLoggedUser: true
-          })
+          const { queryByTestId } = renderProfileInformation(props)
 
           expect(queryByTestId(actionsForNonBlockedTestId)).toBeNull()
         })
       })
 
       describe('and the user is blocked by the profile', () => {
+        beforeEach(() => {
+          props = { ...props, isBlockedByLoggedUser: false, hasBlockedLoggedUser: true }
+        })
+
         it('should render some of the other profile data', () => {
-          const { queryByText, queryByTestId } = renderProfileInformation({
-            profileAddress: anotherAddress,
-            loggedInAddress: anAddress,
-            profile: anotherProfile,
-            isSocialClientReady: false,
-            hasBlockedLoggedUser: true
-          })
+          const { queryByText, queryByTestId } = renderProfileInformation(props)
 
           expect(queryByText(avatarName)).not.toBeInTheDocument()
           expect(queryByTestId(anAddress)).toBeNull()
@@ -194,15 +225,37 @@ describe('ProfileInformation', () => {
         })
 
         it('should not render the actions for non-blocked users', () => {
-          const { queryByTestId } = renderProfileInformation({
-            profileAddress: anotherAddress,
-            loggedInAddress: anAddress,
-            profile: anotherProfile,
-            isSocialClientReady: false,
-            hasBlockedLoggedUser: true
-          })
+          const { queryByTestId } = renderProfileInformation(props)
 
           expect(queryByTestId(actionsForNonBlockedTestId)).toBeNull()
+        })
+      })
+
+      describe('and the share on twitter button is clicked', () => {
+        beforeEach(() => {
+          renderedComponent = renderProfileInformation(props)
+          jest.useFakeTimers()
+        })
+
+        afterEach(() => {
+          jest.useRealTimers()
+        })
+
+        it('should open a new page with a twitter message to share its own profile', () => {
+          jest.spyOn(window, 'open').mockImplementation(() => null)
+          const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            `${t('profile_information.share_others_profile_tw_message')}${PROFILE_URL}${locations.account(anotherAddress)}`
+          )}`
+
+          const { getByTestId, getByText } = renderedComponent
+          const dropdownButton = getByTestId(shareButtonTestId)
+          const shareItem = getByText(t('profile_information.share_on_tw'))
+          expect(dropdownButton).toBeInTheDocument()
+          fireEvent.click(dropdownButton)
+          fireEvent.click(shareItem)
+
+          jest.runAllTimers()
+          expect(window.open).toHaveBeenCalledWith(twitterURL, '_blank,noreferrer')
         })
       })
     })
@@ -252,13 +305,36 @@ describe('ProfileInformation', () => {
 
   describe('when the avatar is loaded', () => {
     describe('and the user has nothing to show in the about modal', () => {
-      it('should not render the view more button', () => {
-        const { queryByText } = renderProfileInformation({
-          profile: {
-            avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description: '' } as Avatar]
-          }
+      let description: string
+
+      describe('and neither the user has a lengthily description', () => {
+        beforeEach(() => {
+          description = 'a'.repeat(MAX_DESCRIPTION_LENGTH + 1)
         })
-        expect(queryByText(t('profile_information.view_more'))).toBeNull()
+
+        it('should render the view more button', () => {
+          const { queryByText } = renderProfileInformation({
+            profile: {
+              avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description } as Avatar]
+            }
+          })
+          expect(queryByText(t('profile_information.view_more'))).not.toBeNull()
+        })
+      })
+
+      describe('and the user has a lengthily description', () => {
+        beforeEach(() => {
+          description = 'a'
+        })
+
+        it('should not render the view more button', () => {
+          const { queryByText } = renderProfileInformation({
+            profile: {
+              avatars: [{ name: avatarName, userId: anAddress, ethAddress: anAddress, description } as Avatar]
+            }
+          })
+          expect(queryByText(t('profile_information.view_more'))).not.toBeNull()
+        })
       })
     })
 
@@ -319,12 +395,58 @@ describe('ProfileInformation', () => {
       })
 
       describe('and neither the user nor the profile are blocked', () => {
-        it('should render the view more button and the icons related to those links', () => {
-          const { getByTestId, getByText } = renderProfileInformation({
-            profile
+        describe('and there are less than three links ', () => {
+          it('should render the view more button and the icons related to those links', () => {
+            const { getByTestId, getByText } = renderProfileInformation({
+              profile
+            })
+            expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+            expect(getByTestId('twitter')).toBeInTheDocument()
           })
-          expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
-          expect(getByTestId('twitter')).toBeInTheDocument()
+        })
+
+        describe('and there are exactly three links', () => {
+          beforeEach(() => {
+            profile.avatars[0].links = [
+              { title: 'twitter', url: 'https://twitter.com/decentraland' },
+              { title: 'facebook', url: 'https://facebook.com/decentraland' },
+              { title: 'instagram', url: 'https://instagram.com/decentraland' }
+            ]
+          })
+
+          it('should render the view more button and the icons related to those 3 links', () => {
+            const { getByTestId, getByText } = renderProfileInformation({
+              profile
+            })
+            expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+            expect(getByTestId('twitter')).toBeInTheDocument()
+            expect(getByTestId('facebook')).toBeInTheDocument()
+            expect(getByTestId('instagram')).toBeInTheDocument()
+          })
+        })
+
+        describe('and there are more than three links ', () => {
+          beforeEach(() => {
+            profile.avatars[0].links = [
+              { title: 'twitter', url: 'https://twitter.com/decentraland' },
+              { title: 'facebook', url: 'https://facebook.com/decentraland' },
+              { title: 'instagram', url: 'https://instagram.com/decentraland' },
+              { title: 'github', url: 'https://github.com/decentraland' },
+              { title: 'mastodon', url: 'https://mastodon.com/decentraland' }
+            ]
+          })
+
+          it('should render the view more button and the icons related to the first three links', () => {
+            const { getByTestId, queryByTestId, getByText } = renderProfileInformation({
+              profile
+            })
+            expect(getByText(t('profile_information.view_more'))).toBeInTheDocument()
+            expect(getByTestId('twitter')).toBeInTheDocument()
+            expect(getByTestId('facebook')).toBeInTheDocument()
+            expect(getByTestId('instagram')).toBeInTheDocument()
+            expect(queryByTestId('github')).toBeNull()
+            expect(queryByTestId('linkify')).toBeNull()
+          })
         })
       })
 
@@ -350,6 +472,20 @@ describe('ProfileInformation', () => {
           expect(queryByTestId('twitter')).toBeNull()
         })
       })
+    })
+  })
+
+  describe('when the component is rendered', () => {
+    beforeEach(() => {
+      renderedComponent = renderProfileInformation({
+        profileAddress: anAddress,
+        isSocialClientReady: false
+      })
+    })
+
+    it("should show the user's address first and last fourth characters", () => {
+      const { getByTestId } = renderedComponent
+      expect(getByTestId(walletTestId).textContent).toContain(`${anAddress.slice(0, 6)}...${anAddress.slice(-4)}`)
     })
   })
 })

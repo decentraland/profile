@@ -1,8 +1,8 @@
 {
   "NETWORK": "sepolia",
   "CHAIN_ID": "11155111",
-  "EXPLORER_URL": "https://play.decentraland.org/?NETWORK=sepolia&DEBUG_MODE=true&realm=artemis",
-  "PEER_URL": "https://peer-ap1.decentraland.zone",
+  "EXPLORER_URL": "https://play.decentraland.zone",
+  "PEER_URL": "https://peer.decentraland.zone",
   "MARKETPLACE_GRAPH_URL": "https://api.studio.thegraph.com/query/49472/marketplace-sepolia/version/latest",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.zone",
   "SOCIAL_RPC_URL": "wss://rpc-social-service.decentraland.zone",
@@ -10,5 +10,9 @@
   "SYNAPSE_URL": "https://social.decentraland.zone",
   "PROFILE_URL": "https://profile.decentraland.zone",
   "MARKETPLACE_URL": "https://market.decentraland.zone",
-  "NFT_SERVER_URL": "https://nft-api.decentraland.zone/v1"
+  "NFT_SERVER_URL": "https://nft-api.decentraland.zone/v1",
+  "SEGMENT_API_KEY": "69qQIHhaX2FkM9KP233SYNQNuPjpY0JG",
+  "SSO_URL": "https://id.decentraland.zone",
+  "ENVIRONMENT": "development",
+  "SENTRY_DSN": "https://d2d3f81155656b53fe7746a0b69b6e0e@o4504361728212992.ingest.sentry.io/4505748385169408"
 }

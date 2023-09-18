@@ -2,17 +2,39 @@
   color: var(--text);
   gap: 36px;
   display: flex;
-  justify-content: space-between;
   width: 100%;
 }
 
-.ProfileInformation .actions  {
+.avatarInformation {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  row-gap: 75px;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.ProfileInformation .actions .buttons {
+.avatarTopContent {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.avatarInformationContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+}
+
+.avatarInformationGap {
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.actions .buttons {
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -20,51 +42,50 @@
   height: 34px;
 }
 
-.ProfileInformation .actions .links {
+.actions .links {
   display: flex;
   align-self: end;
   column-gap: 16px;
 }
 
-.ProfileInformation .basicRow {
+.basicRow {
   display: flex;
   flex-direction: row;
   gap: 36px;
 }
 
-.ProfileInformation .basicCenteredRow {
+.basicCenteredRow {
   align-items: center;
   display: flex;
-  margin-top: 12px;
 }
 
-.ProfileInformation .description {
+.description {
   font-size: 12px;
 }
 
-.ProfileInformation .userName {
+.userName {
   color: var(--text);
   font-size: 24px;
   font-weight: 700;
 }
 
-.ProfileInformation .userNumber {
+.userNumber {
   font-size: 18px;
+  text-wrap: nowrap;
 }
 
-.ProfileInformation .profileData {
+.profileData {
   gap: 12px;
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.ProfileInformation .wallet {
+.wallet {
   align-items: center;
   display: flex;
   gap: 4px;
   height: 24px;
-  margin-top: 12px;
 }
 
 .walletIcon {
@@ -72,12 +93,20 @@
   width: 24px;
 }
 
-.ProfileInformation :global(.ui.button.basic).copyLink, .ProfileInformation :global(.ui.button.basic).viewMore {
-  padding: unset;
+.buttonsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.ProfileInformation :global(.ui.inverted.button).smallButton {
-  align-items: center;
+.copyLink:global(.ui.button.basic),
+.viewMore:global(.ui.button.basic) {
+  padding: unset;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.smallButton:global(.ui.button) {
   height: 34px;
   min-width: 34px;
   max-width: 34px;
@@ -85,22 +114,18 @@
   padding: 0px 0px 0px 9px;
 }
 
-.ProfileInformation :global(.ui.primary.button).smallButton {
-  align-items: center;
-  display: flex;
-  height: 34px;
-  min-width: 34px;
-  max-width: 34px;
-  justify-content: center;
+.shareButton:global(.ui.button) {
   padding: unset;
+  display: flex;
+  align-items: center;
 }
 
-.ProfileInformation :global(.ui.primary.button).fluidButton {
+.fluidButton:global(.ui.button) {
   padding-bottom: unset;
   padding-top: unset;
 }
 
-.ProfileInformation :global(.ui.dropdown .menu > .item > img).dropdownMenuIcon {
+.dropdownMenuIcon:global(.ui.dropdown .menu > .item > img) {
   margin: unset;
   stroke: white;
   height: 20px;
@@ -109,6 +134,29 @@
 
 .Profile.inline .dcl.blockie {
   width: 100px;
+}
+
+.column {
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.copied {
+  background-color: var(--card);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.copiedLink {
+  position: fixed;
+  background-color: var(--card);
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 10;
+  top: 70px;
+  right: 63px;
 }
 
 .ProfileInformation .blockedButton {
@@ -120,4 +168,86 @@
 
 .displayContents {
   display: contents;
+}
+
+.friendsButton {
+  min-width: 230px !important;
+}
+
+@media (max-width: 991px) {
+  .ProfileInformation :global(.Profile.massive.inline .dcl.avatar-face) {
+    width: 100px !important;
+    height: 100px !important;
+    border: 2px solid #43404a;
+  }
+
+  .ProfileInformation {
+    margin-top: -50px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mobileTopContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .actions .buttons {
+    column-gap: 6px;
+  }
+
+  .basicRow {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .column {
+    flex-direction: column-reverse;
+    display: flex;
+    gap: 8px;
+  }
+
+  .copiedLink {
+    position: static;
+    padding: 8px;
+  }
+
+  .friendsButton {
+    min-width: unset !important;
+  }
+
+  .description {
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .avatarInformationGap {
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .friendsContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+}
+
+:global(.ui.dropdown) :global(.menu > .item).copyItem {
+  display: flex;
+  align-items: center;
+}
+
+:global(.ui.dropdown) :global(.menu > .item).copyItem>svg {
+  margin-right: 11px;
+}
+
+.userNameLastPart {
+  color: var(--light-gray);
 }

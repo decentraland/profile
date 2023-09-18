@@ -2,6 +2,14 @@ import { graphql } from 'decentraland-dapps/dist/lib/graph'
 
 const BATCH_SIZE = 1000
 
+const getSubdomainByNameQuery = (name: string) => `{
+    nfts(where:{ name_starts_with_nocase: "${name}", name_ends_with_nocase: "${name}" }) {
+      owner {
+        address
+      }
+    }
+}`
+
 const getSubdomainQuery = (owner: string, offset: number) => `{
     nfts(first: ${BATCH_SIZE}, skip: ${offset}, where: { owner: "${owner}", category: ens }) {
       ens {
@@ -9,6 +17,16 @@ const getSubdomainQuery = (owner: string, offset: number) => `{
       }
     }
 }`
+
+type SubdomainByNameQueryResult = {
+  nfts: SubdomainOwner[]
+}
+
+type SubdomainOwner = {
+  owner: {
+    address: string
+  }
+}
 
 type SubdomainTuple = {
   ens: {
@@ -22,6 +40,11 @@ type SubdomainQueryResult = {
 
 export class MarketplaceGraphClient {
   constructor(private readonly _graphUrl: string) {}
+
+  fetchENSNameOwner = async (name: string): Promise<string | null> => {
+    const { nfts } = await graphql<SubdomainByNameQueryResult>(this._graphUrl, getSubdomainByNameQuery(name))
+    return nfts[0]?.owner.address ?? null
+  }
 
   fetchENSList = async (address: string | undefined): Promise<string[]> => {
     if (!address) {

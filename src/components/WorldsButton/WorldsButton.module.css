@@ -1,4 +1,3 @@
-
 .jumpIcon {
   height: 22px;
   width: 22px;
@@ -13,24 +12,25 @@
   display: none;
 }
 
-.worldDropdown:global(.ui.dropdown) :global(.menu>.item) {
+.worldDropdown:global(.ui.dropdown) :global(.menu > .item) {
   display: flex;
   align-items: center;
 }
 
-.worldDropdown:global(.ui.dropdown) :global(.menu>.item>img) {
+.worldDropdown:global(.ui.dropdown) :global(.menu > .item > img) {
   margin: 0 1em 0 0;
 }
 
-.worldButton:global(.ui.primary.button) {
+.worldButton:global(.ui.button) {
   padding: 5px 20px;
+  min-width: 230px;
 }
 
 .worldButton:not(.smallButton) > img {
   margin-right: 10px;
 }
 
-.smallButton:global(.ui.primary.button) {
+.smallButton:global(.ui.button) {
   align-items: center;
   display: flex;
   height: 34px;
@@ -38,4 +38,9 @@
   max-width: 34px;
   justify-content: center;
   padding: unset;
+}
+
+.worldButton > img {
+  width: 24px;
+  height: 24px;
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '../../tests/tests'
+import { FRIENDS_COUNTER_DATA_TEST_ID } from './constants'
 import FriendsCounter from './FriendsCounter'
 import { Props } from './FriendsCounter.types'
 
@@ -16,7 +17,7 @@ describe('when rendering the FriendsCounter with the friends count in zero', () 
   })
 
   it('should render the component with the friends count without the clickable class', async () => {
-    const button = await renderedComponent.getByTestId('FriendsCounter')
+    const button = renderedComponent.getByTestId(FRIENDS_COUNTER_DATA_TEST_ID)
     expect(button).not.toHaveClass('clickable')
     expect(button).toHaveTextContent('0 friends')
   })
@@ -28,7 +29,7 @@ describe('when rendering the FriendsCounter with the friends count greater than 
   })
 
   it('should render the component with the friends count without the clickable class', () => {
-    const button = renderedComponent.getByTestId('FriendsCounter')
+    const button = renderedComponent.getByTestId(FRIENDS_COUNTER_DATA_TEST_ID)
     expect(button).toHaveClass('clickable')
     expect(button).toHaveTextContent('3 friends')
   })
@@ -40,7 +41,7 @@ describe('when rendering the FriendsCounter in its loading state', () => {
   })
 
   it('should render the component with a loader', () => {
-    expect(renderedComponent.getByTestId('FriendsCounter').querySelector('.loader')).not.toBeNull()
+    expect(renderedComponent.getByTestId(FRIENDS_COUNTER_DATA_TEST_ID).querySelector('.loader')).not.toBeNull()
   })
 })
 
@@ -50,7 +51,7 @@ describe('when clicking the FriendsCounter with a zero count', () => {
   beforeEach(() => {
     onClick = jest.fn()
     renderedComponent = renderFriendsCounter({ count: 0, onClick })
-    const button = renderedComponent.getByTestId('FriendsCounter')
+    const button = renderedComponent.getByTestId(FRIENDS_COUNTER_DATA_TEST_ID)
     fireEvent.click(button)
   })
 
@@ -65,7 +66,7 @@ describe('when clicking the FriendsCounter with a greater than zero count', () =
   beforeEach(() => {
     onClick = jest.fn()
     renderedComponent = renderFriendsCounter({ count: 3, onClick })
-    const button = renderedComponent.getByTestId('FriendsCounter')
+    const button = renderedComponent.getByTestId(FRIENDS_COUNTER_DATA_TEST_ID)
     fireEvent.click(button)
   })
 

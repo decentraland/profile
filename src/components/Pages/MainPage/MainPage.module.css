@@ -9,22 +9,75 @@
   gap: 5%;
   justify-content: center;
   height: 100%;
-  padding: 30px;
+  padding: 20px;
 }
 
-.MainPage .infoContainer {
+.infoContainer {
   backdrop-filter: blur(20px);
-  background: linear-gradient(151deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.06) 100%);
+  background: linear-gradient(151deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.06) 100%);
   border-radius: 10px;
   box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 98%;
   padding: 32px;
+  min-height: 80vh;
 }
 
-.MainPage .tab {
+.tab {
   color: var(--text);
   font-weight: 700;
+}
+
+.tabTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.fullPage {
+  height: 60vh;
+}
+
+.avatarContainer {
+  position: relative;
+  width: 20%;
+  min-width: 260px;
+}
+
+.divider {
+  margin-bottom: 12px;
+}
+
+@media only screen and (min-width: 1200px) {
+  .MainPage :global(.dcl.tabs .ui.container) {
+    margin-left: unset !important;
+    margin-right: unset !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .MainPage {
+    align-items: center;
+    flex-direction: column;
+    padding: unset;
+  }
+
+  .infoContainer {
+    backdrop-filter: unset;
+    background: unset;
+    box-shadow: unset;
+    border: unset;
+    width: 100%;
+    padding: 16px;
+  }
+
+  .avatarContainer {
+    position: static;
+  }
+
+  .divider:global(.ui.divider:not(.vertical):not(.horizontal)) {
+    border-top: 1px solid rgba(34, 36, 38, 1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
 }

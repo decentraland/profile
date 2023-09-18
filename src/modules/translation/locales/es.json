@@ -9,9 +9,12 @@
     "copied": "Copiado",
     "copy_link": "Copiar enlace",
     "share_on_tw": "Compartir en Twitter",
-    "tw_message": "Oye, revisa mi perfil en decentraland\n",
+    "share_my_profile_tw_message": "Descubre más acerca de mí a través de mi perfil en Decentraland! #DCLProfiles\n",
+    "share_others_profile_tw_message": "Encontré un profile de Decentraland asombroso. Échale un vistazo! #DCLProfiles\n",
     "view_more": "Ver Más",
-    "blocked": "Bloqueado"
+    "blocked": "Bloqueado",
+    "worlds_tooltip": "Mundos",
+    "share_tooltip": "Compartir"
   },
   "blocked": {
     "blocked_logged_user_title": "{name} te ha bloqueado",
@@ -51,9 +54,11 @@
     "mutual": "amigos en común"
   },
   "overview": {
+    "title": "Collecionables Equipados",
     "start_dressing": "Comienza a vestirte de formas más allá de tu imaginación",
     "get_collectibles": "¡Obtén tu primer coleccionable y lúcete en Decentraland!",
-    "go_to_marketplace": "ir al marketplace"
+    "go_to_marketplace": "ir al marketplace",
+    "no_collectibles": " no posee collecionables aun"
   },
   "about_modal": {
     "title": "Acerca de",
@@ -70,5 +75,24 @@
     "real_name_label": "Nombre real",
     "hobbies_label": "Aficiones",
     "links_label": "Enlaces"
+  },
+  "confirmation_modal": {
+    "pending_request_title": "¿Estás seguro de que deseas cancelar la solicitud?",
+    "pending_request_subtitle": "Recuerda que puedes reenviar la solicitud cuando quieras.",
+    "pending_request_confirmation": "cancelar solicitud",
+    "pending_request_cancel": "volver atrás",
+    "pending_request_title_mobile": "Cancelar solicitud",
+    "friend_title": "¿Estás seguro de que deseas eliminar a {avatarName} como amigo?",
+    "friend_subtitle": "Recuerda que puedes reenviar la solicitud cuando quieras.",
+    "friend_confirmation": "sí, eliminar amigo",
+    "friend_cancel": "cancelar",
+    "friend_title_mobile": "Eliminar amigo {avatarName}"
+  },
+  "navbar": {
+    "sign_in": "iniciar sesión"
+  },
+  "not_found_page": {
+    "title": "¡Parece que hasta los exploradores pueden perderse!<br></br>No pudimos encontrar ésta dirección o nombre en Decentraland.",
+    "message": "Por favor revísalo e intenta nuevamente"
   }
 }

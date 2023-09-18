@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
+import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
 import { RootState } from '../../modules/reducer'
 import {
   removeFriendRequest,
   acceptFriendshipRequest,
   requestFriendshipRequest,
-  cancelFriendshipRequestRequest
+  cancelFriendshipRequestRequest,
+  logInAndRequestFriendshipRequest
 } from '../../modules/social/actions'
 import {
   getFriendshipStatus,
@@ -29,14 +31,21 @@ const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
       isRequestingFriendship(state, ownProps.friendAddress) ||
       isRemovingFriend(state, ownProps.friendAddress) ||
       isAcceptingFriendRequest(state, ownProps.friendAddress),
-    friendshipStatus: getFriendshipStatus(state, ownProps.friendAddress)
+    friendshipStatus: getFriendshipStatus(state, ownProps.friendAddress),
+    profile: getProfileOfAddress(state, ownProps.friendAddress)
   }
 }
 
 const mapDispatch = (dispatch: MapDispatch, ownProps: OwnProps): MapDispatchProps => ({
   onCancelFriendRequest: () => dispatch(cancelFriendshipRequestRequest(ownProps.friendAddress)),
   onRemoveFriend: () => dispatch(removeFriendRequest(ownProps.friendAddress)),
-  onAddFriend: () => dispatch(requestFriendshipRequest(ownProps.friendAddress)),
+  onAddFriend: () => {
+    if (ownProps.isLoggedIn) {
+      dispatch(requestFriendshipRequest(ownProps.friendAddress))
+    } else {
+      dispatch(logInAndRequestFriendshipRequest(ownProps.friendAddress))
+    }
+  },
   onAcceptFriendRequest: () => dispatch(acceptFriendshipRequest(ownProps.friendAddress))
 })
 

@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { Button } from 'decentraland-ui'
 import { locations } from '../../modules/routing/locations'
-import UserMenu from '../UserMenu'
+import UserInformation from '../UserInformation'
 import { Props } from './Navbar.types'
 import './Navbar.css'
 
@@ -12,7 +14,16 @@ const Navbar = (props: Props) => {
   const navigate = useNavigate()
 
   if (isConnected) {
-    props = { ...props, rightMenu: <UserMenu /> }
+    props = { ...props, rightMenu: <UserInformation /> }
+  } else {
+    props = {
+      ...props,
+      rightMenu: (
+        <Button primary onClick={() => navigate(locations.signIn(locations.root()))}>
+          {t('navbar.sign_in')}
+        </Button>
+      )
+    }
   }
 
   const handleOnSignIn = useCallback(() => {

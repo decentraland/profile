@@ -1,17 +1,19 @@
 .Avatar {
   display: flex;
   flex-direction: column;
-  height: 80vh;
-  width: 15%;
+  width: inherit;
   min-width: 260px;
+  height: 80vh;
   align-items: center;
+  position: fixed;
+  top: 10vh;
 }
 
 .noProfile iframe {
-  filter: blur(18px) brightness(0%);
+  filter: blur(8px) brightness(0%);
 }
 
-.loading { 
+.loading {
   justify-content: center;
 }
 
@@ -22,8 +24,8 @@
 
 .noProfile .message {
   position: absolute;
-  left:50%;
-  top:50%;
+  left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
   padding: 6px 14px 6px 14px;
   text-align: center;
@@ -33,6 +35,33 @@
 }
 
 .wearablePreview {
+  width: 100vw;
   height: 100%;
   position: relative;
+}
+
+.editButton>img {
+  margin-right: 5px;
+}
+
+
+@media (max-width: 991px) {
+  .Avatar {
+    height: 399px;
+    width: unset;
+    position: static;
+  }
+
+  .editButton {
+    position: absolute;
+    right: 20px;
+    top: 379px;
+    min-width: unset !important;
+    width: unset !important;
+    padding: 10px !important;
+  }
+
+  .editButton>img {
+    margin-right: unset;
+  }
 }

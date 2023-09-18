@@ -3,12 +3,16 @@
   "CHAIN_ID": "1",
   "EXPLORER_URL": "https://play.decentraland.org",
   "PEER_URL": "https://peer.decentraland.org",
-  "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace-goerli",
+  "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org",
   "BUILDER_URL": "https://builder.decentraland.org",
   "SYNAPSE_URL": "https://social.decentraland.org",
   "SOCIAL_RPC_URL": "wss://rpc-social-service.decentraland.org",
   "PROFILE_URL": "https://profile.decentraland.org",
   "MARKETPLACE_URL": "https://market.decentraland.org",
-  "NFT_SERVER_URL": "https://nft-api.decentraland.org/v1"
+  "NFT_SERVER_URL": "https://nft-api.decentraland.org/v1",
+  "SEGMENT_API_KEY": "AGaiQumreF5ubucC71RoGA1rkDAnVocy",
+  "SSO_URL": "https://id.decentraland.org",
+  "ENVIRONMENT": "production",
+  "SENTRY_DSN": "https://d2d3f81155656b53fe7746a0b69b6e0e@o4504361728212992.ingest.sentry.io/4505748385169408"
 }

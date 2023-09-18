@@ -1,5 +1,5 @@
 .page {
-  background-image: url(../../assets/images/background.png);
+  background-image: url(../../assets/images/background.webp);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -21,8 +21,22 @@
   flex-shrink: 0;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   .content {
     padding: 0;
+  }
+
+  .page {
+    background-size: 100% 480px;
+    background-color: black;
+    background-position: initial;
+    position: unset;
+    background-image: url(../../assets/images/background-tablet.webp);
+  }
+}
+
+@media (max-width: 767px) {
+  .page {
+    background-image: url(../../assets/images/background-mobile.webp);
   }
 }
