@@ -26,7 +26,7 @@ const Overview = (props: Props) => {
   }, [wearableIds])
 
   return (
-    <div className={classNames(className, styles.Overview)}>
+    <div className={classNames(className, styles.Overview)} data-testid="overview">
       {isLoading ? (
         <Loader active />
       ) : items.length > 0 ? (
@@ -34,7 +34,7 @@ const Overview = (props: Props) => {
           <div className={styles.tabTitle}>{t('overview.title')}</div>
           <div className={classNames(styles.OverviewWithItems)}>
             {items.map((item: Item) => (
-              <a href={`${MARKETPLACE_URL}${item.url}`} target="_blank" key={item.id}>
+              <a href={`${MARKETPLACE_URL}${item.url}`} target="_blank" key={item.id} data-testid={`overview-${item.id}`}>
                 <AssetCard asset={item} />
               </a>
             ))}
