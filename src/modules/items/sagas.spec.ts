@@ -1,9 +1,17 @@
 import { call } from 'redux-saga/effects'
 import { expectSaga } from 'redux-saga-test-plan'
 import { Item, Network } from '@dcl/schemas'
-import { fetchItemsByUrnFailure, fetchItemsByUrnRequest, fetchItemsByUrnSuccess } from './actions'
+import {
+  fetchCreationsFailure,
+  fetchCreationsRequest,
+  fetchCreationsSuccess,
+  fetchItemsByUrnFailure,
+  fetchItemsByUrnRequest,
+  fetchItemsByUrnSuccess
+} from './actions'
 import { ItemAPI } from './client'
 import { itemSagas } from './sagas'
+import { CreationsFetchOptions } from './types'
 
 describe('when handling the fetch items by urns request', () => {
   let api: ItemAPI
@@ -83,6 +91,47 @@ describe('when handling the fetch items by urns request', () => {
           .dispatch(fetchItemsByUrnRequest(itemUrns))
           .silentRun()
       })
+    })
+  })
+})
+
+describe('when handling the fetch creations request', () => {
+  let api: ItemAPI
+  let options: CreationsFetchOptions
+  let items: Item[]
+  let apiResponse: Promise<{ data: Item[] }>
+
+  beforeEach(() => {
+    api = new ItemAPI('https://api.decentraland.org/v1')
+    options = { creator: '0x1' }
+  })
+
+  describe('and the API request fails', () => {
+    beforeEach(() => {
+      apiResponse = Promise.reject(new Error('anError'))
+    })
+
+    it('should put the fetch creations failure action with the error', () => {
+      return expectSaga(itemSagas, api)
+        .provide([[call([api, 'get'], options), apiResponse]])
+        .put(fetchCreationsFailure('anError'))
+        .dispatch(fetchCreationsRequest(options))
+        .silentRun()
+    })
+  })
+
+  describe('and the API request succeeds', () => {
+    beforeEach(() => {
+      items = [{ id: 'anItemId' } as Item, { id: 'anotherItemId' } as Item]
+      apiResponse = Promise.resolve({ data: items })
+    })
+
+    it('should put the fetch creations success action with the items', () => {
+      return expectSaga(itemSagas, api)
+        .provide([[call([api, 'get'], options), apiResponse]])
+        .put(fetchCreationsSuccess(items))
+        .dispatch(fetchCreationsRequest(options))
+        .silentRun()
     })
   })
 })

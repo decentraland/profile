@@ -94,5 +94,39 @@
   "not_found_page": {
     "title": "看来即使是探险家也会迷路！<br></br>在 Decentraland 中找不到此地址或名称。",
     "message": "请仔细检查并重试"
+  },
+  "categories": {
+    "wearables": "可穿戴",
+    "wearables_head": "头部",
+    "wearables_upper_body": "上半身",
+    "wearables_lower_body": "下半身",
+    "wearables_feet": "腿部",
+    "wearables_hands": "手",
+    "wearables_accessories": "饰品",
+    "wearables_skin": "皮肤",
+    "wearables_earring": "耳环",
+    "wearables_eyewear": "眼镜",
+    "wearables_hat": "帽子",
+    "wearables_helmet": "头盔",
+    "wearables_mask": "面具",
+    "wearables_tiara": "头饰",
+    "wearables_top_head": "头顶",
+    "wearables_eyebrows": "眉毛",
+    "wearables_eyes": "眼睛",
+    "wearables_facial_hair": "胡子",
+    "wearables_hair": "头发",
+    "wearables_mouth": "嘴巴",
+    "emotes": "表情",
+    "emotes_dance": "舞蹈",
+    "emotes_stunt": "特技",
+    "emotes_greetings": "问候",
+    "emotes_fun": "乐趣",
+    "emotes_poses": "姿势",
+    "emotes_reactions": "反应",
+    "emotes_horror": "恐怖",
+    "emotes_miscellaneous": "各种各样的"
+  },
+  "categories_menu": {
+    "title": "类别"
   }
 }
