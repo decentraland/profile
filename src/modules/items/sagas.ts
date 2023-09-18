@@ -10,10 +10,10 @@ import {
   fetchCreationsFailure,
   fetchCreationsSuccess
 } from './actions'
-import { ItemAPI } from './client'
+import { ItemsClient } from './client'
 import { isEthereumWearable, isMaticWearable } from './utils'
 
-export function* itemSagas(api: ItemAPI) {
+export function* itemSagas(api: ItemsClient) {
   yield takeEvery(fetchItemsByUrnRequest.type, handleFetchItemsByUrnRequest)
   yield takeLatest(fetchCreationsRequest.type, handleFetchCreationsRequest)
 
@@ -31,7 +31,7 @@ export function* itemSagas(api: ItemAPI) {
         apiCalls.push(call([api, 'get'], { urns: maticUrns, network: Network.MATIC }))
       }
 
-      const responses: Awaited<ReturnType<ItemAPI['get']>>[] = yield all(apiCalls)
+      const responses: Awaited<ReturnType<ItemsClient['get']>>[] = yield all(apiCalls)
 
       yield put(fetchItemsByUrnSuccess(responses.flatMap(response => response.data)))
     } catch (error) {
@@ -41,7 +41,7 @@ export function* itemSagas(api: ItemAPI) {
 
   function* handleFetchCreationsRequest(action: ReturnType<typeof fetchCreationsRequest>) {
     try {
-      const response: Awaited<ReturnType<ItemAPI['get']>> = yield call([api, 'get'], action.payload)
+      const response: Awaited<ReturnType<ItemsClient['get']>> = yield call([api, 'get'], action.payload)
       yield put(fetchCreationsSuccess(response.data))
     } catch (error) {
       yield put(fetchCreationsFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))

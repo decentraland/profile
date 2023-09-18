@@ -9,15 +9,15 @@ import {
   fetchItemsByUrnRequest,
   fetchItemsByUrnSuccess
 } from './actions'
-import { ItemAPI } from './client'
+import { ItemsClient } from './client'
 import { itemSagas } from './sagas'
 import { CreationsFetchOptions } from './types'
 
 describe('when handling the fetch items by urns request', () => {
-  let api: ItemAPI
+  let api: ItemsClient
 
   beforeEach(() => {
-    api = new ItemAPI('https://api.decentraland.org/v1')
+    api = new ItemsClient('https://api.decentraland.org/v1')
   })
 
   describe('and the request to the server fails', () => {
@@ -96,13 +96,13 @@ describe('when handling the fetch items by urns request', () => {
 })
 
 describe('when handling the fetch creations request', () => {
-  let api: ItemAPI
+  let api: ItemsClient
   let options: CreationsFetchOptions
   let items: Item[]
   let apiResponse: Promise<{ data: Item[] }>
 
   beforeEach(() => {
-    api = new ItemAPI('https://api.decentraland.org/v1')
+    api = new ItemsClient('https://api.decentraland.org/v1')
     options = { creator: '0x1' }
   })
 

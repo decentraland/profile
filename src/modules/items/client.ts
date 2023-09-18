@@ -1,17 +1,20 @@
 import { EmoteCategory, Item, NFTCategory, WearableCategory } from '@dcl/schemas'
 import { Categories, Options } from './types'
 
-export class ItemAPI {
+export class ItemsClient {
   url: string
 
   constructor(url: string) {
     this.url = url
   }
 
-  async get(filters: Options = {}): Promise<{ data: Item[] }> {
-    const queryParams = this._buildItemsQueryString(filters)
-    const response = await fetch(`${this.url}/catalog?${queryParams}`)
-    return await response.json()
+  async get(options: Options = {}): Promise<{ data: Item[] }> {
+    const queryParams = this._buildItemsQueryString(options)
+    const url = new URL(this.url)
+    url.pathname = '/v1/catalog'
+    url.search = queryParams.toString()
+    const response = await fetch(url.toString())
+    return response.json()
   }
 
   getCategories(
@@ -30,7 +33,7 @@ export class ItemAPI {
     }
   }
 
-  private _buildItemsQueryString(filters: Options): string {
+  private _buildItemsQueryString(filters: Options): URLSearchParams {
     const queryParams = new URLSearchParams()
     const categories = filters.category ? this.getCategories(filters.category) : undefined
 
@@ -60,6 +63,6 @@ export class ItemAPI {
       }
     }
 
-    return queryParams.toString()
+    return queryParams
   }
 }

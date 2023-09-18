@@ -6,7 +6,7 @@ import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
 import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { config } from './config'
 import { identitySaga } from './identity/sagas'
-import { ItemAPI } from './items/client'
+import { ItemsClient } from './items/client'
 import { itemSagas } from './items/sagas'
 import { modalSagas } from './modal/sagas'
 import { createProfileSaga } from './profile/sagas'
@@ -34,7 +34,7 @@ export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphCl
     translationSaga(),
     identitySaga(),
     modalSagas(),
-    itemSagas(new ItemAPI(NFT_SERVER_URL)),
+    itemSagas(new ItemsClient(NFT_SERVER_URL)),
     socialSagas(),
     createProfileSaga(marketplaceGraphClient, peerApi)(),
     featuresSaga({
