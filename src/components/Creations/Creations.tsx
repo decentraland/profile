@@ -17,7 +17,6 @@ const Creations = (props: Props) => {
   const { items, isLoading, onFetchCreations } = props
 
   const { page, first, sortBy, filters, changeFilter } = usePagination<keyof Options>()
-
   const selectedCategory = useMemo(
     () =>
       filters.category && Object.values(Categories).includes(filters.category as Categories)
