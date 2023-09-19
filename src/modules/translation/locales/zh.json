@@ -1,4 +1,7 @@
 {
+  "global": {
+    "load_more": "装载更多"
+  },
   "avatar": {
     "edit": "編輯頭像",
     "message": "在 Decentraland 中编辑您的头像"

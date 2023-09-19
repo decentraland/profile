@@ -117,13 +117,14 @@ describe('when reducing the success action to fetch creations', () => {
     state.loading = [fetchCreationsRequest({ creator: '0x1' })]
   })
 
-  it('should return a state with the items set and the loading state cleared', () => {
-    expect(itemsReducer(state, fetchCreationsSuccess([{ id: 'anotherItemId' } as Item]))).toEqual({
+  it('should return a state with the items and total set and the loading state cleared', () => {
+    expect(itemsReducer(state, fetchCreationsSuccess({ items: [{ id: 'anotherItemId' } as Item], total: 1 }))).toEqual({
       ...state,
       loading: [],
       data: {
         ...state.data,
-        items: [{ id: 'anItemId' } as Item, { id: 'anotherItemId' } as Item]
+        items: [{ id: 'anItemId' } as Item, { id: 'anotherItemId' } as Item],
+        total: 1
       }
     })
   })

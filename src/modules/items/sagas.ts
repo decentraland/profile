@@ -42,7 +42,7 @@ export function* itemSagas(api: ItemsClient) {
   function* handleFetchCreationsRequest(action: ReturnType<typeof fetchCreationsRequest>) {
     try {
       const response: Awaited<ReturnType<ItemsClient['get']>> = yield call([api, 'get'], action.payload)
-      yield put(fetchCreationsSuccess(response.data))
+      yield put(fetchCreationsSuccess({ items: response.data, total: response.total }))
     } catch (error) {
       yield put(fetchCreationsFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }

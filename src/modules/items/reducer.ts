@@ -13,6 +13,7 @@ import {
 export type ItemsState = {
   data: {
     items: Item[]
+    total: number
   }
   loading: LoadingState
   error: string | null
@@ -20,7 +21,8 @@ export type ItemsState = {
 
 export const buildInitialState = (): ItemsState => ({
   data: {
-    items: []
+    items: [],
+    total: 0
   },
   loading: [],
   error: null
@@ -45,12 +47,15 @@ export const itemsReducer = createReducer<ItemsState>(buildInitialState(), build
       const { skip } = action.payload
       if (skip === 0 || skip === undefined) {
         state.data.items = []
+        state.data.total = 0
       }
       state.loading = loadingReducer(state.loading, action)
       state.error = null
     })
     .addCase(fetchCreationsSuccess, (state, action) => {
-      state.data.items = [...state.data.items, ...action.payload]
+      const { items, total } = action.payload
+      state.data.items = [...state.data.items, ...items]
+      state.data.total = total
       state.loading = loadingReducer(state.loading, action)
     })
     .addCase(fetchCreationsFailure, (state, action) => {

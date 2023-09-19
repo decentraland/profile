@@ -1,7 +1,13 @@
-.creations {
+.main {
   display: flex;
   flex-direction: row;
   gap: 32px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .items {

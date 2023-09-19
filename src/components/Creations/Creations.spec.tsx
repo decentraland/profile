@@ -8,9 +8,19 @@ import { CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE } from './constants'
 import Creations from './Creations'
 import { Props } from './Creations.types'
 
-function renderCreations(props: Partial<Props> = {}) {
+function renderCreations(props: Partial<Props> = {}, initialEntries: string[] = ['/']) {
   return renderWithProviders(
-    <Creations profileAddress={'0x1'} isLoading={false} items={[]} error={null} view={View.OWN} onFetchCreations={jest.fn()} {...props} />
+    <Creations
+      profileAddress={'0x1'}
+      isLoading={false}
+      items={[]}
+      totalItems={0}
+      error={null}
+      view={View.OWN}
+      onFetchCreations={jest.fn()}
+      {...props}
+    />,
+    { router: { initialEntries } }
   )
 }
 
@@ -107,5 +117,25 @@ describe('when changing the category', () => {
       fireEvent.click(getByText(t('categories.wearables_head')))
     })
     expect(onFetchCreations).toHaveBeenCalledWith({ creator: '0x1', first: 24, skip: 0, category: 'wearables_head' })
+  })
+})
+
+describe('when doing an initial load of a page greater than one', () => {
+  let onFetchCreations: jest.Mock
+  let page: number
+
+  beforeEach(() => {
+    page = 4
+    onFetchCreations = jest.fn()
+    renderedComponent = renderCreations({ profileAddress: '0x1', onFetchCreations }, [`/account/0x1/creations?page=${page}`])
+  })
+
+  it("should fetch the user's creations taking into account the pages", () => {
+    expect(onFetchCreations).toHaveBeenCalledWith({
+      creator: '0x1',
+      first: page * ITEMS_PER_PAGE,
+      skip: 0,
+      category: 'wearables'
+    })
   })
 })

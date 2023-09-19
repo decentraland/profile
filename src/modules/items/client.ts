@@ -8,7 +8,7 @@ export class ItemsClient {
     this.url = url
   }
 
-  async get(options: Options = {}): Promise<{ data: Item[] }> {
+  async get(options: Options = {}): Promise<{ data: Item[]; total: number }> {
     const queryParams = this._buildItemsQueryString(options)
     const url = new URL(this.url)
     url.pathname = '/v1/catalog'
@@ -36,6 +36,14 @@ export class ItemsClient {
   private _buildItemsQueryString(filters: Options): URLSearchParams {
     const queryParams = new URLSearchParams()
     const categories = filters.category ? this.getCategories(filters.category) : undefined
+
+    if (filters.first) {
+      queryParams.append('first', filters.first.toString())
+    }
+
+    if (filters.skip) {
+      queryParams.append('skip', filters.skip.toString())
+    }
 
     if (filters.ids) {
       filters.ids.forEach(id => queryParams.append('id', id))

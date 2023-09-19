@@ -123,13 +123,13 @@ describe('when handling the fetch creations request', () => {
   describe('and the API request succeeds', () => {
     beforeEach(() => {
       items = [{ id: 'anItemId' } as Item, { id: 'anotherItemId' } as Item]
-      apiResponse = Promise.resolve({ data: items })
+      apiResponse = Promise.resolve({ data: items, total: items.length })
     })
 
     it('should put the fetch creations success action with the items', () => {
       return expectSaga(itemSagas, api)
         .provide([[call([api, 'get'], options), apiResponse]])
-        .put(fetchCreationsSuccess(items))
+        .put(fetchCreationsSuccess({ items, total: items.length }))
         .dispatch(fetchCreationsRequest(options))
         .silentRun()
     })

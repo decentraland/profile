@@ -3,9 +3,11 @@ import { AssetCard } from 'decentraland-dapps/dist/containers/AssetCard/AssetCar
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { CategoryFilter } from 'decentraland-ui/dist/components/CategoryFilter/CategoryFilter'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
+import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { usePagination } from '../../lib/pagination'
 import { config } from '../../modules/config'
 import { Categories, Options } from '../../modules/items/types'
+import { InfiniteScroll } from '../InfiniteScroll'
 import { CREATIONS_DATA_TEST_ID, CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, LOADER_DATA_TEST_ID } from './constants'
 import { buildCategoryFilterCategories } from './utils'
 import { Props } from './Creations.types'
@@ -14,9 +16,23 @@ import styles from './Creations.module.css'
 const MARKETPLACE_URL = config.get('MARKETPLACE_URL', '')
 
 const Creations = (props: Props) => {
-  const { items, isLoading, onFetchCreations } = props
+  const { items, totalItems: count, isLoading, onFetchCreations } = props
 
-  const { page, first, sortBy, filters, changeFilter } = usePagination<keyof Options>()
+  const isMobile = useMobileMediaQuery()
+  const { page, first, sortBy, filters, hasMorePages, goToPage, changeFilter } = usePagination<keyof Options>({
+    pageSize: ITEMS_PER_PAGE,
+    count
+  })
+
+  const changePage = useCallback(
+    (newPage: number) => {
+      if (newPage > page) {
+        goToPage(newPage)
+      }
+    },
+    [page]
+  )
+
   const selectedCategory = useMemo(
     () =>
       filters.category && Object.values(Categories).includes(filters.category as Categories)
@@ -26,10 +42,11 @@ const Creations = (props: Props) => {
   )
 
   useEffect(() => {
+    const shouldMakeInitialLoad = !count && page !== 1
     onFetchCreations({
       creator: props.profileAddress,
-      first,
-      skip: ITEMS_PER_PAGE * (page - 1),
+      first: shouldMakeInitialLoad ? page * ITEMS_PER_PAGE : first,
+      skip: shouldMakeInitialLoad ? 0 : ITEMS_PER_PAGE * (page - 1),
       category: selectedCategory
     })
   }, [page, first, filters, sortBy])
@@ -41,26 +58,40 @@ const Creations = (props: Props) => {
 
   return (
     <div data-testid={CREATIONS_DATA_TEST_ID}>
-      {isLoading ? (
+      {isLoading && items.length === 0 ? (
         <Loader active data-testid={LOADER_DATA_TEST_ID} />
       ) : (
-        <div className={styles.creations}>
-          <div className={styles.sidebar}>
-            <CategoryFilter title={t('categories_menu.title')} items={categories} value={selectedCategory} onClick={onChangeCategory} />
+        <>
+          <div className={styles.main}>
+            {!isMobile ? (
+              <div className={styles.sidebar}>
+                <CategoryFilter title={t('categories_menu.title')} items={categories} value={selectedCategory} onClick={onChangeCategory} />
+              </div>
+            ) : null}
+            <div className={styles.content}>
+              <div role="feed" className={styles.items}>
+                {items.map(item => (
+                  <a
+                    href={`${MARKETPLACE_URL}${item.url}`}
+                    target="_blank"
+                    role="article"
+                    key={item.id}
+                    data-testid={`${CREATION_ITEM_DATA_TEST_ID}-${item.id}`}
+                  >
+                    <AssetCard asset={item} />
+                  </a>
+                ))}
+              </div>
+              <InfiniteScroll
+                page={page}
+                maxScrollPages={3}
+                hasMorePages={hasMorePages ?? false}
+                isLoading={isLoading}
+                onLoadMore={changePage}
+              />
+            </div>
           </div>
-          <div className={styles.items}>
-            {items.map(item => (
-              <a
-                href={`${MARKETPLACE_URL}${item.url}`}
-                target="_blank"
-                key={item.id}
-                data-testid={`${CREATION_ITEM_DATA_TEST_ID}-${item.id}`}
-              >
-                <AssetCard asset={item} />
-              </a>
-            ))}
-          </div>
-        </div>
+        </>
       )}
     </div>
   )

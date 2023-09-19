@@ -1,8 +1,8 @@
 import { Avatar, Item } from '@dcl/schemas'
 import { RootState } from '../reducer'
-import { fetchItemsByUrnRequest } from './actions'
+import { fetchCreationsRequest, fetchItemsByUrnRequest } from './actions'
 import { buildInitialState } from './reducer'
-import { getError, getItems, getProfileWearableUrns, isLoadingItems } from './selectors'
+import { getError, getItems, getProfileWearableUrns, isLoadingCreations, isLoadingItems } from './selectors'
 
 let state: RootState
 
@@ -32,6 +32,16 @@ describe('when getting the items from the state', () => {
   })
 })
 
+describe('when getting the total items from the state', () => {
+  beforeEach(() => {
+    state.items.data.total = 10
+  })
+
+  it('should return the total items', () => {
+    expect(getItems(state)).toBe(state.items.data.items)
+  })
+})
+
 describe('when getting if the items are being loaded', () => {
   describe('and the items are not being loaded', () => {
     beforeEach(() => {
@@ -43,7 +53,7 @@ describe('when getting if the items are being loaded', () => {
     })
   })
 
-  describe('and the friends are being loaded', () => {
+  describe('and the items are being loaded', () => {
     beforeEach(() => {
       state.items.loading = [fetchItemsByUrnRequest(['anId'])]
     })
@@ -99,6 +109,28 @@ describe('when getting the wearable urns of a given profile', () => {
   describe('and the profile exists', () => {
     it('should return the wearable urns of the user items', () => {
       expect(getProfileWearableUrns(state, address)).toEqual(state.profile.data[address].avatars[0].avatar.wearables)
+    })
+  })
+})
+
+describe('when getting if the creations are being loaded', () => {
+  describe('and the creations are not being loaded', () => {
+    beforeEach(() => {
+      state.items.loading = []
+    })
+
+    it('should return false', () => {
+      expect(isLoadingCreations(state)).toBe(false)
+    })
+  })
+
+  describe('and the creations are being loaded', () => {
+    beforeEach(() => {
+      state.items.loading = [fetchCreationsRequest({ creator: '0x1' })]
+    })
+
+    it('should return true', () => {
+      expect(isLoadingCreations(state)).toBe(true)
     })
   })
 })

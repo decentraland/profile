@@ -1,15 +1,13 @@
 .page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
   background-image: url(../../assets/images/background.webp);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  bottom: 0px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  position: fixed;
-  top: 0px;
-  width: 100%;
+  background-attachment: fixed;
 }
 
 .content {
@@ -30,7 +28,7 @@
     background-size: 100% 480px;
     background-color: black;
     background-position: initial;
-    position: unset;
+    background-attachment: initial;
     background-image: url(../../assets/images/background-tablet.webp);
   }
 }

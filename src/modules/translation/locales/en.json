@@ -1,4 +1,7 @@
 {
+  "global": {
+    "load_more": "Load more"
+  },
   "avatar": {
     "edit": "Edit Avatar",
     "message": "Edit your avatar in Decentraland"

@@ -11,7 +11,7 @@ export type FetchItemsByUrnSuccessAction = ReturnType<typeof fetchItemsByUrnSucc
 export type FetchItemsByUrnFailureAction = ReturnType<typeof fetchItemsByUrnFailure>
 
 export const fetchCreationsRequest = createAction<CreationsFetchOptions>('[Request] Fetch Creations')
-export const fetchCreationsSuccess = createAction<Item[]>('[Success] Fetch Creations')
+export const fetchCreationsSuccess = createAction<{ items: Item[]; total: number }>('[Success] Fetch Creations')
 export const fetchCreationsFailure = createAction<string>('[Failure] Fetch Creations')
 
 export type FetchCreationsRequestAction = ReturnType<typeof fetchCreationsRequest>
