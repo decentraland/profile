@@ -6,6 +6,7 @@ import path from 'path'
 import { TextEncoder, TextDecoder } from 'util'
 import { config } from 'dotenv'
 import flatten from 'flat'
+import fetch, { Request, Response } from 'node-fetch'
 import { en as dappsEn } from 'decentraland-dapps/dist/modules/translation/defaults'
 import { mergeTranslations, setCurrentLocale } from 'decentraland-dapps/dist/modules/translation/utils'
 import * as locales from '../modules/translation/locales'
@@ -25,6 +26,10 @@ Object.assign(globalThis, { TextDecoder, TextEncoder })
 setCurrentLocale('en', mergeTranslations(flatten(dappsEn), flatten(locales.en)))
 
 if (!globalThis.fetch) {
-  globalThis.fetch = jest.fn()
-  globalThis.Request = jest.fn()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  globalThis.fetch = fetch as any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  globalThis.Request = Request as any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  globalThis.Response = Response as any
 }

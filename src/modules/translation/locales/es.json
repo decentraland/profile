@@ -1,4 +1,7 @@
 {
+  "global": {
+    "load_more": "Cargar más"
+  },
   "avatar": {
     "edit": "Editar Avatar",
     "message": "Edita tu Avatar en Decentraland"
@@ -94,5 +97,39 @@
   "not_found_page": {
     "title": "¡Parece que hasta los exploradores pueden perderse!<br></br>No pudimos encontrar ésta dirección o nombre en Decentraland.",
     "message": "Por favor revísalo e intenta nuevamente"
+  },
+  "categories": {
+    "wearables": "Wearables",
+    "wearables_head": "Cabeza",
+    "wearables_upper_body": "Torso",
+    "wearables_lower_body": "Piernas",
+    "wearables_feet": "Pies",
+    "wearables_hands": "Manos",
+    "wearables_accessories": "Accesorios",
+    "wearables_skin": "Skin",
+    "wearables_earring": "Aros",
+    "wearables_eyewear": "Gafas",
+    "wearables_hat": "Sombreros",
+    "wearables_helmet": "Cascos",
+    "wearables_mask": "Mascaras",
+    "wearables_tiara": "Tiara",
+    "wearables_top_head": "Tope de la cabeza",
+    "wearables_eyebrows": "Cejas",
+    "wearables_eyes": "Ojos",
+    "wearables_facial_hair": "Barba",
+    "wearables_hair": "Cabello",
+    "wearables_mouth": "Boca",
+    "emotes": "Emotes",
+    "emotes_dance": "Dance",
+    "emotes_stunt": "Truco",
+    "emotes_greetings": "Saludos",
+    "emotes_fun": "Divertido",
+    "emotes_poses": "Poses",
+    "emotes_reactions": "Reacciones",
+    "emotes_horror": "Horror",
+    "emotes_miscellaneous": "Misceláneos"
+  },
+  "categories_menu": {
+    "title": "Categorías"
   }
 }

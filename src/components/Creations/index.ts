@@ -1,1 +1,1 @@
-export * from './Creations'
+export { default as Creations } from './Creations.container'
