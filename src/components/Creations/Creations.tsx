@@ -42,11 +42,11 @@ const Creations = (props: Props) => {
   )
 
   useEffect(() => {
-    const shouldMakeInitialLoad = !count && page !== 1
+    const shouldLoadMultiplePages = !count && page !== 1
     onFetchCreations({
       creator: props.profileAddress,
-      first: shouldMakeInitialLoad ? page * ITEMS_PER_PAGE : first,
-      skip: shouldMakeInitialLoad ? 0 : ITEMS_PER_PAGE * (page - 1),
+      first: shouldLoadMultiplePages ? page * ITEMS_PER_PAGE : first,
+      skip: shouldLoadMultiplePages ? 0 : ITEMS_PER_PAGE * (page - 1),
       category: selectedCategory
     })
   }, [page, first, filters, sortBy])
