@@ -49,6 +49,7 @@ const Avatar = (props: Props) => {
             dev={config.getEnv() === Env.DEVELOPMENT}
             disableBackground={true}
             profile={profileAddress}
+            disableDefaultWearables
           />
           {(!profile && view === View.OWN && !isLoadingWearablePreview) || isError ? (
             <div data-testid="avatar-message" className={styles.message}>
