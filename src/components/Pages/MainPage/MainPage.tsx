@@ -37,8 +37,7 @@ function MainPage(props: Props) {
   }
 
   const selectedTab = useMemo(() => {
-    const tab = params.tab
-    return tab || AccountTabs.OVERVIEW
+    return params.tab ?? AccountTabs.OVERVIEW
   }, [params])
 
   const tabs: { displayValue: string; value: AccountTabs }[] = useMemo(

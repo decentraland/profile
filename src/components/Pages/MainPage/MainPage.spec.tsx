@@ -39,7 +39,7 @@ function renderMainPage(props: Partial<Props> = {}) {
 
 let screen: RenderResult
 
-describe('when creations tab FF is enabled', () => {
+describe('when the creations tab FF is enabled', () => {
   let mainTabsCmp: ReturnType<typeof within>
 
   beforeEach(() => {
@@ -47,26 +47,26 @@ describe('when creations tab FF is enabled', () => {
     mainTabsCmp = within(screen.getByTestId('main-tabs'))
   })
 
-  it('should show creations tab', async () => {
+  it('should show the creations tab', async () => {
     expect(mainTabsCmp.getByText(t('tabs.creations'))).toBeInTheDocument()
   })
 
-  it('should show overview tab', () => {
+  it('should show the overview tab', () => {
     expect(mainTabsCmp.getByText(t('tabs.overview'))).toBeInTheDocument()
   })
 })
 
-describe('when creations tab FF is disabled', () => {
+describe('when the creations tab FF is disabled', () => {
   beforeEach(() => {
     screen = renderMainPage({ isCreationsTabEnabled: false })
   })
 
-  it('should not show tabs section', () => {
+  it('should not show the tabs section', () => {
     expect(screen.queryByTestId('main-tabs')).not.toBeInTheDocument()
   })
 })
 
-describe('when assets tab FF is enabled', () => {
+describe('when the assets tab FF is enabled', () => {
   let mainTabsCmp: ReturnType<typeof within>
 
   beforeEach(() => {
@@ -74,21 +74,21 @@ describe('when assets tab FF is enabled', () => {
     mainTabsCmp = within(screen.getByTestId('main-tabs'))
   })
 
-  it('should show assets tab', () => {
+  it('should show the assets tab', () => {
     expect(mainTabsCmp.getByText(t('tabs.assets'))).toBeInTheDocument()
   })
 
-  it('should show overview tab', () => {
+  it('should show the overview tab', () => {
     expect(mainTabsCmp.getByText(t('tabs.overview'))).toBeInTheDocument()
   })
 })
 
-describe('when assets tab FF is disable', () => {
+describe('when the assets tab FF is disable', () => {
   beforeEach(() => {
     screen = renderMainPage({ isAssetsTabEnabled: false })
   })
 
-  it('should not show tabs section', () => {
+  it('should not show the tabs section', () => {
     expect(screen.queryByTestId('main-tabs')).not.toBeInTheDocument()
   })
 })
