@@ -1,3 +1,4 @@
 export enum FeatureName {
-  CREATIONS = 'creations'
+  CREATIONS = 'creations',
+  ASSETS = 'assets'
 }

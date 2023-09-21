@@ -1,4 +1,5 @@
 export enum AccountTabs {
   OVERVIEW = 'overview',
-  CREATIONS = 'creations'
+  CREATIONS = 'creations',
+  ASSETS = 'assets'
 }
