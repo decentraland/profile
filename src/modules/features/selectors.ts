@@ -9,3 +9,10 @@ export const getIsCreationsTabEnabled = (state: RootState) => {
   }
   return false
 }
+
+export const getIsAssetsTabEnabled = (state: RootState) => {
+  if (hasLoadedInitialFlags(state)) {
+    return getIsFeatureEnabled(state, ApplicationName.PROFILE, FeatureName.ASSETS)
+  }
+  return false
+}

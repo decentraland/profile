@@ -3,8 +3,9 @@ export type Props = {
   profileAddress?: string
   isLoading?: boolean
   isCreationsTabEnabled: boolean
+  isAssetsTabEnabled: boolean
   isBlocked: boolean
 }
 
-export type MapStateProps = Pick<Props, 'loggedInAddress' | 'isBlocked' | 'isLoading' | 'isCreationsTabEnabled'>
+export type MapStateProps = Pick<Props, 'loggedInAddress' | 'isBlocked' | 'isLoading' | 'isCreationsTabEnabled' | 'isAssetsTabEnabled'>
 export type OwnProps = Pick<Props, 'profileAddress' | 'isLoading'>
