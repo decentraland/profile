@@ -2,7 +2,7 @@ import { ItemFilters } from '@dcl/schemas'
 
 export type CreationsFetchOptions = Omit<Options, 'creator'> & Required<Pick<Options, 'creator'>>
 
-export type Options = Pick<ItemFilters, 'first' | 'skip' | 'creator' | 'ids' | 'network' | 'urns'> & { category?: Categories }
+export type Options = Pick<ItemFilters, 'first' | 'skip' | 'creator' | 'ids' | 'network' | 'urns' | 'rarities'> & { category?: Categories }
 
 export enum Categories {
   WEARABLES = 'wearables',

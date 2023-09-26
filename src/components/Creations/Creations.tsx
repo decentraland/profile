@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
+import { Rarity } from '@dcl/schemas'
 import { AssetCard } from 'decentraland-dapps/dist/containers/AssetCard/AssetCard'
+import { RarityFilter } from 'decentraland-dapps/dist/containers/RarityFilter'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { CategoryFilter } from 'decentraland-ui/dist/components/CategoryFilter/CategoryFilter'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
@@ -40,6 +42,7 @@ const Creations = (props: Props) => {
         : Categories.WEARABLES,
     [filters.category]
   )
+  const selectedRarities = useMemo(() => filters.rarities?.split(',') ?? [], [filters.rarities])
 
   useEffect(() => {
     const shouldLoadMultiplePages = !count && page !== 1
@@ -47,52 +50,61 @@ const Creations = (props: Props) => {
       creator: props.profileAddress,
       first: shouldLoadMultiplePages ? page * ITEMS_PER_PAGE : first,
       skip: shouldLoadMultiplePages ? 0 : ITEMS_PER_PAGE * (page - 1),
-      category: selectedCategory
+      category: selectedCategory,
+      rarities: selectedRarities as Rarity[]
     })
   }, [page, first, filters, sortBy])
 
   const categories = useMemo(() => buildCategoryFilterCategories(), [])
-  const onChangeCategory = useCallback((value: string) => {
-    changeFilter('category', value)
-  }, [])
+  const onChangeCategory = useCallback(
+    (value: string) => {
+      changeFilter('category', value)
+    },
+    [changeFilter]
+  )
+  const onChangeRarity = useCallback(
+    (value: string[]) => {
+      changeFilter('rarities', value.join(','))
+    },
+    [changeFilter]
+  )
 
   return (
     <div data-testid={CREATIONS_DATA_TEST_ID}>
-      {isLoading && items.length === 0 ? (
-        <Loader active data-testid={LOADER_DATA_TEST_ID} />
-      ) : (
-        <>
-          <div className={styles.main}>
-            {!isMobile ? (
-              <div className={styles.sidebar}>
-                <CategoryFilter title={t('categories_menu.title')} items={categories} value={selectedCategory} onClick={onChangeCategory} />
-              </div>
-            ) : null}
-            <div className={styles.content}>
-              <div role="feed" className={styles.items}>
-                {items.map(item => (
-                  <a
-                    href={`${MARKETPLACE_URL}${item.url}`}
-                    target="_blank"
-                    role="article"
-                    key={item.id}
-                    data-testid={`${CREATION_ITEM_DATA_TEST_ID}-${item.id}`}
-                  >
-                    <AssetCard asset={item} />
-                  </a>
-                ))}
-              </div>
-              <InfiniteScroll
-                page={page}
-                maxScrollPages={3}
-                hasMorePages={hasMorePages ?? false}
-                isLoading={isLoading}
-                onLoadMore={changePage}
-              />
-            </div>
+      <div className={styles.main}>
+        {!isMobile ? (
+          <div className={styles.sidebar}>
+            <CategoryFilter title={t('categories_menu.title')} items={categories} value={selectedCategory} onClick={onChangeCategory} />
+            <RarityFilter rarities={selectedRarities} onChange={onChangeRarity} />
           </div>
-        </>
-      )}
+        ) : null}
+        <div className={styles.content}>
+          <div role="feed" className={styles.items}>
+            {isLoading && items.length === 0 ? (
+              <Loader active data-testid={LOADER_DATA_TEST_ID} />
+            ) : (
+              items.map(item => (
+                <a
+                  href={`${MARKETPLACE_URL}${item.url}`}
+                  target="_blank"
+                  role="article"
+                  key={item.id}
+                  data-testid={`${CREATION_ITEM_DATA_TEST_ID}-${item.id}`}
+                >
+                  <AssetCard asset={item} />
+                </a>
+              ))
+            )}
+          </div>
+          <InfiniteScroll
+            page={page}
+            maxScrollPages={3}
+            hasMorePages={hasMorePages ?? false}
+            isLoading={isLoading}
+            onLoadMore={changePage}
+          />
+        </div>
+      </div>
     </div>
   )
 }

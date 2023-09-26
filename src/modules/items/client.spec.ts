@@ -1,5 +1,5 @@
 import nock from 'nock'
-import { Item, Network } from '@dcl/schemas'
+import { Item, Network, Rarity } from '@dcl/schemas'
 import { ItemsClient } from './client'
 import { Categories, Options } from './types'
 
@@ -18,7 +18,8 @@ describe.each<[string, Options, string]>([
   ['urns', { urns: ['firstUrn', 'secondUrn'] }, 'urn=firstUrn&urn=secondUrn'],
   ['ids', { ids: ['firstId', 'secondId'] }, 'id=firstId&id=secondId'],
   ['network', { network: Network.MATIC }, 'network=MATIC'],
-  ['creator', { creator: 'aCreator' }, 'creator=aCreator']
+  ['creator', { creator: 'aCreator' }, 'creator=aCreator'],
+  ['rarities', { rarities: [Rarity.COMMON, Rarity.EPIC] }, 'rarity=common&rarity=epic']
 ])('when requesting items with the %s option', (type, options, queryString) => {
   beforeEach(() => {
     scope.get(`/v1/catalog?${queryString}`).reply(200, {

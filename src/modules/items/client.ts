@@ -62,6 +62,10 @@ export class ItemsClient {
       creators.forEach(creator => queryParams.append('creator', creator))
     }
 
+    if (filters.rarities) {
+      filters.rarities.forEach(rarity => queryParams.append('rarity', rarity))
+    }
+
     if (categories) {
       queryParams.append('category', categories.category)
       if (categories.emoteCategory) {
