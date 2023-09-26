@@ -62,7 +62,7 @@ const Creations = (props: Props) => {
     },
     [changeFilter]
   )
-  const onChangeFilter = useCallback(
+  const onChangeRarity = useCallback(
     (value: string[]) => {
       changeFilter('rarities', value.join(','))
     },
@@ -75,7 +75,7 @@ const Creations = (props: Props) => {
         {!isMobile ? (
           <div className={styles.sidebar}>
             <CategoryFilter title={t('categories_menu.title')} items={categories} value={selectedCategory} onClick={onChangeCategory} />
-            <RarityFilter rarities={selectedRarities} onChange={onChangeFilter} />
+            <RarityFilter rarities={selectedRarities} onChange={onChangeRarity} />
           </div>
         ) : null}
         <div className={styles.content}>

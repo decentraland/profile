@@ -120,7 +120,7 @@ describe('when changing the category', () => {
   })
 })
 
-describe.only('when changing the rarity', () => {
+describe('when changing the rarity', () => {
   let onFetchCreations: jest.Mock
 
   beforeEach(() => {
