@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo } from 'react'
 import { Rarity } from '@dcl/schemas'
+import { useMobileMediaQuery } from 'decentraland-ui'
 import { usePagination } from '../../lib/pagination'
 import { NFTCategory, NFTOptions } from '../../modules/nfts/types'
 import { InfiniteScroll } from '../InfiniteScroll'
-import { NFTFilters } from '../NFTFilters'
+import { NftFilters } from '../NFTFilters'
 import { ITEMS_PER_PAGE } from './constants'
 import styles from './Assets.module.css'
 
@@ -15,6 +16,8 @@ export default function Assets() {
     pageSize: ITEMS_PER_PAGE,
     count
   })
+
+  const isMobile = useMobileMediaQuery()
 
   const onChangePage = useCallback(
     (newPage: number) => {
@@ -45,7 +48,7 @@ export default function Assets() {
 
   return (
     <div className={styles.container}>
-      <NFTFilters filters={nftFilters} onChange={onChangeFilter} />
+      {!isMobile && <NftFilters filters={nftFilters} onChange={onChangeFilter} />}
       <div>ASSETS</div>
       <InfiniteScroll page={page} maxScrollPages={3} hasMorePages={hasMorePages ?? false} isLoading={isLoading} onLoadMore={onChangePage} />
     </div>
