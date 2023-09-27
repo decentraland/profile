@@ -3,6 +3,8 @@ import { AccessoryCategory, EmoteCategory, HeadCategory, MainCategory, WearableC
 
 export type CreationsFetchOptions = Omit<Options, 'creator'> & Required<Pick<Options, 'creator'>>
 
-export type Options = Pick<ItemFilters, 'first' | 'skip' | 'creator' | 'ids' | 'network' | 'urns' | 'rarities'> & { category?: ItemCategory }
+export type Options = Pick<ItemFilters, 'first' | 'skip' | 'creator' | 'ids' | 'network' | 'urns' | 'rarities'> & {
+  category?: ItemCategory
+}
 
 export type ItemCategory = MainCategory.EMOTE | MainCategory.WEARABLE | WearableCategory | AccessoryCategory | HeadCategory | EmoteCategory

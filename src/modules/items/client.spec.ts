@@ -1,8 +1,8 @@
 import nock from 'nock'
 import { Item, Network, Rarity } from '@dcl/schemas'
+import { EmoteCategory, MainCategory, WearableCategory } from '../../utils/categories'
 import { ItemsClient } from './client'
 import { Options } from './types'
-import { EmoteCategory, MainCategory, WearableCategory } from '../../utils/categories'
 
 let client: ItemsClient
 let items: Item[]

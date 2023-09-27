@@ -1,5 +1,5 @@
-import { ItemCategory } from "../modules/items/types"
-import { NFTCategory } from "../modules/nfts/types"
+import { ItemCategory } from '../modules/items/types'
+import { NFTCategory } from '../modules/nfts/types'
 
 export enum MainCategory {
   WEARABLE = 'wearable',
@@ -52,9 +52,9 @@ export enum LandCategory {
   ESTATE = 'land_estate'
 }
 
-export function getAllCategories(isItem: false): NFTCategory[];
-export function getAllCategories(isItem: true): ItemCategory[];
-export function getAllCategories(isItem: boolean): NFTCategory[] | ItemCategory[]{
+export function getAllCategories(isItem: false): NFTCategory[]
+export function getAllCategories(isItem: true): ItemCategory[]
+export function getAllCategories(isItem: boolean): NFTCategory[] | ItemCategory[] {
   const categories = []
   categories.push(MainCategory.WEARABLE)
   categories.push(MainCategory.EMOTE)

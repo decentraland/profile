@@ -1,15 +1,15 @@
 import React, { useCallback, useMemo } from 'react'
 import { Rarity } from '@dcl/schemas'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { RarityFilter } from 'decentraland-dapps/dist/containers'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { CategoryFilter } from 'decentraland-ui/dist/components/CategoryFilter/CategoryFilter'
 import { NFTCategory } from '../../modules/nfts/types'
 import { MainCategory, getAllCategories } from '../../utils/categories'
-import { Props } from './NFTFilters.types'
 import { buildCategoryFilterCategories } from './utils'
+import { Props } from './NFTFilters.types'
 import styles from './NFTFilters.module.css'
 
-export function NFTFilters({ filters, onChange }: Props) {
+export function NftFilters({ filters, onChange }: Props) {
   // category
   const categories = useMemo(() => buildCategoryFilterCategories(), [])
   const selectedCategory = useMemo(() => {

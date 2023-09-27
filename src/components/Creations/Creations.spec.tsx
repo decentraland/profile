@@ -3,11 +3,11 @@ import { fireEvent, act } from '@testing-library/react'
 import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory as BaseWearableCategory } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { renderWithProviders } from '../../tests/tests'
+import { MainCategory, WearableCategory } from '../../utils/categories'
 import { View } from '../../utils/view'
 import { CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE } from './constants'
 import Creations from './Creations'
 import { Props } from './Creations.types'
-import { MainCategory, WearableCategory } from '../../utils/categories'
 
 function renderCreations(props: Partial<Props> = {}, initialEntries: string[] = ['/']) {
   return renderWithProviders(
@@ -135,7 +135,13 @@ describe('when changing the rarity', () => {
     act(() => {
       fireEvent.click(getByText('Common'))
     })
-    expect(onFetchCreations).toHaveBeenCalledWith({ creator: '0x1', first: 24, skip: 0, category: MainCategory.WEARABLE, rarities: ['common'] })
+    expect(onFetchCreations).toHaveBeenCalledWith({
+      creator: '0x1',
+      first: 24,
+      skip: 0,
+      category: MainCategory.WEARABLE,
+      rarities: ['common']
+    })
   })
 })
 

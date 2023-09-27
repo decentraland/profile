@@ -1,1 +1,1 @@
-export * from "./NFTFilters";
+export * from './NFTFilters'

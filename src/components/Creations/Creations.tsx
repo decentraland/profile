@@ -9,12 +9,12 @@ import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media
 import { usePagination } from '../../lib/pagination'
 import { config } from '../../modules/config'
 import { ItemCategory, Options } from '../../modules/items/types'
+import { MainCategory, getAllCategories } from '../../utils/categories'
 import { InfiniteScroll } from '../InfiniteScroll'
 import { CREATIONS_DATA_TEST_ID, CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, LOADER_DATA_TEST_ID } from './constants'
 import { buildCategoryFilterCategories } from './utils'
 import { Props } from './Creations.types'
 import styles from './Creations.module.css'
-import { MainCategory, getAllCategories } from '../../utils/categories'
 
 const MARKETPLACE_URL = config.get('MARKETPLACE_URL', '')
 

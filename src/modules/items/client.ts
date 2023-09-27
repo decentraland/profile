@@ -1,6 +1,6 @@
 import { EmoteCategory, Item, NFTCategory, WearableCategory } from '@dcl/schemas'
+import { MainCategory } from '../../utils/categories'
 import { ItemCategory, Options } from './types'
-import { MainCategory } from '../../utils/categories';
 
 export class ItemsClient {
   url: string

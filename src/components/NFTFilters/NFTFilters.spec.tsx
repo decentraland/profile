@@ -1,14 +1,14 @@
 import React from 'react'
 import { RenderResult, render } from '@testing-library/react'
+import testUserEvent from '@testing-library/user-event'
+import { Rarity } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { MainCategory } from '../../utils/categories'
-import { NFTFilters } from './NFTFilters'
+import { NftFilters } from './NFTFilters'
 import { Props } from './NFTFilters.types'
-import userEvent from '@testing-library/user-event'
-import { Rarity } from '@dcl/schemas'
 
-function renderNFTFilters(props: Partial<Props> = {}) {
-  return render(<NFTFilters filters={{}} onChange={jest.fn()} {...props} />)
+function renderNftFilters(props: Partial<Props> = {}) {
+  return render(<NftFilters filters={{}} onChange={jest.fn()} {...props} />)
 }
 
 describe.each([
@@ -20,30 +20,30 @@ describe.each([
   let screen: RenderResult
 
   beforeEach(() => {
-    screen = renderNFTFilters({ filters: { category } })
+    screen = renderNftFilters({ filters: { category } })
   })
 
-  it.each(filters)(`should render %s`, filter => {
+  it.each(filters)('should render %s', filter => {
     expect(screen.getByText(filter)).toBeInTheDocument()
   })
 })
 
-describe("when changing rarity", () => {
-  it("should call onChange function with the right params", async () => {
+describe('when changing rarity', () => {
+  it('should call onChange function with the right params', async () => {
     const onChange = jest.fn()
-    const screen = renderNFTFilters({ onChange })
+    const screen = renderNftFilters({ onChange })
     const raritybutton = screen.getByText(t('@dapps.rarities.common'))
-    await userEvent.click(raritybutton)
+    await testUserEvent.click(raritybutton)
     expect(onChange).toHaveBeenCalledWith({ itemRarities: [Rarity.COMMON] })
   })
 })
 
-describe("when changing category", () => {
-  it("should call onChange function with the right params", async () => {
+describe('when changing category', () => {
+  it('should call onChange function with the right params', async () => {
     const onChange = jest.fn()
-    const screen = renderNFTFilters({ onChange })
+    const screen = renderNftFilters({ onChange })
     const emoteCategoryBtn = screen.getByText(t(`categories.${MainCategory.EMOTE}`))
-    await userEvent.click(emoteCategoryBtn)
+    await testUserEvent.click(emoteCategoryBtn)
     expect(onChange).toHaveBeenCalledWith({ category: MainCategory.EMOTE })
   })
 })
