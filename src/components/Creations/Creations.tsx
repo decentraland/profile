@@ -8,7 +8,7 @@ import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { usePagination } from '../../lib/pagination'
 import { config } from '../../modules/config'
-import { Categories, Options } from '../../modules/items/types'
+import { ItemSaleStatus, Categories, Options } from '../../modules/items/types'
 import { InfiniteScroll } from '../InfiniteScroll'
 import { CREATIONS_DATA_TEST_ID, CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, LOADER_DATA_TEST_ID } from './constants'
 import { buildCategoryFilterCategories } from './utils'
@@ -43,6 +43,7 @@ const Creations = (props: Props) => {
     [filters.category]
   )
   const selectedRarities = useMemo(() => filters.rarities?.split(',') ?? [], [filters.rarities])
+  const selectedStatus = useMemo(() => (filters.status as ItemSaleStatus) ?? ItemSaleStatus.ON_SALE, [filters.status])
 
   useEffect(() => {
     const shouldLoadMultiplePages = !count && page !== 1
@@ -51,7 +52,8 @@ const Creations = (props: Props) => {
       first: shouldLoadMultiplePages ? page * ITEMS_PER_PAGE : first,
       skip: shouldLoadMultiplePages ? 0 : ITEMS_PER_PAGE * (page - 1),
       category: selectedCategory,
-      rarities: selectedRarities as Rarity[]
+      rarities: selectedRarities as Rarity[],
+      status: selectedStatus
     })
   }, [page, first, filters, sortBy])
 
@@ -65,6 +67,13 @@ const Creations = (props: Props) => {
   const onChangeRarity = useCallback(
     (value: string[]) => {
       changeFilter('rarities', value.join(','))
+    },
+    [changeFilter]
+  )
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onChangeStatus = useCallback(
+    (value: ItemSaleStatus) => {
+      changeFilter('status', value)
     },
     [changeFilter]
   )
