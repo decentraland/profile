@@ -1,7 +1,7 @@
 .main {
-  display: flex;
-  flex-direction: row;
-  gap: 32px;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  gap: 16px;
 }
 
 .content {
@@ -27,6 +27,10 @@
 }
 
 @media (max-width: 991px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
   .items {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }

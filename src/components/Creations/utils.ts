@@ -1,5 +1,5 @@
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { AccessoryCategory, EmotesCategory, HeadCategory, MainCategories, WearableCategory } from '../../modules/items/types'
+import { MainCategory, AccessoryCategory, WearableCategory, EmoteCategory, HeadCategory } from '../../utils/categories'
 
 function buildCategoryFilterItem(category: string) {
   return {
@@ -11,24 +11,24 @@ function buildCategoryFilterItem(category: string) {
 export function buildCategoryFilterCategories() {
   return [
     {
-      ...buildCategoryFilterItem(MainCategories.WEARABLES),
+      ...buildCategoryFilterItem(MainCategory.WEARABLE),
       children: [
         {
-          ...buildCategoryFilterItem(WearableCategory.WEARABLES_HEAD),
+          ...buildCategoryFilterItem(WearableCategory.HEAD),
           children: Object.values(HeadCategory).map(value => buildCategoryFilterItem(value))
         },
         ...Object.values(WearableCategory)
-          .filter(value => value !== WearableCategory.WEARABLES_HEAD && value !== WearableCategory.WEARABLES_ACCESSORIES)
+          .filter(value => value !== WearableCategory.HEAD && value !== WearableCategory.ACCESSORIES)
           .map(value => buildCategoryFilterItem(value)),
         {
-          ...buildCategoryFilterItem(WearableCategory.WEARABLES_ACCESSORIES),
+          ...buildCategoryFilterItem(WearableCategory.ACCESSORIES),
           children: Object.values(AccessoryCategory).map(value => buildCategoryFilterItem(value))
         }
       ]
     },
     {
-      ...buildCategoryFilterItem(MainCategories.EMOTES),
-      children: Object.values(EmotesCategory).map(value => buildCategoryFilterItem(value))
+      ...buildCategoryFilterItem(MainCategory.EMOTE),
+      children: Object.values(EmoteCategory).map(value => buildCategoryFilterItem(value))
     }
   ]
 }

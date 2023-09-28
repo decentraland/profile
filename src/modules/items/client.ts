@@ -1,5 +1,6 @@
 import { EmoteCategory, Item, NFTCategory, WearableCategory } from '@dcl/schemas'
-import { Categories, Options } from './types'
+import { MainCategory } from '../../utils/categories'
+import { ItemCategory, Options } from './types'
 
 export class ItemsClient {
   url: string
@@ -18,18 +19,18 @@ export class ItemsClient {
   }
 
   getCategories(
-    category: Categories
+    category: ItemCategory
   ): { category: NFTCategory; wearableCategory?: WearableCategory; emoteCategory?: EmoteCategory } | undefined {
-    if (category === Categories.WEARABLES) {
+    if (category === MainCategory.WEARABLE) {
       return { category: NFTCategory.WEARABLE }
-    } else if (category === Categories.EMOTES) {
+    } else if (category === MainCategory.EMOTE) {
       return { category: NFTCategory.EMOTE }
     }
 
     if (category.startsWith('wearable')) {
-      return { category: NFTCategory.WEARABLE, wearableCategory: category.replace('wearables_', '') as WearableCategory }
+      return { category: NFTCategory.WEARABLE, wearableCategory: category.replace('wearable_', '') as WearableCategory }
     } else if (category.startsWith('emote')) {
-      return { category: NFTCategory.EMOTE, emoteCategory: category.replace('emotes_', '') as EmoteCategory }
+      return { category: NFTCategory.EMOTE, emoteCategory: category.replace('emote_', '') as EmoteCategory }
     }
   }
 

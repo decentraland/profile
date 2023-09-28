@@ -8,7 +8,8 @@ import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { usePagination } from '../../lib/pagination'
 import { config } from '../../modules/config'
-import { Categories, Options } from '../../modules/items/types'
+import { ItemCategory, Options } from '../../modules/items/types'
+import { MainCategory, getAllCategories } from '../../utils/categories'
 import { InfiniteScroll } from '../InfiniteScroll'
 import { CREATIONS_DATA_TEST_ID, CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, LOADER_DATA_TEST_ID } from './constants'
 import { buildCategoryFilterCategories } from './utils'
@@ -37,9 +38,9 @@ const Creations = (props: Props) => {
 
   const selectedCategory = useMemo(
     () =>
-      filters.category && Object.values(Categories).includes(filters.category as Categories)
-        ? (filters.category as Categories)
-        : Categories.WEARABLES,
+      filters.category && getAllCategories(true).includes(filters.category as ItemCategory)
+        ? (filters.category as ItemCategory)
+        : MainCategory.WEARABLE,
     [filters.category]
   )
   const selectedRarities = useMemo(() => filters.rarities?.split(',') ?? [], [filters.rarities])
