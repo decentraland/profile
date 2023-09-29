@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
 import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui'
@@ -9,9 +8,8 @@ import { Props } from './Navbar.types'
 import './Navbar.css'
 
 const Navbar = (props: Props) => {
-  const { isConnected } = props
-  const { pathname, search } = location
-  const navigate = useNavigate()
+  const { isConnected, onSignIn } = props
+  const { pathname } = location
 
   if (isConnected) {
     props = { ...props, rightMenu: <UserInformation /> }
@@ -19,19 +17,12 @@ const Navbar = (props: Props) => {
     props = {
       ...props,
       rightMenu: (
-        <Button primary onClick={() => navigate(locations.signIn(locations.root()))}>
+        <Button primary onClick={onSignIn}>
           {t('navbar.sign_in')}
         </Button>
       )
     }
   }
-
-  const handleOnSignIn = useCallback(() => {
-    const searchParams = new URLSearchParams(search)
-    const currentRedirectTo = searchParams.get('redirectTo')
-    const redirectTo = !currentRedirectTo ? `${pathname}${search}` : currentRedirectTo
-    navigate(locations.signIn(redirectTo))
-  }, [navigate, pathname, search])
 
   return (
     <BaseNavbar
@@ -39,7 +30,7 @@ const Navbar = (props: Props) => {
       activePage="profile"
       isFullscreen={props.isFullscreen}
       isSignIn={pathname === locations.signIn()}
-      onSignIn={handleOnSignIn}
+      onSignIn={() => undefined}
     />
   )
 }

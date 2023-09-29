@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit'
+import { ProviderType } from '@dcl/schemas'
 import { RequestEvent } from './types'
 
 // Fetch friends actions
@@ -65,7 +66,9 @@ export type RequestFriendshipFailureAction = ReturnType<typeof requestFriendship
 
 // Log in and request friendship
 
-export const logInAndRequestFriendshipRequest = createAction<string>('[Request] Log In And Request Friendship')
+export const logInAndRequestFriendshipRequest = createAction<{ friendAddress: string; onLogIn: (provider: ProviderType) => void }>(
+  '[Request] Log In And Request Friendship'
+)
 
 export type LogInAndRequestFriendshipRequestAction = ReturnType<typeof logInAndRequestFriendshipRequest>
 
