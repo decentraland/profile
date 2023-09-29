@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
+import { ProviderType } from '@dcl/schemas'
 import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
+import { loginRequest } from '../../modules/identity/action'
 import { RootState } from '../../modules/reducer'
 import {
   removeFriendRequest,
@@ -43,7 +45,12 @@ const mapDispatch = (dispatch: MapDispatch, ownProps: OwnProps): MapDispatchProp
     if (ownProps.isLoggedIn) {
       dispatch(requestFriendshipRequest(ownProps.friendAddress))
     } else {
-      dispatch(logInAndRequestFriendshipRequest(ownProps.friendAddress))
+      dispatch(
+        logInAndRequestFriendshipRequest({
+          friendAddress: ownProps.friendAddress,
+          onLogIn: (provider: ProviderType) => dispatch(loginRequest(provider))
+        })
+      )
     }
   },
   onAcceptFriendRequest: () => dispatch(acceptFriendshipRequest(ownProps.friendAddress))

@@ -174,9 +174,9 @@ export function* socialSagas() {
   }
 
   function* handleLogInAndRequestFriendshipRequest(action: LogInAndRequestFriendshipRequestAction) {
-    const friendAddress = action.payload
+    const { friendAddress, onLogIn } = action.payload
 
-    yield put(openModal('LoginModal'))
+    yield put(openModal('LoginModal', { onConnect: onLogIn }))
 
     const {
       success,
