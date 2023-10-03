@@ -418,7 +418,7 @@ describe('when handling the log in and request friendship action', () => {
           ]
         ])
         .not.put(requestFriendshipRequest(friendAddress))
-        .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+        .dispatch(logInAndRequestFriendshipRequest({ friendAddress, onLogIn: () => undefined }))
         .silentRun()
     })
   })
@@ -441,7 +441,7 @@ describe('when handling the log in and request friendship action', () => {
             ]
           ])
           .not.put(requestFriendshipRequest(friendAddress))
-          .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+          .dispatch(logInAndRequestFriendshipRequest({ friendAddress, onLogIn: () => undefined }))
           .silentRun()
       })
     })
@@ -479,7 +479,7 @@ describe('when handling the log in and request friendship action', () => {
               ]
             ])
             .not.put(requestFriendshipRequest(friendAddress))
-            .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+            .dispatch(logInAndRequestFriendshipRequest({ friendAddress, onLogIn: () => undefined }))
             .silentRun()
         })
       })
@@ -524,7 +524,7 @@ describe('when handling the log in and request friendship action', () => {
                 ]
               ])
               .not.put(requestFriendshipRequest(friendAddress))
-              .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+              .dispatch(logInAndRequestFriendshipRequest({ friendAddress, onLogIn: () => undefined }))
               .silentRun()
           })
         })
@@ -568,7 +568,7 @@ describe('when handling the log in and request friendship action', () => {
                   [select(getFriendshipStatus, friendAddress), friendshipStatus]
                 ])
                 .not.put(requestFriendshipRequest(friendAddress))
-                .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+                .dispatch(logInAndRequestFriendshipRequest({ friendAddress, onLogIn: () => undefined }))
                 .silentRun()
             })
           })
@@ -606,7 +606,7 @@ describe('when handling the log in and request friendship action', () => {
                   [put(requestFriendshipRequest(friendAddress)), undefined]
                 ])
                 .put(requestFriendshipRequest(friendAddress))
-                .dispatch(logInAndRequestFriendshipRequest(friendAddress))
+                .dispatch(logInAndRequestFriendshipRequest({ friendAddress, onLogIn: () => undefined }))
                 .silentRun()
             })
           })

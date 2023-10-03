@@ -1,8 +1,9 @@
 import React from 'react'
 import { fireEvent, act } from '@testing-library/react'
-import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory } from '@dcl/schemas'
+import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory as BaseWearableCategory } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { renderWithProviders } from '../../tests/tests'
+import { MainCategory, WearableCategory } from '../../utils/categories'
 import { View } from '../../utils/view'
 import { CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE } from './constants'
 import Creations from './Creations'
@@ -51,7 +52,7 @@ describe('when rendering the component', () => {
       first: ITEMS_PER_PAGE,
       skip: 0,
       rarities: [],
-      category: 'wearables'
+      category: MainCategory.WEARABLE
     })
   })
 })
@@ -84,7 +85,7 @@ describe('when rendering the component with items', () => {
         data: {
           wearable: {
             description: 'a description',
-            category: WearableCategory.EARRING,
+            category: BaseWearableCategory.EARRING,
             bodyShapes: [BodyShape.MALE],
             rarity: Rarity.COMMON,
             isSmart: false
@@ -115,9 +116,9 @@ describe('when changing the category', () => {
   it('should re-trigger the creations fetch', () => {
     const { getByText } = renderedComponent
     act(() => {
-      fireEvent.click(getByText(t('categories.wearables_head')))
+      fireEvent.click(getByText(t(`categories.${WearableCategory.HEAD}`)))
     })
-    expect(onFetchCreations).toHaveBeenCalledWith({ creator: '0x1', first: 24, rarities: [], skip: 0, category: 'wearables_head' })
+    expect(onFetchCreations).toHaveBeenCalledWith({ creator: '0x1', first: 24, rarities: [], skip: 0, category: WearableCategory.HEAD })
   })
 })
 
@@ -134,7 +135,13 @@ describe('when changing the rarity', () => {
     act(() => {
       fireEvent.click(getByText('Common'))
     })
-    expect(onFetchCreations).toHaveBeenCalledWith({ creator: '0x1', first: 24, skip: 0, category: 'wearables', rarities: ['common'] })
+    expect(onFetchCreations).toHaveBeenCalledWith({
+      creator: '0x1',
+      first: 24,
+      skip: 0,
+      category: MainCategory.WEARABLE,
+      rarities: ['common']
+    })
   })
 })
 
@@ -154,7 +161,7 @@ describe('when doing an initial load of a page greater than one', () => {
       first: page * ITEMS_PER_PAGE,
       skip: 0,
       rarities: [],
-      category: 'wearables'
+      category: MainCategory.WEARABLE
     })
   })
 })

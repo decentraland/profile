@@ -1,7 +1,8 @@
 import nock from 'nock'
 import { Item, Network, Rarity } from '@dcl/schemas'
+import { EmoteCategory, MainCategory, WearableCategory } from '../../utils/categories'
 import { ItemsClient } from './client'
-import { Categories, ItemSaleStatus, Options } from './types'
+import { Options, ItemSaleStatus } from './types'
 
 let client: ItemsClient
 let items: Item[]
@@ -42,7 +43,7 @@ describe('when requesting the items with a category', () => {
       scope.get('/v1/catalog?category=wearable').reply(200, {
         data: items
       })
-      options = { category: Categories.WEARABLES }
+      options = { category: MainCategory.WEARABLE }
     })
 
     it('should request the API with the category in the query string and return the resulting items', async () => {
@@ -57,7 +58,7 @@ describe('when requesting the items with a category', () => {
       scope.get('/v1/catalog?category=wearable&wearableCategory=head').reply(200, {
         data: items
       })
-      options = { category: Categories.WEARABLES_HEAD }
+      options = { category: WearableCategory.HEAD }
     })
 
     it('should request the API with the category and the wearable category in the query string and return the resulting items', async () => {
@@ -72,7 +73,7 @@ describe('when requesting the items with a category', () => {
       scope.get('/v1/catalog?category=emote').reply(200, {
         data: items
       })
-      options = { category: Categories.EMOTES }
+      options = { category: MainCategory.EMOTE }
     })
 
     it('should request the API with the category in the query string and return the resulting items', async () => {
@@ -87,7 +88,7 @@ describe('when requesting the items with a category', () => {
       scope.get('/v1/catalog?category=emote&emoteCategory=fun').reply(200, {
         data: items
       })
-      options = { category: Categories.EMOTES_FUN }
+      options = { category: EmoteCategory.FUN }
     })
 
     it('should request the API with the category and the emote category in the query string and return the resulting items', async () => {
