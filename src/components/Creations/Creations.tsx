@@ -43,6 +43,7 @@ const Creations = (props: Props) => {
 
   useEffect(() => {
     const shouldLoadMultiplePages = !count && page !== 1
+
     onFetchCreations({
       creator: props.profileAddress,
       first: shouldLoadMultiplePages ? page * ITEMS_PER_PAGE : first,

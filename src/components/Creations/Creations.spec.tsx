@@ -147,12 +147,14 @@ describe('when changing the rarity', () => {
     act(() => {
       fireEvent.click(getByText('Common'))
     })
+
     expect(onFetchCreations).toHaveBeenCalledWith({
       creator: '0x1',
       first: 24,
       skip: 0,
       category: MainCategory.WEARABLE,
       rarities: ['common'],
+      sortBy: ItemSortBy.NEWEST,
       status: ItemSaleStatus.ON_SALE
     })
   })
@@ -177,6 +179,7 @@ describe('when changing the item sale status', () => {
       creator: '0x1',
       first: 24,
       skip: 0,
+      sortBy: ItemSortBy.NEWEST,
       category: MainCategory.WEARABLE,
       rarities: [],
       status: ItemSaleStatus.ONLY_LISTING
@@ -226,7 +229,8 @@ describe('when changing the sorting', () => {
       skip: 0,
       category: MainCategory.WEARABLE,
       rarities: [],
-      sortBy: ItemSortBy.CHEAPEST
+      sortBy: ItemSortBy.CHEAPEST,
+      status: ItemSaleStatus.ON_SALE
     })
   })
 })
