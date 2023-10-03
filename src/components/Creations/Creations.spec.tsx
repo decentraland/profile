@@ -2,6 +2,7 @@ import React from 'react'
 import { fireEvent, act } from '@testing-library/react'
 import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory as BaseWearableCategory, ItemSortBy } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { ItemSaleStatus } from '../../modules/items/types'
 import { renderWithProviders } from '../../tests/tests'
 import { MainCategory, WearableCategory } from '../../utils/categories'
 import { View } from '../../utils/view'
@@ -54,7 +55,8 @@ describe('when rendering the component', () => {
       skip: 0,
       rarities: [],
       category: MainCategory.WEARABLE,
-      sortBy: ItemSortBy.NEWEST
+      sortBy: ItemSortBy.NEWEST,
+      status: ItemSaleStatus.ON_SALE
     })
   })
 })
@@ -125,8 +127,9 @@ describe('when changing the category', () => {
       first: 24,
       rarities: [],
       sortBy: ItemSortBy.NEWEST,
+      category: WearableCategory.HEAD,
       skip: 0,
-      category: WearableCategory.HEAD
+      status: ItemSaleStatus.ON_SALE
     })
   })
 })
@@ -139,7 +142,7 @@ describe('when changing the rarity', () => {
     renderedComponent = renderCreations({ profileAddress: '0x1', onFetchCreations })
   })
 
-  it('should re-trigger the creations fetch', () => {
+  it('should re-trigger the creations fetch with the new rarity', () => {
     const { getByText } = renderedComponent
     act(() => {
       fireEvent.click(getByText('Common'))
@@ -150,7 +153,33 @@ describe('when changing the rarity', () => {
       skip: 0,
       category: MainCategory.WEARABLE,
       rarities: ['common'],
-      sortBy: ItemSortBy.NEWEST
+      status: ItemSaleStatus.ON_SALE
+    })
+  })
+})
+
+describe('when changing the item sale status', () => {
+  let onFetchCreations: jest.Mock
+
+  beforeEach(() => {
+    onFetchCreations = jest.fn()
+    renderedComponent = renderCreations({ profileAddress: '0x1', onFetchCreations })
+  })
+
+  it('should re-trigger the creations fetch with the new sale status', () => {
+    const { getByText } = renderedComponent
+
+    act(() => {
+      // Select and click the "Only Listings" radio button
+      fireEvent.click(getByText('Only Listings').parentElement?.querySelector('input') ?? new HTMLElement())
+    })
+    expect(onFetchCreations).toHaveBeenCalledWith({
+      creator: '0x1',
+      first: 24,
+      skip: 0,
+      category: MainCategory.WEARABLE,
+      rarities: [],
+      status: ItemSaleStatus.ONLY_LISTING
     })
   })
 })
@@ -172,7 +201,8 @@ describe('when doing an initial load of a page greater than one', () => {
       skip: 0,
       rarities: [],
       sortBy: ItemSortBy.NEWEST,
-      category: MainCategory.WEARABLE
+      category: MainCategory.WEARABLE,
+      status: ItemSaleStatus.ON_SALE
     })
   })
 })

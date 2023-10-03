@@ -2,7 +2,7 @@ import nock from 'nock'
 import { Item, ItemSortBy, Network, Rarity } from '@dcl/schemas'
 import { EmoteCategory, MainCategory, WearableCategory } from '../../utils/categories'
 import { ItemsClient } from './client'
-import { Options } from './types'
+import { Options, ItemSaleStatus } from './types'
 
 let client: ItemsClient
 let items: Item[]
@@ -93,6 +93,30 @@ describe('when requesting the items with a category', () => {
     })
 
     it('should request the API with the category and the emote category in the query string and return the resulting items', async () => {
+      const response = await client.get(options)
+      expect(nock.isDone()).toBe(true)
+      expect(response).toEqual({ data: items })
+    })
+  })
+})
+
+describe('when requesting the items with a status', () => {
+  let options: Options
+
+  describe.each([
+    [ItemSaleStatus.ON_SALE, 'isOnSale=true'],
+    [ItemSaleStatus.NOT_FOR_SALE, 'isOnSale=false'],
+    [ItemSaleStatus.ONLY_LISTING, 'onlyListing=true'],
+    [ItemSaleStatus.ONLY_MINTING, 'onlyMinting=true']
+  ])('and the status is %s', (status, query) => {
+    beforeEach(() => {
+      scope.get(`/v1/catalog?${query}`).reply(200, {
+        data: items
+      })
+      options = { status }
+    })
+
+    it(`should request the API with the query "${query}" and return the resulting items`, async () => {
       const response = await client.get(options)
       expect(nock.isDone()).toBe(true)
       expect(response).toEqual({ data: items })

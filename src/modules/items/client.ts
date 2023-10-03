@@ -1,6 +1,6 @@
 import { EmoteCategory, Item, NFTCategory, WearableCategory } from '@dcl/schemas'
 import { MainCategory } from '../../utils/categories'
-import { ItemCategory, Options } from './types'
+import { ItemCategory, Options, ItemSaleStatus } from './types'
 
 export class ItemsClient {
   url: string
@@ -78,6 +78,23 @@ export class ItemsClient {
 
     if (filters.sortBy) {
       queryParams.append('sortBy', filters.sortBy)
+    }
+
+    if (filters.status) {
+      switch (filters.status) {
+        case ItemSaleStatus.ON_SALE:
+          queryParams.append('isOnSale', 'true')
+          break
+        case ItemSaleStatus.NOT_FOR_SALE:
+          queryParams.append('isOnSale', 'false')
+          break
+        case ItemSaleStatus.ONLY_LISTING:
+          queryParams.append('onlyListing', 'true')
+          break
+        case ItemSaleStatus.ONLY_MINTING:
+          queryParams.append('onlyMinting', 'true')
+          break
+      }
     }
 
     return queryParams
