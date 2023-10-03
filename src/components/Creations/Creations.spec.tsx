@@ -1,6 +1,5 @@
 import React from 'react'
 import { fireEvent, act } from '@testing-library/react'
-// import userEvent from '@testing-library/user-event'
 import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory as BaseWearableCategory } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ItemSaleStatus } from '../../modules/items/types'
