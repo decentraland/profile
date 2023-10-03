@@ -76,6 +76,10 @@ export class ItemsClient {
       }
     }
 
+    if (filters.sortBy) {
+      queryParams.append('sortBy', filters.sortBy)
+    }
+
     return queryParams
   }
 }

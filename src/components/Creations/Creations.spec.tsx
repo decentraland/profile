@@ -19,6 +19,7 @@ function renderCreations(props: Partial<Props> = {}, initialEntries: string[] = 
       error={null}
       view={View.OWN}
       onFetchCreations={jest.fn()}
+      onOpenMobileFilters={jest.fn()}
       {...props}
     />,
     { router: { initialEntries } }
@@ -52,7 +53,8 @@ describe('when rendering the component', () => {
       first: ITEMS_PER_PAGE,
       skip: 0,
       rarities: [],
-      category: MainCategory.WEARABLE
+      category: MainCategory.WEARABLE,
+      sortBy: 'newest'
     })
   })
 })
@@ -118,7 +120,14 @@ describe('when changing the category', () => {
     act(() => {
       fireEvent.click(getByText(t(`categories.${WearableCategory.HEAD}`)))
     })
-    expect(onFetchCreations).toHaveBeenCalledWith({ creator: '0x1', first: 24, rarities: [], skip: 0, category: WearableCategory.HEAD })
+    expect(onFetchCreations).toHaveBeenCalledWith({
+      creator: '0x1',
+      first: 24,
+      rarities: [],
+      sortBy: 'newest',
+      skip: 0,
+      category: WearableCategory.HEAD
+    })
   })
 })
 
@@ -140,7 +149,8 @@ describe('when changing the rarity', () => {
       first: 24,
       skip: 0,
       category: MainCategory.WEARABLE,
-      rarities: ['common']
+      rarities: ['common'],
+      sortBy: 'newest'
     })
   })
 })
@@ -161,6 +171,7 @@ describe('when doing an initial load of a page greater than one', () => {
       first: page * ITEMS_PER_PAGE,
       skip: 0,
       rarities: [],
+      sortBy: 'newest',
       category: MainCategory.WEARABLE
     })
   })

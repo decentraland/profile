@@ -14,6 +14,7 @@ export type UsePaginationResult<T extends string = string, T2 extends string = s
   goToPage: (newPage: number) => void
   changeSorting: (sort: T2) => void
   changeFilter: (filter: T, value: string, options?: { clearOldFilters: boolean }) => void
+  changeFilters: (filters: Partial<Record<T, string | undefined>>, options?: { clearOldFilters: boolean }) => void
 }
 
 export type PaginationOptions = {
@@ -85,6 +86,26 @@ export function usePagination<T extends string = string, T2 extends string = str
     [pathname, navigate, search, sortBy]
   )
 
+  const changeFilters = useCallback(
+    (filters: Partial<Record<T, string | undefined>>, options: { clearOldFilters: boolean } = { clearOldFilters: false }) => {
+      const params = new URLSearchParams(options.clearOldFilters ? {} : search)
+      // Reset the page when changing the filter
+      params.set('page', '1')
+      if (options.clearOldFilters && sortBy) {
+        params.set('sortBy', sortBy)
+      }
+      Object.entries<string | undefined>(filters).forEach(([filter, value]) => {
+        if (value) {
+          params.set(filter, value)
+        } else {
+          params.delete(filter)
+        }
+      })
+      navigate(`${pathname}?${params.toString()}`)
+    },
+    [pathname, navigate, search, sortBy]
+  )
+
   const pages = options?.count ? Math.ceil(options?.count / (options?.pageSize ?? DEFAULT_PAGE_SIZE)) : undefined
   const hasMorePages = pages ? page < pages : undefined
 
@@ -99,6 +120,7 @@ export function usePagination<T extends string = string, T2 extends string = str
     goToNextPage,
     goToPage,
     changeSorting,
-    changeFilter
+    changeFilter,
+    changeFilters
   }
 }

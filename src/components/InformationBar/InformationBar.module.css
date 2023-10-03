@@ -1,0 +1,52 @@
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  min-height: 26px;
+}
+
+.countText {
+  color: white;
+  margin-bottom: 0;
+  margin-right: 10px;
+  font-size: 17px;
+  height: 100%;
+}
+
+.countContainer {
+  display: flex;
+  align-items: baseline;
+}
+
+.rightOptionsContainer :global(.ui.dropdown) {
+  display: flex;
+  align-items: center;
+}
+
+.rightOptionsContainer {
+  display: flex;
+  margin-left: auto;
+}
+
+.openFiltersWrapper {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+}
+
+.openFilters {
+  width: 20px;
+  height: 20px;
+  background-image: url(../../assets/icons/Filters.svg);
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  margin-left: 24px;
+}
+
+.openFilters.active {
+  background-image: url(../../assets/icons/FiltersActive.svg);
+  background-size: 20px;
+}

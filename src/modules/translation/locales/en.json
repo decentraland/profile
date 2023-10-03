@@ -135,5 +135,21 @@
   },
   "categories_menu": {
     "title": "Categories"
+  },
+  "items_sort_by": {
+    "name": "Name",
+    "newest": "Newest",
+    "recently_reviewed": "Recently reviewed",
+    "recently_sold": "Recently sold",
+    "recently_listed": "Recently listed",
+    "cheapest": "Cheapest"
+  },
+  "creations": {
+    "items_count": "{count} {count, plural, one {item} other {items}}"
+  },
+  "filters_modal": {
+    "title": "Filters",
+    "reset": "Reset",
+    "apply": "Apply filters"
   }
 }

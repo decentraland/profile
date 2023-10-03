@@ -1,5 +1,5 @@
 import nock from 'nock'
-import { Item, Network, Rarity } from '@dcl/schemas'
+import { Item, ItemSortBy, Network, Rarity } from '@dcl/schemas'
 import { EmoteCategory, MainCategory, WearableCategory } from '../../utils/categories'
 import { ItemsClient } from './client'
 import { Options } from './types'
@@ -20,7 +20,8 @@ describe.each<[string, Options, string]>([
   ['ids', { ids: ['firstId', 'secondId'] }, 'id=firstId&id=secondId'],
   ['network', { network: Network.MATIC }, 'network=MATIC'],
   ['creator', { creator: 'aCreator' }, 'creator=aCreator'],
-  ['rarities', { rarities: [Rarity.COMMON, Rarity.EPIC] }, 'rarity=common&rarity=epic']
+  ['rarities', { rarities: [Rarity.COMMON, Rarity.EPIC] }, 'rarity=common&rarity=epic'],
+  ['sortBy', { sortBy: ItemSortBy.NAME }, 'sortBy=name']
 ])('when requesting items with the %s option', (type, options, queryString) => {
   beforeEach(() => {
     scope.get(`/v1/catalog?${queryString}`).reply(200, {
