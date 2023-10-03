@@ -31,7 +31,7 @@ export function renderWithProviders(
   const LocationDisplay = () => {
     const location = useLocation()
 
-    return <div data-testid={LOCATION_DISPLAY_TEST_ID}>{location.pathname}</div>
+    return <div data-testid={LOCATION_DISPLAY_TEST_ID}>{location.pathname + location.search.toString()}</div>
   }
 
   const memoryRouter = (component: React.ReactNode) =>
