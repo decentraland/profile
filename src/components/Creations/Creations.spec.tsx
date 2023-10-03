@@ -1,6 +1,6 @@
 import React from 'react'
 import { fireEvent, act } from '@testing-library/react'
-import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory as BaseWearableCategory } from '@dcl/schemas'
+import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory as BaseWearableCategory, ItemSortBy } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { renderWithProviders } from '../../tests/tests'
 import { MainCategory, WearableCategory } from '../../utils/categories'
@@ -54,7 +54,7 @@ describe('when rendering the component', () => {
       skip: 0,
       rarities: [],
       category: MainCategory.WEARABLE,
-      sortBy: 'newest'
+      sortBy: ItemSortBy.NEWEST
     })
   })
 })
@@ -124,7 +124,7 @@ describe('when changing the category', () => {
       creator: '0x1',
       first: 24,
       rarities: [],
-      sortBy: 'newest',
+      sortBy: ItemSortBy.NEWEST,
       skip: 0,
       category: WearableCategory.HEAD
     })
@@ -150,7 +150,7 @@ describe('when changing the rarity', () => {
       skip: 0,
       category: MainCategory.WEARABLE,
       rarities: ['common'],
-      sortBy: 'newest'
+      sortBy: ItemSortBy.NEWEST
     })
   })
 })
@@ -171,8 +171,32 @@ describe('when doing an initial load of a page greater than one', () => {
       first: page * ITEMS_PER_PAGE,
       skip: 0,
       rarities: [],
-      sortBy: 'newest',
+      sortBy: ItemSortBy.NEWEST,
       category: MainCategory.WEARABLE
+    })
+  })
+})
+
+describe('when changing the sorting', () => {
+  let onFetchCreations: jest.Mock
+
+  beforeEach(() => {
+    onFetchCreations = jest.fn()
+    renderedComponent = renderCreations({ profileAddress: '0x1', onFetchCreations })
+  })
+
+  it('should re-trigger the creations fetch with the selected sort', () => {
+    const { getByText } = renderedComponent
+    act(() => {
+      fireEvent.click(getByText(t(`items_sort_by.${ItemSortBy.CHEAPEST}`)))
+    })
+    expect(onFetchCreations).toHaveBeenCalledWith({
+      creator: '0x1',
+      first: 24,
+      skip: 0,
+      category: MainCategory.WEARABLE,
+      rarities: [],
+      sortBy: ItemSortBy.CHEAPEST
     })
   })
 })
