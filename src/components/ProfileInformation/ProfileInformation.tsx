@@ -86,6 +86,7 @@ const ProfileInformation = (props: Props) => {
   const isBlocked = !isLoggedInProfile && (isBlockedByLoggedUser || hasBlockedLoggedUser)
   const shouldShowViewMoreButton =
     (hasAboutInformation(avatar) || (avatar?.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH) && !isBlocked
+  const userHasLinks = avatar?.links?.length ?? 0 > 0
 
   const renderLinks = useCallback(
     () =>
@@ -213,7 +214,7 @@ const ProfileInformation = (props: Props) => {
               {isLoggedInProfile ? <FriendsCounter /> : <MutualFriendsCounter friendAddress={profileAddress} />}
             </div>
           )}
-          {isTabletAndBelow && <>| {renderLinks()}</>}
+          {isTabletAndBelow && userHasLinks ? <>| {renderLinks()}</> : null}
         </div>
         {avatar && (
           <div className={styles.description}>

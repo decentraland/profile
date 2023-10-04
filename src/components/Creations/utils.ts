@@ -1,6 +1,6 @@
 import { AssetStatus } from 'decentraland-dapps/dist/containers'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { ItemSaleStatus } from '../../modules/items/types'
+import { ItemCategory, ItemSaleStatus } from '../../modules/items/types'
 import { MainCategory, AccessoryCategory, WearableCategory, EmoteCategory, HeadCategory } from '../../utils/categories'
 
 function buildCategoryFilterItem(category: string) {
@@ -59,4 +59,8 @@ export function convertItemSaleStatusToAssetStatus(status: ItemSaleStatus): Asse
     case ItemSaleStatus.NOT_FOR_SALE:
       return AssetStatus.NOT_FOR_SALE
   }
+}
+
+export function getCategoryName(category: ItemCategory): 'emotes' | 'wearables' {
+  return category.startsWith('wearable') ? 'wearables' : 'emotes'
 }

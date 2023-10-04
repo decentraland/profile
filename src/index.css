@@ -140,6 +140,10 @@ code {
   }
 }
 
+.ui.button.inverted {
+  color: white;
+}
+
 .ui.button.inverted:focus {
   background: none;
   color: white;

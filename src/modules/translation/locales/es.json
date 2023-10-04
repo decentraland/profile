@@ -131,5 +131,15 @@
   },
   "categories_menu": {
     "title": "Categorías"
+  },
+  "creations": {
+    "own_empty_wearables_title": "Aún no has creado ningún wearable",
+    "own_empty_emotes_title": "Aún no has creado ningún emote",
+    "own_empty_wearables_text": "¡Envíe su primera colección y conviértase en descentral y creador!<br> </br> Crea wearables increíbles y monetiza tus creaciones",
+    "own_empty_emotes_text": "¡Envíe su primera colección y conviértase en descentral y creador!<br> </br> Crea emotes increíbles y monetiza tus creaciones",
+    "own_empty_primary_action": "Aprende más",
+    "own_empty_secondary_action": "Crear una colección",
+    "other_empty_wearables_title": "{name} todavía no creó ningún wearable",
+    "other_empty_emotes_title": "{nombre} no creó ningún emote"
   }
 }
