@@ -1,5 +1,6 @@
 import { ItemSortBy } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { ItemCategory } from '../../modules/items/types'
 import { MainCategory, AccessoryCategory, WearableCategory, EmoteCategory, HeadCategory } from '../../utils/categories'
 
 function buildCategoryFilterItem(category: string) {
@@ -36,4 +37,8 @@ export function buildCategoryFilterCategories() {
 
 export function buildSortByOptions() {
   return Object.values(ItemSortBy).map(value => ({ value, text: t(`items_sort_by.${value}`) }))
+}
+
+export function getCategoryName(category: ItemCategory): 'emotes' | 'wearables' {
+  return category.startsWith('wearable') ? 'wearables' : 'emotes'
 }

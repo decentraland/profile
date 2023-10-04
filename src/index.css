@@ -140,14 +140,22 @@ code {
   }
 }
 
-.ui.button.inverted:focus {
-  background: none;
-  color: white;
-  border: 1px solid white;
-  box-shadow: none;
+.ui.button.secondary.inverted {
+  color: var(--text);
 }
 
-.ui.button.inverted:hover {
-  border: 1px solid white;
+.ui.button.secondary.inverted:focus,
+.ui.button.inverted:focus {
+  background: none;
+  color: var(--text);
+  border: 1px solid var(--text);
   box-shadow: none;
+  background-color: transparent;
+}
+
+.ui.button.secondary.inverted:hover,
+.ui.button.inverted:hover {
+  border: 1px solid var(--text);
+  box-shadow: none;
+  background-color: transparent;
 }
