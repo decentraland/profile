@@ -76,6 +76,10 @@ export class ItemsClient {
       }
     }
 
+    if (filters.sortBy) {
+      queryParams.append('sortBy', filters.sortBy)
+    }
+
     if (filters.status) {
       switch (filters.status) {
         case ItemSaleStatus.ON_SALE:

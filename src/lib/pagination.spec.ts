@@ -209,6 +209,69 @@ describe('when getting the pagination hook', () => {
     })
   })
 
+  describe('and using the changeFilters function', () => {
+    beforeEach(() => {
+      useLocationMock.search = 'filter=value&anotherFilter=someValue&sortBy=createdAt'
+      renderedHook = renderHook(() => usePagination())
+      currentResult = renderedHook.result.current as UsePaginationResult
+    })
+
+    describe('and the flag to remove all the old filters is set', () => {
+      beforeEach(() => {
+        act(() => {
+          currentResult.changeFilters(
+            { filter: 'newValue', anotherFilter: 'anotherNewValue' },
+            {
+              clearOldFilters: true
+            }
+          )
+        })
+      })
+
+      it('should push the first page into the history only with the new filters and the current sorting', () => {
+        expect(navigateMock).toHaveBeenCalledWith('/v1/lists?page=1&sortBy=createdAt&filter=newValue&anotherFilter=anotherNewValue')
+      })
+    })
+
+    describe('and the flag to remove all the old filters is not set', () => {
+      beforeEach(() => {
+        act(() => {
+          currentResult.changeFilters(
+            { filter: 'newValue', someOtherFilter: 'someOtherValue' },
+            {
+              clearOldFilters: false
+            }
+          )
+        })
+      })
+
+      it('should push the first page into the history with the changed filter and the current sorting', () => {
+        expect(navigateMock).toHaveBeenCalledWith(
+          '/v1/lists?filter=newValue&anotherFilter=someValue&sortBy=createdAt&page=1&someOtherFilter=someOtherValue'
+        )
+      })
+    })
+
+    describe('and some of the filter values are undefined', () => {
+      beforeEach(() => {
+        act(() => {
+          currentResult.changeFilters(
+            { filter: undefined, someOtherFilter: 'someOtherValue' },
+            {
+              clearOldFilters: false
+            }
+          )
+        })
+      })
+
+      it('should push the first page into the history with the new filter, the older one removed and the current sorting', () => {
+        expect(navigateMock).toHaveBeenCalledWith(
+          '/v1/lists?anotherFilter=someValue&sortBy=createdAt&page=1&someOtherFilter=someOtherValue'
+        )
+      })
+    })
+  })
+
   describe('and the count option is set', () => {
     beforeEach(() => {
       useLocationMock.search = 'page=1'

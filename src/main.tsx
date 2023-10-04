@@ -3,7 +3,7 @@ import 'semantic-ui-css/semantic.min.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
@@ -24,32 +24,23 @@ import './index.css'
 
 SSO.init(config.get('SSO_URL'))
 
-const router = createBrowserRouter([
-  {
-    path: '/accounts/:profileAddress/:tab?',
-    element: <WithProfile component={MainPage} />
-  },
-  {
-    path: 'sign-in',
-    element: <SignInPage />
-  },
-  {
-    path: '*',
-    element: <ConnectAndRedirect />
-  }
-])
-
 const component = (
   <React.StrictMode>
-    <Provider store={initStore()}>
-      <WalletProvider>
-        <TranslationProvider locales={Object.keys(locales)}>
-          <ModalProvider components={modals}>
-            <RouterProvider router={router} />
-          </ModalProvider>
-        </TranslationProvider>
-      </WalletProvider>
-    </Provider>
+    <BrowserRouter>
+      <Provider store={initStore()}>
+        <WalletProvider>
+          <TranslationProvider locales={Object.keys(locales)}>
+            <ModalProvider components={modals}>
+              <Routes>
+                <Route path="/accounts/:profileAddress/:tab?" element={<WithProfile component={MainPage} />} />
+                <Route path="sign-in" element={<SignInPage />} />
+                <Route path="*" element={<ConnectAndRedirect />} />
+              </Routes>
+            </ModalProvider>
+          </TranslationProvider>
+        </WalletProvider>
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>
 )
 
