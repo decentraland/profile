@@ -9,7 +9,7 @@ import { MapStateProps, MapDispatch, MapDispatchProps, OwnProps } from './Creati
 
 const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   return {
-    items: getItems(state),
+    items: getItems(state) && [],
     totalItems: getTotalItems(state),
     error: getError(state),
     profileName: getProfileOfAddress(state, ownProps.profileAddress)?.avatars[0]?.name || 'Unknown',

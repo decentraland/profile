@@ -8,6 +8,7 @@ import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { CategoryFilter } from 'decentraland-ui/dist/components/CategoryFilter/CategoryFilter'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
+import emoteImage from '../../assets/images/emote.svg'
 import shirtImage from '../../assets/images/shirt.svg'
 import { usePagination } from '../../lib/pagination'
 import { config } from '../../modules/config'
@@ -105,11 +106,11 @@ const Creations = (props: Props) => {
             <div className={styles.loader}>
               <Loader active inline size="medium" data-testid={LOADER_DATA_TEST_ID} />
             </div>
-          ) : items.length === 0 ? (
+          ) : !isLoading && items.length === 0 ? (
             <div className={styles.empty}>
               <div className={styles.message}>
                 <div className={styles.image}>
-                  <img src={shirtImage} />
+                  <img src={selectedCategoryName === 'wearables' ? shirtImage : emoteImage} />
                 </div>
                 <h2 className={styles.title}>{t(`creations.${view}_empty_${selectedCategoryName}_title`, { name: profileName })}</h2>
                 {view === View.OWN ? (
