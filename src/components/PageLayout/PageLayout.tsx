@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import { BackToTopButton } from 'decentraland-dapps/dist/containers/BackToTopButton/BackToTopButton'
 import { Footer } from '../Footer'
 import Navbar from '../Navbar'
 import { Props } from './PageLayout.types'
@@ -11,6 +12,7 @@ const PageLayout = ({ children, className }: Props) => {
       <Navbar className={styles.navbar} isFullscreen />
       <div className={styles.content}>{children}</div>
       <Footer className={styles.footer} />
+      <BackToTopButton />
     </div>
   )
 }
