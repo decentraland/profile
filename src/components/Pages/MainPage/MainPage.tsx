@@ -68,7 +68,7 @@ function MainPage(props: Props) {
       case AccountTabs.CREATIONS:
         return <Creations profileAddress={profileAddress ?? nullAddress} view={view} />
       case AccountTabs.ASSETS:
-        return <Assets />
+        return <Assets profileAddress={profileAddress ?? nullAddress} />
       default:
         return <Overview loggedInAddress={loggedInAddress} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
     }

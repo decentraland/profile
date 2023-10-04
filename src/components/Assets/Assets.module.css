@@ -3,3 +3,10 @@
   grid-template-columns: var(--sidebar-width) 1fr;
   gap: 16px;
 }
+
+.assets {
+  display: grid;
+  gap: 12px;
+  grid-gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
