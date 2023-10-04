@@ -46,14 +46,13 @@ const CreationsFiltersModal = (props: Props) => {
   )
   const handleChangeStatus = useCallback(
     (value: AssetStatus) => {
-      console.log('Changing status')
       setFiltersToChange({ ...filtersToChange, status: getItemSaleStatus(value) })
     },
     [setFiltersToChange]
   )
 
   const handleClearFilters = useCallback(() => {
-    setFiltersToChange({ category: undefined, rarities: undefined })
+    setFiltersToChange({ category: undefined, rarities: undefined, status: undefined })
   }, [setFiltersToChange])
 
   return (

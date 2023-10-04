@@ -95,7 +95,7 @@ export function usePagination<T extends string = string, T2 extends string = str
         params.set('sortBy', sortBy)
       }
       Object.entries<string | undefined>(filters).forEach(([filter, value]) => {
-        if (value) {
+        if (value !== undefined) {
           params.set(filter, value)
         } else {
           params.delete(filter)

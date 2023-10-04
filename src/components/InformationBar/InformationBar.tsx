@@ -26,7 +26,7 @@ const InformationBar = <T extends string>(props: Props<T>) => {
         {isMobile ? (
           <i
             data-testid={INFORMATION_BAR_MOBILE_DATA_TEST_ID}
-            className={classNames(styles.openFilters, styles.openFiltersWrapper, hasFiltersEnabled && styles.active)}
+            className={classNames(styles.openFilters, styles.openFiltersWrapper, { [styles.active]: hasFiltersEnabled })}
             onClick={onOpenFiltersModal}
           />
         ) : null}
