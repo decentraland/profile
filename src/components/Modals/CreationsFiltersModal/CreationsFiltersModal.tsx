@@ -17,20 +17,20 @@ const CreationsFiltersModal = (props: Props) => {
   const { filters, changeFilters } = usePagination<keyof Options, ItemSortBy>({
     pageSize: ITEMS_PER_PAGE
   })
-  const [category, getCategoriesFilterValue] = useCategoriesFilter(filters.category)
-  const [rarities, getRaritiesFilterValue] = useRaritiesFilter(filters.rarities)
-  const [status, getItemSaleStatus, getAssetStatusFilterValue] = useAssetStatusFilter(filters.status)
+  const [category, getCategoriesQueryString] = useCategoriesFilter(filters.category)
+  const [rarities, getRaritiesQueryString] = useRaritiesFilter(filters.rarities)
+  const [status, getItemSaleStatusQueryString, getAssetStatusFilterValue] = useAssetStatusFilter(filters.status)
   const [filtersToChange, setFiltersToChange] = useState<Pick<Options, 'category' | 'rarities' | 'status'>>({ category, rarities, status })
 
   const categories = useMemo(() => buildCategoryFilterCategories(), [])
 
   const handleApplyFilters = useCallback(() => {
     changeFilters({
-      category: filtersToChange.category ? getCategoriesFilterValue(filtersToChange.category) : filtersToChange.category,
-      rarities: filtersToChange.rarities ? getRaritiesFilterValue(filtersToChange.rarities) : filtersToChange.rarities,
+      category: filtersToChange.category ? getCategoriesQueryString(filtersToChange.category) : filtersToChange.category,
+      rarities: filtersToChange.rarities ? getRaritiesQueryString(filtersToChange.rarities) : filtersToChange.rarities,
       status: filtersToChange.status
     })
-  }, [filtersToChange, getRaritiesFilterValue, getCategoriesFilterValue, changeFilters])
+  }, [filtersToChange, getRaritiesQueryString, getCategoriesQueryString, changeFilters])
 
   const handleChangeCategory = useCallback(
     (category: string) => {
@@ -46,7 +46,7 @@ const CreationsFiltersModal = (props: Props) => {
   )
   const handleChangeStatus = useCallback(
     (value: AssetStatus) => {
-      setFiltersToChange({ ...filtersToChange, status: getItemSaleStatus(value) })
+      setFiltersToChange({ ...filtersToChange, status: getItemSaleStatusQueryString(value) })
     },
     [setFiltersToChange]
   )

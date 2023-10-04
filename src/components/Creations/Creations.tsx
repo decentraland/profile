@@ -29,9 +29,9 @@ const Creations = (props: Props) => {
     count
   })
 
-  const [category, getCategoriesFilterValue] = useCategoriesFilter(filters.category)
-  const [rarities, getRaritiesFilterValue] = useRaritiesFilter(filters.rarities)
-  const [status, , getAssetStatusFilterValue] = useAssetStatusFilter(filters.status)
+  const [category, getCategoriesQueryString] = useCategoriesFilter(filters.category)
+  const [rarities, getRaritiesQueryString] = useRaritiesFilter(filters.rarities)
+  const [status, , getAssetStatusQueryString] = useAssetStatusFilter(filters.status)
 
   const selectedSortBy = sortBy ?? ItemSortBy.NEWEST
   const hasFiltersEnabled = Boolean(sortBy || filters.category || filters.rarities)
@@ -63,15 +63,15 @@ const Creations = (props: Props) => {
   )
   const handleSetRarity = useCallback(
     (changedRarities: Rarity[]) => {
-      changeFilter('rarities', getRaritiesFilterValue(changedRarities))
+      changeFilter('rarities', getRaritiesQueryString(changedRarities))
     },
-    [getRaritiesFilterValue, changeFilter]
+    [getRaritiesQueryString, changeFilter]
   )
   const handleSetCategory = useCallback(
     (category: string) => {
-      changeFilter('category', getCategoriesFilterValue(category))
+      changeFilter('category', getCategoriesQueryString(category))
     },
-    [getCategoriesFilterValue, changeFilter]
+    [getCategoriesQueryString, changeFilter]
   )
   const handleSortByChange = useCallback(
     (value: ItemSortBy) => {
@@ -93,7 +93,7 @@ const Creations = (props: Props) => {
           <div className={styles.sidebar}>
             <CategoryFilter title={t('categories_menu.title')} items={categories} value={category} onClick={handleSetCategory} />
             <RarityFilter rarities={rarities} onChange={handleSetRarity} />
-            <AssetStatusFilter value={getAssetStatusFilterValue(status)} onChange={onChangeStatus} />
+            <AssetStatusFilter value={getAssetStatusQueryString(status)} onChange={onChangeStatus} />
           </div>
         ) : null}
         <div className={styles.content}>

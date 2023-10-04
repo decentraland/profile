@@ -4,27 +4,42 @@ import { AssetStatus } from 'decentraland-dapps/dist/containers'
 import { ItemCategory, ItemSaleStatus } from '../modules/items/types'
 import { MainCategory, getAllCategories } from '../utils/categories'
 
+/**
+ * Hook that receives the rarities value from the URL and facilitates the conversion between the value and its query string.
+ * @param rarities - The processed rarities from the query string URL.
+ * @returns The selected rarities and the function to convert the rarities into a query string.
+ */
 export const useRaritiesFilter = (rarities: string | null | undefined): [Rarity[], (raritiesToSet: Rarity[]) => string] => {
   const selectedRarities = useMemo(() => rarities?.split(',') ?? [], [rarities]) as Rarity[]
-  const getFilterValue = useCallback((raritiesToSet: Rarity[]) => raritiesToSet.join(','), [])
-  return [selectedRarities, getFilterValue]
+  const getFilterQueryString = useCallback((raritiesToSet: Rarity[]) => raritiesToSet.join(','), [])
+  return [selectedRarities, getFilterQueryString]
 }
 
+/**
+ * Hook that receives the categories value from the URL and facilitates the conversion between the value and its query string.
+ * @param categories - The processed categories from the query string URL.
+ * @returns The selected categories and the function to convert the categories into a query string.
+ */
 export const useCategoriesFilter = (category: string | null | undefined): [ItemCategory, (categoryToSet: string) => string] => {
   const selectedCategory = useMemo(
     () => (category && getAllCategories(true).includes(category as ItemCategory) ? (category as ItemCategory) : MainCategory.WEARABLE),
     [category]
   )
-  const getFilterValue = useCallback((categoryToSet: string) => categoryToSet, [])
+  const getFilterQueryString = useCallback((categoryToSet: string) => categoryToSet, [])
 
-  return [selectedCategory, getFilterValue]
+  return [selectedCategory, getFilterQueryString]
 }
 
+/**
+ * Hook that receives the status value from the URL and facilitates the conversion between the value and its query string.
+ * @param assetStatus - The processed asset sale status from the query string URL.
+ * @returns The selected status, the function to convert the categories into a query string and a function to convert between the assets status component values and the client ones.
+ */
 export const useAssetStatusFilter = (
   assetStatus: string | null | undefined
 ): [ItemSaleStatus, (assetStatusToSet: AssetStatus) => ItemSaleStatus, (assetStatusToSet: ItemSaleStatus) => AssetStatus] => {
   const selectedStatus = useMemo(() => (assetStatus as ItemSaleStatus) ?? ItemSaleStatus.ON_SALE, [assetStatus])
-  const getItemSaleStatusFilterValue = useCallback(
+  const getItemSaleStatusQueryString = useCallback(
     (assetStatusToSet: AssetStatus) => convertAssetStatusToItemSaleStatus(assetStatusToSet),
     []
   )
@@ -33,7 +48,7 @@ export const useAssetStatusFilter = (
     []
   )
 
-  return [selectedStatus, getItemSaleStatusFilterValue, getAssetStatusFilterValue]
+  return [selectedStatus, getItemSaleStatusQueryString, getAssetStatusFilterValue]
 }
 
 function convertAssetStatusToItemSaleStatus(status: AssetStatus): ItemSaleStatus {
