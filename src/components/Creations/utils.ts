@@ -1,7 +1,5 @@
 import { ItemSortBy } from '@dcl/schemas'
-import { AssetStatus } from 'decentraland-dapps/dist/containers'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { ItemSaleStatus } from '../../modules/items/types'
 import { MainCategory, AccessoryCategory, WearableCategory, EmoteCategory, HeadCategory } from '../../utils/categories'
 
 function buildCategoryFilterItem(category: string) {
@@ -38,30 +36,4 @@ export function buildCategoryFilterCategories() {
 
 export function buildSortByOptions() {
   return Object.values(ItemSortBy).map(value => ({ value, text: t(`items_sort_by.${value}`) }))
-}
-
-export function convertAssetStatusToItemSaleStatus(status: AssetStatus): ItemSaleStatus {
-  switch (status) {
-    case AssetStatus.ON_SALE:
-      return ItemSaleStatus.ON_SALE
-    case AssetStatus.ONLY_MINTING:
-      return ItemSaleStatus.ONLY_MINTING
-    case AssetStatus.ONLY_LISTING:
-      return ItemSaleStatus.ONLY_LISTING
-    case AssetStatus.NOT_FOR_SALE:
-      return ItemSaleStatus.NOT_FOR_SALE
-  }
-}
-
-export function convertItemSaleStatusToAssetStatus(status: ItemSaleStatus): AssetStatus {
-  switch (status) {
-    case ItemSaleStatus.ON_SALE:
-      return AssetStatus.ON_SALE
-    case ItemSaleStatus.ONLY_MINTING:
-      return AssetStatus.ONLY_MINTING
-    case ItemSaleStatus.ONLY_LISTING:
-      return AssetStatus.ONLY_LISTING
-    case ItemSaleStatus.NOT_FOR_SALE:
-      return AssetStatus.NOT_FOR_SALE
-  }
 }

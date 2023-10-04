@@ -1,7 +1,9 @@
-.rarity {
+.rarity,
+.status {
   background: none;
 }
 
-.rarity:global(.dcl.box) {
+.rarity:global(.dcl.box),
+.status:global(.dcl.box) {
   border: none;
 }

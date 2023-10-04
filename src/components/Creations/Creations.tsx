@@ -7,19 +7,14 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { CategoryFilter } from 'decentraland-ui/dist/components/CategoryFilter/CategoryFilter'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
-import { useCategoriesFilter, useRaritiesFilter } from '../../hooks/filters'
+import { useAssetStatusFilter, useCategoriesFilter, useRaritiesFilter } from '../../hooks/filters'
 import { usePagination } from '../../lib/pagination'
 import { config } from '../../modules/config'
-import { ItemSaleStatus, Options } from '../../modules/items/types'
+import { Options } from '../../modules/items/types'
 import { InfiniteScroll } from '../InfiniteScroll'
 import InformationBar from '../InformationBar'
 import { CREATIONS_DATA_TEST_ID, CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, LOADER_DATA_TEST_ID } from './constants'
-import {
-  buildCategoryFilterCategories,
-  buildSortByOptions,
-  convertAssetStatusToItemSaleStatus,
-  convertItemSaleStatusToAssetStatus
-} from './utils'
+import { buildCategoryFilterCategories, buildSortByOptions } from './utils'
 import { Props } from './Creations.types'
 import styles from './Creations.module.css'
 
@@ -36,8 +31,8 @@ const Creations = (props: Props) => {
 
   const [category, getCategoriesFilterValue] = useCategoriesFilter(filters.category)
   const [rarities, getRaritiesFilterValue] = useRaritiesFilter(filters.rarities)
+  const [status, , getAssetStatusFilterValue] = useAssetStatusFilter(filters.status)
 
-  const selectedStatus = useMemo(() => (filters.status as ItemSaleStatus) ?? ItemSaleStatus.ON_SALE, [filters.status])
   const selectedSortBy = sortBy ?? ItemSortBy.NEWEST
   const hasFiltersEnabled = Boolean(sortBy || filters.category || filters.rarities)
 
@@ -51,7 +46,7 @@ const Creations = (props: Props) => {
       category,
       rarities,
       sortBy: selectedSortBy,
-      status: selectedStatus
+      status
     })
   }, [page, first, filters, sortBy])
 
@@ -86,7 +81,7 @@ const Creations = (props: Props) => {
   )
   const onChangeStatus = useCallback(
     (value: AssetStatus) => {
-      changeFilter('status', convertAssetStatusToItemSaleStatus(value))
+      changeFilter('status', value)
     },
     [changeFilter]
   )
@@ -98,7 +93,7 @@ const Creations = (props: Props) => {
           <div className={styles.sidebar}>
             <CategoryFilter title={t('categories_menu.title')} items={categories} value={category} onClick={handleSetCategory} />
             <RarityFilter rarities={rarities} onChange={handleSetRarity} />
-            <AssetStatusFilter value={convertItemSaleStatusToAssetStatus(selectedStatus)} onChange={onChangeStatus} />
+            <AssetStatusFilter value={getAssetStatusFilterValue(status)} onChange={onChangeStatus} />
           </div>
         ) : null}
         <div className={styles.content}>

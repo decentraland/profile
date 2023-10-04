@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { ItemSortBy, Rarity } from '@dcl/schemas'
+import { AssetStatus, AssetStatusFilter } from 'decentraland-dapps/dist/containers'
 import { RarityFilter } from 'decentraland-dapps/dist/containers/RarityFilter'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { CategoryFilter } from 'decentraland-ui/dist/components/CategoryFilter/CategoryFilter'
-import { useCategoriesFilter, useRaritiesFilter } from '../../../hooks/filters'
+import { useAssetStatusFilter, useCategoriesFilter, useRaritiesFilter } from '../../../hooks/filters'
 import { usePagination } from '../../../lib/pagination'
-import { ItemCategory, Options } from '../../../modules/items/types'
+import { ItemCategory, ItemSaleStatus, Options } from '../../../modules/items/types'
 import { ITEMS_PER_PAGE } from '../../Assets/constants'
 import { buildCategoryFilterCategories } from '../../Creations/utils'
 import FiltersModal from '../FiltersModal'
@@ -18,14 +19,16 @@ const CreationsFiltersModal = (props: Props) => {
   })
   const [category, getCategoriesFilterValue] = useCategoriesFilter(filters.category)
   const [rarities, getRaritiesFilterValue] = useRaritiesFilter(filters.rarities)
-  const [filtersToChange, setFiltersToChange] = useState<Pick<Options, 'category' | 'rarities'>>({ category, rarities })
+  const [status, getItemSaleStatus, getAssetStatusFilterValue] = useAssetStatusFilter(filters.status)
+  const [filtersToChange, setFiltersToChange] = useState<Pick<Options, 'category' | 'rarities' | 'status'>>({ category, rarities, status })
 
   const categories = useMemo(() => buildCategoryFilterCategories(), [])
 
   const handleApplyFilters = useCallback(() => {
     changeFilters({
       category: filtersToChange.category ? getCategoriesFilterValue(filtersToChange.category) : filtersToChange.category,
-      rarities: filtersToChange.rarities ? getRaritiesFilterValue(filtersToChange.rarities) : filtersToChange.rarities
+      rarities: filtersToChange.rarities ? getRaritiesFilterValue(filtersToChange.rarities) : filtersToChange.rarities,
+      status: filtersToChange.status
     })
   }, [filtersToChange, getRaritiesFilterValue, getCategoriesFilterValue, changeFilters])
 
@@ -41,6 +44,13 @@ const CreationsFiltersModal = (props: Props) => {
     },
     [filtersToChange]
   )
+  const handleChangeStatus = useCallback(
+    (value: AssetStatus) => {
+      console.log('Changing status')
+      setFiltersToChange({ ...filtersToChange, status: getItemSaleStatus(value) })
+    },
+    [setFiltersToChange]
+  )
 
   const handleClearFilters = useCallback(() => {
     setFiltersToChange({ category: undefined, rarities: undefined })
@@ -55,6 +65,11 @@ const CreationsFiltersModal = (props: Props) => {
         onClick={handleChangeCategory}
       />
       <RarityFilter className={styles.rarity} rarities={filtersToChange.rarities ?? []} onChange={handleChangeRarity} />
+      <AssetStatusFilter
+        className={styles.status}
+        value={getAssetStatusFilterValue(filtersToChange.status ?? ItemSaleStatus.ON_SALE)}
+        onChange={handleChangeStatus}
+      />
     </FiltersModal>
   )
 }
