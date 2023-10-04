@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from '@reduxjs/toolkit'
+import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
 import { fetchCreationsRequest } from '../../modules/items/actions'
 import { getError, getItems, getTotalItems, isLoadingCreations } from '../../modules/items/selectors'
@@ -9,18 +10,19 @@ import { MapStateProps, MapDispatch, MapDispatchProps, OwnProps } from './Creati
 
 const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   return {
-    items: getItems(state) && [],
+    items: getItems(state),
     totalItems: getTotalItems(state),
     error: getError(state),
     profileName: getProfileOfAddress(state, ownProps.profileAddress)?.avatars[0]?.name || 'Unknown',
-    isLoading: isLoadingCreations(state) && false
+    isLoading: isLoadingCreations(state)
   }
 }
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps =>
   bindActionCreators(
     {
-      onFetchCreations: fetchCreationsRequest
+      onFetchCreations: fetchCreationsRequest,
+      onOpenMobileFilters: () => openModal('CreationsFiltersModal')
     },
     dispatch
   )

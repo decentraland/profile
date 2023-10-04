@@ -67,6 +67,10 @@
   padding-right: 30px;
 }
 
+.informationBar {
+  margin-bottom: 20px;
+}
+
 @media (max-width: 767px) {
   .main {
     display: flex;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { fireEvent, act } from '@testing-library/react'
-import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory as BaseWearableCategory } from '@dcl/schemas'
+import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory as BaseWearableCategory, ItemSortBy } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ItemSaleStatus } from '../../modules/items/types'
 import { renderWithProviders } from '../../tests/tests'
@@ -20,6 +20,7 @@ function renderCreations(props: Partial<Props> = {}, initialEntries: string[] = 
       error={null}
       view={View.OWN}
       onFetchCreations={jest.fn()}
+      onOpenMobileFilters={jest.fn()}
       {...props}
     />,
     { router: { initialEntries } }
@@ -54,6 +55,7 @@ describe('when rendering the component', () => {
       skip: 0,
       rarities: [],
       category: MainCategory.WEARABLE,
+      sortBy: ItemSortBy.NEWEST,
       status: ItemSaleStatus.ON_SALE
     })
   })
@@ -124,8 +126,9 @@ describe('when changing the category', () => {
       creator: '0x1',
       first: 24,
       rarities: [],
-      skip: 0,
+      sortBy: ItemSortBy.NEWEST,
       category: WearableCategory.HEAD,
+      skip: 0,
       status: ItemSaleStatus.ON_SALE
     })
   })
@@ -144,12 +147,14 @@ describe('when changing the rarity', () => {
     act(() => {
       fireEvent.click(getByText('Common'))
     })
+
     expect(onFetchCreations).toHaveBeenCalledWith({
       creator: '0x1',
       first: 24,
       skip: 0,
       category: MainCategory.WEARABLE,
       rarities: ['common'],
+      sortBy: ItemSortBy.NEWEST,
       status: ItemSaleStatus.ON_SALE
     })
   })
@@ -174,6 +179,7 @@ describe('when changing the item sale status', () => {
       creator: '0x1',
       first: 24,
       skip: 0,
+      sortBy: ItemSortBy.NEWEST,
       category: MainCategory.WEARABLE,
       rarities: [],
       status: ItemSaleStatus.ONLY_LISTING
@@ -197,7 +203,33 @@ describe('when doing an initial load of a page greater than one', () => {
       first: page * ITEMS_PER_PAGE,
       skip: 0,
       rarities: [],
+      sortBy: ItemSortBy.NEWEST,
       category: MainCategory.WEARABLE,
+      status: ItemSaleStatus.ON_SALE
+    })
+  })
+})
+
+describe('when changing the sorting', () => {
+  let onFetchCreations: jest.Mock
+
+  beforeEach(() => {
+    onFetchCreations = jest.fn()
+    renderedComponent = renderCreations({ profileAddress: '0x1', onFetchCreations })
+  })
+
+  it('should re-trigger the creations fetch with the selected sort', () => {
+    const { getByText } = renderedComponent
+    act(() => {
+      fireEvent.click(getByText(t(`items_sort_by.${ItemSortBy.CHEAPEST}`)))
+    })
+    expect(onFetchCreations).toHaveBeenCalledWith({
+      creator: '0x1',
+      first: 24,
+      skip: 0,
+      category: MainCategory.WEARABLE,
+      rarities: [],
+      sortBy: ItemSortBy.CHEAPEST,
       status: ItemSaleStatus.ON_SALE
     })
   })

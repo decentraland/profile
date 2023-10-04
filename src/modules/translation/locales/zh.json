@@ -132,6 +132,14 @@
   "categories_menu": {
     "title": "类别"
   },
+  "items_sort_by": {
+    "name": "名称",
+    "newest": "最新",
+    "recently_reviewed": "最近审查",
+    "recently_sold": "最近售出",
+    "recently_listed": "最新上市",
+    "cheapest": "最低价"
+  },
   "creations": {
     "own_empty_wearables_title": "您还没有创建任何可穿戴设备",
     "own_empty_emotes_title": "您还没有创造任何情绪",
@@ -141,5 +149,10 @@
     "own_empty_secondary_action": "创建一个集合",
     "other_empty_wearables_title": "{名称}还没有创建任何可穿戴设备",
     "other_empty_emotes_title": "{name}还没有创造任何情绪"
+  },
+  "filters_modal": {
+    "filters": "过滤器",
+    "reset": "重置",
+    "apply": "应用过滤器"
   }
 }
