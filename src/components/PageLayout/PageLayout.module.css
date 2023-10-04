@@ -19,6 +19,10 @@
   flex-shrink: 0;
 }
 
+.page :global(.ui.button.backToTop) {
+  width: 170px;
+}
+
 @media (max-width: 991px) {
   .content {
     padding: 0;
