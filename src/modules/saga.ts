@@ -9,6 +9,8 @@ import { identitySaga } from './identity/sagas'
 import { ItemsClient } from './items/client'
 import { itemSagas } from './items/sagas'
 import { modalSagas } from './modal/sagas'
+import { NFTClient } from './nfts/client'
+import { nftSagas } from './nfts/sagas'
 import { createProfileSaga } from './profile/sagas'
 import { socialSagas } from './social/sagas'
 import { translationSaga } from './translation/sagas'
@@ -42,6 +44,7 @@ export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphCl
         apps: [ApplicationName.PROFILE],
         delay: 60000 /** 60 seconds */
       }
-    })
+    }),
+    nftSagas(new NFTClient(NFT_SERVER_URL))
   ])
 }
