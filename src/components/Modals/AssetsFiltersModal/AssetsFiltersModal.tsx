@@ -7,7 +7,7 @@ import { ITEMS_PER_PAGE } from '../../Assets/constants'
 import { NftFilters } from '../../NFTFilters'
 import FiltersModal from '../FiltersModal'
 import { Props } from './AssetsFiltersModal.types'
-import styles from './AssetsFilterModal.module.css'
+import styles from './AssetsFiltersModal.module.css'
 
 const AssetsFiltersModal = (props: Props) => {
   const { filters, changeFilters } = usePagination<keyof NFTOptions>({
