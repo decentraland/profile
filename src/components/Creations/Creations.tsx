@@ -106,7 +106,7 @@ const Creations = (props: Props) => {
           <InformationBar
             className={styles.informationBar}
             isLoading={isLoading}
-            count={items.length}
+            count={count}
             sortByOptions={sortByOptions}
             sortBy={selectedSortBy}
             hasFiltersEnabled={hasFiltersEnabled}

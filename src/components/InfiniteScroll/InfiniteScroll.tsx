@@ -10,8 +10,8 @@ export function InfiniteScroll({ page, hasMorePages, isLoading, maxScrollPages, 
   const onScroll = useCallback(() => {
     const scrollTop = document.documentElement.scrollTop
     const scrollHeight = document.documentElement.scrollHeight
-    const clientHeight = document.documentElement.clientHeight
-    if (!isLoading && scrollTop + clientHeight >= scrollHeight && hasMorePages && (!maxScrollPages || scrollPage < maxScrollPages)) {
+    const offsetHeight = document.documentElement.offsetHeight
+    if (!isLoading && scrollTop + offsetHeight >= scrollHeight && hasMorePages && (!maxScrollPages || scrollPage < maxScrollPages)) {
       setScrollPage(scrollPage + 1)
       onLoadMore(page + 1)
     }
