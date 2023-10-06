@@ -40,7 +40,7 @@ export function NftFilters({ filters, onChange }: Props) {
   }
   return (
     <div className={styles.container}>
-      <CategoryFilter title={t('categories_menu.title')} items={categories} value={selectedCategory} onClick={onChangeCategory} />
+      <CategoryFilter i18n={{ title: t('categories_menu.title') }} items={categories} value={selectedCategory} onClick={onChangeCategory} />
       {categorySpecificFilters}
     </div>
   )
