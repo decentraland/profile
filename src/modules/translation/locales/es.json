@@ -153,7 +153,10 @@
   },
   "on_sale_filter": {
     "title": "Estado",
-    "label": "En venta"
+    "label": "En venta",
+    "for_sale": "Solo en venta",
+    "not_for_sale": "Artículos a la venta y no",
+    "tooltip": "Mostrar artículos solo para la venta o ambos"
   },
   "filters_modal": {
     "title": "Filtros",

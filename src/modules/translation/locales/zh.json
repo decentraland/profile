@@ -152,7 +152,10 @@
   },
   "on_sale_filter": {
     "title": "地位",
-    "label": "出售"
+    "label": "出售",
+    "for_sale": "仅出售",
+    "not_for_sale": "包括不出售的物品",
+    "tooltip": "仅显示出售物品或两者兼而有之"
   },
   "filters_modal": {
     "filters": "过滤器",
