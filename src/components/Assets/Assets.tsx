@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { Rarity } from '@dcl/schemas'
-import { Loader, useMobileMediaQuery } from 'decentraland-ui'
 import { NFTCard } from 'decentraland-ui/dist/components/NFTCard/NFTCard'
+import { Loader, useMobileMediaQuery } from 'decentraland-ui'
 import { usePagination } from '../../lib/pagination'
 import { NFTCategory, NFTOptions, NFTResult } from '../../modules/nfts/types'
 import { MainCategory } from '../../utils/categories'

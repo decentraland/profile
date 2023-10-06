@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { getAddress, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { hasLoadedInitialFlags } from 'decentraland-dapps/dist/modules/features/selectors'
+import { getAddress, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { getIsAssetsTabEnabled, getIsCreationsTabEnabled } from '../../../modules/features/selectors'
 import { isLoggingIn } from '../../../modules/identity/selector'
 import { hasBlockedLoggedUser, isBlockedByLoggedUser } from '../../../modules/profile/selectors'
