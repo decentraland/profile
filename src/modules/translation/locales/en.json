@@ -159,5 +159,20 @@
     "title": "Filters",
     "reset": "Reset",
     "apply": "Apply filters"
+  },
+  "assets_tab": {
+    "assets_count": "{count} {count, plural, one {asset} other {assets}}",
+    "own_empty_category": "You don't have any {category} yet.",
+    "other_empty_category": "{name} doesn't have any {category} yet",
+    "go_to_marketplace": "Go to the marketplace"
+  },
+  "nfts_sort_by": {
+    "name": "Name",
+    "newest": "Newest",
+    "recently_sold": "Recently sold",
+    "recently_listed": "Recently listed",
+    "cheapest": "Cheapest",
+    "rental_listing_date": "Recently listed for rent",
+    "max_rental_price": "Cheapest listing"
   }
 }

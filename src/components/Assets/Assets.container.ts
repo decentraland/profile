@@ -1,17 +1,19 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from '@reduxjs/toolkit'
+import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
 import { fetchNFTsRequest } from '../../modules/nfts/actions'
 import { getError, getNFTs, getTotalNFTs, isLoading } from '../../modules/nfts/selectors'
 import { RootState } from '../../modules/reducer'
-import Creations from './Assets'
-import { MapStateProps, MapDispatch, MapDispatchProps } from './Assets.types'
+import Assets from './Assets'
+import { MapStateProps, MapDispatch, MapDispatchProps, OwnProps } from './Assets.types'
 
-const mapState = (state: RootState): MapStateProps => {
+const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   return {
     assets: getNFTs(state),
     total: getTotalNFTs(state),
     error: getError(state),
-    isLoading: isLoading(state)
+    isLoading: isLoading(state),
+    profileName: getProfileOfAddress(state, ownProps.profileAddress)?.avatars[0]?.name || 'Unknown'
   }
 }
 
@@ -23,4 +25,4 @@ const mapDispatch = (dispatch: MapDispatch): MapDispatchProps =>
     dispatch
   )
 
-export default connect(mapState, mapDispatch)(Creations)
+export default connect(mapState, mapDispatch)(Assets)

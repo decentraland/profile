@@ -70,3 +70,15 @@ export function getAllCategories(isItem: boolean): NFTCategory[] | ItemCategory[
   }
   return categories
 }
+
+export function getWearableCategories(): NFTCategory[] {
+  return [MainCategory.WEARABLE, ...Object.values(WearableCategory), ...Object.values(HeadCategory), ...Object.values(AccessoryCategory)]
+}
+
+export function getEmoteCategories(): NFTCategory[] {
+  return [MainCategory.EMOTE, ...Object.values(EmoteCategory)]
+}
+
+export function getLandCategories(): NFTCategory[] {
+  return [MainCategory.LAND, ...Object.values(LandCategory)]
+}
