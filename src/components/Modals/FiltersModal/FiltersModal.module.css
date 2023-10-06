@@ -14,7 +14,6 @@
   border-bottom: 1px solid rgba(115, 110, 125, 0.32);
   background: var(--background);
   position: sticky;
-  top: 0;
   z-index: 2;
 }
 
@@ -33,7 +32,7 @@
 
 :global(.ui.modal).assetFiltersModal > :global(.content) {
   overflow: scroll;
-  margin: 0;
+  margin: 0 0 0 10px;
   padding: 0 !important; /* override important from decentraland-ui */
   display: flex;
   flex-direction: column;

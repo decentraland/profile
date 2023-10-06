@@ -58,7 +58,7 @@ const CreationsFiltersModal = (props: Props) => {
   return (
     <FiltersModal clearFilters={handleClearFilters} applyFilters={handleApplyFilters} {...props}>
       <CategoryFilter
-        title={t('categories_menu.title')}
+        i18n={{ title: t('categories_menu.title') }}
         items={categories}
         value={filtersToChange.category ?? 'wearable'}
         onClick={handleChangeCategory}

@@ -7,6 +7,7 @@ import { View } from '../../utils/view'
 
 export type Props = {
   profileAddress: string
+  profileName: string
   isLoading: boolean
   items: Item[]
   totalItems: number
@@ -16,6 +17,7 @@ export type Props = {
   onOpenMobileFilters: () => void
 }
 
-export type MapStateProps = Pick<Props, 'isLoading' | 'items' | 'totalItems' | 'error'>
+export type MapStateProps = Pick<Props, 'isLoading' | 'items' | 'totalItems' | 'profileName' | 'error'>
+export type OwnProps = Pick<Props, 'view' | 'profileAddress'>
 export type MapDispatchProps = Pick<Props, 'onFetchCreations' | 'onOpenMobileFilters'>
 export type MapDispatch = Dispatch<FetchCreationsRequestAction | OpenModalAction>
