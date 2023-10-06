@@ -66,7 +66,7 @@ export default function Assets(props: Props) {
   const onChangeFilter = useCallback((filters: Partial<NFTOptions>) => {
     const filterKeys = Object.keys(filters) as (keyof NFTOptions)[]
     filterKeys.forEach(key => {
-      const value: string | string[] | number = filters[key] || ''
+      const value = filters[key] || ''
       if (Array.isArray(value)) {
         value.join(',')
       }
