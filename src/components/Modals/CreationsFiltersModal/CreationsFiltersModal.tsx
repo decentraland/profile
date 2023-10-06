@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { ItemSortBy, Rarity } from '@dcl/schemas'
-import { AssetStatus, AssetStatusFilter } from 'decentraland-dapps/dist/containers'
+import { AssetStatus, AssetStatusFilter, SmartWearableFilter } from 'decentraland-dapps/dist/containers'
 import { RarityFilter } from 'decentraland-dapps/dist/containers/RarityFilter'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { CategoryFilter } from 'decentraland-ui/dist/components/CategoryFilter/CategoryFilter'
@@ -8,7 +8,8 @@ import { useAssetStatusFilter, useCategoriesFilter, useRaritiesFilter } from '..
 import { usePagination } from '../../../lib/pagination'
 import { ItemCategory, ItemSaleStatus, Options } from '../../../modules/items/types'
 import { ITEMS_PER_PAGE } from '../../Assets/constants'
-import { buildCategoryFilterCategories } from '../../Creations/utils'
+import { SMART_WEARABLE_FILTER } from '../../Creations/constants'
+import { buildCategoryFilterCategories, getCategoryName } from '../../Creations/utils'
 import FiltersModal from '../FiltersModal'
 import { Props } from './CreationsFiltersModal.types'
 import styles from './CreationsFiltersModal.module.css'
@@ -20,7 +21,12 @@ const CreationsFiltersModal = (props: Props) => {
   const [category, getCategoriesQueryString] = useCategoriesFilter(filters.category)
   const [rarities, getRaritiesQueryString] = useRaritiesFilter(filters.rarities)
   const [status, getItemSaleStatusQueryString, getAssetStatusFilterValue] = useAssetStatusFilter(filters.status)
-  const [filtersToChange, setFiltersToChange] = useState<Pick<Options, 'category' | 'rarities' | 'status'>>({ category, rarities, status })
+  const [filtersToChange, setFiltersToChange] = useState<Pick<Options, 'category' | 'rarities' | 'status' | 'isWearableSmart'>>({
+    category,
+    rarities,
+    status,
+    isWearableSmart: filters.isWearableSmart === 'true'
+  })
 
   const categories = useMemo(() => buildCategoryFilterCategories(), [])
 
@@ -28,7 +34,8 @@ const CreationsFiltersModal = (props: Props) => {
     changeFilters({
       category: filtersToChange.category ? getCategoriesQueryString(filtersToChange.category) : filtersToChange.category,
       rarities: filtersToChange.rarities ? getRaritiesQueryString(filtersToChange.rarities) : filtersToChange.rarities,
-      status: filtersToChange.status
+      status: filtersToChange.status,
+      isWearableSmart: (!!filtersToChange.isWearableSmart).toString()
     })
   }, [filtersToChange, getRaritiesQueryString, getCategoriesQueryString, changeFilters])
 
@@ -51,6 +58,13 @@ const CreationsFiltersModal = (props: Props) => {
     [setFiltersToChange]
   )
 
+  const handleSetSW = useCallback(
+    (isOnlySmart: boolean) => {
+      setFiltersToChange({ ...filtersToChange, isWearableSmart: isOnlySmart })
+    },
+    [setFiltersToChange]
+  )
+
   const handleClearFilters = useCallback(() => {
     setFiltersToChange({ category: undefined, rarities: undefined, status: undefined })
   }, [setFiltersToChange])
@@ -64,6 +78,14 @@ const CreationsFiltersModal = (props: Props) => {
         onClick={handleChangeCategory}
       />
       <RarityFilter className={styles.rarity} rarities={filtersToChange.rarities ?? []} onChange={handleChangeRarity} />
+      {getCategoryName(category) === 'wearables' ? (
+        <SmartWearableFilter
+          className={styles.sw}
+          isOnlySmart={filtersToChange.isWearableSmart}
+          onChange={handleSetSW}
+          data-testid={SMART_WEARABLE_FILTER}
+        />
+      ) : null}
       <AssetStatusFilter
         className={styles.status}
         value={getAssetStatusFilterValue(filtersToChange.status ?? ItemSaleStatus.ON_SALE)}
