@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from '@reduxjs/toolkit'
+import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
 import { fetchNFTsRequest } from '../../modules/nfts/actions'
 import { getError, getNFTs, getTotalNFTs, isLoading } from '../../modules/nfts/selectors'
@@ -20,7 +21,8 @@ const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps =>
   bindActionCreators(
     {
-      onFetchAssets: fetchNFTsRequest
+      onFetchAssets: fetchNFTsRequest,
+      onOpenFiltersModal: () => openModal('AssetsFiltersModal')
     },
     dispatch
   )

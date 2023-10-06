@@ -2,3 +2,4 @@ export { default as LoginModal } from 'decentraland-dapps/dist/containers/LoginM
 export { default as FriendsModal } from './FriendsModal'
 export { default as AboutModal } from './AboutModal'
 export { default as CreationsFiltersModal } from './CreationsFiltersModal'
+export { default as AssetsFiltersModal } from './AssetsFiltersModal'
