@@ -1,9 +1,9 @@
 import { formatWeiToMana, getMinimumValueForFractionDigits } from './mana'
 
-describe("getMinimumValueForFractionDigits", () => {
+describe('getMinimumValueForFractionDigits', () => {
   it.each([
     { fractionDigits: 2, minimumValue: 0.01 },
-    { fractionDigits: 1, minimumValue: 0.1 },
+    { fractionDigits: 1, minimumValue: 0.1 }
   ])('should return $minimumValue when value is $fractionDigits', ({ fractionDigits, minimumValue }) => {
     expect(getMinimumValueForFractionDigits(fractionDigits)).toEqual(minimumValue)
   })
