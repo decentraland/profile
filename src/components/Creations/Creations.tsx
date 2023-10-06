@@ -97,7 +97,7 @@ const Creations = (props: Props) => {
       <div className={styles.main}>
         {!isMobile ? (
           <div className={styles.sidebar}>
-            <CategoryFilter title={t('categories_menu.title')} items={categories} value={category} onClick={handleSetCategory} />
+            <CategoryFilter i18n={{ title: t('categories_menu.title') }} items={categories} value={category} onClick={handleSetCategory} />
             <RarityFilter rarities={rarities} onChange={handleSetRarity} />
             <AssetStatusFilter value={getAssetStatusQueryString(status)} onChange={onChangeStatus} />
           </div>

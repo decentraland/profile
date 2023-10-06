@@ -1,9 +1,5 @@
-.rarity,
-.status {
-  background: none;
-}
-
-.rarity:global(.dcl.box),
-.status:global(.dcl.box) {
+.rarity:global(.dcl.box.dui-rarity-filter),
+.status:global(.dcl.box.dui-asset-status-filter) {
   border: none;
+  background: none;
 }
