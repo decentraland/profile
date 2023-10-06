@@ -21,7 +21,8 @@ describe.each<[string, Options, string]>([
   ['network', { network: Network.MATIC }, 'network=MATIC'],
   ['creator', { creator: 'aCreator' }, 'creator=aCreator'],
   ['rarities', { rarities: [Rarity.COMMON, Rarity.EPIC] }, 'rarity=common&rarity=epic'],
-  ['sortBy', { sortBy: ItemSortBy.NAME }, 'sortBy=name']
+  ['sortBy', { sortBy: ItemSortBy.NAME }, 'sortBy=name'],
+  ['isWearableSmart', { isWearableSmart: true }, 'isWearableSmart=true']
 ])('when requesting items with the %s option', (type, options, queryString) => {
   beforeEach(() => {
     scope.get(`/v1/catalog?${queryString}`).reply(200, {
@@ -121,5 +122,24 @@ describe('when requesting the items with a status', () => {
       expect(nock.isDone()).toBe(true)
       expect(response).toEqual({ data: items })
     })
+  })
+})
+
+describe('when requesting the items with "isWearableSmart"', () => {
+  let options: Options
+  let isWearableSmart: boolean
+
+  beforeEach(() => {
+    isWearableSmart = true
+    scope.get(`/v1/catalog?isWearableSmart=${isWearableSmart}`).reply(200, {
+      data: items
+    })
+    options = { isWearableSmart }
+  })
+
+  it('should request the API with the query isWearableSmart=true and return the resulting items', async () => {
+    const response = await client.get(options)
+    expect(nock.isDone()).toBe(true)
+    expect(response).toEqual({ data: items })
   })
 })

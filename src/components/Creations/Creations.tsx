@@ -76,9 +76,9 @@ const Creations = (props: Props) => {
   )
   const handleSetSW = useCallback(
     (isOnlySmart: boolean) => {
-      changeFilter('isWearableSmart', `${isOnlySmart}`)
+      changeFilter('isWearableSmart', isOnlySmart.toString())
     },
-    [getRaritiesQueryString, changeFilter]
+    [changeFilter]
   )
   const handleSetCategory = useCallback(
     (category: string) => {
@@ -106,11 +106,13 @@ const Creations = (props: Props) => {
           <div className={styles.sidebar}>
             <CategoryFilter i18n={{ title: t('categories_menu.title') }} items={categories} value={category} onClick={handleSetCategory} />
             <RarityFilter rarities={rarities} onChange={handleSetRarity} />
-            <SmartWearableFilter
-              isOnlySmart={filters.isWearableSmart === 'true'}
-              onChange={handleSetSW}
-              data-testid={SMART_WEARABLE_FILTER}
-            />
+            {selectedCategoryName === 'wearables' ? (
+              <SmartWearableFilter
+                isOnlySmart={filters.isWearableSmart === 'true'}
+                onChange={handleSetSW}
+                data-testid={SMART_WEARABLE_FILTER}
+              />
+            ) : null}
             <AssetStatusFilter value={getAssetStatusQueryString(status)} onChange={onChangeStatus} />
           </div>
         ) : null}

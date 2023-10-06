@@ -1,5 +1,6 @@
 .rarity:global(.dcl.box.dui-rarity-filter),
-.status:global(.dcl.box.dui-asset-status-filter) {
+.status:global(.dcl.box.dui-asset-status-filter),
+.sw:global(.dcl.box.dcl.box.dui-smart-wearable-filter) {
   border: none;
   background: none;
 }
