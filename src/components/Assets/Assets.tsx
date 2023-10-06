@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { Rarity } from '@dcl/schemas'
-import { useMobileMediaQuery } from 'decentraland-ui'
+import { Loader, useMobileMediaQuery } from 'decentraland-ui'
+import { NFTCard } from 'decentraland-ui/dist/components/NFTCard/NFTCard'
 import { usePagination } from '../../lib/pagination'
 import { NFTCategory, NFTOptions, NFTResult } from '../../modules/nfts/types'
 import { MainCategory } from '../../utils/categories'
@@ -61,11 +62,11 @@ export default function Assets(props: Props) {
   return (
     <div className={styles.container}>
       {!isMobile && <NftFilters filters={nftFilters} onChange={onChangeFilter} />}
-      <div className={styles.assets}>
+      <div role="feed" className={styles.assets}>
         {isLoading && assets.length === 0 ? (
-          <span>LOADING</span>
+          <Loader active />
         ) : (
-          assets.map((asset: NFTResult) => <span key={asset.nft.id}>{asset.nft.name}</span>)
+          assets.map((asset: NFTResult) => <NFTCard nft={asset.nft} price={asset.order?.price} />)
         )}
       </div>
       <InfiniteScroll page={page} maxScrollPages={3} hasMorePages={hasMorePages ?? false} isLoading={isLoading} onLoadMore={onChangePage} />
