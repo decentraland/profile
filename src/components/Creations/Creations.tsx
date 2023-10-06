@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { Rarity, ItemSortBy } from '@dcl/schemas'
-import { AssetStatus, AssetStatusFilter } from 'decentraland-dapps/dist/containers'
+import { AssetStatus, AssetStatusFilter, SmartWearableFilter } from 'decentraland-dapps/dist/containers'
 import { AssetCard } from 'decentraland-dapps/dist/containers/AssetCard/AssetCard'
 import { RarityFilter } from 'decentraland-dapps/dist/containers/RarityFilter'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
@@ -17,7 +17,7 @@ import { Options } from '../../modules/items/types'
 import { View } from '../../utils/view'
 import { InfiniteScroll } from '../InfiniteScroll'
 import InformationBar from '../InformationBar'
-import { CREATIONS_DATA_TEST_ID, CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, LOADER_DATA_TEST_ID } from './constants'
+import { CREATIONS_DATA_TEST_ID, CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, LOADER_DATA_TEST_ID, SMART_WEARABLE_FILTER } from './constants'
 import { buildCategoryFilterCategories, buildSortByOptions, getCategoryName } from './utils'
 import { Props } from './Creations.types'
 import styles from './Creations.module.css'
@@ -52,7 +52,8 @@ const Creations = (props: Props) => {
       category,
       rarities,
       sortBy: selectedSortBy,
-      status
+      status,
+      ...(filters.isWearableSmart === 'true' ? { isWearableSmart: true } : {})
     })
   }, [page, first, filters, sortBy])
 
@@ -70,6 +71,12 @@ const Creations = (props: Props) => {
   const handleSetRarity = useCallback(
     (changedRarities: Rarity[]) => {
       changeFilter('rarities', getRaritiesQueryString(changedRarities))
+    },
+    [getRaritiesQueryString, changeFilter]
+  )
+  const handleSetSW = useCallback(
+    (isOnlySmart: boolean) => {
+      changeFilter('isWearableSmart', `${isOnlySmart}`)
     },
     [getRaritiesQueryString, changeFilter]
   )
@@ -99,6 +106,11 @@ const Creations = (props: Props) => {
           <div className={styles.sidebar}>
             <CategoryFilter i18n={{ title: t('categories_menu.title') }} items={categories} value={category} onClick={handleSetCategory} />
             <RarityFilter rarities={rarities} onChange={handleSetRarity} />
+            <SmartWearableFilter
+              isOnlySmart={filters.isWearableSmart === 'true'}
+              onChange={handleSetSW}
+              data-testid={SMART_WEARABLE_FILTER}
+            />
             <AssetStatusFilter value={getAssetStatusQueryString(status)} onChange={onChangeStatus} />
           </div>
         ) : null}

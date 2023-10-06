@@ -97,6 +97,10 @@ export class ItemsClient {
       }
     }
 
+    if (filters.isWearableSmart) {
+      queryParams.append('isWearableSmart', 'true')
+    }
+
     return queryParams
   }
 }
