@@ -20,7 +20,8 @@ export default function Assets(props: Props) {
   const nftFilters = useMemo(
     () => ({
       category: (filters.category || MainCategory.WEARABLE) as NFTCategory,
-      itemRarities: filters.itemRarities?.split(',') as Rarity[]
+      itemRarities: filters.itemRarities?.split(',') as Rarity[],
+      isOnSale: filters.isOnSale ? Boolean(filters.isOnSale) : undefined
     }),
     [filters]
   )
@@ -35,7 +36,8 @@ export default function Assets(props: Props) {
       skip: shouldLoadMultiplePages ? 0 : ITEMS_PER_PAGE * (page - 1),
       category: nftFilters.category,
       itemRarities: nftFilters.itemRarities,
-      owner: profileAddress
+      owner: profileAddress,
+      ...(filters.isOnSale === 'true' ? { isOnSale: true } : {})
     })
   }, [page, first, filters])
 
@@ -50,7 +52,7 @@ export default function Assets(props: Props) {
 
   const onChangeFilter = useCallback((filters: Partial<NFTOptions>) => {
     ;(Object.keys(filters) as (keyof NFTOptions)[]).forEach(key => {
-      const value: string | string[] | number = filters[key] || ''
+      const value: string | string[] | number | boolean = filters[key] || ''
       if (Array.isArray(value)) {
         value.join(',')
       }

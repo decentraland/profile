@@ -5,6 +5,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { CategoryFilter } from 'decentraland-ui/dist/components/CategoryFilter/CategoryFilter'
 import { NFTCategory } from '../../modules/nfts/types'
 import { MainCategory, getAllCategories } from '../../utils/categories'
+import OnSaleFilter from '../OnSaleFilter'
 import { buildCategoryFilterCategories } from './utils'
 import { Props } from './NFTFilters.types'
 import styles from './NFTFilters.module.css'
@@ -32,6 +33,13 @@ export function NftFilters({ filters, onChange }: Props) {
     onChange({ itemRarities: rarities })
   }, [])
 
+  const handleChangeOnSale = useCallback(
+    (isOnSale: boolean) => {
+      onChange({ isOnSale })
+    },
+    [onChange]
+  )
+
   const rarityFilter = <RarityFilter key="rarities" rarities={selectedRarities} onChange={onChangeRarity} />
 
   let categorySpecificFilters: Array<React.ReactNode> = []
@@ -42,6 +50,7 @@ export function NftFilters({ filters, onChange }: Props) {
     <div className={styles.container}>
       <CategoryFilter i18n={{ title: t('categories_menu.title') }} items={categories} value={selectedCategory} onClick={onChangeCategory} />
       {categorySpecificFilters}
+      <OnSaleFilter value={filters.isOnSale ?? false} onChange={handleChangeOnSale} />
     </div>
   )
 }

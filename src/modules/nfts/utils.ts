@@ -54,6 +54,10 @@ export function buildNftQueryString(options: NFTOptions): string {
     options.itemRarities.forEach(rarity => queryParams.append('itemRarity', rarity))
   }
 
+  if (options.isOnSale) {
+    queryParams.append('isOnSale', options.isOnSale.toString())
+  }
+
   if (options.category) {
     const categoryParams = getFiltersForCategory(options.category)
     Object.keys(categoryParams).forEach(param => queryParams.append(param, categoryParams[param]))

@@ -4,6 +4,7 @@ import testUserEvent from '@testing-library/user-event'
 import { Rarity } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { MainCategory } from '../../utils/categories'
+import { ON_SALE_FILTER_DATA_TEST_ID } from '../OnSaleFilter/constants'
 import { NftFilters } from './NFTFilters'
 import { Props } from './NFTFilters.types'
 
@@ -45,5 +46,16 @@ describe('when changing category', () => {
     const emoteCategoryBtn = screen.getByText(t(`categories.${MainCategory.EMOTE}`))
     await testUserEvent.click(emoteCategoryBtn)
     expect(onChange).toHaveBeenCalledWith({ category: MainCategory.EMOTE })
+  })
+})
+
+describe('when changing the on sale filter', () => {
+  it('should call onChange function with the isOnSale parameter', async () => {
+    const onChange = jest.fn()
+    const screen = renderNftFilters({ onChange })
+    const onSaleBtn = screen.getByTestId(ON_SALE_FILTER_DATA_TEST_ID)
+
+    await testUserEvent.click(onSaleBtn as Element)
+    expect(onChange).toHaveBeenCalledWith({ isOnSale: true })
   })
 })

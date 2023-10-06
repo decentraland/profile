@@ -151,6 +151,10 @@
     "other_empty_wearables_title": "{name} todavía no creó ningún wearable",
     "other_empty_emotes_title": "{nombre} no creó ningún emote"
   },
+  "on_sale_filter": {
+    "title": "Estado",
+    "label": "En venta"
+  },
   "filters_modal": {
     "title": "Filtros",
     "reset": "Limpiar",
