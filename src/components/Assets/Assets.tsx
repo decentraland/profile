@@ -127,6 +127,7 @@ export default function Assets(props: Props) {
           <div role="feed" className={styles.assets}>
             {assets.map((asset: NFTResult) => (
               <NFTCard
+                key={asset.nft.id}
                 className={classNames('dui-nft-card', styles.card)}
                 href={getMarketplaceNFTDetailUrl(asset.nft.contractAddress, asset.nft.tokenId)}
                 nft={asset.nft}
