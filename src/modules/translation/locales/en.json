@@ -146,14 +146,11 @@
   },
   "creations": {
     "items_count": "{count} {count, plural, one {item} other {items}}",
-    "own_empty_wearables_title": "You haven't created any Wearables yet",
-    "own_empty_emotes_title": "You haven't created any Emotes yet",
-    "own_empty_wearables_text": "Submit your first collection and become a Decentraland creator! <br></br> Create awesome wearables and monetize your creations",
-    "own_empty_emotes_text": "Submit your first collection and become a Decentraland creator! <br></br> Create awesome emotes and monetize your creations",
+    "own_empty_title": "You haven't created any {category} yet",
+    "own_empty_text": "Submit your first collection and become a Decentraland creator! <br></br> Create awesome {category} and monetize your creations",
     "own_empty_primary_action": "Learn more",
     "own_empty_secondary_action": "Create a collection",
-    "other_empty_wearables_title": "{name} hasn't created any Wearables yet",
-    "other_empty_emotes_title": "{name} hasn't created any Emotes yet"
+    "other_empty_title": "{name} hasn't created any {category} yet"
   },
   "filters_modal": {
     "title": "Filters",

@@ -138,10 +138,17 @@ const Creations = (props: Props) => {
                 <div className={styles.image}>
                   <img src={selectedCategoryName === 'wearables' ? shirtImage : emoteImage} />
                 </div>
-                <h2 className={styles.title}>{t(`creations.${view}_empty_${selectedCategoryName}_title`, { name: profileName })}</h2>
+                <h2 className={styles.title}>
+                  {t(`creations.${view}_empty_title`, {
+                    name: profileName,
+                    category: t(`categories.${category}`).toLowerCase()
+                  })}
+                </h2>
                 {view === View.OWN ? (
                   <>
-                    <p className={styles.text}>{t(`creations.own_empty_${selectedCategoryName}_text`, { br: () => <br></br> })}</p>
+                    <p className={styles.text}>
+                      {t('creations.own_empty_text', { br: () => <br></br>, category: t(`categories.${category}`).toLowerCase() })}
+                    </p>
                     <div className={styles.actions}>
                       <Button
                         secondary
