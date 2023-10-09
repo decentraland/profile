@@ -85,7 +85,7 @@ describe('when changing the on sale filter', () => {
     screen = renderNftFilters({ onChange })
   })
 
-  it('should call onChange function with the isOnSale parameter', async () => {
+  it('should call onChange function with the isOnSale parameter set to true', async () => {
     const onSaleBtn = (await screen.findByText(t('on_sale_filter.label'))).previousSibling
     await testUserEvent.click(onSaleBtn as Element)
     expect(onChange).toHaveBeenCalledWith({ isOnSale: true })
@@ -101,7 +101,7 @@ describe('when changing the smart wearable filter', () => {
     screen = renderNftFilters({ onChange })
   })
 
-  it('should call onChange function with the isWearableSmart parameter', async () => {
+  it('should call onChange function with the isWearableSmart parameter set to true', async () => {
     const smartWearableBtn = screen.getByTestId(SMART_WEARABLE_FILTER_DATA_TEST_ID).querySelector('input')
     await testUserEvent.click(smartWearableBtn as Element)
     expect(onChange).toHaveBeenCalledWith({ isWearableSmart: true })

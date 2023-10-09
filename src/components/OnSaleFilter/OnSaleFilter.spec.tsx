@@ -1,7 +1,7 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { renderWithProviders } from '../../tests/tests'
-import { ON_SALE_FILTER_DATA_TEST_ID } from './constants'
 import OnSaleFilter from './OnSaleFilter'
 import { Props } from './OnSaleFilter.types'
 
@@ -13,29 +13,33 @@ let renderedComponent: ReturnType<typeof renderOnSaleFilter>
 
 describe('when checking the on sale checkbox', () => {
   let isChecked: boolean
+  let onChange: jest.Mock
+
   describe('when the checkbox is checked', () => {
     beforeEach(() => {
       isChecked = true
-      renderedComponent = renderOnSaleFilter({ value: isChecked })
+      onChange = jest.fn()
+      renderedComponent = renderOnSaleFilter({ value: isChecked, onChange })
     })
 
     it('should call the onChange method prop with the value as false', async () => {
-      const { findByTestId } = renderedComponent
-      fireEvent.click(await findByTestId(ON_SALE_FILTER_DATA_TEST_ID))
-      expect(isChecked).toBe(!!isChecked)
+      const { findByText } = renderedComponent
+      fireEvent.click((await findByText(t('on_sale_filter.label'))).previousSibling as Element)
+      expect(onChange).toHaveBeenCalledWith(!isChecked)
     })
   })
 
   describe('when the checkbox is not checked', () => {
     beforeEach(() => {
       isChecked = false
-      renderedComponent = renderOnSaleFilter({ value: isChecked })
+      onChange = jest.fn()
+      renderedComponent = renderOnSaleFilter({ value: isChecked, onChange })
     })
 
     it('should call the onChange method prop with the value as true', async () => {
-      const { findByTestId } = renderedComponent
-      fireEvent.click(await findByTestId(ON_SALE_FILTER_DATA_TEST_ID))
-      expect(isChecked).toBe(!!isChecked)
+      const { findByText } = renderedComponent
+      fireEvent.click((await findByText(t('on_sale_filter.label'))).previousSibling as Element)
+      expect(onChange).toHaveBeenCalledWith(!isChecked)
     })
   })
 })
