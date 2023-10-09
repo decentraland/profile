@@ -39,7 +39,7 @@ const OnSaleFilter = (props: Props) => {
   )
 
   return (
-    <Box className={styles.box} collapsible header={header}>
+    <Box className={styles.box} collapsible defaultCollapsed header={header}>
       <Checkbox
         data-testid={ON_SALE_FILTER_DATA_TEST_ID}
         label={t('on_sale_filter.label')}

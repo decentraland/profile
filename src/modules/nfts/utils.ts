@@ -67,5 +67,9 @@ export function buildNftQueryString(options: NFTOptions): string {
     Object.keys(categoryParams).forEach(param => queryParams.append(param, categoryParams[param]))
   }
 
+  if (options.isWearableSmart) {
+    queryParams.append('isWearableSmart', 'true')
+  }
+
   return queryParams.toString()
 }

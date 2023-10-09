@@ -1,17 +1,18 @@
 import React, { useCallback, useMemo } from 'react'
 import classNames from 'classnames'
 import { Rarity } from '@dcl/schemas'
-import { RarityFilter } from 'decentraland-dapps/dist/containers'
+import { RarityFilter, SmartWearableFilter } from 'decentraland-dapps/dist/containers'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { CategoryFilter } from 'decentraland-ui/dist/components/CategoryFilter/CategoryFilter'
 import { NFTCategory } from '../../modules/nfts/types'
 import { MainCategory, getAllCategories } from '../../utils/categories'
 import OnSaleFilter from '../OnSaleFilter'
+import { SMART_WEARABLE_FILTER_DATA_TEST_ID } from './constants'
 import { buildCategoryFilterCategories } from './utils'
 import { Props } from './NFTFilters.types'
 import styles from './NFTFilters.module.css'
 
-export function NftFilters({ filters, className, onChange }: Props) {
+const NFTFilters = ({ filters, className, onChange }: Props) => {
   // category
   const categories = useMemo(() => buildCategoryFilterCategories(), [])
   const selectedCategory = useMemo(() => {
@@ -41,12 +42,33 @@ export function NftFilters({ filters, className, onChange }: Props) {
     [onChange]
   )
 
-  const rarityFilter = <RarityFilter key="rarities" rarities={selectedRarities} onChange={onChangeRarity} />
+  const handleChangeIsWearableSmart = useCallback(
+    (isWearableSmart: boolean) => {
+      onChange({ isWearableSmart })
+    },
+    [onChange]
+  )
 
-  let categorySpecificFilters: Array<React.ReactNode> = []
-  if (selectedCategory.includes(MainCategory.WEARABLE) || selectedCategory.includes(MainCategory.EMOTE)) {
-    categorySpecificFilters = [rarityFilter]
-  }
+  const categorySpecificFilters: Array<React.ReactNode> = useMemo(() => {
+    const filterComponents: Array<React.ReactNode> = []
+    if (selectedCategory.includes(MainCategory.WEARABLE) || selectedCategory.includes(MainCategory.EMOTE)) {
+      const rarityFilter = <RarityFilter key="rarities" rarities={selectedRarities} onChange={onChangeRarity} />
+      filterComponents.push(rarityFilter)
+    }
+    if (selectedCategory.includes(MainCategory.WEARABLE)) {
+      const smartWearableFilter = (
+        <SmartWearableFilter
+          key="smart"
+          data-testid={SMART_WEARABLE_FILTER_DATA_TEST_ID}
+          isOnlySmart={filters.isWearableSmart ?? false}
+          onChange={handleChangeIsWearableSmart}
+        />
+      )
+      filterComponents.push(smartWearableFilter)
+    }
+    return filterComponents
+  }, [selectedCategory, selectedRarities, onChangeRarity, filters.isWearableSmart, handleChangeIsWearableSmart])
+
   return (
     <div className={classNames(styles.container, className)}>
       <CategoryFilter i18n={{ title: t('categories_menu.title') }} items={categories} value={selectedCategory} onClick={onChangeCategory} />
@@ -55,3 +77,5 @@ export function NftFilters({ filters, className, onChange }: Props) {
     </div>
   )
 }
+
+export default NFTFilters

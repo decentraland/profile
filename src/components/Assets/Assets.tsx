@@ -13,7 +13,7 @@ import { formatWeiToMana } from '../../utils/mana'
 import { View } from '../../utils/view'
 import { InfiniteScroll } from '../InfiniteScroll'
 import InformationBar from '../InformationBar'
-import { NftFilters } from '../NFTFilters'
+import NFTFilters from '../NFTFilters'
 import { ITEMS_PER_PAGE } from './constants'
 import { buildSortByOptions, getCategoryImage } from './utils'
 import { Props } from './Assets.types'
@@ -33,7 +33,8 @@ export default function Assets(props: Props) {
     () => ({
       category: (filters.category || MainCategory.WEARABLE) as NFTCategory,
       itemRarities: filters.itemRarities?.split(',') as Rarity[],
-      isOnSale: filters.isOnSale ? Boolean(filters.isOnSale) : undefined
+      isOnSale: filters.isOnSale ? Boolean(filters.isOnSale) : undefined,
+      isWearableSmart: filters.isWearableSmart ? Boolean(filters.isWearableSmart) : undefined
     }),
     [filters]
   )
@@ -52,7 +53,8 @@ export default function Assets(props: Props) {
       itemRarities: nftFilters.itemRarities,
       owner: profileAddress,
       sortBy: selectedSortBy,
-      ...(filters.isOnSale === 'true' ? { isOnSale: true } : {})
+      ...(filters.isOnSale === 'true' ? { isOnSale: true } : {}),
+      ...(filters.isWearableSmart === 'true' ? { isWearableSmart: true } : {})
     })
   }, [page, first, filters, selectedSortBy])
 
@@ -102,7 +104,7 @@ export default function Assets(props: Props) {
 
   return (
     <div className={styles.container}>
-      {!isMobile && <NftFilters filters={nftFilters} onChange={onChangeFilter} />}
+      {!isMobile && <NFTFilters filters={nftFilters} onChange={onChangeFilter} />}
       <div className={styles.content}>
         <InformationBar<NFTSortBy>
           className={styles.informationBar}

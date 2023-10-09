@@ -24,6 +24,7 @@ describe.each<[string, NFTOptions, string]>([
   ['land subcategory', { category: LandCategory.PARCEL }, 'isLand=true&category=parcel'],
   ['ens category', { category: MainCategory.ENS }, 'category=ens'],
   ['owner', { owner: 'owner' }, 'owner=owner'],
+  ['isWearableSmart', { isWearableSmart: true }, 'isWearableSmart=true'],
   ['itemRarities', { itemRarities: [Rarity.COMMON, Rarity.EPIC] }, 'itemRarity=common&itemRarity=epic']
 ])('when requesting items with the %s option', (type, options, queryString) => {
   beforeEach(() => {
