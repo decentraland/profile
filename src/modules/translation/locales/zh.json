@@ -141,14 +141,12 @@
     "cheapest": "最低价"
   },
   "creations": {
-    "own_empty_wearables_title": "您还没有创建任何可穿戴设备",
-    "own_empty_emotes_title": "您还没有创造任何情绪",
-    "own_empty_wearables_text": "提交您的第一个收藏品并成为去分散的创作者！<br> </br>创建很棒的可穿戴设备并将您的作品货币化",
-    "own_empty_emotes_text": "提交您的第一个收藏品并成为去分散的创作者！<br> </br>创造出色的情感并使您的创作获利",
+    "items_count": "{count} {count, plural, one {item} other {items}}",
+    "own_empty_title": "您尚未创建任何{category}",
+    "own_empty_text": "提交您的第一个收藏并成为 Decentraland 创造者！ <br></br> 创造精彩的{category}并通过您的创作获利",
     "own_empty_primary_action": "了解更多",
     "own_empty_secondary_action": "创建一个集合",
-    "other_empty_wearables_title": "{名称}还没有创建任何可穿戴设备",
-    "other_empty_emotes_title": "{name}还没有创造任何情绪"
+    "other_empty_title": "{name} 尚未创建任何 {category}"
   },
   "on_sale_filter": {
     "title": "地位",
