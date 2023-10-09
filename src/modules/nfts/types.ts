@@ -1,7 +1,7 @@
 import { NFT, NFTFilters, Order, RentalListing } from '@dcl/schemas'
 import { AccessoryCategory, EmoteCategory, HeadCategory, LandCategory, MainCategory, WearableCategory } from '../../utils/categories'
 
-export type NFTOptions = Pick<NFTFilters, 'first' | 'skip' | 'itemRarities' | 'owner' | 'sortBy' | 'isWearableSmart'> & {
+export type NFTOptions = Pick<NFTFilters, 'first' | 'skip' | 'itemRarities' | 'owner' | 'sortBy' | 'isWearableSmart' | 'isOnSale'> & {
   category?: NFTCategory
 }
 

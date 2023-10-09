@@ -155,6 +155,13 @@
     "other_empty_wearables_title": "{name} hasn't created any Wearables yet",
     "other_empty_emotes_title": "{name} hasn't created any Emotes yet"
   },
+  "on_sale_filter": {
+    "title": "Status",
+    "label": "On sale",
+    "for_sale": "Only for sale",
+    "not_for_sale": "Include items not for sale",
+    "tooltip": "Show items only for sale or both"
+  },
   "filters_modal": {
     "title": "Filters",
     "reset": "Reset",

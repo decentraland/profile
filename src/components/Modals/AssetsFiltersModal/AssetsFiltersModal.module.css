@@ -1,5 +1,4 @@
-.filters :global(.dcl.box.dui-rarity-filter) {
+.filters :global(.dcl.box) {
   border: none;
   background: none;
 }
-

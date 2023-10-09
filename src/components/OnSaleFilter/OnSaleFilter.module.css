@@ -1,0 +1,29 @@
+.box:global(.dcl.box) {
+  background-color: var(--card);
+  padding: 13px 20px 13px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* Desktop */
+@media only screen and (min-width: 992px) {
+  .header {
+    gap: 5px;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .header {
+    justify-content: space-between;
+    text-transform: none;
+    font-size: 17px;
+  }
+
+  .name {
+    color: var(--text);
+  }
+}
