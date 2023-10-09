@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
+import classNames from 'classnames'
 import { Rarity } from '@dcl/schemas'
 import { RarityFilter } from 'decentraland-dapps/dist/containers'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
@@ -10,7 +11,7 @@ import { buildCategoryFilterCategories } from './utils'
 import { Props } from './NFTFilters.types'
 import styles from './NFTFilters.module.css'
 
-export function NftFilters({ filters, onChange }: Props) {
+export function NftFilters({ filters, className, onChange }: Props) {
   // category
   const categories = useMemo(() => buildCategoryFilterCategories(), [])
   const selectedCategory = useMemo(() => {
@@ -47,7 +48,7 @@ export function NftFilters({ filters, onChange }: Props) {
     categorySpecificFilters = [rarityFilter]
   }
   return (
-    <div className={styles.container}>
+    <div className={classNames(styles.container, className)}>
       <CategoryFilter i18n={{ title: t('categories_menu.title') }} items={categories} value={selectedCategory} onClick={onChangeCategory} />
       {categorySpecificFilters}
       <OnSaleFilter value={filters.isOnSale ?? false} onChange={handleChangeOnSale} />

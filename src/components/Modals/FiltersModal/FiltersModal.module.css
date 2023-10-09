@@ -38,6 +38,17 @@
   flex-direction: column;
   flex: 1;
   background: transparent;
+  overflow-x: hidden;
+}
+
+.assetFiltersModal {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.assetFiltersModal::-webkit-scrollbar {
+  display: none;
 }
 
 :global(.ui.modal).assetFiltersModal > .modalFooter {

@@ -6,7 +6,7 @@ import { ItemSaleStatus } from '../../modules/items/types'
 import { renderWithProviders } from '../../tests/tests'
 import { MainCategory, WearableCategory } from '../../utils/categories'
 import { View } from '../../utils/view'
-import { CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE } from './constants'
+import { CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, SMART_WEARABLE_FILTER } from './constants'
 import Creations from './Creations'
 import { Props } from './Creations.types'
 
@@ -199,6 +199,36 @@ describe('when changing the category', () => {
       category: WearableCategory.HEAD,
       skip: 0,
       status: ItemSaleStatus.ON_SALE
+    })
+  })
+})
+
+describe('when changing the isWearableSmart filter', () => {
+  let onFetchCreations: jest.Mock
+
+  beforeEach(() => {
+    onFetchCreations = jest.fn()
+    renderedComponent = renderCreations({ profileAddress: '0x1', onFetchCreations })
+  })
+
+  it('should re-trigger the creations fetch', () => {
+    const { getByTestId } = renderedComponent
+    const checkboxContainer = getByTestId(SMART_WEARABLE_FILTER)
+    act(() => {
+      const checkbox = checkboxContainer.querySelector("input[type='checkbox']")
+      if (checkbox) {
+        fireEvent.click(checkbox)
+      }
+    })
+    expect(onFetchCreations).toHaveBeenCalledWith({
+      creator: '0x1',
+      first: 24,
+      rarities: [],
+      sortBy: ItemSortBy.NEWEST,
+      category: NFTCategory.WEARABLE,
+      skip: 0,
+      status: ItemSaleStatus.ON_SALE,
+      isWearableSmart: true
     })
   })
 })

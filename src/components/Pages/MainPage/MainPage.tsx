@@ -22,7 +22,7 @@ import { Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
-  const { isLoading, profileAddress, loggedInAddress, isBlocked, isCreationsTabEnabled, isAssetsTabEnabled } = props
+  const { isLoading, profileAddress, loggedInAddress, isBlocked, isCreationsTabEnabled, isAssetsTabEnabled, isLoadingFeatures } = props
   const view = getView(loggedInAddress, profileAddress)
   const isMobile = useMobileMediaQuery()
   const navigate = useNavigate()
@@ -30,8 +30,8 @@ function MainPage(props: Props) {
 
   if (
     !isTabValid(params.tab) ||
-    (params.tab === AccountTabs.ASSETS && !isAssetsTabEnabled) ||
-    (params.tab === AccountTabs.CREATIONS && !isCreationsTabEnabled)
+    (params.tab === AccountTabs.ASSETS && !isAssetsTabEnabled && !isLoadingFeatures) ||
+    (params.tab === AccountTabs.CREATIONS && !isCreationsTabEnabled && !isLoadingFeatures)
   ) {
     navigate(locations.account(profileAddress ?? nullAddress), { replace: true })
   }
@@ -68,11 +68,11 @@ function MainPage(props: Props) {
       case AccountTabs.CREATIONS:
         return <Creations profileAddress={profileAddress ?? nullAddress} view={view} />
       case AccountTabs.ASSETS:
-        return <Assets profileAddress={profileAddress ?? nullAddress} />
+        return <Assets profileAddress={profileAddress ?? nullAddress} view={view} />
       default:
         return <Overview loggedInAddress={loggedInAddress} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
     }
-  }, [selectedTab])
+  }, [selectedTab, view])
 
   usePageTracking()
 

@@ -28,3 +28,8 @@ export const getEditAvatarUrl = () => {
   const EXPLORER_URL = config.get('EXPLORER_URL')
   return `${EXPLORER_URL}?OPEN_AVATAR_EDITOR${config.is(Env.DEVELOPMENT) ? '&NETWORK=sepolia' : ''}`
 }
+
+export const getMarketplaceNFTDetailUrl = (contractAddress: string, tokenId: string) => {
+  const MARKETPLACE_URL = config.get('MARKETPLACE_URL')
+  return `${MARKETPLACE_URL}/contracts/${contractAddress}/tokens/${tokenId}`
+}

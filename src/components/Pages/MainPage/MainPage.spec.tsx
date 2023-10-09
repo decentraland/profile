@@ -32,6 +32,7 @@ function renderMainPage(props: Partial<Props> = {}) {
       isCreationsTabEnabled={false}
       isAssetsTabEnabled={false}
       isBlocked={false}
+      isLoadingFeatures={false}
       {...props}
     />
   )

@@ -46,6 +46,10 @@ export function buildNftQueryString(options: NFTOptions): string {
     queryParams.append('skip', options.skip.toString())
   }
 
+  if (options.sortBy) {
+    queryParams.append('sortBy', options.sortBy)
+  }
+
   if (options.owner) {
     queryParams.append('owner', options.owner)
   }
