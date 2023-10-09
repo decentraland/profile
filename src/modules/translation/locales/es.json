@@ -143,7 +143,7 @@
   "creations": {
     "items_count": "{count} {count, plural, one {item} other {items}}",
     "own_empty_title": "Aún no has creado ningún {category}",
-    "own_empty_text": "¡Envíe su primera colección y conviértase en descentral y creador!<br> </br> Crea {category} increíbles y monetiza tus creaciones",
+    "own_empty_text": "¡Envíe su primera colección y conviértase en un creador de Decentraland!<br> </br> Crea {category} increíbles y monetiza tus creaciones",
     "own_empty_primary_action": "Aprende más",
     "own_empty_secondary_action": "Crear una colección",
     "other_empty_title": "{name} todavía no creó ningún {category}"
