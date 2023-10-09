@@ -53,10 +53,10 @@ export default function Assets(props: Props) {
       itemRarities: nftFilters.itemRarities,
       owner: profileAddress,
       sortBy: selectedSortBy,
-      ...(filters.isOnSale === 'true' ? { isOnSale: true } : {}),
-      ...(filters.isWearableSmart === 'true' ? { isWearableSmart: true } : {})
+      ...(nftFilters.isOnSale ? { isOnSale: true } : {}),
+      ...(nftFilters.isWearableSmart ? { isWearableSmart: true } : {})
     })
-  }, [page, first, filters, selectedSortBy])
+  }, [page, first, nftFilters, selectedSortBy, profileAddress])
 
   const onChangePage = useCallback(
     (newPage: number) => {
@@ -64,23 +64,29 @@ export default function Assets(props: Props) {
         goToPage(newPage)
       }
     },
-    [page]
+    [page, goToPage]
   )
 
-  const onChangeFilter = useCallback((filters: Partial<NFTOptions>) => {
-    const filterKeys = Object.keys(filters) as (keyof NFTOptions)[]
-    filterKeys.forEach(key => {
-      const value = filters[key] || ''
-      if (Array.isArray(value)) {
-        value.join(',')
-      }
-      changeFilter(key, value.toString())
-    })
-  }, [])
+  const onChangeFilter = useCallback(
+    (filters: Partial<NFTOptions>) => {
+      const filterKeys = Object.keys(filters) as (keyof NFTOptions)[]
+      filterKeys.forEach(key => {
+        const value = filters[key] || ''
+        if (Array.isArray(value)) {
+          value.join(',')
+        }
+        changeFilter(key, value.toString())
+      })
+    },
+    [changeFilter]
+  )
 
-  const onChangeSortBy = useCallback((sortOption: NFTSortBy) => {
-    changeSorting(sortOption)
-  }, [])
+  const onChangeSortBy = useCallback(
+    (sortOption: NFTSortBy) => {
+      changeSorting(sortOption)
+    },
+    [changeSorting]
+  )
 
   const renderEmptyState = useCallback(() => {
     const actions =
@@ -100,7 +106,7 @@ export default function Assets(props: Props) {
         </div>
       </div>
     )
-  }, [nftFilters.category, view, profileName])
+  }, [isMobile, nftFilters.category, view, profileName])
 
   return (
     <div className={styles.container}>
