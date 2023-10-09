@@ -4,7 +4,6 @@ import testUserEvent from '@testing-library/user-event'
 import { Rarity } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { MainCategory } from '../../utils/categories'
-import { ON_SALE_FILTER_DATA_TEST_ID } from '../OnSaleFilter/constants'
 import { SMART_WEARABLE_FILTER_DATA_TEST_ID } from './constants'
 import NFTFilters from './NFTFilters'
 import { Props } from './NFTFilters.types'
@@ -87,8 +86,8 @@ describe('when changing the on sale filter', () => {
   })
 
   it('should call onChange function with the isOnSale parameter', async () => {
-    const onSaleBtn = screen.getByTestId(ON_SALE_FILTER_DATA_TEST_ID)
-    await testUserEvent.click(onSaleBtn)
+    const onSaleBtn = (await screen.findByText(t('on_sale_filter.label'))).previousSibling
+    await testUserEvent.click(onSaleBtn as Element)
     expect(onChange).toHaveBeenCalledWith({ isOnSale: true })
   })
 })

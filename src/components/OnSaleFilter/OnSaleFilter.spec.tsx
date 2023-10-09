@@ -1,7 +1,7 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { renderWithProviders } from '../../tests/tests'
+import { ON_SALE_FILTER_DATA_TEST_ID } from './constants'
 import OnSaleFilter from './OnSaleFilter'
 import { Props } from './OnSaleFilter.types'
 
@@ -20,9 +20,8 @@ describe('when checking the on sale checkbox', () => {
     })
 
     it('should call the onChange method prop with the value as false', async () => {
-      const { findByText } = renderedComponent
-      fireEvent.click((await findByText(t('on_sale_filter.label'))).previousSibling as HTMLElement)
-
+      const { findByTestId } = renderedComponent
+      fireEvent.click(await findByTestId(ON_SALE_FILTER_DATA_TEST_ID))
       expect(isChecked).toBe(!!isChecked)
     })
   })
@@ -34,8 +33,8 @@ describe('when checking the on sale checkbox', () => {
     })
 
     it('should call the onChange method prop with the value as true', async () => {
-      const { findByText } = renderedComponent
-      fireEvent.click((await findByText(t('on_sale_filter.label'))).previousSibling as HTMLElement)
+      const { findByTestId } = renderedComponent
+      fireEvent.click(await findByTestId(ON_SALE_FILTER_DATA_TEST_ID))
       expect(isChecked).toBe(!!isChecked)
     })
   })

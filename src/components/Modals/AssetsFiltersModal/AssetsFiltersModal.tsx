@@ -31,8 +31,6 @@ const AssetsFiltersModal = (props: Props) => {
     isWearableSmart: nftFilters.isWearableSmart
   })
 
-  console.log('Filters to change', filtersToChange)
-
   const onChangeFilter = useCallback((filters: Partial<NFTOptions>) => {
     const newFilters = { ...filtersToChange }
     if ('itemRarities' in filters) {

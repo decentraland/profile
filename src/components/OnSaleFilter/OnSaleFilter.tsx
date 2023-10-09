@@ -20,7 +20,7 @@ const OnSaleFilter = (props: Props) => {
   )
   const header = useMemo(
     () => (
-      <div className={styles.header}>
+      <div className={styles.header} data-testid={ON_SALE_FILTER_DATA_TEST_ID}>
         {!isMobileOrTablet ? (
           <>
             <span className={styles.name}>
@@ -39,14 +39,8 @@ const OnSaleFilter = (props: Props) => {
   )
 
   return (
-    <Box className={styles.box} collapsible defaultCollapsed header={header}>
-      <Checkbox
-        data-testid={ON_SALE_FILTER_DATA_TEST_ID}
-        label={t('on_sale_filter.label')}
-        toggle
-        checked={value}
-        onChange={handleOnChange}
-      />
+    <Box className={styles.box} collapsible header={header}>
+      <Checkbox label={t('on_sale_filter.label')} toggle checked={value} onChange={handleOnChange} />
     </Box>
   )
 }
