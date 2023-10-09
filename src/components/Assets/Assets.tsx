@@ -23,7 +23,7 @@ const MARKETPLACE_URL = config.get('MARKETPLACE_URL')
 
 export default function Assets(props: Props) {
   const isMobile = useMobileMediaQuery()
-  const { isLoading, total: count, assets, view, profileAddress, profileName, onFetchAssets } = props
+  const { isLoading, total: count, assets, view, profileAddress, profileName, onFetchAssets, onOpenFiltersModal } = props
   const { first, page, filters, hasMorePages, sortBy, goToPage, changeFilter, changeSorting } = usePagination<keyof NFTOptions>({
     pageSize: ITEMS_PER_PAGE,
     count
@@ -111,7 +111,7 @@ export default function Assets(props: Props) {
           hasFiltersEnabled={hasFiltersEnabled}
           onSortByChange={onChangeSortBy}
           getCountText={count => t('assets_tab.assets_count', { count })}
-          onOpenFiltersModal={() => console.log('TODO: Mobile filters')}
+          onOpenFiltersModal={onOpenFiltersModal}
         />
         {isLoading && assets.length === 0 ? (
           <div className={styles.loader}>
