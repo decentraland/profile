@@ -121,28 +121,12 @@ describe('when rendering the component without items', () => {
   describe('and the view is of the own user', () => {
     beforeEach(() => {
       view = View.OWN
+      renderedComponent = renderCreations({ items, view }, ['/creations?category=wearable'])
     })
 
-    describe('and the category is of a wearable', () => {
-      beforeEach(() => {
-        renderedComponent = renderCreations({ items, view }, ['/creations?category=wearable'])
-      })
-
-      it('should render a message saying that the user does not have wearables created', () => {
-        const { getByText } = renderedComponent
-        expect(getByText(t('creations.own_empty_wearables_title'))).toBeInTheDocument()
-      })
-    })
-
-    describe('and the category is emotes', () => {
-      beforeEach(() => {
-        renderedComponent = renderCreations({ items, view }, ['/creations?category=emote'])
-      })
-
-      it('should render a message saying that the user does not have emotes created', () => {
-        const { getByText } = renderedComponent
-        expect(getByText(t('creations.own_empty_emotes_title'))).toBeInTheDocument()
-      })
+    it('should render a message saying that the user does not have wearables created', () => {
+      const { getByText } = renderedComponent
+      expect(getByText(t('creations.own_empty_title', { category: t('categories.wearable').toLowerCase() }))).toBeInTheDocument()
     })
   })
 
@@ -152,28 +136,14 @@ describe('when rendering the component without items', () => {
     beforeEach(() => {
       view = View.OTHER
       profileName = 'aName'
+      renderedComponent = renderCreations({ items, view, profileName }, ['/creations?category=wearable'])
     })
 
-    describe('and the category is wearables', () => {
-      beforeEach(() => {
-        renderedComponent = renderCreations({ items, view, profileName }, ['/creations?category=wearable'])
-      })
-
-      it('should render a message saying that the user does not have wearables created', () => {
-        const { getByText } = renderedComponent
-        expect(getByText(t('creations.other_empty_wearables_title', { name: profileName }))).toBeInTheDocument()
-      })
-    })
-
-    describe('and the category is emotes', () => {
-      beforeEach(() => {
-        renderedComponent = renderCreations({ items, view, profileName }, ['/creations?category=emote'])
-      })
-
-      it('should render a message saying that the user does not have emotes created', () => {
-        const { getByText } = renderedComponent
-        expect(getByText(t('creations.other_empty_emotes_title', { name: profileName }))).toBeInTheDocument()
-      })
+    it('should render a message saying that the user does not have wearables created', () => {
+      const { getByText } = renderedComponent
+      expect(
+        getByText(t('creations.other_empty_title', { name: profileName, category: t('categories.wearable').toLowerCase() }))
+      ).toBeInTheDocument()
     })
   })
 })
