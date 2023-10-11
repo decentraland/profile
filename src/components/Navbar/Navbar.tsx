@@ -1,9 +1,9 @@
 import React from 'react'
 import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
+import UserInformation from 'decentraland-dapps/dist/containers/UserInformation'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui'
 import { locations } from '../../modules/routing/locations'
-import UserInformation from '../UserInformation'
 import { Props } from './Navbar.types'
 import './Navbar.css'
 
