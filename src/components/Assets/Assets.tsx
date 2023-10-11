@@ -32,7 +32,7 @@ export default function Assets(props: Props) {
   const nftFilters = useMemo(
     () => ({
       category: (filters.category || MainCategory.WEARABLE) as NFTCategory,
-      itemRarities: filters.itemRarities?.split(',') as Rarity[],
+      itemRarities: (filters.itemRarities?.split(',') ?? []) as Rarity[],
       isOnSale: filters.isOnSale ? Boolean(filters.isOnSale) : undefined,
       isWearableSmart: filters.isWearableSmart ? Boolean(filters.isWearableSmart) : undefined
     }),
@@ -85,7 +85,7 @@ export default function Assets(props: Props) {
   const renderEmptyState = useCallback(() => {
     const actions =
       view === View.OWN ? (
-        <Button primary fluid={isMobile} target="_blank" href={MARKETPLACE_URL} size="small">
+        <Button primary fluid={isMobile} target="_blank" href={MARKETPLACE_URL}>
           {t('assets_tab.go_to_marketplace')}
         </Button>
       ) : null

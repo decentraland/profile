@@ -1,10 +1,10 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import { fetchNFTsFailure, fetchNFTsRequest, fetchNFTsSuccess } from './actions'
 import { NFTClient } from './client'
 
 export function* nftSagas(api: NFTClient) {
-  yield takeLatest(fetchNFTsRequest.type, handleFetchNftsRequest)
+  yield takeEvery(fetchNFTsRequest.type, handleFetchNftsRequest)
 
   function* handleFetchNftsRequest(action: ReturnType<typeof fetchNFTsRequest>) {
     try {
