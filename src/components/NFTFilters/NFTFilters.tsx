@@ -22,18 +22,24 @@ const NFTFilters = ({ filters, className, onChange }: Props) => {
     return MainCategory.WEARABLE
   }, [filters.category])
 
-  const onChangeCategory = useCallback((id: string) => {
-    onChange({ category: id as NFTCategory })
-  }, [])
+  const onChangeCategory = useCallback(
+    (id: string) => {
+      onChange({ category: id as NFTCategory })
+    },
+    [onChange]
+  )
 
   // itemRarities
   const selectedRarities = useMemo(
     () => (filters.itemRarities ? filters.itemRarities.filter(rarity => Object.values(Rarity).includes(rarity)) : []),
     [filters.itemRarities]
   )
-  const onChangeRarity = useCallback((rarities: Rarity[]) => {
-    onChange({ itemRarities: rarities })
-  }, [])
+  const onChangeRarity = useCallback(
+    (rarities: Rarity[]) => {
+      onChange({ itemRarities: rarities })
+    },
+    [onChange]
+  )
 
   const handleChangeOnSale = useCallback(
     (isOnSale: boolean) => {
