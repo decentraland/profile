@@ -1,4 +1,4 @@
-import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { all, call, put, takeEvery } from 'redux-saga/effects'
 import { Network } from '@dcl/schemas'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import {
@@ -15,7 +15,7 @@ import { isEthereumWearable, isMaticWearable } from './utils'
 
 export function* itemSagas(api: ItemsClient) {
   yield takeEvery(fetchItemsByUrnRequest.type, handleFetchItemsByUrnRequest)
-  yield takeLatest(fetchCreationsRequest.type, handleFetchCreationsRequest)
+  yield takeEvery(fetchCreationsRequest.type, handleFetchCreationsRequest)
 
   function* handleFetchItemsByUrnRequest(action: FetchItemsByUrnRequestAction) {
     try {

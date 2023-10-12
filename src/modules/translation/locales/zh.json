@@ -141,12 +141,17 @@
     "cheapest": "最低价"
   },
   "creations": {
-    "items_count": "{count} {count, plural, one {item} other {items}}",
-    "own_empty_title": "您尚未创建任何{category}",
-    "own_empty_text": "提交您的第一个收藏并成为 Decentraland 创造者！ <br></br> 创造精彩的{category}并通过您的创作获利",
+    "items_count": "{count} 项目}",
+    "own_empty_main_category_title": "您尚未创建任何{category}",
+    "own_empty_sub_category_title": "找不到{category} {parentCategory}",
+    "other_empty_main_category_title": "{name} 尚未创建任何 {category}",
+    "other_empty_sub_category_title": "{name} 尚未创建任何 {category} {parentCategory}",
+    "empty_multiple_filters_title": "没有找到这些过滤器的结果",
+    "own_empty_main_category_text": "释放您的创造力并开始从您自己的设计中赚钱！",
+    "own_empty_sub_category_text": "您尚未发布任何{category} {parentCategory}。",
     "own_empty_primary_action": "了解更多",
     "own_empty_secondary_action": "创建一个集合",
-    "other_empty_title": "{name} 尚未创建任何 {category}"
+    "clear_filters": "清除过滤器"
   },
   "on_sale_filter": {
     "title": "地位",

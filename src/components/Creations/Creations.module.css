@@ -60,12 +60,25 @@
   text-align: center;
 }
 
-.empty .message .actions {
+.empty .message .mainCategoryActions {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 30px;
   padding-right: 30px;
+}
+
+.empty .message .subCategoryActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.empty .message .emptyActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .informationBar {

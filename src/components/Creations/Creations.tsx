@@ -9,15 +9,24 @@ import { CategoryFilter } from 'decentraland-ui/dist/components/CategoryFilter/C
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import emoteImage from '../../assets/images/emote.svg'
+import noResultsImage from '../../assets/images/noResults.svg'
 import shirtImage from '../../assets/images/shirt.svg'
 import { useAssetStatusFilter, useCategoriesFilter, useRaritiesFilter } from '../../hooks/filters'
 import { usePagination } from '../../lib/pagination'
 import { config } from '../../modules/config'
 import { Options } from '../../modules/items/types'
+import { MainCategory } from '../../utils/categories'
 import { View } from '../../utils/view'
 import { InfiniteScroll } from '../InfiniteScroll'
 import InformationBar from '../InformationBar'
-import { CREATIONS_DATA_TEST_ID, CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, LOADER_DATA_TEST_ID, SMART_WEARABLE_FILTER } from './constants'
+import {
+  CREATIONS_CLEAR_FILTERS_DATA_TEST_ID,
+  CREATIONS_DATA_TEST_ID,
+  CREATION_ITEM_DATA_TEST_ID,
+  ITEMS_PER_PAGE,
+  LOADER_DATA_TEST_ID,
+  SMART_WEARABLE_FILTER
+} from './constants'
 import { buildCategoryFilterCategories, buildSortByOptions, getCategoryName } from './utils'
 import { Props } from './Creations.types'
 import styles from './Creations.module.css'
@@ -30,7 +39,10 @@ const Creations = (props: Props) => {
   const { items, profileName, totalItems: count, isLoading, view, onFetchCreations, onOpenMobileFilters } = props
 
   const isMobile = useMobileMediaQuery()
-  const { page, first, sortBy, filters, hasMorePages, goToPage, changeFilter, changeSorting } = usePagination<keyof Options, ItemSortBy>({
+  const { page, first, sortBy, filters, hasMorePages, goToPage, changeFilter, changeFilters, changeSorting } = usePagination<
+    keyof Options,
+    ItemSortBy
+  >({
     pageSize: ITEMS_PER_PAGE,
     count
   })
@@ -92,12 +104,79 @@ const Creations = (props: Props) => {
     },
     [changeFilter]
   )
-  const onChangeStatus = useCallback(
+  const handleChangeStatus = useCallback(
     (value: AssetStatus) => {
       changeFilter('status', value)
     },
     [changeFilter]
   )
+  const handleClearFilters = useCallback(() => {
+    changeFilters({}, { clearOldFilters: true })
+  }, [changeFilters])
+
+  const renderEmptyComponent = useCallback(() => {
+    const onlyCategoryIsSelected = !filters.rarities && !filters.status && !filters.isWearableSmart
+    const isMainCategory = category === MainCategory.EMOTE || category === MainCategory.WEARABLE
+    const parentCategory = selectedCategoryName === 'wearables' ? MainCategory.WEARABLE : MainCategory.EMOTE
+
+    let image: string
+    if (onlyCategoryIsSelected) {
+      image = selectedCategoryName === 'wearables' ? shirtImage : emoteImage
+    } else {
+      image = noResultsImage
+    }
+
+    return (
+      <div className={styles.empty}>
+        <div className={styles.message}>
+          <div className={styles.image}>
+            <img src={image} />
+          </div>
+          <h2 className={styles.title}>
+            {onlyCategoryIsSelected
+              ? t(`creations.${view}_empty_${isMainCategory ? 'main' : 'sub'}_category_title`, {
+                  name: profileName,
+                  category: t(`categories.${category}`).toLocaleLowerCase(),
+                  parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+                })
+              : t('creations.empty_multiple_filters_title')}
+          </h2>
+          {view === View.OWN && onlyCategoryIsSelected ? (
+            <>
+              <p className={styles.text}>
+                {t(`creations.own_empty_${isMainCategory ? 'main' : 'sub'}_category_text`, {
+                  category: t(`categories.${category}`).toLowerCase(),
+                  parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+                })}
+              </p>
+              <div className={isMainCategory ? styles.mainCategoryActions : styles.subCategoryActions}>
+                <Button
+                  secondary
+                  inverted
+                  fluid={isMobile}
+                  target="_blank"
+                  href={`${DOCS_URL}/creator/wearables-and-emotes/manage-collections/creating-collection/`}
+                >
+                  {t('creations.own_empty_primary_action')}
+                </Button>
+                <Button primary fluid={isMobile} target="_blank" href={`${BUILDER_URL}/collections`}>
+                  {t('creations.own_empty_secondary_action')}
+                </Button>
+              </div>
+            </>
+          ) : !onlyCategoryIsSelected ? (
+            <>
+              <div className={styles.emptyActions}>
+                <Button onClick={handleClearFilters} secondary inverted fluid={isMobile} data-testid={CREATIONS_CLEAR_FILTERS_DATA_TEST_ID}>
+                  {t('creations.clear_filters')}
+                </Button>
+              </div>
+            </>
+          ) : null}
+        </div>
+      </div>
+    )
+  }, [selectedCategoryName, view, profileName, category, isMobile, filters, handleClearFilters])
 
   return (
     <div data-testid={CREATIONS_DATA_TEST_ID}>
@@ -113,7 +192,7 @@ const Creations = (props: Props) => {
                 data-testid={SMART_WEARABLE_FILTER}
               />
             ) : null}
-            <AssetStatusFilter value={getAssetStatusQueryString(status)} onChange={onChangeStatus} />
+            <AssetStatusFilter value={getAssetStatusQueryString(status)} onChange={handleChangeStatus} />
           </div>
         ) : null}
         <div className={styles.content}>
@@ -133,40 +212,7 @@ const Creations = (props: Props) => {
               <Loader active inline size="medium" data-testid={LOADER_DATA_TEST_ID} />
             </div>
           ) : !isLoading && items.length === 0 ? (
-            <div className={styles.empty}>
-              <div className={styles.message}>
-                <div className={styles.image}>
-                  <img src={selectedCategoryName === 'wearables' ? shirtImage : emoteImage} />
-                </div>
-                <h2 className={styles.title}>
-                  {t(`creations.${view}_empty_title`, {
-                    name: profileName,
-                    category: t(`categories.${category}`).toLowerCase()
-                  })}
-                </h2>
-                {view === View.OWN ? (
-                  <>
-                    <p className={styles.text}>
-                      {t('creations.own_empty_text', { br: () => <br></br>, category: t(`categories.${category}`).toLowerCase() })}
-                    </p>
-                    <div className={styles.actions}>
-                      <Button
-                        secondary
-                        inverted
-                        fluid={isMobile}
-                        target="_blank"
-                        href={`${DOCS_URL}/creator/wearables-and-emotes/manage-collections/creating-collection/`}
-                      >
-                        {t('creations.own_empty_primary_action')}
-                      </Button>
-                      <Button primary fluid={isMobile} target="_blank" href={`${BUILDER_URL}/collections`}>
-                        {t('creations.own_empty_secondary_action')}
-                      </Button>
-                    </div>
-                  </>
-                ) : null}
-              </div>
-            </div>
+            renderEmptyComponent()
           ) : (
             <div role="feed" className={styles.items}>
               {items.map(item => (
