@@ -19,7 +19,14 @@ import { MainCategory } from '../../utils/categories'
 import { View } from '../../utils/view'
 import { InfiniteScroll } from '../InfiniteScroll'
 import InformationBar from '../InformationBar'
-import { CREATIONS_DATA_TEST_ID, CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, LOADER_DATA_TEST_ID, SMART_WEARABLE_FILTER } from './constants'
+import {
+  CREATIONS_CLEAR_FILTERS_DATA_TEST_ID,
+  CREATIONS_DATA_TEST_ID,
+  CREATION_ITEM_DATA_TEST_ID,
+  ITEMS_PER_PAGE,
+  LOADER_DATA_TEST_ID,
+  SMART_WEARABLE_FILTER
+} from './constants'
 import { buildCategoryFilterCategories, buildSortByOptions, getCategoryName } from './utils'
 import { Props } from './Creations.types'
 import styles from './Creations.module.css'
@@ -132,7 +139,7 @@ const Creations = (props: Props) => {
                   category: t(`categories.${category}`).toLocaleLowerCase(),
                   parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
                 })
-              : t('creations.empty_title')}
+              : t('creations.empty_multiple_filters_title')}
           </h2>
           {view === View.OWN && onlyCategoryIsSelected ? (
             <>
@@ -157,10 +164,10 @@ const Creations = (props: Props) => {
                 </Button>
               </div>
             </>
-          ) : view === View.OWN && !onlyCategoryIsSelected ? (
+          ) : !onlyCategoryIsSelected ? (
             <>
               <div className={styles.empty_actions}>
-                <Button onClick={handleClearFilters} secondary inverted fluid={isMobile}>
+                <Button onClick={handleClearFilters} secondary inverted fluid={isMobile} data-testid={CREATIONS_CLEAR_FILTERS_DATA_TEST_ID}>
                   {t('creations.clear_filters')}
                 </Button>
               </div>

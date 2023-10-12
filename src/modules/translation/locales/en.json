@@ -148,12 +148,13 @@
     "items_count": "{count} {count, plural, one {item} other {items}}",
     "own_empty_main_category_title": "You haven't created any {category} yet",
     "own_empty_sub_category_title": "No {category} {parentCategory} found",
-    "empty_title": "No results found for these filters",
+    "other_empty_main_category_title": "{name} hasn't created any {category} yet",
+    "other_empty_sub_category_title": "{name} hasn't created any {category} {parentCategory} yet",
+    "empty_multiple_filters_title": "No results found for these filters",
     "own_empty_main_category_text": "Unleash your creativity and start earning from your own designs!",
     "own_empty_sub_category_text": "You haven’t published any {category} {parentCategory} yet.",
     "own_empty_primary_action": "Learn more",
     "own_empty_secondary_action": "Create a collection",
-    "other_empty_title": "{name} hasn't created any {category} yet",
     "clear_filters": "Clear filters"
   },
   "on_sale_filter": {

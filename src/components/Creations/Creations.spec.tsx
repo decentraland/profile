@@ -2,11 +2,11 @@ import React from 'react'
 import { fireEvent, act } from '@testing-library/react'
 import { BodyShape, Item, NFTCategory, Network, Rarity, WearableCategory as BaseWearableCategory, ItemSortBy } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { ItemSaleStatus } from '../../modules/items/types'
-import { renderWithProviders } from '../../tests/tests'
-import { MainCategory, WearableCategory } from '../../utils/categories'
+import { ItemCategory, ItemSaleStatus } from '../../modules/items/types'
+import { LOCATION_DISPLAY_TEST_ID, renderWithProviders } from '../../tests/tests'
+import { EmoteCategory, MainCategory, WearableCategory } from '../../utils/categories'
 import { View } from '../../utils/view'
-import { CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, SMART_WEARABLE_FILTER } from './constants'
+import { CREATIONS_CLEAR_FILTERS_DATA_TEST_ID, CREATION_ITEM_DATA_TEST_ID, ITEMS_PER_PAGE, SMART_WEARABLE_FILTER } from './constants'
 import Creations from './Creations'
 import { Props } from './Creations.types'
 
@@ -121,12 +121,108 @@ describe('when rendering the component without items', () => {
   describe('and the view is of the own user', () => {
     beforeEach(() => {
       view = View.OWN
-      renderedComponent = renderCreations({ items, view }, ['/creations?category=wearable'])
     })
 
-    it('should render a message saying that the user does not have wearables created', () => {
-      const { getByText } = renderedComponent
-      expect(getByText(t('creations.own_empty_title', { category: t('categories.wearable').toLowerCase() }))).toBeInTheDocument()
+    describe('and no other filters than the category are selected', () => {
+      let category: ItemCategory
+      let parentCategory: ItemCategory
+
+      describe('and the wearables main category is selected', () => {
+        beforeEach(() => {
+          category = MainCategory.WEARABLE
+          parentCategory = MainCategory.WEARABLE
+          renderedComponent = renderCreations({ items, view }, ['/creations?category=wearable'])
+        })
+
+        it('should render a message saying that the user does not have wearables created', () => {
+          const { getByText } = renderedComponent
+          expect(
+            getByText(
+              t('creations.own_empty_main_category_title', {
+                category: t(`categories.${category}`).toLocaleLowerCase()
+              })
+            )
+          ).toBeInTheDocument()
+        })
+      })
+
+      describe('and the emotes main category is selected', () => {
+        beforeEach(() => {
+          category = MainCategory.EMOTE
+          parentCategory = MainCategory.EMOTE
+          renderedComponent = renderCreations({ items, view }, ['/creations?category=emote'])
+        })
+
+        it('should render a message saying that the user does not have emotes created', () => {
+          const { getByText } = renderedComponent
+          expect(
+            getByText(
+              t('creations.own_empty_main_category_title', {
+                category: t(`categories.${category}`).toLocaleLowerCase()
+              })
+            )
+          ).toBeInTheDocument()
+        })
+      })
+
+      describe('and a wearables sub category is selected', () => {
+        beforeEach(() => {
+          category = WearableCategory.FEET
+          parentCategory = MainCategory.WEARABLE
+          renderedComponent = renderCreations({ items, view }, ['/creations?category=wearable_feet'])
+        })
+
+        it('should render a message saying that the user does not have wearables created for the specified sub category', () => {
+          const { getByText } = renderedComponent
+          expect(
+            getByText(
+              t('creations.own_empty_sub_category_title', {
+                category: t(`categories.${category}`).toLocaleLowerCase(),
+                parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+              })
+            )
+          ).toBeInTheDocument()
+        })
+      })
+
+      describe('and a emotes sub category is selected', () => {
+        beforeEach(() => {
+          category = EmoteCategory.DANCE
+          parentCategory = MainCategory.EMOTE
+          renderedComponent = renderCreations({ items, view }, ['/creations?category=emote_dance'])
+        })
+
+        it('should render a message saying that the user does not have emotes created for the specified sub category', () => {
+          const { getByText } = renderedComponent
+          expect(
+            getByText(
+              t('creations.own_empty_sub_category_title', {
+                category: t(`categories.${category}`).toLocaleLowerCase(),
+                parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+              })
+            )
+          ).toBeInTheDocument()
+        })
+      })
+    })
+
+    describe('and various filters are selected', () => {
+      beforeEach(() => {
+        renderedComponent = renderCreations({ items, view }, ['/creations?category=emote&rarities=common'])
+      })
+
+      it("should show a message saying that there aren't any results with the selected filters", () => {
+        const { getByText } = renderedComponent
+        expect(getByText(t('creations.empty_multiple_filters_title'))).toBeInTheDocument()
+      })
+
+      describe('and the user clicks in the clear filters button', () => {
+        it('should clear the filters', () => {
+          const { getByTestId } = renderedComponent
+          fireEvent.click(getByTestId(CREATIONS_CLEAR_FILTERS_DATA_TEST_ID))
+          expect(getByTestId(LOCATION_DISPLAY_TEST_ID)).toHaveTextContent('/creations?page=1')
+        })
+      })
     })
   })
 
@@ -136,14 +232,112 @@ describe('when rendering the component without items', () => {
     beforeEach(() => {
       view = View.OTHER
       profileName = 'aName'
-      renderedComponent = renderCreations({ items, view, profileName }, ['/creations?category=wearable'])
     })
 
-    it('should render a message saying that the user does not have wearables created', () => {
-      const { getByText } = renderedComponent
-      expect(
-        getByText(t('creations.other_empty_title', { name: profileName, category: t('categories.wearable').toLowerCase() }))
-      ).toBeInTheDocument()
+    describe('and no other filters than the category are selected', () => {
+      let category: ItemCategory
+      let parentCategory: ItemCategory
+
+      describe('and the wearables main category is selected', () => {
+        beforeEach(() => {
+          category = MainCategory.WEARABLE
+          parentCategory = MainCategory.WEARABLE
+          renderedComponent = renderCreations({ items, view, profileName }, ['/creations?category=wearable'])
+        })
+
+        it('should render a message saying that the user does not have wearables created', () => {
+          const { getByText } = renderedComponent
+          expect(
+            getByText(
+              t('creations.other_empty_main_category_title', {
+                name: profileName,
+                category: t(`categories.${category}`).toLocaleLowerCase()
+              })
+            )
+          ).toBeInTheDocument()
+        })
+      })
+
+      describe('and the emotes main category is selected', () => {
+        beforeEach(() => {
+          category = MainCategory.EMOTE
+          parentCategory = MainCategory.EMOTE
+          renderedComponent = renderCreations({ items, view, profileName }, ['/creations?category=emote'])
+        })
+
+        it('should render a message saying that the user does not have emotes created', () => {
+          const { getByText } = renderedComponent
+          expect(
+            getByText(
+              t('creations.other_empty_main_category_title', {
+                name: profileName,
+                category: t(`categories.${category}`).toLocaleLowerCase()
+              })
+            )
+          ).toBeInTheDocument()
+        })
+      })
+
+      describe('and a wearables sub category is selected', () => {
+        beforeEach(() => {
+          category = WearableCategory.FEET
+          parentCategory = MainCategory.WEARABLE
+          renderedComponent = renderCreations({ items, view, profileName }, ['/creations?category=wearable_feet'])
+        })
+
+        it('should render a message saying that the user does not have wearables created for the specified sub category', () => {
+          const { getByText } = renderedComponent
+          expect(
+            getByText(
+              t('creations.other_empty_sub_category_title', {
+                name: profileName,
+                category: t(`categories.${category}`).toLocaleLowerCase(),
+                parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+              })
+            )
+          ).toBeInTheDocument()
+        })
+      })
+
+      describe('and a emotes sub category is selected', () => {
+        beforeEach(() => {
+          category = EmoteCategory.DANCE
+          parentCategory = MainCategory.EMOTE
+          renderedComponent = renderCreations({ items, view, profileName }, ['/creations?category=emote_dance'])
+        })
+
+        it('should render a message saying that the user does not have emotes created for the specified sub category', () => {
+          const { getByText } = renderedComponent
+          expect(
+            getByText(
+              t('creations.other_empty_sub_category_title', {
+                name: profileName,
+                category: t(`categories.${category}`).toLocaleLowerCase(),
+                parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+              })
+            )
+          ).toBeInTheDocument()
+        })
+      })
+    })
+
+    describe('and various filters are selected', () => {
+      beforeEach(() => {
+        renderedComponent = renderCreations({ items, view, profileName }, ['/creations?category=emote&rarities=common'])
+      })
+
+      it("should show a message saying that there aren't any results with the selected filters", () => {
+        const { getByText } = renderedComponent
+        expect(getByText(t('creations.empty_multiple_filters_title'))).toBeInTheDocument()
+      })
+
+      describe('and the user clicks in the clear filters button', () => {
+        it('should clear the filters', () => {
+          const { getByTestId } = renderedComponent
+          fireEvent.click(getByTestId(CREATIONS_CLEAR_FILTERS_DATA_TEST_ID))
+          expect(getByTestId(LOCATION_DISPLAY_TEST_ID)).toHaveTextContent('/creations?page=1')
+        })
+      })
     })
   })
 })
