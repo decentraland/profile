@@ -49,18 +49,14 @@ export const itemsReducer = createReducer<ItemsState>(buildInitialState(), build
         state.data.items = []
         state.data.total = 0
       }
-      console.log('PRE: fetchCreationsRequest', JSON.stringify(state.loading))
       state.loading = loadingReducer(state.loading, action)
-      console.log('POST: fetchCreationsRequest', JSON.stringify(state.loading))
       state.error = null
     })
     .addCase(fetchCreationsSuccess, (state, action) => {
       const { items, total } = action.payload
       state.data.items = [...state.data.items, ...items]
       state.data.total = total
-      console.log('PRE: fetchCreationsSuccess', state.loading)
       state.loading = loadingReducer(state.loading, action)
-      console.log('POST: fetchCreationsSuccess', state.loading)
     })
     .addCase(fetchCreationsFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
