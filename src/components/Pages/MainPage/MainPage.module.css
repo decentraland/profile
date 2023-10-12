@@ -12,6 +12,11 @@
   padding: 20px;
 }
 
+.MainPage.extended {
+  transition: gap 0.5s;
+  gap: 0px;
+}
+
 .infoContainer {
   backdrop-filter: blur(20px);
   background: linear-gradient(151deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.06) 100%);
@@ -22,6 +27,7 @@
   flex: 1;
   padding: 32px;
   min-height: 80vh;
+  transition: gap 0.5s, width 0.5s;
 }
 
 .tab {
@@ -41,8 +47,20 @@
 
 .avatarContainer {
   position: relative;
+}
+
+.avatarContainer.hidden {
+  transition: min-width 0.5s, width 0.5s, visibility 0.2s;
+  width: 0px;
+  visibility: hidden;
+  min-width: 0px;
+}
+
+.avatarContainer.visible {
   width: 20%;
   min-width: 260px;
+  visibility: visible;
+  transition: min-width 0.5s, width 0.5s, visibility 0.5s;
 }
 
 .divider {
