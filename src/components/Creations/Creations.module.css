@@ -60,7 +60,7 @@
   text-align: center;
 }
 
-.empty .message .main_category_actions {
+.empty .message .mainCategoryActions {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -68,14 +68,14 @@
   padding-right: 30px;
 }
 
-.empty .message .sub_category_actions {
+.empty .message .subCategoryActions {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
 }
 
-.empty .message .empty_actions {
+.empty .message .emptyActions {
   display: flex;
   justify-content: center;
   align-items: center;

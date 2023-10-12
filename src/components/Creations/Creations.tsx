@@ -149,7 +149,7 @@ const Creations = (props: Props) => {
                   parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
                 })}
               </p>
-              <div className={isMainCategory ? styles.main_category_actions : styles.sub_category_actions}>
+              <div className={isMainCategory ? styles.mainCategoryActions : styles.subCategoryActions}>
                 <Button
                   secondary
                   inverted
@@ -166,7 +166,7 @@ const Creations = (props: Props) => {
             </>
           ) : !onlyCategoryIsSelected ? (
             <>
-              <div className={styles.empty_actions}>
+              <div className={styles.emptyActions}>
                 <Button onClick={handleClearFilters} secondary inverted fluid={isMobile} data-testid={CREATIONS_CLEAR_FILTERS_DATA_TEST_ID}>
                   {t('creations.clear_filters')}
                 </Button>
