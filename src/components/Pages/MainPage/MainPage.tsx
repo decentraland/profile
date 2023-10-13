@@ -80,12 +80,15 @@ function MainPage(props: Props) {
     <LoadingPage />
   ) : (
     <PageLayout>
-      <div className={classNames(styles.MainPage)}>
-        {selectedTab === AccountTabs.OVERVIEW || isMobile ? (
-          <div className={classNames(styles.avatarContainer)}>
-            <Avatar view={view} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
-          </div>
-        ) : null}
+      <div className={classNames(styles.MainPage, { [styles.extended]: selectedTab !== AccountTabs.OVERVIEW })}>
+        <div
+          className={classNames(styles.avatarContainer, {
+            [styles.hidden]: selectedTab !== AccountTabs.OVERVIEW,
+            [styles.visible]: selectedTab === AccountTabs.OVERVIEW || isMobile
+          })}
+        >
+          <Avatar view={view} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
+        </div>
         <div className={classNames(styles.infoContainer)}>
           <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
           <Divider className={styles.divider} />
