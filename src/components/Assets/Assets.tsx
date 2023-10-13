@@ -11,6 +11,7 @@ import { getMarketplaceNFTDetailUrl } from '../../modules/routing/locations'
 import { MainCategory } from '../../utils/categories'
 import { formatWeiToMana } from '../../utils/mana'
 import { View } from '../../utils/view'
+import { LOADER_DATA_TEST_ID } from '../Creations/constants'
 import { InfiniteScroll } from '../InfiniteScroll'
 import InformationBar from '../InformationBar'
 import NFTFilters from '../NFTFilters'
@@ -23,7 +24,7 @@ const MARKETPLACE_URL = config.get('MARKETPLACE_URL')
 
 export default function Assets(props: Props) {
   const isMobile = useMobileMediaQuery()
-  const { isLoading, total: count, assets, view, profileAddress, profileName, onFetchAssets, onOpenFiltersModal } = props
+  const { isLoading, total: count, assets, view, profileAddress, profileName, onFetchAssets, onOpenMobileFilters } = props
   const { first, page, filters, hasMorePages, sortBy, goToPage, changeFilter, changeSorting } = usePagination<keyof NFTOptions>({
     pageSize: ITEMS_PER_PAGE,
     count
@@ -121,11 +122,11 @@ export default function Assets(props: Props) {
           hasFiltersEnabled={hasFiltersEnabled}
           onSortByChange={onChangeSortBy}
           getCountText={count => t('assets_tab.assets_count', { count })}
-          onOpenFiltersModal={onOpenFiltersModal}
+          onOpenFiltersModal={onOpenMobileFilters}
         />
         {isLoading && assets.length === 0 ? (
           <div className={styles.loader}>
-            <Loader active />
+            <Loader active data-testid={LOADER_DATA_TEST_ID} />
           </div>
         ) : !isLoading && assets.length === 0 ? (
           renderEmptyState()

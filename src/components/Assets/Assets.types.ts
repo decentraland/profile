@@ -13,10 +13,10 @@ export type Props = {
   view: View
   profileName: string
   onFetchAssets: (options: NFTOptions) => void
-  onOpenFiltersModal: () => void
+  onOpenMobileFilters: () => void
 }
 
 export type MapStateProps = Pick<Props, 'assets' | 'error' | 'isLoading' | 'total' | 'profileName'>
 export type OwnProps = Omit<Props, keyof MapStateProps | keyof MapDispatchProps>
-export type MapDispatchProps = Pick<Props, 'onFetchAssets' | 'onOpenFiltersModal'>
+export type MapDispatchProps = Pick<Props, 'onFetchAssets' | 'onOpenMobileFilters'>
 export type MapDispatch = Dispatch<FetchNFTsRequestAction | OpenModalAction>
