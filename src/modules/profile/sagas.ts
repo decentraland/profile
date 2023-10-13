@@ -1,5 +1,5 @@
 import { isAddress } from 'ethers'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, all, takeEvery } from 'redux-saga/effects'
 import { isErrorWithMessage } from '@dcl/social-rpc-client'
 import { PeerAPI } from 'decentraland-dapps/dist/lib/peer'
 import { createProfileSaga as createDefaultProfileSaga } from 'decentraland-dapps/dist/modules/profile/sagas'
@@ -16,8 +16,7 @@ import {
 export function createProfileSaga(marketplaceGraphClient: MarketplaceGraphClient, peerApi: PeerAPI) {
   const defaultProfileSagas = createDefaultProfileSaga({ peerUrl: peerApi.url })
   return function* () {
-    yield profileSagas(marketplaceGraphClient, peerApi)
-    yield defaultProfileSagas()
+    yield all([profileSagas(marketplaceGraphClient, peerApi), defaultProfileSagas()])
   }
 }
 
