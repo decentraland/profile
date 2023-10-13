@@ -50,17 +50,17 @@
 }
 
 .avatarContainer.hidden {
-  transition: min-width 0.5s, width 0.5s, visibility 0.2s;
+  transition: min-width 0.5s, width 0.5s, opacity 0.2s;
   width: 0px;
-  visibility: hidden;
+  opacity: 0;
   min-width: 0px;
 }
 
 .avatarContainer.visible {
   width: 20%;
   min-width: 260px;
-  visibility: visible;
-  transition: min-width 0.5s, width 0.5s, visibility 0.5s;
+  opacity: 1;
+  transition: min-width 0.5s, width 0.5s, opacity 0.5s;
 }
 
 .divider {
