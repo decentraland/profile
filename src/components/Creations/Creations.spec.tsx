@@ -484,7 +484,7 @@ describe('when changing the sorting', () => {
   it('should re-trigger the creations fetch with the selected sort', () => {
     const { getByText } = renderedComponent
     act(() => {
-      fireEvent.click(getByText(t(`items_sort_by.${ItemSortBy.CHEAPEST}`)))
+      fireEvent.click(getByText(t(`catalog_sort_by.${ItemSortBy.CHEAPEST}`)))
     })
     expect(onFetchCreations).toHaveBeenCalledWith({
       creator: '0x1',

@@ -92,7 +92,7 @@ describe('when changing the sorting options', () => {
 
   it('should call the onSortByChange prop method with the new sort option', () => {
     const { getByText } = renderedComponent
-    fireEvent.click(getByText(t(`items_sort_by.${ItemSortBy.RECENTLY_LISTED}`)))
+    fireEvent.click(getByText(t(`catalog_sort_by.${ItemSortBy.RECENTLY_LISTED}`)))
     expect(onSortByChange).toHaveBeenCalledWith(ItemSortBy.RECENTLY_LISTED)
   })
 })
