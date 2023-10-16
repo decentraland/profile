@@ -1,4 +1,4 @@
-import { ItemSortBy } from '@dcl/schemas'
+import { CatalogSortBy } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ItemCategory } from '../../modules/items/types'
 import { MainCategory, AccessoryCategory, WearableCategory, EmoteCategory, HeadCategory } from '../../utils/categories'
@@ -36,7 +36,7 @@ export function buildCategoryFilterCategories() {
 }
 
 export function buildSortByOptions() {
-  return Object.values(ItemSortBy).map(value => ({ value, text: t(`items_sort_by.${value}`) }))
+  return Object.values(CatalogSortBy).map(value => ({ value, text: t(`catalog_sort_by.${value}`) }))
 }
 
 export function getCategoryName(category: ItemCategory): 'emotes' | 'wearables' {

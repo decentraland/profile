@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
-import { Rarity, ItemSortBy } from '@dcl/schemas'
+import { Rarity, CatalogSortBy } from '@dcl/schemas'
 import { AssetStatus, AssetStatusFilter, SmartWearableFilter } from 'decentraland-dapps/dist/containers'
 import { AssetCard } from 'decentraland-dapps/dist/containers/AssetCard/AssetCard'
 import { RarityFilter } from 'decentraland-dapps/dist/containers/RarityFilter'
@@ -41,7 +41,7 @@ const Creations = (props: Props) => {
   const isMobile = useMobileMediaQuery()
   const { page, first, sortBy, filters, hasMorePages, goToPage, changeFilter, changeFilters, changeSorting } = usePagination<
     keyof Options,
-    ItemSortBy
+    CatalogSortBy
   >({
     pageSize: ITEMS_PER_PAGE,
     count
@@ -51,7 +51,7 @@ const Creations = (props: Props) => {
   const [rarities, getRaritiesQueryString] = useRaritiesFilter(filters.rarities)
   const [status, , getAssetStatusQueryString] = useAssetStatusFilter(filters.status)
   const selectedCategoryName = useMemo(() => getCategoryName(category), [category])
-  const selectedSortBy = sortBy ?? ItemSortBy.NEWEST
+  const selectedSortBy = sortBy ?? CatalogSortBy.NEWEST
   const hasFiltersEnabled = Boolean(sortBy || filters.category || filters.rarities)
 
   useEffect(() => {
@@ -99,10 +99,10 @@ const Creations = (props: Props) => {
     [getCategoriesQueryString, changeFilter]
   )
   const handleSortByChange = useCallback(
-    (value: ItemSortBy) => {
+    (value: CatalogSortBy) => {
       changeSorting(value)
     },
-    [changeFilter]
+    [changeSorting]
   )
   const handleChangeStatus = useCallback(
     (value: AssetStatus) => {

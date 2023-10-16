@@ -10,9 +10,12 @@ const InformationBar = <T extends string>(props: Props<T>) => {
   const { count, sortBy, sortByOptions, isLoading, className, hasFiltersEnabled, getCountText, onSortByChange, onOpenFiltersModal } = props
   const isMobile = useMobileMediaQuery()
 
-  const handleOnSortChange = useCallback((_: unknown, props: DropdownProps) => {
-    onSortByChange(props.value as T)
-  }, [])
+  const handleOnSortChange = useCallback(
+    (_: unknown, props: DropdownProps) => {
+      onSortByChange(props.value as T)
+    },
+    [onSortByChange]
+  )
 
   return (
     <div className={classNames(styles.infoRow, className)}>
