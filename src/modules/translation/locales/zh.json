@@ -132,13 +132,12 @@
   "categories_menu": {
     "title": "类别"
   },
-  "items_sort_by": {
-    "name": "名称",
+  "catalog_sort_by": {
     "newest": "最新",
-    "recently_reviewed": "最近审查",
     "recently_sold": "最近售出",
-    "recently_listed": "最新上市",
-    "cheapest": "最低价"
+    "cheapest": "最低价",
+    "most_expensive": "最貴",
+    "recently_listed": "最新上市"
   },
   "creations": {
     "items_count": "{count} 项目}",

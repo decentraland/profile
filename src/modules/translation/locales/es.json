@@ -132,13 +132,12 @@
   "categories_menu": {
     "title": "Categorías"
   },
-  "items_sort_by": {
-    "name": "Nombre",
+  "catalog_sort_by": {
     "newest": "Más nuevos",
-    "recently_reviewed": "Revisado recientemente",
     "recently_sold": "Vendidos recientemente",
-    "recently_listed": "Listados recientemente",
-    "cheapest": "Más baratos"
+    "cheapest": "Más baratos",
+    "most_expensive": "Más caros",
+    "recently_listed": "Listados recientemente"
   },
   "creations": {
     "items_count": "{count} {count, plural, one {item} other {items}}",

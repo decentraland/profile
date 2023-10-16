@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { ItemSortBy, Rarity } from '@dcl/schemas'
+import { CatalogSortBy, Rarity } from '@dcl/schemas'
 import { AssetStatus, AssetStatusFilter, SmartWearableFilter } from 'decentraland-dapps/dist/containers'
 import { RarityFilter } from 'decentraland-dapps/dist/containers/RarityFilter'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
@@ -15,7 +15,7 @@ import { Props } from './CreationsFiltersModal.types'
 import styles from './CreationsFiltersModal.module.css'
 
 const CreationsFiltersModal = (props: Props) => {
-  const { filters, changeFilters } = usePagination<keyof Options, ItemSortBy>({
+  const { filters, changeFilters } = usePagination<keyof Options, CatalogSortBy>({
     pageSize: ITEMS_PER_PAGE
   })
   const [category, getCategoriesQueryString] = useCategoriesFilter(filters.category)
