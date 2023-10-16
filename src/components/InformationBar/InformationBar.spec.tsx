@@ -1,6 +1,6 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
-import { ItemSortBy } from '@dcl/schemas'
+import { CatalogSortBy } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { renderWithProviders } from '../../tests/tests'
@@ -15,10 +15,10 @@ jest.mock('decentraland-ui/dist/components/Media/Media', () => ({
 
 const useMobileMediaQueryMock = useMobileMediaQuery as jest.MockedFunction<typeof useMobileMediaQuery>
 
-function renderInformationBar(props: Partial<Props<ItemSortBy>> = {}) {
+function renderInformationBar(props: Partial<Props<CatalogSortBy>> = {}) {
   return renderWithProviders(
     <InformationBar
-      sortBy={ItemSortBy.NAME}
+      sortBy={CatalogSortBy.CHEAPEST}
       sortByOptions={buildSortByOptions()}
       getCountText={count => count.toString()}
       onSortByChange={jest.fn()}
@@ -92,8 +92,8 @@ describe('when changing the sorting options', () => {
 
   it('should call the onSortByChange prop method with the new sort option', () => {
     const { getByText } = renderedComponent
-    fireEvent.click(getByText(t(`catalog_sort_by.${ItemSortBy.RECENTLY_LISTED}`)))
-    expect(onSortByChange).toHaveBeenCalledWith(ItemSortBy.RECENTLY_LISTED)
+    fireEvent.click(getByText(t(`catalog_sort_by.${CatalogSortBy.RECENTLY_LISTED}`)))
+    expect(onSortByChange).toHaveBeenCalledWith(CatalogSortBy.RECENTLY_LISTED)
   })
 })
 
