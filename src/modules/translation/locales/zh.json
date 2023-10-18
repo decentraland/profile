@@ -127,7 +127,11 @@
     "emotes_poses": "姿势",
     "emotes_reactions": "反应",
     "emotes_horror": "恐怖",
-    "emotes_miscellaneous": "各种各样的"
+    "emotes_miscellaneous": "各种各样的",
+    "land": "土地",
+    "land_parcel": "地块",
+    "land_estate": "产业",
+    "ens": "名称"
   },
   "categories_menu": {
     "title": "类别"

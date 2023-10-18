@@ -127,7 +127,11 @@
     "emotes_poses": "Poses",
     "emotes_reactions": "Reacciones",
     "emotes_horror": "Horror",
-    "emotes_miscellaneous": "Misceláneos"
+    "emotes_miscellaneous": "Misceláneos",
+    "land": "Tierra",
+    "land_parcel": "Parcelas",
+    "land_estate": "Estates",
+    "ens": "Nombres"
   },
   "categories_menu": {
     "title": "Categorías"
