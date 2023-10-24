@@ -47,10 +47,10 @@ function MainPage(props: Props) {
         ? [{ displayValue: view === View.OWN ? t('tabs.own_assets') : t('tabs.others_assets'), value: AccountTabs.ASSETS }]
         : []),
       ...(isCreationsTabEnabled
-        ? [{ displayValue: view === View.OWN ? t('tabs.own_creations') : t('tabs.own_creations'), value: AccountTabs.CREATIONS }]
+        ? [{ displayValue: view === View.OWN ? t('tabs.own_creations') : t('tabs.others_creations'), value: AccountTabs.CREATIONS }]
         : [])
     ],
-    [isAssetsTabEnabled, isCreationsTabEnabled]
+    [isAssetsTabEnabled, isCreationsTabEnabled, view]
   )
 
   const handleTabChange = useCallback((tab: AccountTabs) => {
