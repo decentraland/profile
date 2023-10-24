@@ -137,7 +137,7 @@ const Creations = (props: Props) => {
               ? t(`creations.${view}_empty_${isMainCategory ? 'main' : 'sub'}_category_title`, {
                   name: profileName,
                   category: t(`categories.${category}`).toLocaleLowerCase(),
-                  parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+                  parentCategory: t(`categories.${parentCategory}`)
                 })
               : t('creations.empty_multiple_filters_title')}
           </h2>
@@ -146,7 +146,7 @@ const Creations = (props: Props) => {
               <p className={styles.text}>
                 {t(`creations.own_empty_${isMainCategory ? 'main' : 'sub'}_category_text`, {
                   category: t(`categories.${category}`).toLowerCase(),
-                  parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+                  parentCategory: t(`categories.${parentCategory}`)
                 })}
               </p>
               <div className={isMainCategory ? styles.mainCategoryActions : styles.subCategoryActions}>
