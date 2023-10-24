@@ -30,12 +30,11 @@
     "jump": "Jump to \"{domain}\" World"
   },
   "tabs": {
-    "assets": "Assets",
-    "creations": "Creations",
-    "dao_activity": "DAO Activity",
-    "lists": "Lists",
     "overview": "Overview",
-    "places": "Places"
+    "own_assets": "My Assets",
+    "others_assets": "Assets",
+    "own_creations": "My Creations",
+    "others_creations": "Creations"
   },
   "friendship_button": {
     "friends": "Friends",
@@ -59,9 +58,9 @@
   "overview": {
     "title": "Equipped Collectibles",
     "start_dressing": "Start dressing in ways beyond your imagination ",
-    "get_collectibles": "Get your first collectible wereable and rock it in Decentraland!",
+    "get_collectibles": "Get your first collectible Wearable and rock it in Decentraland!",
     "go_to_marketplace": "go to marketplace",
-    "no_collectibles": " doesn't have any collectible wearables yet."
+    "no_collectibles": " doesn't have any collectible Wearables yet."
   },
   "about_modal": {
     "title": "About",
@@ -145,9 +144,9 @@
   },
   "creations": {
     "items_count": "{count} {count, plural, one {item} other {items}}",
-    "own_empty_main_category_title": "You haven't created any {category} yet",
+    "own_empty_main_category_title": "You haven't created any {parentCategory} yet",
     "own_empty_sub_category_title": "No {category} {parentCategory} found",
-    "other_empty_main_category_title": "{name} hasn't created any {category} yet",
+    "other_empty_main_category_title": "{name} hasn't created any {parentCategory} yet",
     "other_empty_sub_category_title": "{name} hasn't created any {category} {parentCategory} yet",
     "empty_multiple_filters_title": "No results found for these filters",
     "own_empty_main_category_text": "Unleash your creativity and start earning from your own designs!",

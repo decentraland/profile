@@ -31,11 +31,10 @@
   },
   "tabs": {
     "overview": "Resumen",
-    "assets": "Objetos",
-    "creations": "Creaciones",
-    "lists": "Listas",
-    "dao_activity": "Actividad DAO",
-    "places": "Places"
+    "own_assets": "Mis assets",
+    "others_assets": "Assets",
+    "own_creations": "Mis creaciones",
+    "others_creations": "Creaciones"
   },
   "friendship_button": {
     "friends": "Amigos",
@@ -145,9 +144,9 @@
   },
   "creations": {
     "items_count": "{count} {count, plural, one {item} other {items}}",
-    "own_empty_main_category_title": "No has creado ningún {category} todavía",
+    "own_empty_main_category_title": "No has creado ningún {parentCategory} todavía",
     "own_empty_sub_category_title": "No se encontró ningún {parentCategory} de {category}",
-    "other_empty_main_category_title": "{name} no ha creado ningún {category} todavía",
+    "other_empty_main_category_title": "{name} no ha creado ningún {parentCategory} todavía",
     "other_empty_sub_category_title": "{name} no ha creado ningún {parentCategory} de {category} todavía",
     "empty_multiple_filters_title": "No se ha encontrado ningún resultado para éstos filtros",
     "own_empty_main_category_text": "¡Libera tu creatividad y comienza a ganar de tus propios diseños!",

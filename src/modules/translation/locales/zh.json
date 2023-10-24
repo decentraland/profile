@@ -31,11 +31,10 @@
   },
   "tabs": {
     "overview": "概述",
-    "assets": "資產",
-    "creations": "創作",
-    "lists": "列表",
-    "dao_activity": "DAO 活動",
-    "places": "地點"
+    "own_assets": "我的资产",
+    "others_assets": "资产",
+    "own_creations": "我的创作",
+    "others_creations": "创作"
   },
   "friendship_button": {
     "friends": "朋友们",
@@ -145,9 +144,9 @@
   },
   "creations": {
     "items_count": "{count} 项目}",
-    "own_empty_main_category_title": "您尚未创建任何{category}",
+    "own_empty_main_category_title": "您尚未创建任何{parentCategory}",
     "own_empty_sub_category_title": "找不到{category} {parentCategory}",
-    "other_empty_main_category_title": "{name} 尚未创建任何 {category}",
+    "other_empty_main_category_title": "{name} 尚未创建任何 {parentCategory}",
     "other_empty_sub_category_title": "{name} 尚未创建任何 {category} {parentCategory}",
     "empty_multiple_filters_title": "没有找到这些过滤器的结果",
     "own_empty_main_category_text": "释放您的创造力并开始从您自己的设计中赚钱！",

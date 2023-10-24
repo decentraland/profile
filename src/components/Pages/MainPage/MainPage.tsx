@@ -8,7 +8,7 @@ import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
 import usePageTracking from '../../../hooks/usePageTracking'
 import { isTabValid, locations } from '../../../modules/routing/locations'
 import { AccountTabs } from '../../../modules/routing/types'
-import { getView } from '../../../utils/view'
+import { View, getView } from '../../../utils/view'
 import { Assets } from '../../Assets'
 import { Avatar } from '../../Avatar'
 import { BlockedUser } from '../../BlockedUser'
@@ -43,8 +43,12 @@ function MainPage(props: Props) {
   const tabs: { displayValue: string; value: AccountTabs }[] = useMemo(
     () => [
       { displayValue: t('tabs.overview'), value: AccountTabs.OVERVIEW },
-      ...(isAssetsTabEnabled ? [{ displayValue: t('tabs.assets'), value: AccountTabs.ASSETS }] : []),
-      ...(isCreationsTabEnabled ? [{ displayValue: t('tabs.creations'), value: AccountTabs.CREATIONS }] : [])
+      ...(isAssetsTabEnabled
+        ? [{ displayValue: view === View.OWN ? t('tabs.own_assets') : t('tabs.others_assets'), value: AccountTabs.ASSETS }]
+        : []),
+      ...(isCreationsTabEnabled
+        ? [{ displayValue: view === View.OWN ? t('tabs.own_creations') : t('tabs.own_creations'), value: AccountTabs.CREATIONS }]
+        : [])
     ],
     [isAssetsTabEnabled, isCreationsTabEnabled]
   )
