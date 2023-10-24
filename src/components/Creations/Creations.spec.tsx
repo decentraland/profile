@@ -139,7 +139,8 @@ describe('when rendering the component without items', () => {
           expect(
             getByText(
               t('creations.own_empty_main_category_title', {
-                category: t(`categories.${category}`).toLocaleLowerCase()
+                category: t(`categories.${category}`).toLocaleLowerCase(),
+                parentCategory: t(`categories.${parentCategory}`)
               })
             )
           ).toBeInTheDocument()
@@ -158,7 +159,8 @@ describe('when rendering the component without items', () => {
           expect(
             getByText(
               t('creations.own_empty_main_category_title', {
-                category: t(`categories.${category}`).toLocaleLowerCase()
+                category: t(`categories.${category}`).toLocaleLowerCase(),
+                parentCategory: t(`categories.${parentCategory}`)
               })
             )
           ).toBeInTheDocument()
@@ -178,7 +180,7 @@ describe('when rendering the component without items', () => {
             getByText(
               t('creations.own_empty_sub_category_title', {
                 category: t(`categories.${category}`).toLocaleLowerCase(),
-                parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+                parentCategory: t(`categories.${parentCategory}`)
               })
             )
           ).toBeInTheDocument()
@@ -198,7 +200,7 @@ describe('when rendering the component without items', () => {
             getByText(
               t('creations.own_empty_sub_category_title', {
                 category: t(`categories.${category}`).toLocaleLowerCase(),
-                parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+                parentCategory: t(`categories.${parentCategory}`)
               })
             )
           ).toBeInTheDocument()
@@ -251,7 +253,8 @@ describe('when rendering the component without items', () => {
             getByText(
               t('creations.other_empty_main_category_title', {
                 name: profileName,
-                category: t(`categories.${category}`).toLocaleLowerCase()
+                category: t(`categories.${category}`).toLocaleLowerCase(),
+                parentCategory: t(`categories.${parentCategory}`)
               })
             )
           ).toBeInTheDocument()
@@ -271,7 +274,8 @@ describe('when rendering the component without items', () => {
             getByText(
               t('creations.other_empty_main_category_title', {
                 name: profileName,
-                category: t(`categories.${category}`).toLocaleLowerCase()
+                category: t(`categories.${category}`).toLocaleLowerCase(),
+                parentCategory: t(`categories.${parentCategory}`)
               })
             )
           ).toBeInTheDocument()
@@ -292,7 +296,7 @@ describe('when rendering the component without items', () => {
               t('creations.other_empty_sub_category_title', {
                 name: profileName,
                 category: t(`categories.${category}`).toLocaleLowerCase(),
-                parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+                parentCategory: t(`categories.${parentCategory}`)
               })
             )
           ).toBeInTheDocument()
@@ -313,7 +317,7 @@ describe('when rendering the component without items', () => {
               t('creations.other_empty_sub_category_title', {
                 name: profileName,
                 category: t(`categories.${category}`).toLocaleLowerCase(),
-                parentCategory: t(`categories.${parentCategory}`).toLocaleLowerCase()
+                parentCategory: t(`categories.${parentCategory}`)
               })
             )
           ).toBeInTheDocument()
