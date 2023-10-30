@@ -10,19 +10,31 @@ import unfriendUserIcon from '../../assets/icons/UnfriendUser.png'
 import userIcon from '../../assets/icons/User.png'
 import { getAvatarName } from '../../modules/profile/utils'
 import { FriendshipStatus } from '../../modules/social/types'
+import { DESKTOP_ADDRESS_SIZE, MOBILE_ADDRESS_SIZE } from '../../utils/address'
 import ConfirmationModal from '../Modals/ConfirmationModal'
 import { Props } from './FriendshipButton.types'
 import styles from './FriendshipButton.module.css'
 
 const FriendshipButton = (props: Props) => {
-  const { friendshipStatus, className, isLoading, onAddFriend, onCancelFriendRequest, onAcceptFriendRequest, onRemoveFriend, profile } =
-    props
+  const {
+    friendshipStatus,
+    friendAddress,
+    className,
+    isLoading,
+    onAddFriend,
+    onCancelFriendRequest,
+    onAcceptFriendRequest,
+    onRemoveFriend,
+    profile
+  } = props
 
   const [isHovering, setIsHovering] = useState(false)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const isTableAndBelow = useTabletAndBelowMediaQuery()
 
-  const avatarName = getAvatarName(profile?.avatars[0]).name
+  const avatarName = !profile
+    ? friendAddress.slice(0, isTableAndBelow ? MOBILE_ADDRESS_SIZE : DESKTOP_ADDRESS_SIZE)
+    : getAvatarName(profile?.avatars[0]).fullName
 
   const handleButtonClick = useCallback(() => {
     switch (friendshipStatus) {

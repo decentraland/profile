@@ -5,6 +5,7 @@ import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { ModalNavigation } from 'decentraland-ui/dist/components/ModalNavigation/ModalNavigation'
+import { DESKTOP_ADDRESS_SIZE, MOBILE_ADDRESS_SIZE } from '../../../utils/address'
 import FriendshipButton from '../../FriendshipButton'
 import { LinkedProfile } from '../../LinkedProfile'
 import { FriendsType, Props } from './FriendsModal.types'
@@ -13,8 +14,6 @@ import styles from './FriendsModal.module.css'
 const ITEM_HEIGHT = 70
 const DEFAULT_LIST_HEIGHT = 300
 const DEFAULT_LIST_WIDTH = 200
-const MOBILE_ADDRESS_SIZE = 10
-const DESKTOP_ADDRESS_SIZE = 14
 
 const FriendsModal = (props: Props) => {
   const { onClose, friends, metadata } = props

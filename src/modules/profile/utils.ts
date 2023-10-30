@@ -1,19 +1,19 @@
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Avatar, AvatarFacts } from './types'
 
-export const getAvatarName = (avatar?: Avatar): { name: string; lastPart?: string } => {
+export const getAvatarName = (avatar?: Avatar): { name: string; lastPart?: string; fullName: string } => {
   if (!avatar) {
-    return { name: t('profile_information.default_name') }
+    return { name: t('profile_information.default_name'), fullName: t('profile_information.default_name') }
   }
 
   if (avatar.hasClaimedName) {
-    return { name: avatar.name }
+    return { name: avatar.name, fullName: avatar.name }
   }
 
   const lastPart = `#${avatar?.userId.slice(-4)}`
   const name = avatar.name.endsWith(lastPart) ? avatar.name.substring(0, avatar.name.length - lastPart.length) : avatar.name
 
-  return { name: name, lastPart: lastPart }
+  return { name: name, lastPart: lastPart, fullName: avatar.name }
 }
 
 export const getAvatarFacts = ({

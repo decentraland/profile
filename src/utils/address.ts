@@ -1,0 +1,2 @@
+export const MOBILE_ADDRESS_SIZE = 10
+export const DESKTOP_ADDRESS_SIZE = 14
