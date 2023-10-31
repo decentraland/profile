@@ -132,7 +132,7 @@ export default function Assets(props: Props) {
         </div>
       </div>
     )
-  }, [isMobile, hasAdditionalFiltersEnabled, nftFilters.category, view, profileName])
+  }, [isMobile, hasAdditionalFiltersEnabled, nftFilters.category, view, profileName, handleClearFilters])
 
   return (
     <div className={styles.container}>

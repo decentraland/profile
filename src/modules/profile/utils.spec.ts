@@ -59,7 +59,7 @@ describe("when getting an avatar's name", () => {
 
       describe('and the name does not have a last part', () => {
         it("should return the avatar's name with the last part", () => {
-          expect(getAvatarName(avatar)).toEqual({ name: avatar?.name, lastPart, fullName: avatar?.name })
+          expect(getAvatarName(avatar)).toEqual({ name: avatar?.name, lastPart, fullName: `${avatar?.name}${lastPart}` })
         })
       })
     })
