@@ -4,6 +4,7 @@ import { NFTSortBy, Rarity } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { NFTCard } from 'decentraland-ui/dist/components/NFTCard/NFTCard'
 import { Loader, useMobileMediaQuery, Button } from 'decentraland-ui'
+import noResultsImage from '../../assets/images/noResults.svg'
 import { usePagination } from '../../lib/pagination'
 import { config } from '../../modules/config'
 import { NFTCategory, NFTOptions, NFTResult } from '../../modules/nfts/types'
@@ -24,7 +25,9 @@ const MARKETPLACE_URL = config.get('MARKETPLACE_URL')
 export default function Assets(props: Props) {
   const isMobile = useMobileMediaQuery()
   const { isLoading, total: count, assets, view, profileAddress, profileName, onFetchAssets, onOpenFiltersModal } = props
-  const { first, page, filters, hasMorePages, sortBy, goToPage, changeFilter, changeSorting } = usePagination<keyof NFTOptions>({
+  const { first, page, filters, hasMorePages, sortBy, goToPage, changeFilter, changeSorting, changeFilters } = usePagination<
+    keyof NFTOptions
+  >({
     pageSize: ITEMS_PER_PAGE,
     count
   })
@@ -41,7 +44,10 @@ export default function Assets(props: Props) {
 
   const sortOptions = useMemo(() => buildSortByOptions(nftFilters.category), [nftFilters.category])
   const selectedSortBy = useMemo(() => (sortBy as NFTSortBy) ?? NFTSortBy.NEWEST, [sortBy])
-  const hasFiltersEnabled = Boolean(sortBy || filters.category || (filters.itemRarities && filters.itemRarities.length))
+  const hasAdditionalFiltersEnabled = Boolean(
+    (filters.itemRarities && filters.itemRarities.length) || filters.isOnSale || filters.isWearableSmart
+  )
+  const hasFiltersEnabled = Boolean(sortBy || filters.category || hasAdditionalFiltersEnabled)
 
   useEffect(() => {
     const shouldLoadMultiplePages = !count && page !== 1
@@ -88,7 +94,27 @@ export default function Assets(props: Props) {
     [changeSorting]
   )
 
+  const handleClearFilters = useCallback(() => {
+    changeFilters({}, { clearOldFilters: true })
+  }, [changeFilters])
+
   const renderEmptyState = useCallback(() => {
+    if (hasAdditionalFiltersEnabled) {
+      return (
+        <div className={styles.empty}>
+          <div className={styles.message}>
+            <img className={styles.image} alt={t(`categories.${nftFilters.category}`)} src={noResultsImage} />
+            <h2 className={styles.title}>{t('assets_tab.empty_with_filters')}</h2>
+            <div className={styles.emptyActions}>
+              <Button onClick={handleClearFilters} secondary inverted fluid={isMobile}>
+                {t('assets_tab.clear_filters')}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
     const actions =
       view === View.OWN ? (
         <Button primary fluid={isMobile} target="_blank" href={MARKETPLACE_URL}>
@@ -106,7 +132,7 @@ export default function Assets(props: Props) {
         </div>
       </div>
     )
-  }, [isMobile, nftFilters.category, view, profileName])
+  }, [isMobile, hasAdditionalFiltersEnabled, nftFilters.category, view, profileName, handleClearFilters])
 
   return (
     <div className={styles.container}>

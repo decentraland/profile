@@ -11,7 +11,10 @@ describe("when getting an avatar's name", () => {
     })
 
     it('should return default name without last part', () => {
-      expect(getAvatarName(avatar)).toEqual({ name: t('profile_information.default_name') })
+      expect(getAvatarName(avatar)).toEqual({
+        name: t('profile_information.default_name'),
+        fullName: t('profile_information.default_name')
+      })
     })
   })
 
@@ -29,7 +32,7 @@ describe("when getting an avatar's name", () => {
       })
 
       it("should return the avatar's name without last part", () => {
-        expect(getAvatarName(avatar)).toEqual({ name: avatar?.name })
+        expect(getAvatarName(avatar)).toEqual({ name: avatar?.name, fullName: avatar?.name })
       })
     })
 
@@ -50,13 +53,13 @@ describe("when getting an avatar's name", () => {
         })
 
         it("should return the avatar's name and the last part", () => {
-          expect(getAvatarName(avatar)).toEqual({ name: avatarName, lastPart })
+          expect(getAvatarName(avatar)).toEqual({ name: avatarName, lastPart, fullName: avatar?.name })
         })
       })
 
       describe('and the name does not have a last part', () => {
         it("should return the avatar's name with the last part", () => {
-          expect(getAvatarName(avatar)).toEqual({ name: avatar?.name, lastPart })
+          expect(getAvatarName(avatar)).toEqual({ name: avatar?.name, lastPart, fullName: `${avatar?.name}${lastPart}` })
         })
       })
     })

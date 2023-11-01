@@ -171,7 +171,9 @@
     "assets_count": "{count} {count, plural, one {objeto} other {objetos}}",
     "own_empty_category": "No tienes ninguno {category} todavía.",
     "other_empty_category": "{name} not tiene ningun {category} todavía",
-    "go_to_marketplace": "Ir al marketplace"
+    "go_to_marketplace": "Ir al marketplace",
+    "empty_with_filters": "No se encontraron resultados para los filtros seleccionados",
+    "clear_filters": "Limpiar filtros"
   },
   "nfts_sort_by": {
     "name": "Nombre",

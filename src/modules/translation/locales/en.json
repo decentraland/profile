@@ -171,7 +171,9 @@
     "assets_count": "{count} {count, plural, one {asset} other {assets}}",
     "own_empty_category": "You don't have any {category} yet.",
     "other_empty_category": "{name} doesn't have any {category} yet",
-    "go_to_marketplace": "Go to the marketplace"
+    "go_to_marketplace": "Go to the marketplace",
+    "empty_with_filters": "No results found for these filters",
+    "clear_filters": "Clear filters"
   },
   "nfts_sort_by": {
     "name": "Name",

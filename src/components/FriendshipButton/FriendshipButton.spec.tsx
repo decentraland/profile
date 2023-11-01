@@ -81,10 +81,12 @@ describe.each([
 describe('when clicking the button for a friend with the status "FRIEND"', () => {
   let onClick: jest.Mock
   let button: HTMLElement
+  let friendAddress: string
 
   beforeEach(async () => {
     onClick = jest.fn()
-    renderedComponent = renderFriendshipButton({ friendshipStatus: FriendshipStatus.FRIEND, onRemoveFriend: onClick })
+    friendAddress = '0x123123'
+    renderedComponent = renderFriendshipButton({ friendshipStatus: FriendshipStatus.FRIEND, onRemoveFriend: onClick, friendAddress })
     button = await renderedComponent.findByTestId('FriendshipButton')
     act(() => {
       fireEvent.click(button)
@@ -92,7 +94,7 @@ describe('when clicking the button for a friend with the status "FRIEND"', () =>
   })
 
   it('should open the confirmation modal', () => {
-    expect(renderedComponent.getByText(t('confirmation_modal.friend_title', { avatarName: 'Unnamed' }))).toBeInTheDocument()
+    expect(renderedComponent.getByText(t('confirmation_modal.friend_title', { avatarName: friendAddress }))).toBeInTheDocument()
   })
 })
 
