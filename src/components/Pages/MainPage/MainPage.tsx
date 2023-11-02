@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo } from 'react'
+import { Helmet } from 'react-helmet'
 import { useNavigate, useParams } from 'react-router-dom'
 import classNames from 'classnames'
 import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
-import usePageTracking from '../../../hooks/usePageTracking'
+import { getAvatarName } from '../../../modules/profile/utils'
 import { isTabValid, locations } from '../../../modules/routing/locations'
 import { AccountTabs } from '../../../modules/routing/types'
 import { View, getView } from '../../../utils/view'
@@ -22,7 +23,8 @@ import { Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
-  const { isLoading, profileAddress, loggedInAddress, isBlocked, isCreationsTabEnabled, isAssetsTabEnabled, isLoadingFeatures } = props
+  const { isLoading, profile, profileAddress, loggedInAddress, isBlocked, isCreationsTabEnabled, isAssetsTabEnabled, isLoadingFeatures } =
+    props
   const view = getView(loggedInAddress, profileAddress)
   const isMobile = useMobileMediaQuery()
   const navigate = useNavigate()
@@ -78,12 +80,33 @@ function MainPage(props: Props) {
     }
   }, [selectedTab, view])
 
-  usePageTracking()
+  const renderPageTitle = useCallback(() => {
+    const currentTab = tabs.find(t => t.value === selectedTab)
+
+    let title = 'Profile | Decentraland'
+    let description = 'Profile | Decentraland'
+
+    if (view === View.OWN) {
+      title = `${currentTab?.displayValue} · ${title}`
+    } else {
+      const avatarName = getAvatarName(profile?.avatars[0]).name
+      title = `${avatarName} (#${profileAddress?.slice(-6)}) ${currentTab?.displayValue} · ${title}`
+      description = `${avatarName} (${profileAddress}) profile information`
+    }
+
+    return (
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Helmet>
+    )
+  }, [selectedTab, view])
 
   return isLoading ? (
     <LoadingPage />
   ) : (
     <PageLayout>
+      {renderPageTitle()}
       <div className={classNames(styles.MainPage, { [styles.extended]: selectedTab !== AccountTabs.OVERVIEW })}>
         <div
           className={classNames(styles.avatarContainer, {

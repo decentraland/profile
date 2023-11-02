@@ -1,3 +1,5 @@
+import { Profile } from '@dcl/schemas'
+
 export type Props = {
   loggedInAddress?: string
   profileAddress?: string
@@ -6,10 +8,11 @@ export type Props = {
   isAssetsTabEnabled: boolean
   isLoadingFeatures: boolean
   isBlocked: boolean
+  profile?: Profile
 }
 
 export type MapStateProps = Pick<
   Props,
-  'loggedInAddress' | 'isBlocked' | 'isLoading' | 'isCreationsTabEnabled' | 'isAssetsTabEnabled' | 'isLoadingFeatures'
+  'loggedInAddress' | 'isBlocked' | 'isLoading' | 'isCreationsTabEnabled' | 'isAssetsTabEnabled' | 'isLoadingFeatures' | 'profile'
 >
 export type OwnProps = Pick<Props, 'profileAddress' | 'isLoading'>
