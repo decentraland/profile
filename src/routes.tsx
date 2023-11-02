@@ -10,7 +10,6 @@ export default function AppRoutes() {
   const location = useLocation()
 
   useEffect(() => {
-    console.log('HELLO', location)
     const analytics = getAnalytics()
 
     if (analytics) {
