@@ -106,7 +106,7 @@ describe('ProfileInformation', () => {
 
         const dropdownButton = getByTestId(shareButtonTestId)
         userEvent.click(dropdownButton)
-        expect(getByText(t('profile_information.qr_code.item'))).toBeInTheDocument()
+        expect(getByText(t('profile_information.qr_code_item'))).toBeInTheDocument()
       })
 
       describe('and the social client is ready', () => {
@@ -198,7 +198,7 @@ describe('ProfileInformation', () => {
 
           const dropdownButton = getByTestId(shareButtonTestId)
           userEvent.click(dropdownButton)
-          expect(queryByText(t('profile_information.qr_code.item'))).not.toBeInTheDocument()
+          expect(queryByText(t('profile_information.qr_code_item'))).not.toBeInTheDocument()
         })
       })
 

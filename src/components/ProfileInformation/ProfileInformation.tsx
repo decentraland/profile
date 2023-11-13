@@ -153,7 +153,7 @@ const ProfileInformation = (props: Props) => {
                     onClick={handleShareOnTwitter}
                   />
                   {isLoggedInProfile && (
-                    <Dropdown.Item icon="qrcode" text={t('profile_information.qr_code.item')} onClick={handleShowQrCode} />
+                    <Dropdown.Item icon="qrcode" text={t('profile_information.qr_code_item')} onClick={handleShowQrCode} />
                   )}
                 </Dropdown.Menu>
               </Dropdown>

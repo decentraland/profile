@@ -18,7 +18,7 @@ export default function ShareQrCodeModal({ profile, profileAddress, onClose }: P
       <Profile size="huge" imageOnly address={profileAddress} avatar={profile?.avatars[0]} />
       <span className={styles.title}>{avatarName.fullName}</span>
       <QRCodeCanvas value={`${PROFILE_URL}${locations.account(profileAddress)}`} size={250} />
-      <span className={styles.info}>{t('profile_information.qr_code.info')}</span>
+      <span className={styles.info}>{t('profile_information.qr_code_info')}</span>
     </Modal>
   )
 }
