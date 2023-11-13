@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import classnames from 'classnames'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
 import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
@@ -30,6 +30,7 @@ import {
   walletTestId,
   MAX_NUMBER_OF_LINKS
 } from './constants'
+import ShareQRCodeModal from './ShareQrCodeModal'
 import { Props } from './ProfileInformation.types'
 import styles from './ProfileInformation.module.css'
 
@@ -40,7 +41,7 @@ const ProfileInformation = (props: Props) => {
 
   const [hasCopiedLink, setHasCopiedLink] = useTimer(1200)
   const [hasCopiedWallet, setHasCopiedWallet] = useTimer(1200)
-
+  const [showQRCode, setShowQRCode] = useState(false)
   const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
   const avatar = profile?.avatars[0]
@@ -74,6 +75,10 @@ const ProfileInformation = (props: Props) => {
 
     return () => clearTimeout(timeout)
   }, [profileAddress, loggedInAddress])
+
+  const handleShowQrCode = () => setShowQRCode(true)
+
+  const handleHideQRcode = () => setShowQRCode(false)
 
   const handleViewMore = useCallback(() => {
     avatar && onViewMore && onViewMore(avatar)
@@ -147,6 +152,9 @@ const ProfileInformation = (props: Props) => {
                     text={t('profile_information.share_on_tw')}
                     onClick={handleShareOnTwitter}
                   />
+                  {isLoggedInProfile && (
+                    <Dropdown.Item icon="qrcode" text={t('profile_information.qr_code.item')} onClick={handleShowQrCode} />
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
             </div>
@@ -232,6 +240,7 @@ const ProfileInformation = (props: Props) => {
           </div>
         )}
       </div>
+      {showQRCode && <ShareQRCodeModal profileAddress={profileAddress} profile={profile} onClose={handleHideQRcode} />}
     </div>
   )
 }

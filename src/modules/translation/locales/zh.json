@@ -12,6 +12,10 @@
     "copied": "已復制",
     "copy_link": "複製鏈接",
     "tw_message": "分享到Twitter",
+    "qr_code": {
+      "item": "Share with QR Code",
+      "info": "Share QR Code so others can see the profile"
+    },
     "share_my_profile_tw_message": "通过我的 Decentraland 个人资料了解更多关于我的信息！#DCLProfiles\n",
     "share_others_profile_tw_message": "找到了很棒的 Decentraland 简介。 看一看！#DCLProfiles\n",
     "view_more": "查看更多",

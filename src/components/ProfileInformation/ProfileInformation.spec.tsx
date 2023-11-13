@@ -1,5 +1,6 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
@@ -100,6 +101,14 @@ describe('ProfileInformation', () => {
         expect(queryByTestId(blockedButtonTestId)).toBeNull()
       })
 
+      it('should render "Share with QR Code" button', () => {
+        const { getByTestId, getByText } = renderProfileInformation({ ...props, isBlockedByLoggedUser: true, hasBlockedLoggedUser: true })
+
+        const dropdownButton = getByTestId(shareButtonTestId)
+        userEvent.click(dropdownButton)
+        expect(getByText(t('profile_information.qr_code.item'))).toBeInTheDocument()
+      })
+
       describe('and the social client is ready', () => {
         beforeEach(() => {
           props = { ...props, isSocialClientReady: true }
@@ -182,6 +191,14 @@ describe('ProfileInformation', () => {
           const { getByTestId } = renderProfileInformation(props)
 
           expect(getByTestId(actionsForNonBlockedTestId)).toBeInTheDocument()
+        })
+
+        it('should not render "Share with QR Code" button', () => {
+          const { getByTestId, queryByText } = renderProfileInformation(props)
+
+          const dropdownButton = getByTestId(shareButtonTestId)
+          userEvent.click(dropdownButton)
+          expect(queryByText(t('profile_information.qr_code.item'))).not.toBeInTheDocument()
         })
       })
 

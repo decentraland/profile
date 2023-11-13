@@ -12,6 +12,10 @@
     "copied": "Copiado",
     "copy_link": "Copiar enlace",
     "share_on_tw": "Compartir en Twitter",
+    "qr_code": {
+      "item": "Share with QR Code",
+      "info": "Share QR Code so others can see the profile"
+    },
     "share_my_profile_tw_message": "Descubre más acerca de mí a través de mi perfil en Decentraland! #DCLProfiles\n",
     "share_others_profile_tw_message": "Encontré un profile de Decentraland asombroso. Échale un vistazo! #DCLProfiles\n",
     "view_more": "Ver Más",
