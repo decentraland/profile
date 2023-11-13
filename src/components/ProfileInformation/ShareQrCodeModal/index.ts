@@ -1,2 +1,2 @@
-import ShareQRCodeModal from './ShareQrCodeModal'
-export default ShareQRCodeModal
+import ShareQrCodeModal from './ShareQrCodeModal'
+export default ShareQrCodeModal
