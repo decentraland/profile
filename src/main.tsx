@@ -4,6 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Env } from '@dcl/ui-env'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
@@ -26,7 +27,7 @@ SSO.init(config.get('SSO_URL'))
 
 const component = (
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.MODE !== 'development' && config.is(Env.DEVELOPMENT) ? '/profile' : undefined}>
       <Provider store={initStore()}>
         <WalletProvider>
           <TranslationProvider locales={Object.keys(locales)}>
