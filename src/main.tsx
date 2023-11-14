@@ -25,9 +25,11 @@ import './index.css'
 
 SSO.init(config.get('SSO_URL'))
 
+const basename = import.meta.env.MODE !== 'development' && !config.is(Env.PRODUCTION) ? '/profile' : undefined
+
 const component = (
   <React.StrictMode>
-    <BrowserRouter basename={import.meta.env.MODE !== 'development' && config.is(Env.DEVELOPMENT) ? '/profile' : undefined}>
+    <BrowserRouter basename={basename}>
       <Provider store={initStore()}>
         <WalletProvider>
           <TranslationProvider locales={Object.keys(locales)}>
