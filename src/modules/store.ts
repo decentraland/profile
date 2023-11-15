@@ -32,6 +32,7 @@ export function initStore() {
     _window.getState = store.getState
   }
 
+  // Create the Worlds Content client
   const worldsContentClient = createContentClient({ url: config.get('WORLDS_CONTENT_SERVER_URL'), fetcher: createFetchComponent() })
   const marketplaceGraphClient = new MarketplaceGraphClient(config.get('MARKETPLACE_GRAPH_URL'))
   const peerApi = new PeerAPI(config.get('PEER_URL'))
