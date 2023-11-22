@@ -7,14 +7,15 @@ on:
         description: "NPM Version of the release (@dcl/profile-site)"
         required: true
         default: ""
-      deploymentDomain:
+      deploymentEnvironment:
         type: "choice"
-        description: "Deployment domain"
+        description: "Deployment environment"
         required: true
         default: "zone"
         options:
           - zone
           - today
+          - org
       rolloutPercentage:
         description: "The percentage for this rollout"
         required: true
@@ -40,6 +41,6 @@ jobs:
 
           # Rollout information
           deploymentPath: "profile"
-          deploymentEnvironment: ${{ github.event.inputs.deploymentDomain }}
+          deploymentEnvironment: ${{ github.event.inputs.deploymentEnvironment }}
           deploymentName: "_site"
           percentage: ${{ github.event.inputs.rolloutPercentage }}
