@@ -4,7 +4,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Env } from '@dcl/ui-env'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
@@ -25,8 +24,7 @@ import './index.css'
 
 SSO.init(config.get('SSO_URL'))
 
-const basename = import.meta.env.MODE !== 'development' && !config.is(Env.PRODUCTION) ? '/profile' : undefined
-
+const basename = /^decentraland.(zone|org|today)$/.test(window.location.host) ? '/profile' : '/'
 const component = (
   <React.StrictMode>
     <BrowserRouter basename={basename}>
