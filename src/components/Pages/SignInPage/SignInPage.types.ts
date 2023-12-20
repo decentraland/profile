@@ -3,9 +3,11 @@ import { LoginRequestAction, loginRequest } from '../../../modules/identity/acti
 
 export type Props = {
   isConnected: boolean
+  isAuthDappEnabled: boolean
+  isConnecting: boolean
   onConnect: typeof loginRequest
 }
 
-export type MapStateProps = Pick<Props, 'isConnected'>
+export type MapStateProps = Pick<Props, 'isConnected' | 'isAuthDappEnabled'>
 export type MapDispatch = Dispatch<LoginRequestAction>
 export type MapDispatchProps = Pick<Props, 'onConnect'>
