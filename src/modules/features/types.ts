@@ -1,4 +1,5 @@
 export enum FeatureName {
   CREATIONS = 'creations',
-  ASSETS = 'assets'
+  ASSETS = 'assets',
+  AUTH_DAPP = 'auth-dapp'
 }

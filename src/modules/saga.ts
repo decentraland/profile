@@ -41,7 +41,7 @@ export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphCl
     createProfileSaga(marketplaceGraphClient, peerApi)(),
     featuresSaga({
       polling: {
-        apps: [ApplicationName.PROFILE],
+        apps: [ApplicationName.PROFILE, ApplicationName.DAPPS],
         delay: 60000 /** 60 seconds */
       }
     }),
