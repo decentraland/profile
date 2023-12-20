@@ -1,6 +1,7 @@
 import { call, put, race, select, take, takeEvery } from 'redux-saga/effects'
 import { AuthIdentity } from '@dcl/crypto'
-import { getIdentity, storeIdentity, clearIdentity } from '@dcl/single-sign-on-client'
+import { LocalStorageUtils } from '@dcl/single-sign-on-client'
+import { getIdentity, storeIdentity, clearIdentity } from '@dcl/single-sign-on-client-legacy'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import {
   CONNECT_WALLET_FAILURE,
@@ -17,8 +18,12 @@ import {
   DISCONNECT_WALLET
 } from 'decentraland-dapps/dist/modules/wallet/actions'
 import { isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { config } from '../config'
+import { getIsAuthDappEnabled } from '../features/selectors'
 import { LoginRequestAction, loginFailure, loginRequest, loginSuccess, logout } from './action'
 import { generateIdentity } from './utils'
+
+const AUTH_URL = config.get('AUTH_URL')
 
 export function* identitySaga() {
   yield takeEvery(loginRequest.type, handleLogin)
@@ -85,20 +90,28 @@ export function* identitySaga() {
     const { wallet } = action.payload
     const { address } = wallet
     const lowerCasedAddress = address.toLowerCase()
-
     auxAddress = lowerCasedAddress
 
-    let identity: AuthIdentity
+    const isAuthDappEnabled: boolean = yield select(state => getIsAuthDappEnabled(state))
 
-    const ssoIdentity: AuthIdentity | null = yield call(getIdentity, lowerCasedAddress)
-
-    if (!ssoIdentity) {
-      identity = yield call(generateIdentity, lowerCasedAddress)
-      yield call(storeIdentity, lowerCasedAddress, identity)
+    if (isAuthDappEnabled) {
+      const identity: AuthIdentity | null = LocalStorageUtils.getIdentity(lowerCasedAddress)
+      if (!identity) {
+        window.location.replace(`${AUTH_URL}/login?redirectTo=${window.location.href}`)
+        return
+      }
+      yield put(loginSuccess({ address: lowerCasedAddress, identity }))
     } else {
-      identity = ssoIdentity
-    }
+      let identity: AuthIdentity
+      const ssoIdentity: AuthIdentity | null = yield call(getIdentity, lowerCasedAddress)
 
-    yield put(loginSuccess({ address: lowerCasedAddress, identity }))
+      if (!ssoIdentity) {
+        identity = yield call(generateIdentity, lowerCasedAddress)
+        yield call(storeIdentity, lowerCasedAddress, identity)
+      } else {
+        identity = ssoIdentity
+      }
+      yield put(loginSuccess({ address: lowerCasedAddress, identity }))
+    }
   }
 }

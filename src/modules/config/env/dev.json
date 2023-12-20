@@ -15,5 +15,6 @@
   "SEGMENT_API_KEY": "69qQIHhaX2FkM9KP233SYNQNuPjpY0JG",
   "SSO_URL": "https://id.decentraland.zone",
   "ENVIRONMENT": "development",
-  "SENTRY_DSN": "https://d2d3f81155656b53fe7746a0b69b6e0e@o4504361728212992.ingest.sentry.io/4505748385169408"
+  "SENTRY_DSN": "https://d2d3f81155656b53fe7746a0b69b6e0e@o4504361728212992.ingest.sentry.io/4505748385169408",
+  "AUTH_URL": "/auth"
 }
