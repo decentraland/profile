@@ -22,10 +22,11 @@ export type Props = {
   className?: string
   profile?: Profile
   isLoggedIn?: boolean
+  isAuthDappEnabled?: boolean
 }
 
 export type OwnProps = Pick<Props, 'friendAddress' | 'className' | 'isLoggedIn'>
-export type MapStateProps = Pick<Props, 'isLoading' | 'friendshipStatus' | 'profile'>
+export type MapStateProps = Pick<Props, 'isLoading' | 'friendshipStatus' | 'profile' | 'isAuthDappEnabled'>
 export type MapDispatchProps = Pick<Props, 'onRemoveFriend' | 'onAcceptFriendRequest' | 'onCancelFriendRequest' | 'onAddFriend'>
 export type MapDispatch = Dispatch<
   | FetchFriendsRequestAction

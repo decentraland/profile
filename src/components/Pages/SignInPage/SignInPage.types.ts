@@ -8,6 +8,6 @@ export type Props = {
   onConnect: typeof loginRequest
 }
 
-export type MapStateProps = Pick<Props, 'isConnected' | 'isAuthDappEnabled'>
+export type MapStateProps = Pick<Props, 'isConnected' | 'isConnecting' | 'isAuthDappEnabled'>
 export type MapDispatch = Dispatch<LoginRequestAction>
 export type MapDispatchProps = Pick<Props, 'onConnect'>
