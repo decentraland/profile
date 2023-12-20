@@ -14,7 +14,7 @@ import {
 } from './action'
 
 export function createProfileSaga(marketplaceGraphClient: MarketplaceGraphClient, peerApi: PeerAPI) {
-  const defaultProfileSagas = createDefaultProfileSaga({ peerUrl: peerApi.url })
+  const defaultProfileSagas = createDefaultProfileSaga({ peerUrl: peerApi.url, getIdentity: () => undefined })
   return function* () {
     yield all([profileSagas(marketplaceGraphClient, peerApi), defaultProfileSagas()])
   }
