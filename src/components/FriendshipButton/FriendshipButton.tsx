@@ -60,7 +60,7 @@ const FriendshipButton = (props: Props) => {
       case FriendshipStatus.PENDING_RESPONSE:
         return onAcceptFriendRequest()
     }
-  }, [friendshipStatus, setIsOpenModal, onAcceptFriendRequest, handleAddFriend ])
+  }, [friendshipStatus, setIsOpenModal, onAcceptFriendRequest, handleAddFriend])
 
   const buttonText = useMemo(() => {
     switch (friendshipStatus) {
