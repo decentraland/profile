@@ -39,13 +39,13 @@ const FriendshipButton = (props: Props) => {
     ? friendAddress.slice(0, isTableAndBelow ? MOBILE_ADDRESS_SIZE : DESKTOP_ADDRESS_SIZE)
     : getAvatarName(profile?.avatars[0]).fullName
 
-  const handleAddFriend = () => {
+  const handleAddFriend = useCallback(() => {
     if (isAuthDappEnabled && !isLoggedIn) {
       window.location.replace(`${config.get('AUTH_URL')}?redirectTo=${window.location.href}`)
     } else {
       onAddFriend()
     }
-  }
+  }, [isAuthDappEnabled, isLoggedIn, onAddFriend])
 
   const handleButtonClick = useCallback(() => {
     switch (friendshipStatus) {
@@ -60,7 +60,7 @@ const FriendshipButton = (props: Props) => {
       case FriendshipStatus.PENDING_RESPONSE:
         return onAcceptFriendRequest()
     }
-  }, [friendshipStatus, isHovering])
+  }, [friendshipStatus, setIsOpenModal, onAcceptFriendRequest, handleAddFriend ])
 
   const buttonText = useMemo(() => {
     switch (friendshipStatus) {
