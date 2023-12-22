@@ -8,6 +8,7 @@ import blockedUserIcon from '../../assets/icons/BlockUser.png'
 import pendingRequestIcon from '../../assets/icons/PendingRequest.png'
 import unfriendUserIcon from '../../assets/icons/UnfriendUser.png'
 import userIcon from '../../assets/icons/User.png'
+import { config } from '../../modules/config'
 import { getAvatarName } from '../../modules/profile/utils'
 import { FriendshipStatus } from '../../modules/social/types'
 import { DESKTOP_ADDRESS_SIZE, MOBILE_ADDRESS_SIZE } from '../../utils/address'
@@ -21,6 +22,8 @@ const FriendshipButton = (props: Props) => {
     friendAddress,
     className,
     isLoading,
+    isAuthDappEnabled,
+    isLoggedIn,
     onAddFriend,
     onCancelFriendRequest,
     onAcceptFriendRequest,
@@ -36,20 +39,28 @@ const FriendshipButton = (props: Props) => {
     ? friendAddress.slice(0, isTableAndBelow ? MOBILE_ADDRESS_SIZE : DESKTOP_ADDRESS_SIZE)
     : getAvatarName(profile?.avatars[0]).fullName
 
+  const handleAddFriend = useCallback(() => {
+    if (isAuthDappEnabled && !isLoggedIn) {
+      window.location.replace(`${config.get('AUTH_URL')}?redirectTo=${window.location.href}`)
+    } else {
+      onAddFriend()
+    }
+  }, [isAuthDappEnabled, isLoggedIn, onAddFriend])
+
   const handleButtonClick = useCallback(() => {
     switch (friendshipStatus) {
       case FriendshipStatus.FRIEND:
         setIsOpenModal(true)
         break
       case FriendshipStatus.NOT_FRIEND:
-        return onAddFriend()
+        return handleAddFriend()
       case FriendshipStatus.PENDING_REQUEST:
         setIsOpenModal(true)
         break
       case FriendshipStatus.PENDING_RESPONSE:
         return onAcceptFriendRequest()
     }
-  }, [friendshipStatus, isHovering])
+  }, [friendshipStatus, setIsOpenModal, onAcceptFriendRequest, handleAddFriend])
 
   const buttonText = useMemo(() => {
     switch (friendshipStatus) {

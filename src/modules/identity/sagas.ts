@@ -1,7 +1,6 @@
 import { call, put, race, select, take, takeEvery } from 'redux-saga/effects'
 import { AuthIdentity } from '@dcl/crypto'
-import { LocalStorageUtils } from '@dcl/single-sign-on-client'
-import { getIdentity, storeIdentity, clearIdentity } from '@dcl/single-sign-on-client-legacy'
+import { getIdentity, storeIdentity, clearIdentity, localStorageGetIdentity } from '@dcl/single-sign-on-client'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import {
   CONNECT_WALLET_FAILURE,
@@ -95,7 +94,7 @@ export function* identitySaga() {
     const isAuthDappEnabled: boolean = yield select(state => getIsAuthDappEnabled(state))
 
     if (isAuthDappEnabled) {
-      const identity: AuthIdentity | null = LocalStorageUtils.getIdentity(lowerCasedAddress)
+      const identity: AuthIdentity | null = localStorageGetIdentity(lowerCasedAddress)
       if (!identity) {
         window.location.replace(`${AUTH_URL}/login?redirectTo=${window.location.href}`)
         return
