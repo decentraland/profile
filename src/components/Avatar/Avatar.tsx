@@ -51,11 +51,11 @@ const Avatar = (props: Props) => {
             profile={profileAddress}
             disableDefaultWearables
           />
-          {(!profile && view === View.OWN && !isLoadingWearablePreview) || isError ? (
-            <div data-testid="avatar-message" className={styles.message}>
-              {t('avatar.message')}
-            </div>
-          ) : null}
+        </div>
+      ) : null}
+      {(!profile && view === View.OWN && !isLoadingWearablePreview) || isError ? (
+        <div data-testid="avatar-message" className={styles.message}>
+          {t('avatar.message')}
         </div>
       ) : null}
       {view === View.OWN && (
