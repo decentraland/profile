@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
+import { Navbar2 as BaseNavbar2 } from 'decentraland-dapps/dist/containers'
 import UserInformation from 'decentraland-dapps/dist/containers/UserInformation'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui'
@@ -10,7 +11,7 @@ import './Navbar.css'
 const AUTH_URL = config.get('AUTH_URL')
 
 const Navbar = (props: Props) => {
-  const { isConnected, isAuthDappEnabled, onSignIn } = props
+  const { isConnected, isAuthDappEnabled, isNavbarV2Enabled, onSignIn } = props
 
   const handleSignIn = useCallback(() => {
     if (isAuthDappEnabled) {
@@ -33,7 +34,11 @@ const Navbar = (props: Props) => {
     }
   }
 
-  return <BaseNavbar {...props} activePage="profile" isFullscreen={props.isFullscreen} onSignIn={() => undefined} />
+  return isNavbarV2Enabled ? (
+    <BaseNavbar2 {...props} onSignIn={handleSignIn} />
+  ) : (
+    <BaseNavbar {...props} activePage="profile" isFullscreen={props.isFullscreen} onSignIn={() => undefined} />
+  )
 }
 
 export default Navbar
