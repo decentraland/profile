@@ -2,6 +2,7 @@ import { configureStore, Reducer, Middleware, AnyAction, combineReducers, Store 
 import { FeaturesState, featuresReducer as features } from 'decentraland-dapps/dist/modules/features/reducer'
 import { ModalState, modalReducer as modal } from 'decentraland-dapps/dist/modules/modal/reducer'
 import { StorageState, storageReducer as storage, storageReducerWrapper } from 'decentraland-dapps/dist/modules/storage/reducer'
+import { TransactionState, transactionReducer as transaction } from 'decentraland-dapps/dist/modules/transaction/reducer'
 import { TranslationState, translationReducer as translation } from 'decentraland-dapps/dist/modules/translation/reducer'
 import { WalletState, walletReducer as wallet } from 'decentraland-dapps/dist/modules/wallet/reducer'
 import { IdentityState, identityReducer as identity } from './identity/reducer'
@@ -26,7 +27,8 @@ export const createRootReducer = (middlewares: Middleware[], preloadedState = {}
         social,
         world,
         items,
-        nfts
+        nfts,
+        transaction
       })
     ),
     preloadedState,
@@ -54,6 +56,7 @@ export type RootState = {
   features: FeaturesState
   items: ItemsState
   nfts: NFTsState
+  transaction: TransactionState
 }
 
 export type RootStore = Store<RootState>
