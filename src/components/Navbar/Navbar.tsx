@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
-import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
-import { Navbar2 as BaseNavbar2 } from 'decentraland-dapps/dist/containers'
+import { Navbar as BaseNavbar, Navbar2 as BaseNavbar2 } from 'decentraland-dapps/dist/containers'
 import UserInformation from 'decentraland-dapps/dist/containers/UserInformation'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui'
