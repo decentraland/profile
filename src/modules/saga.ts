@@ -3,6 +3,7 @@ import type { PeerAPI } from 'decentraland-dapps/dist/lib/peer'
 import { createAnalyticsSaga } from 'decentraland-dapps/dist/modules/analytics/sagas'
 import { featuresSaga } from 'decentraland-dapps/dist/modules/features/sagas'
 import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
+import { transactionSaga } from 'decentraland-dapps/dist/modules/transaction/sagas'
 import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { config } from './config'
 import { identitySaga } from './identity/sagas'
@@ -45,6 +46,7 @@ export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphCl
         delay: 60000 /** 60 seconds */
       }
     }),
-    nftSagas(new NFTClient(NFT_SERVER_URL))
+    nftSagas(new NFTClient(NFT_SERVER_URL)),
+    transactionSaga()
   ])
 }
