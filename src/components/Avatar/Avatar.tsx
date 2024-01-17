@@ -43,7 +43,6 @@ const Avatar = (props: Props) => {
           <WearablePreview
             onLoad={handleOnLoad}
             onError={handleError}
-            onUpdate={handleOnLoad}
             panning={false}
             lockBeta={true}
             dev={config.getEnv() === Env.DEVELOPMENT}
