@@ -108,7 +108,14 @@ describe('when getting the wearable urns of a given profile', () => {
 
   describe('and the profile exists', () => {
     it('should return the wearable urns of the user items', () => {
-      expect(getProfileWearableUrns(state, address)).toEqual(state.profile.data[address].avatars[0].avatar.wearables)
+      expect(getProfileWearableUrns(state, address)).toEqual([
+        'urn:decentraland:ethereum:collections-v1:community_contest:cw_casinovisor_hat',
+        'urn:decentraland:ethereum:collections-v1:dg_summer_2020:dg_mink_fur_coat_upper_body',
+        'urn:decentraland:matic:collections-v2:0x213efc9acb3f51cdb7ca208fb28b49e792441107',
+        'urn:decentraland:matic:collections-v2:0x62e9f0f793164a2edbd4dc739e3b53da623c8944',
+        'urn:decentraland:matic:collections-v2:0x9d9b55db299c46e5118675361d4a5a2ba49b54b6',
+        'urn:decentraland:matic:collections-v2:0xc25744bed31b2ae67e349a8ef59dfa48e064140f'
+      ])
     })
   })
 })

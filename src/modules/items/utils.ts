@@ -1,4 +1,4 @@
-const wearablesRegex = /^urn:decentraland:(.+):(collections-v[12]):(.+):(.+)(:(.+))?$/
+const wearablesRegex = /^urn:decentraland:(.+):(collections-v[12]):(.+):(.+)(:([0-9]+))?$/
 
 export const isEthereumWearable = (urn: string): boolean => {
   const result = wearablesRegex.exec(urn)
@@ -21,5 +21,11 @@ export const getWearableUrnWithoutId = (urn: string): string | null => {
   if (!result || (result && result.length < 4)) {
     return null
   }
-  return `urn:decentraland:${result[1]}:${result[2]}:${result[3]}`
+
+  // Remove the ID from the URN
+  if (result[2] === 'collections-v2') {
+    return `urn:decentraland:${result[1]}:${result[2]}:${result[3]}`
+  }
+
+  return urn
 }
