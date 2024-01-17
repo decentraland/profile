@@ -15,7 +15,6 @@ const MARKETPLACE_URL = config.get('MARKETPLACE_URL', '')
 
 const Overview = (props: Props) => {
   const { isLoading, items, onFetchItems, wearableIds, className, profileAddress, loggedInAddress, profile } = props
-  console.log('Wearable ids', wearableIds, isLoading)
   const isLoggedInProfile = profileAddress === loggedInAddress
   const avatarName = useMemo(() => getAvatarName(profile?.avatars[0]).name, [profile])
 
