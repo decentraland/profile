@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useMemo, useEffect } from 'react'
 import classNames from 'classnames'
 import { Item } from '@dcl/schemas'
 import { AssetCard } from 'decentraland-dapps/dist/containers/AssetCard/AssetCard'
@@ -15,15 +15,14 @@ const MARKETPLACE_URL = config.get('MARKETPLACE_URL', '')
 
 const Overview = (props: Props) => {
   const { isLoading, items, onFetchItems, wearableIds, className, profileAddress, loggedInAddress, profile } = props
-
   const isLoggedInProfile = profileAddress === loggedInAddress
-  const avatarName = getAvatarName(profile?.avatars[0]).name
+  const avatarName = useMemo(() => getAvatarName(profile?.avatars[0]).name, [profile])
 
   useEffect(() => {
     if (wearableIds.length > 0) {
       onFetchItems(wearableIds)
     }
-  }, [wearableIds])
+  }, [wearableIds.length])
 
   return (
     <div className={classNames(className, styles.Overview)} data-testid="overview">
