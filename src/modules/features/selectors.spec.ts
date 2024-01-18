@@ -3,7 +3,7 @@ import { INITIAL_STATE } from 'decentraland-dapps/dist/modules/features/reducer'
 import { getIsFeatureEnabled, hasLoadedInitialFlags } from 'decentraland-dapps/dist/modules/features/selectors'
 import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
 import { RootState } from '../reducer'
-import { getIsAssetsTabEnabled, getIsAuthDappEnabled, getIsCreationsTabEnabled, getIsNavbarV2Enabled } from './selectors'
+import { getIsAssetsTabEnabled, getIsAuthDappEnabled, getIsCreationsTabEnabled } from './selectors'
 import { FeatureName } from './types'
 
 jest.mock('decentraland-dapps/dist/modules/features/selectors', () => {
@@ -54,12 +54,6 @@ const waitForInitialLoadingSelectors = [
     name: 'auth-dapp',
     feature: FeatureName.AUTH_DAPP,
     selector: getIsAuthDappEnabled,
-    applicationName: ApplicationName.DAPPS
-  },
-  {
-    name: 'navbar-v2',
-    feature: FeatureName.NAVBAR_V2,
-    selector: getIsNavbarV2Enabled,
     applicationName: ApplicationName.DAPPS
   }
 ]
