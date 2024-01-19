@@ -26,30 +26,21 @@ jest.mock('decentraland-ui/dist/components/Tabs/Tabs', () => {
 
 function renderMainPage(props: Partial<Props> = {}) {
   return renderWithProviders(
-    <MainPage
-      loggedInAddress="0xtest"
-      profileAddress="0xaddress"
-      isCreationsTabEnabled={false}
-      isAssetsTabEnabled={false}
-      isBlocked={false}
-      isLoadingFeatures={false}
-      {...props}
-    />
+    <MainPage loggedInAddress="0xtest" profileAddress="0xaddress" isBlocked={false} isLoadingFeatures={false} {...props} />
   )
 }
 
 let screen: RenderResult
+let mainTabsCmp: ReturnType<typeof within>
+let profileAddress: string
+let loggedInAddress: string
 
-describe('when the creations tab FF is enabled', () => {
-  let mainTabsCmp: ReturnType<typeof within>
-  let profileAddress: string
-  let loggedInAddress: string
-
+describe('when rendering the main page', () => {
   describe('and the user is viewing its own profile', () => {
     beforeEach(() => {
       profileAddress = '0xaddress'
       loggedInAddress = profileAddress
-      screen = renderMainPage({ isCreationsTabEnabled: true, loggedInAddress, profileAddress })
+      screen = renderMainPage({ loggedInAddress, profileAddress })
       mainTabsCmp = within(screen.getByTestId('main-tabs'))
     })
 
@@ -59,52 +50,6 @@ describe('when the creations tab FF is enabled', () => {
 
     it('should show the "My Creations" tab', async () => {
       expect(mainTabsCmp.getByText(t('tabs.own_creations'))).toBeInTheDocument()
-    })
-  })
-
-  describe('and the user is viewing another profile', () => {
-    beforeEach(() => {
-      profileAddress = '0xaddress'
-      loggedInAddress = 'anotherAddress'
-      screen = renderMainPage({ isCreationsTabEnabled: true, loggedInAddress, profileAddress })
-      mainTabsCmp = within(screen.getByTestId('main-tabs'))
-    })
-
-    it('should show the overview tab', () => {
-      expect(mainTabsCmp.getByText(t('tabs.overview'))).toBeInTheDocument()
-    })
-
-    it('should show the "Creations" tab', async () => {
-      expect(mainTabsCmp.getByText(t('tabs.others_creations'))).toBeInTheDocument()
-    })
-  })
-})
-
-describe('when the creations tab FF is disabled', () => {
-  beforeEach(() => {
-    screen = renderMainPage({ isCreationsTabEnabled: false })
-  })
-
-  it('should not show the tabs section', () => {
-    expect(screen.queryByTestId('main-tabs')).not.toBeInTheDocument()
-  })
-})
-
-describe('when the assets tab FF is enabled', () => {
-  let mainTabsCmp: ReturnType<typeof within>
-  let profileAddress: string
-  let loggedInAddress: string
-
-  describe('and the user is viewing its own profile', () => {
-    beforeEach(() => {
-      profileAddress = '0xaddress'
-      loggedInAddress = profileAddress
-      screen = renderMainPage({ isAssetsTabEnabled: true, loggedInAddress, profileAddress })
-      mainTabsCmp = within(screen.getByTestId('main-tabs'))
-    })
-
-    it('should show the overview tab', () => {
-      expect(mainTabsCmp.getByText(t('tabs.overview'))).toBeInTheDocument()
     })
 
     it('should show the "My Assets" tab', () => {
@@ -116,26 +61,20 @@ describe('when the assets tab FF is enabled', () => {
     beforeEach(() => {
       profileAddress = '0xaddress'
       loggedInAddress = 'anotherAddress'
-      screen = renderMainPage({ isAssetsTabEnabled: true, loggedInAddress, profileAddress })
+      screen = renderMainPage({ loggedInAddress, profileAddress })
       mainTabsCmp = within(screen.getByTestId('main-tabs'))
-    })
-
-    it('should show the "Assets" tab', () => {
-      expect(mainTabsCmp.getByText(t('tabs.others_assets'))).toBeInTheDocument()
     })
 
     it('should show the overview tab', () => {
       expect(mainTabsCmp.getByText(t('tabs.overview'))).toBeInTheDocument()
     })
-  })
-})
 
-describe('when the assets tab FF is disabled', () => {
-  beforeEach(() => {
-    screen = renderMainPage({ isAssetsTabEnabled: false })
-  })
+    it('should show the "Creations" tab', async () => {
+      expect(mainTabsCmp.getByText(t('tabs.others_creations'))).toBeInTheDocument()
+    })
 
-  it('should not show the tabs section', () => {
-    expect(screen.queryByTestId('main-tabs')).not.toBeInTheDocument()
+    it('should show the "Assets" tab', () => {
+      expect(mainTabsCmp.getByText(t('tabs.others_assets'))).toBeInTheDocument()
+    })
   })
 })
