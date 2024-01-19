@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { hasLoadedInitialFlags } from 'decentraland-dapps/dist/modules/features/selectors'
 import { getAddress, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { getIsAssetsTabEnabled, getIsCreationsTabEnabled } from '../../../modules/features/selectors'
 import { isLoggingIn } from '../../../modules/identity/selector'
 import { hasBlockedLoggedUser, isBlockedByLoggedUser } from '../../../modules/profile/selectors'
 import { RootState } from '../../../modules/reducer'
@@ -13,8 +12,6 @@ const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps =>
 
   return {
     isLoading: ownProps.isLoading || isLoggingIn(state) || isConnecting(state),
-    isCreationsTabEnabled: getIsCreationsTabEnabled(state),
-    isAssetsTabEnabled: getIsAssetsTabEnabled(state),
     isLoadingFeatures: !hasLoadedInitialFlags(state),
     loggedInAddress: getAddress(state)?.toLowerCase(),
     isBlocked: !!profileAddress && (isBlockedByLoggedUser(state, profileAddress) || hasBlockedLoggedUser(state, profileAddress))
