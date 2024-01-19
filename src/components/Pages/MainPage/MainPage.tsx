@@ -22,7 +22,7 @@ import { Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
-  const { isLoading, profileAddress, loggedInAddress, isBlocked, isCreationsTabEnabled, isAssetsTabEnabled, isLoadingFeatures } = props
+  const { isLoading, profileAddress, loggedInAddress, isBlocked, isLoadingFeatures } = props
   const view = getView(loggedInAddress, profileAddress)
   const isMobile = useMobileMediaQuery()
   const navigate = useNavigate()
@@ -30,8 +30,8 @@ function MainPage(props: Props) {
 
   if (
     !isTabValid(params.tab) ||
-    (params.tab === AccountTabs.ASSETS && !isAssetsTabEnabled && !isLoadingFeatures) ||
-    (params.tab === AccountTabs.CREATIONS && !isCreationsTabEnabled && !isLoadingFeatures)
+    (params.tab === AccountTabs.ASSETS && !isLoadingFeatures) ||
+    (params.tab === AccountTabs.CREATIONS && !isLoadingFeatures)
   ) {
     navigate(locations.account(profileAddress ?? nullAddress), { replace: true })
   }
@@ -43,14 +43,10 @@ function MainPage(props: Props) {
   const tabs: { displayValue: string; value: AccountTabs }[] = useMemo(
     () => [
       { displayValue: t('tabs.overview'), value: AccountTabs.OVERVIEW },
-      ...(isAssetsTabEnabled
-        ? [{ displayValue: view === View.OWN ? t('tabs.own_assets') : t('tabs.others_assets'), value: AccountTabs.ASSETS }]
-        : []),
-      ...(isCreationsTabEnabled
-        ? [{ displayValue: view === View.OWN ? t('tabs.own_creations') : t('tabs.others_creations'), value: AccountTabs.CREATIONS }]
-        : [])
+      { displayValue: view === View.OWN ? t('tabs.own_assets') : t('tabs.others_assets'), value: AccountTabs.ASSETS },
+      { displayValue: view === View.OWN ? t('tabs.own_creations') : t('tabs.others_creations'), value: AccountTabs.CREATIONS }
     ],
-    [isAssetsTabEnabled, isCreationsTabEnabled, view]
+    [view]
   )
 
   const handleTabChange = useCallback((tab: AccountTabs) => {
@@ -98,17 +94,15 @@ function MainPage(props: Props) {
           <Divider className={styles.divider} />
           {!isBlocked ? (
             <>
-              {isCreationsTabEnabled || isAssetsTabEnabled ? (
-                <Tabs>
-                  {tabs.map(tab => {
-                    return (
-                      <Tabs.Tab key={tab.value} active={selectedTab === tab.value} onClick={() => handleTabChange(tab.value)}>
-                        <span className={styles.tab}>{tab.displayValue}</span>
-                      </Tabs.Tab>
-                    )
-                  })}
-                </Tabs>
-              ) : null}
+              <Tabs>
+                {tabs.map(tab => {
+                  return (
+                    <Tabs.Tab key={tab.value} active={selectedTab === tab.value} onClick={() => handleTabChange(tab.value)}>
+                      <span className={styles.tab}>{tab.displayValue}</span>
+                    </Tabs.Tab>
+                  )
+                })}
+              </Tabs>
               {renderTab()}
             </>
           ) : null}
