@@ -9,7 +9,7 @@ import styles from './PageLayout.module.css'
 const PageLayout = ({ children, className }: Props) => {
   return (
     <div className={classNames(styles.page, className)}>
-      <Navbar className={styles.navbar} isFullscreen />
+      <Navbar className={styles.navbar} />
       <div className={styles.content}>{children}</div>
       <Footer className={styles.footer} />
       <BackToTopButton />

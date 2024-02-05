@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit'
+import { NavbarProps } from 'decentraland-dapps/dist/containers/Navbar/Navbar.types'
 import { OpenModalAction } from 'decentraland-dapps/dist/modules/modal/actions'
-import { NavbarProps } from 'decentraland-ui/dist/components/Navbar/Navbar'
 import { LoginRequestAction } from '../../modules/identity/action'
 
 export type Props = Partial<NavbarProps> & {
