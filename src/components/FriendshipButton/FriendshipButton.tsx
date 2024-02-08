@@ -22,7 +22,6 @@ const FriendshipButton = (props: Props) => {
     friendAddress,
     className,
     isLoading,
-    isAuthDappEnabled,
     isLoggedIn,
     onAddFriend,
     onCancelFriendRequest,
@@ -40,12 +39,12 @@ const FriendshipButton = (props: Props) => {
     : getAvatarName(profile?.avatars[0]).fullName
 
   const handleAddFriend = useCallback(() => {
-    if (isAuthDappEnabled && !isLoggedIn) {
+    if (!isLoggedIn) {
       window.location.replace(`${config.get('AUTH_URL')}?redirectTo=${window.location.href}`)
     } else {
       onAddFriend()
     }
-  }, [isAuthDappEnabled, isLoggedIn, onAddFriend])
+  }, [isLoggedIn, onAddFriend])
 
   const handleButtonClick = useCallback(() => {
     switch (friendshipStatus) {
