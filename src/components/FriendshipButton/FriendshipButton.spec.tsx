@@ -104,7 +104,7 @@ describe('when click the button for a friend with the status "NOT_FRIEND"', () =
 
   beforeEach(async () => {
     onClick = jest.fn()
-    renderedComponent = renderFriendshipButton({ friendshipStatus: FriendshipStatus.NOT_FRIEND, onAddFriend: onClick })
+    renderedComponent = renderFriendshipButton({ friendshipStatus: FriendshipStatus.NOT_FRIEND, onAddFriend: onClick, isLoggedIn: true })
     button = await renderedComponent.findByTestId('FriendshipButton')
     fireEvent.click(button)
   })

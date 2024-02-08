@@ -8,7 +8,7 @@ import { Props } from './SignInPage.types'
 import styles from './SignInPage.module.css'
 
 const SignInPage = (props: Props) => {
-  const { isConnected, isAuthDappEnabled, isConnecting, onConnect } = props
+  const { isConnected, isConnecting, onConnect } = props
 
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get('redirectTo')
@@ -18,7 +18,7 @@ const SignInPage = (props: Props) => {
   usePageTracking()
 
   useEffect(() => {
-    if (!isConnected && !isConnecting && isAuthDappEnabled) {
+    if (!isConnected && !isConnecting) {
       window.location.replace(`${config.get('AUTH_URL')}?redirectTo=${redirectToHref}`)
       return
     }
@@ -26,7 +26,7 @@ const SignInPage = (props: Props) => {
     if (redirectTo && isConnected) {
       navigate(decodeURIComponent(redirectTo))
     }
-  }, [redirectTo, isConnected, isConnecting, isAuthDappEnabled, navigate])
+  }, [redirectTo, isConnected, isConnecting, navigate])
 
   return (
     <PageLayout className={styles.signIn}>
