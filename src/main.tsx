@@ -7,13 +7,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
-import * as SSO from '@dcl/single-sign-on-client'
 import * as modals from './components/Modals'
 import MainPage from './components/Pages/MainPage'
 import SignInPage from './components/Pages/SignInPage'
 import { initStore } from './modules/store'
 import * as locales from './modules/translation/locales'
-import { config } from './modules/config'
 import WithProfile from './components/HOC/WithProfile'
 import ConnectAndRedirect from './components/HOC/ConnectAndRedirect'
 import './modules/analytics/track'
@@ -21,8 +19,6 @@ import './modules/analytics/sentry'
 // These CSS styles must be defined last to avoid overriding other styles
 import 'decentraland-ui/dist/themes/alternative/dark-theme.css'
 import './index.css'
-
-SSO.init(config.get('SSO_URL'))
 
 const basename = /^decentraland.(zone|org|today)$/.test(window.location.host) ? '/profile' : '/'
 const component = (

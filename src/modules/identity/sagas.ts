@@ -1,6 +1,6 @@
 import { call, put, race, select, take, takeEvery } from 'redux-saga/effects'
 import { AuthIdentity } from '@dcl/crypto'
-import { getIdentity, storeIdentity, clearIdentity, localStorageGetIdentity } from '@dcl/single-sign-on-client'
+import { localStorageClearIdentity, localStorageGetIdentity, localStorageStoreIdentity } from '@dcl/single-sign-on-client'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import {
   CONNECT_WALLET_FAILURE,
@@ -77,7 +77,7 @@ export function* identitySaga() {
   function* handleDisconnectWallet() {
     if (auxAddress) {
       yield put(logout(auxAddress))
-      yield call(clearIdentity, auxAddress)
+      yield call(localStorageClearIdentity, auxAddress)
     }
   }
 
@@ -102,11 +102,11 @@ export function* identitySaga() {
       yield put(loginSuccess({ address: lowerCasedAddress, identity }))
     } else {
       let identity: AuthIdentity
-      const ssoIdentity: AuthIdentity | null = yield call(getIdentity, lowerCasedAddress)
+      const ssoIdentity: AuthIdentity | null = yield call(localStorageGetIdentity, lowerCasedAddress)
 
       if (!ssoIdentity) {
         identity = yield call(generateIdentity, lowerCasedAddress)
-        yield call(storeIdentity, lowerCasedAddress, identity)
+        yield call(localStorageStoreIdentity, lowerCasedAddress, identity)
       } else {
         identity = ssoIdentity
       }
