@@ -7,14 +7,8 @@ import './Navbar.css'
 const AUTH_URL = config.get('AUTH_URL')
 
 const Navbar = (props: Props) => {
-  const { isAuthDappEnabled, onSignIn } = props
-
   const handleSignIn = useCallback(() => {
-    if (isAuthDappEnabled) {
-      window.location.replace(`${AUTH_URL}?redirectTo=${window.location.href}`)
-    } else if (onSignIn) {
-      onSignIn()
-    }
+    window.location.replace(`${AUTH_URL}?redirectTo=${window.location.href}`)
   }, [])
 
   return <BaseNavbar {...props} onSignIn={handleSignIn} />

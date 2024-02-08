@@ -6,9 +6,7 @@ import { LoginRequestAction } from '../../modules/identity/action'
 export type Props = Partial<NavbarProps> & {
   hasActivity: boolean
   isConnected: boolean
-  isAuthDappEnabled: boolean
 }
 
-export type MapStateProps = Pick<Props, 'hasActivity' | 'isConnected' | 'isAuthDappEnabled'>
-export type MapDispatchProps = Pick<Props, 'onSignIn'>
+export type MapStateProps = Pick<Props, 'hasActivity' | 'isConnected'>
 export type MapDispatch = Dispatch<OpenModalAction | LoginRequestAction>
