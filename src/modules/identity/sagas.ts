@@ -18,7 +18,6 @@ import {
 } from 'decentraland-dapps/dist/modules/wallet/actions'
 import { isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { config } from '../config'
-import { getIsAuthDappEnabled } from '../features/selectors'
 import { LoginRequestAction, loginFailure, loginRequest, loginSuccess, logout } from './action'
 import { generateIdentity } from './utils'
 
@@ -91,7 +90,7 @@ export function* identitySaga() {
     const lowerCasedAddress = address.toLowerCase()
     auxAddress = lowerCasedAddress
 
-    const isAuthDappEnabled: boolean = yield select(state => getIsAuthDappEnabled(state))
+    const isAuthDappEnabled: boolean = true
 
     if (isAuthDappEnabled) {
       const identity: AuthIdentity | null = localStorageGetIdentity(lowerCasedAddress)

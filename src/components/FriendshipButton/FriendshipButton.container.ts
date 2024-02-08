@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { ProviderType } from '@dcl/schemas'
 import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
-import { getIsAuthDappEnabled } from '../../modules/features/selectors'
 import { loginRequest } from '../../modules/identity/action'
 import { RootState } from '../../modules/reducer'
 import {
@@ -35,8 +34,7 @@ const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
       isRemovingFriend(state, ownProps.friendAddress) ||
       isAcceptingFriendRequest(state, ownProps.friendAddress),
     friendshipStatus: getFriendshipStatus(state, ownProps.friendAddress),
-    profile: getProfileOfAddress(state, ownProps.friendAddress),
-    isAuthDappEnabled: getIsAuthDappEnabled(state)
+    profile: getProfileOfAddress(state, ownProps.friendAddress)
   }
 }
 
