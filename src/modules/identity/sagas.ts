@@ -1,6 +1,6 @@
 import { call, put, race, select, take, takeEvery } from 'redux-saga/effects'
 import { AuthIdentity } from '@dcl/crypto'
-import { localStorageClearIdentity, localStorageGetIdentity, localStorageStoreIdentity } from '@dcl/single-sign-on-client'
+import { localStorageClearIdentity, localStorageGetIdentity } from '@dcl/single-sign-on-client'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import {
   CONNECT_WALLET_FAILURE,
@@ -19,7 +19,6 @@ import {
 import { isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { config } from '../config'
 import { LoginRequestAction, loginFailure, loginRequest, loginSuccess, logout } from './action'
-import { generateIdentity } from './utils'
 
 const AUTH_URL = config.get('AUTH_URL')
 
@@ -90,26 +89,13 @@ export function* identitySaga() {
     const lowerCasedAddress = address.toLowerCase()
     auxAddress = lowerCasedAddress
 
-    const isAuthDappEnabled = true
+    const identity: AuthIdentity | null = localStorageGetIdentity(lowerCasedAddress)
 
-    if (isAuthDappEnabled) {
-      const identity: AuthIdentity | null = localStorageGetIdentity(lowerCasedAddress)
-      if (!identity) {
-        window.location.replace(`${AUTH_URL}/login?redirectTo=${window.location.href}`)
-        return
-      }
-      yield put(loginSuccess({ address: lowerCasedAddress, identity }))
-    } else {
-      let identity: AuthIdentity
-      const ssoIdentity: AuthIdentity | null = yield call(localStorageGetIdentity, lowerCasedAddress)
-
-      if (!ssoIdentity) {
-        identity = yield call(generateIdentity, lowerCasedAddress)
-        yield call(localStorageStoreIdentity, lowerCasedAddress, identity)
-      } else {
-        identity = ssoIdentity
-      }
-      yield put(loginSuccess({ address: lowerCasedAddress, identity }))
+    if (!identity) {
+      window.location.replace(`${AUTH_URL}/login?redirectTo=${window.location.href}`)
+      return
     }
+
+    yield put(loginSuccess({ address: lowerCasedAddress, identity }))
   }
 }
