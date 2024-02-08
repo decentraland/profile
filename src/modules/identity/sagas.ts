@@ -90,7 +90,7 @@ export function* identitySaga() {
     const lowerCasedAddress = address.toLowerCase()
     auxAddress = lowerCasedAddress
 
-    const isAuthDappEnabled: boolean = true
+    const isAuthDappEnabled = true
 
     if (isAuthDappEnabled) {
       const identity: AuthIdentity | null = localStorageGetIdentity(lowerCasedAddress)
