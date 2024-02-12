@@ -22,17 +22,13 @@ import { Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
-  const { isLoading, profileAddress, loggedInAddress, isBlocked, isLoadingFeatures } = props
+  const { isLoading, profileAddress, loggedInAddress, isBlocked } = props
   const view = getView(loggedInAddress, profileAddress)
   const isMobile = useMobileMediaQuery()
   const navigate = useNavigate()
   const params = useParams()
 
-  if (
-    !isTabValid(params.tab) ||
-    (params.tab === AccountTabs.ASSETS && !isLoadingFeatures) ||
-    (params.tab === AccountTabs.CREATIONS && !isLoadingFeatures)
-  ) {
+  if (!isTabValid(params.tab)) {
     navigate(locations.account(profileAddress ?? nullAddress), { replace: true })
   }
 
