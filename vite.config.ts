@@ -1,6 +1,5 @@
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
-import basicSsl from '@vitejs/plugin-basic-ssl'
 import react from '@vitejs/plugin-react-swc'
 import rollupNodePolyFill from 'rollup-plugin-polyfill-node'
 import { defineConfig, loadEnv } from 'vite'
@@ -9,7 +8,7 @@ import { defineConfig, loadEnv } from 'vite'
 export default defineConfig(({ command, mode }) => {
   const envVariables = loadEnv(mode, process.cwd())
   return {
-    plugins: [react(), basicSsl()],
+    plugins: [react()],
     // Required because the CatalystClient tries to access it
     define: {
       // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -19,7 +18,6 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     server: {
-      https: true,
       proxy: {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         '/auth': {
