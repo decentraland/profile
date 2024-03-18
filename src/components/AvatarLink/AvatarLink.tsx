@@ -2,6 +2,7 @@ import React from 'react'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
 import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { Popup } from 'decentraland-ui/dist/components/Popup/Popup'
+import { hasHttpProtocol } from '../../utils/url'
 import { getLinkIcon } from './utils'
 import { Props } from './AvatarLink.types'
 import styles from './AvatarLink.module.css'
@@ -13,6 +14,11 @@ const AvatarLink = (props: Props) => {
   } = props
   const icon = getLinkIcon(url)
   const isTabletAndBelow = useTabletAndBelowMediaQuery()
+
+  // Prevent non-http links from being rendered
+  if (!hasHttpProtocol(url)) {
+    return null
+  }
 
   return (
     <Popup

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ModalNavigation } from 'decentraland-ui/dist/components/ModalNavigation/ModalNavigation'
 import { AvatarFacts } from '../../../modules/profile/types'
 import { getAvatarFacts } from '../../../modules/profile/utils'
+import { hasHttpProtocol } from '../../../utils/url'
 import { AvatarLink } from '../../AvatarLink'
 import { AvatarFact } from './AvatarFact'
 import { Props } from './AboutModal.types'
@@ -16,6 +17,7 @@ const AboutModal = (props: Props) => {
   } = props
 
   const avatarFacts = getAvatarFacts(avatar)
+  const links = useMemo(() => avatar.links?.filter(link => hasHttpProtocol(link.url)) ?? [], [avatar.links])
 
   return (
     <Modal onClose={onClose} className={styles.modal} size="large">
@@ -29,11 +31,11 @@ const AboutModal = (props: Props) => {
               <AvatarFact title={key as keyof AvatarFacts} value={value} key={`fact-${index}`} />
             ))}
         </div>
-        {avatar.links?.length ? (
+        {links.length ? (
           <div className={styles.links}>
             <div className={styles.label}>{t('about_modal.links_label')}</div>
             <div className={styles.values}>
-              {avatar.links.map((link, index) => (
+              {links.map((link, index) => (
                 <AvatarLink link={link} key={`link-${index}`} />
               ))}
             </div>

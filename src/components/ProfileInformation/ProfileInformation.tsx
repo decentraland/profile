@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import classnames from 'classnames'
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon'
 import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
@@ -15,6 +15,7 @@ import { config } from '../../modules/config/config'
 import { getAvatarName, hasAboutInformation } from '../../modules/profile/utils'
 import { getEditAvatarUrl, locations } from '../../modules/routing/locations'
 import { useTimer } from '../../utils/timer'
+import { hasHttpProtocol } from '../../utils/url'
 import { AvatarLink } from '../AvatarLink'
 import CopyIcon from '../CopyIcon'
 import FriendsCounter from '../FriendsCounter'
@@ -91,18 +92,19 @@ const ProfileInformation = (props: Props) => {
   const isBlocked = !isLoggedInProfile && (isBlockedByLoggedUser || hasBlockedLoggedUser)
   const shouldShowViewMoreButton =
     (hasAboutInformation(avatar) || (avatar?.description?.length ?? 0) > MAX_DESCRIPTION_LENGTH) && !isBlocked
-  const userHasLinks = avatar?.links?.length ?? 0 > 0
+  const links = useMemo(() => avatar?.links?.filter(link => hasHttpProtocol(link.url)) ?? [], [avatar?.links])
+  const userHasLinks = links.length ?? 0 > 0
 
   const renderLinks = useCallback(
     () =>
       !isBlocked && (
         <div className={styles.links}>
-          {avatar?.links?.slice(0, MAX_NUMBER_OF_LINKS).map((link, index) => (
+          {links.slice(0, MAX_NUMBER_OF_LINKS).map((link, index) => (
             <AvatarLink link={link} key={`profile-link-${index}`} collapsed />
           ))}
         </div>
       ),
-    [isBlocked, avatar]
+    [isBlocked, links]
   )
 
   const renderActions = useCallback(
