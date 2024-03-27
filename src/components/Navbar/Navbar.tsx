@@ -11,7 +11,7 @@ const Navbar = (props: Props) => {
     window.location.replace(`${AUTH_URL}?redirectTo=${window.location.href}`)
   }, [])
 
-  return <BaseNavbar {...props} onSignIn={handleSignIn} />
+  return <BaseNavbar {...props} onSignIn={handleSignIn} withNotifications />
 }
 
 export default Navbar
