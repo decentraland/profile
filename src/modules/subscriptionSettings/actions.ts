@@ -9,10 +9,10 @@ export type GetSubscriptionsSettingsRequestAction = ReturnType<typeof getSubscri
 export type GetSubscriptionsSettingsSuccessAction = ReturnType<typeof getSubscriptionsSettingsSuccess>
 export type GetSubscriptionsSettingsFailureAction = ReturnType<typeof getSubscriptionsSettingsFailure>
 
-export const putSubscriptionsSettingsRequest = createAction<Subscription, string>('[Request] Save Subscriptions setting')
-export const putSubscriptionsSettingsSuccess = createAction<Subscription, string>('[Success] Save Subscriptions setting')
-export const putSubscriptionsSettingsFailure = createAction<string>('[Failure] Save Subscriptions setting')
+export const saveSubscriptionsSettingsRequest = createAction<Subscription, string>('[Request] Save Subscriptions setting')
+export const saveSubscriptionsSettingsSuccess = createAction<Subscription, string>('[Success] Save Subscriptions setting')
+export const saveSubscriptionsSettingsFailure = createAction<string>('[Failure] Save Subscriptions setting')
 
-export type PutSubscriptionsSettingsRequestAction = ReturnType<typeof putSubscriptionsSettingsRequest>
-export type PutSubscriptionsSettingsSuccessAction = ReturnType<typeof putSubscriptionsSettingsSuccess>
-export type PutSubscriptionsSettingsFailureAction = ReturnType<typeof putSubscriptionsSettingsFailure>
+export type SaveSubscriptionsSettingsRequestAction = ReturnType<typeof saveSubscriptionsSettingsRequest>
+export type SaveSubscriptionsSettingsSuccessAction = ReturnType<typeof saveSubscriptionsSettingsSuccess>
+export type SaveSubscriptionsSettingsFailureAction = ReturnType<typeof saveSubscriptionsSettingsFailure>
