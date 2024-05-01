@@ -3,13 +3,14 @@ import { createReducer } from '@reduxjs/toolkit'
 import { NotificationChannelType, NotificationType, SubscriptionDetails } from '@dcl/schemas'
 import { LoadingState, loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
 import {
-  getSubscriptionsFailure,
-  getSubscriptionsRequest,
-  getSubscriptionsSuccess,
-  putSubscriptionsFailure,
-  putSubscriptionsRequest,
-  putSubscriptionsSuccess
+  getSubscriptionsSettingsFailure,
+  getSubscriptionsSettingsRequest,
+  getSubscriptionsSettingsSuccess,
+  putSubscriptionsSettingsFailure,
+  putSubscriptionsSettingsRequest,
+  putSubscriptionsSettingsSuccess
 } from './actions'
+
 export type SubscriptionSettingsState = {
   subscriptionDetails: SubscriptionDetails
   email: string
@@ -22,7 +23,7 @@ const messageTypes = Object.values(NotificationType).reduce((properties, notific
   return properties
 }, {} as Record<NotificationType, NotificationChannelType>)
 
-const INITIAL_STATE: SubscriptionSettingsState = {
+export const buildInitialState = (): SubscriptionSettingsState => ({
   subscriptionDetails: {
     ignore_all_email: true,
     ignore_all_in_app: false,
@@ -31,35 +32,35 @@ const INITIAL_STATE: SubscriptionSettingsState = {
   email: '',
   loading: [],
   error: null
-}
+})
 
-export const subscriptionSettingsReducer = createReducer<SubscriptionSettingsState>(INITIAL_STATE, builder =>
+export const subscriptionSettingsReducer = createReducer<SubscriptionSettingsState>(buildInitialState(), builder =>
   builder
-    .addCase(getSubscriptionsRequest, (state, action) => {
+    .addCase(getSubscriptionsSettingsRequest, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = null
     })
-    .addCase(getSubscriptionsSuccess, (state, action) => {
+    .addCase(getSubscriptionsSettingsSuccess, (state, action) => {
       const { details, email } = action.payload
       state.subscriptionDetails = details
       email && (state.email = email)
       state.loading = loadingReducer(state.loading, action)
     })
-    .addCase(getSubscriptionsFailure, (state, action) => {
+    .addCase(getSubscriptionsSettingsFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = action.payload
     })
-    .addCase(putSubscriptionsRequest, (state, action) => {
+    .addCase(putSubscriptionsSettingsRequest, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = null
     })
-    .addCase(putSubscriptionsSuccess, (state, action) => {
+    .addCase(putSubscriptionsSettingsSuccess, (state, action) => {
       const { details, email } = action.payload
       state.subscriptionDetails = details
-      email && (state.email = email)
+      email && email !== '' && (state.email = email)
       state.loading = loadingReducer(state.loading, action)
     })
-    .addCase(putSubscriptionsFailure, (state, action) => {
+    .addCase(putSubscriptionsSettingsFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = action.payload
     })
