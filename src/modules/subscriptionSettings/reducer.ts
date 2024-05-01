@@ -6,9 +6,9 @@ import {
   getSubscriptionsSettingsFailure,
   getSubscriptionsSettingsRequest,
   getSubscriptionsSettingsSuccess,
-  putSubscriptionsSettingsFailure,
-  putSubscriptionsSettingsRequest,
-  putSubscriptionsSettingsSuccess
+  saveSubscriptionsSettingsFailure,
+  saveSubscriptionsSettingsRequest,
+  saveSubscriptionsSettingsSuccess
 } from './actions'
 
 export type SubscriptionSettingsState = {
@@ -50,17 +50,17 @@ export const subscriptionSettingsReducer = createReducer<SubscriptionSettingsSta
       state.loading = loadingReducer(state.loading, action)
       state.error = action.payload
     })
-    .addCase(putSubscriptionsSettingsRequest, (state, action) => {
+    .addCase(saveSubscriptionsSettingsRequest, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = null
     })
-    .addCase(putSubscriptionsSettingsSuccess, (state, action) => {
+    .addCase(saveSubscriptionsSettingsSuccess, (state, action) => {
       const { details, email } = action.payload
       state.subscriptionDetails = details
       email && email !== '' && (state.email = email)
       state.loading = loadingReducer(state.loading, action)
     })
-    .addCase(putSubscriptionsSettingsFailure, (state, action) => {
+    .addCase(saveSubscriptionsSettingsFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
       state.error = action.payload
     })
