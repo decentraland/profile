@@ -11,7 +11,8 @@ import { NFTsState, nftsReducer as nfts } from './nfts/reducer'
 import { profileReducer as profile } from './profile/reducer'
 import { ProfileState } from './profile/types'
 import { SocialState, socialReducer as social } from './social/reducer'
-import { SubscriptionState, subscriptionReducer as subscription } from './subscription/reducer'
+import { subscriptionReducer as subscription } from './subscription/reducer'
+import { SubscriptionState } from './subscription/types'
 import { WorldState, worldReducer as world } from './world/reducer'
 
 export const createRootReducer = (middlewares: Middleware[], preloadedState = {}) =>
