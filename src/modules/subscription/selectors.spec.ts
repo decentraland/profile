@@ -1,32 +1,33 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { NotificationType } from '@dcl/schemas'
 import { RootState } from '../reducer'
-import { getSubscriptionsSettingsRequest } from './actions'
-import { SubscriptionSettingsState, buildInitialState } from './reducer'
+import { getSubscriptionsRequest } from './actions'
+import { buildInitialState } from './reducer'
 import {
   getEmail,
-  getSubscriptionSettingByNotificationType,
-  getSubscriptionSettings,
+  getSubscriptionByNotificationType,
+  getSubscriptionDetails,
   hasEmail,
   isIgnoringAllEmail,
   isIgnoringAllInApp,
   isLoadingSubscriptions
 } from './selectors'
+import { MessageTypeCamelCase, SubscriptionState } from './types'
+import { toSnakeCase } from './utils'
 
-let subscriptionSettings: SubscriptionSettingsState
+let subscription: SubscriptionState
 
 let state: RootState
 
 beforeEach(() => {
-  subscriptionSettings = buildInitialState()
+  subscription = buildInitialState()
   state = {
-    subscriptionSettings: subscriptionSettings
+    subscription: subscription
   } as RootState
 })
 
 describe('when selecting the email', () => {
   it('should return the email from the state', () => {
-    expect(getEmail(state)).toBe(subscriptionSettings.email)
+    expect(getEmail(state)).toBe(subscription.email)
   })
 })
 
@@ -38,14 +39,14 @@ describe('when asking whether the state has email', () => {
   })
   describe('and the state has an email', () => {
     it('should return true', () => {
-      expect(hasEmail({ ...state, subscriptionSettings: { ...subscriptionSettings, email: 'example@mail.com' } })).toBe(true)
+      expect(hasEmail({ ...state, subscription: { ...subscription, email: 'example@mail.com' } })).toBe(true)
     })
   })
 })
 
-describe('when selecting the subscription settings', () => {
-  it('should return the subscription settings from the state', () => {
-    expect(getSubscriptionSettings(state)).toBe(subscriptionSettings.subscriptionDetails)
+describe('when selecting the subscription', () => {
+  it('should return the subscription from the state', () => {
+    expect(getSubscriptionDetails(state)).toBe(subscription.subscriptionDetails)
   })
 })
 
@@ -60,9 +61,9 @@ describe('when asking whether the state is ignoring all email', () => {
       expect(
         isIgnoringAllEmail({
           ...state,
-          subscriptionSettings: {
-            ...subscriptionSettings,
-            subscriptionDetails: { ...subscriptionSettings.subscriptionDetails, ignore_all_email: false }
+          subscription: {
+            ...subscription,
+            subscriptionDetails: { ...subscription.subscriptionDetails, ignoreAllEmail: false }
           }
         })
       ).toBe(false)
@@ -76,9 +77,9 @@ describe('when asking whether the state is ignoring all in-app notifications', (
       expect(
         isIgnoringAllInApp({
           ...state,
-          subscriptionSettings: {
-            ...subscriptionSettings,
-            subscriptionDetails: { ...subscriptionSettings.subscriptionDetails, ignore_all_in_app: true }
+          subscription: {
+            ...subscription,
+            subscriptionDetails: { ...subscription.subscriptionDetails, ignoreAllInApp: true }
           }
         })
       ).toBe(true)
@@ -93,17 +94,16 @@ describe('when asking whether the state is ignoring all in-app notifications', (
 
 describe('when selecting the subscription setting by notification type', () => {
   it('should return the setting for the given notification type', () => {
-    const getSetting = getSubscriptionSettingByNotificationType(state)
-    expect(getSetting(NotificationType.BID_ACCEPTED)).toBe(
-      subscriptionSettings.subscriptionDetails.message_type[NotificationType.BID_ACCEPTED]
-    )
+    const getSetting = getSubscriptionByNotificationType(state)
+    const notificationType = toSnakeCase(NotificationType.BID_ACCEPTED) as keyof MessageTypeCamelCase
+    expect(getSetting(notificationType)).toBe(subscription.subscriptionDetails.messageType[notificationType])
   })
 })
 
 describe('when asking whether the state is loading subscriptions', () => {
   describe('and the state is loading subscriptions', () => {
     beforeEach(() => {
-      state.subscriptionSettings.loading = [getSubscriptionsSettingsRequest()]
+      state.subscription.loading = [getSubscriptionsRequest()]
     })
     it('should return true', () => {
       expect(isLoadingSubscriptions(state)).toBe(true)
