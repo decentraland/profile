@@ -14,7 +14,7 @@ import {
 
 export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
   yield takeEvery(getSubscriptionsRequest.type, handleGetSubscriptionsRequest)
-  yield takeEvery(saveSubscriptionsRequest.type, handlePuttSubscriptionsRequest)
+  yield takeEvery(saveSubscriptionsRequest.type, handlePutSubscriptionsRequest)
 
   function* handleGetSubscriptionsRequest() {
     try {
@@ -26,11 +26,11 @@ export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
     }
   }
 
-  function* handlePuttSubscriptionsRequest(action: SaveSubscriptionsRequestAction) {
+  function* handlePutSubscriptionsRequest(action: SaveSubscriptionsRequestAction) {
     try {
-      const subscription: Subscription = yield call([notificationsAPI, 'putSubscription'], action.payload.details)
+      const subscription: Subscription = yield call([notificationsAPI, 'putSubscription'], action.payload)
 
-      yield put(saveSubscriptionsSuccess(subscription))
+      yield put(saveSubscriptionsSuccess(subscription.details))
     } catch (error) {
       yield put(saveSubscriptionsFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }

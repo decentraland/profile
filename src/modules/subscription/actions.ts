@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit'
-import { Subscription } from '@dcl/schemas'
+import { Subscription, SubscriptionDetails } from '@dcl/schemas'
 
 export const getSubscriptionsRequest = createAction('[Request] Get Subscriptions')
 export const getSubscriptionsSuccess = createAction<Subscription>('[Success] Get Subscriptions')
@@ -9,8 +9,8 @@ export type GetSubscriptionsRequestAction = ReturnType<typeof getSubscriptionsRe
 export type GetSubscriptionsSuccessAction = ReturnType<typeof getSubscriptionsSuccess>
 export type GetSubscriptionsFailureAction = ReturnType<typeof getSubscriptionsFailure>
 
-export const saveSubscriptionsRequest = createAction<Subscription, string>('[Request] Save Subscriptions')
-export const saveSubscriptionsSuccess = createAction<Subscription, string>('[Success] Save Subscriptions')
+export const saveSubscriptionsRequest = createAction<SubscriptionDetails, string>('[Request] Save Subscriptions')
+export const saveSubscriptionsSuccess = createAction<SubscriptionDetails, string>('[Success] Save Subscriptions')
 export const saveSubscriptionsFailure = createAction<string>('[Failure] Save Subscriptions')
 
 export type SaveSubscriptionsRequestAction = ReturnType<typeof saveSubscriptionsRequest>

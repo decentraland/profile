@@ -31,3 +31,16 @@ export type SubscriptionState = {
   loading: LoadingState
   error: string | null
 }
+
+export enum SubscriptionGroupKeys {
+  GENERAL = 'general',
+  BUYING = 'buying',
+  SELLING = 'selling',
+  RENTALS = 'rentals',
+  CREATORS = 'creators',
+  GOVERNANCE = 'governance'
+}
+
+export type SubscriptionGroups = Writable<{
+  [K in keyof typeof SubscriptionGroupKeys as CamelCase<K>]: NotificationType[]
+}>

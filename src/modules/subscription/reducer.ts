@@ -49,9 +49,7 @@ export const subscriptionReducer = createReducer<SubscriptionState>(buildInitial
       state.error = null
     })
     .addCase(saveSubscriptionsSuccess, (state, action) => {
-      const { details, email } = action.payload
-      state.subscriptionDetails = transformSubscriptionDetailsToCamelCase(details)
-      email && email !== '' && (state.email = email)
+      state.subscriptionDetails = transformSubscriptionDetailsToCamelCase(action.payload)
       state.loading = loadingReducer(state.loading, action)
     })
     .addCase(saveSubscriptionsFailure, (state, action) => {

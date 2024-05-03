@@ -81,9 +81,9 @@ describe('when reducing the update of the subscription request action', () => {
   })
 
   it('should return a state with the loading state set and the error cleared', () => {
-    expect(subscriptionReducer(initialState, saveSubscriptionsRequest(subscription))).toEqual({
+    expect(subscriptionReducer(initialState, saveSubscriptionsRequest(subscription.details))).toEqual({
       ...state,
-      loading: [saveSubscriptionsRequest(subscription)],
+      loading: [saveSubscriptionsRequest(subscription.details)],
       error: null
     })
   })
@@ -93,15 +93,14 @@ describe('when reducing the update of the subscription success action', () => {
   beforeEach(() => {
     initialState = {
       ...state,
-      loading: [saveSubscriptionsRequest(subscription)],
+      loading: [saveSubscriptionsRequest(subscription.details)],
       subscriptionDetails: { ...transformSubscriptionDetailsToCamelCase(subscription.details), ignoreAllInApp: true }
     }
   })
 
   it('should return a state with the details of subscription set, email set and the loading state cleared', () => {
-    expect(subscriptionReducer(initialState, saveSubscriptionsSuccess(subscription))).toEqual({
+    expect(subscriptionReducer(initialState, saveSubscriptionsSuccess(subscription.details))).toEqual({
       ...state,
-      email: subscription.email,
       subscriptionDetails: transformSubscriptionDetailsToCamelCase(subscription.details),
       loading: [],
       error: null
@@ -113,7 +112,7 @@ describe('when reducing update of the subscription failure action', () => {
   let error: string
 
   beforeEach(() => {
-    initialState = { ...state, loading: [saveSubscriptionsRequest(subscription)] }
+    initialState = { ...state, loading: [saveSubscriptionsRequest(subscription.details)] }
     error = 'some error'
   })
 
