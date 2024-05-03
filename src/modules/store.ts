@@ -2,10 +2,13 @@ import { createFetchComponent } from '@well-known-components/fetch-component'
 import { createContentClient } from 'dcl-catalyst-client'
 import { createLogger } from 'redux-logger'
 import createSagasMiddleware from 'redux-saga'
+import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
 import { Env } from '@dcl/ui-env'
 import { PeerAPI } from 'decentraland-dapps/dist/lib/peer'
 import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analytics/middleware'
+import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
+import { getAddress } from 'decentraland-dapps/dist/modules/wallet'
 import { MarketplaceGraphClient } from '../lib/MarketplaceGraphClient'
 import { config } from './config'
 import { createRootReducer } from './reducer'
@@ -36,8 +39,15 @@ export function initStore() {
   const worldsContentClient = createContentClient({ url: config.get('WORLDS_CONTENT_SERVER_URL'), fetcher: createFetchComponent() })
   const marketplaceGraphClient = new MarketplaceGraphClient(config.get('MARKETPLACE_GRAPH_URL'))
   const peerApi = new PeerAPI(config.get('PEER_URL'))
+  const notificationApi = new NotificationsAPI({
+    identity: () => {
+      const address = getAddress(store.getState())
+      const identity = address ? localStorageGetIdentity(address) : null
+      return identity ?? undefined
+    }
+  })
 
-  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi)
+  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi, notificationApi)
   loadStorageMiddleware(store)
 
   return store
