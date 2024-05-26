@@ -59,17 +59,6 @@ function MainPage(props: Props) {
     }
   }, [])
 
-  const renderTab = useCallback(() => {
-    switch (selectedTab) {
-      case AccountTabs.CREATIONS:
-        return <Creations profileAddress={profileAddress ?? nullAddress} view={view} />
-      case AccountTabs.ASSETS:
-        return <Assets profileAddress={profileAddress ?? nullAddress} view={view} />
-      default:
-        return <Overview loggedInAddress={loggedInAddress} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
-    }
-  }, [selectedTab, view])
-
   usePageTracking()
 
   return isLoading ? (
@@ -99,7 +88,13 @@ function MainPage(props: Props) {
                   )
                 })}
               </Tabs>
-              {renderTab()}
+              {selectedTab === AccountTabs.ASSETS ? (
+                <Assets profileAddress={profileAddress ?? nullAddress} view={view} />
+              ) : selectedTab === AccountTabs.CREATIONS ? (
+                <Creations profileAddress={profileAddress ?? nullAddress} view={view} />
+              ) : (
+                <Overview profileAddress={profileAddress ?? nullAddress} />
+              )}
             </>
           ) : null}
           {isBlocked && <BlockedUser profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />}

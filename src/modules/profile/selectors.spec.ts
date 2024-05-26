@@ -1,4 +1,4 @@
-import { LoadProfileRequestAction, loadProfileRequest } from 'decentraland-dapps/dist/modules/profile/actions'
+import { LoadProfileRequestAction } from 'decentraland-dapps/dist/modules/profile/actions'
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { Wallet } from 'decentraland-dapps/dist/modules/wallet/types'
 import { RootState } from '../reducer'
@@ -168,57 +168,26 @@ describe('when selecting if a profile is being loaded', () => {
 
   beforeEach(() => {
     address = '0xca8fa8f0b631ecdb18cda619c4fc9d197c8affca'
+    action = enhancedFetchProfileRequest(address)
   })
 
-  describe('and the profile is being loaded through the load profile action', () => {
+  describe('and the profile is not being loaded', () => {
     beforeEach(() => {
-      action = loadProfileRequest(address)
+      state.profile.loading = [enhancedFetchProfileRequest('anotherAddress')]
     })
 
-    describe('and the profile is not being loaded', () => {
-      beforeEach(() => {
-        state.profile.loading = [loadProfileRequest('anotherAddress')]
-      })
-
-      it('should return false', () => {
-        expect(isLoadingProfile(state, address)).toBe(false)
-      })
-    })
-
-    describe('and the profile is being loaded', () => {
-      beforeEach(() => {
-        state.profile.loading = [action]
-      })
-
-      it('should return true', () => {
-        expect(isLoadingProfile(state, address)).toBe(true)
-      })
+    it('should return false', () => {
+      expect(isLoadingProfile(state, address)).toBe(false)
     })
   })
 
-  describe('and the profile is being loaded through the enhanced fetch profile action', () => {
+  describe('and the profile is being loaded', () => {
     beforeEach(() => {
-      action = enhancedFetchProfileRequest(address)
+      state.profile.loading = [action]
     })
 
-    describe('and the profile is not being loaded', () => {
-      beforeEach(() => {
-        state.profile.loading = [enhancedFetchProfileRequest('anotherAddress')]
-      })
-
-      it('should return false', () => {
-        expect(isLoadingProfile(state, address)).toBe(false)
-      })
-    })
-
-    describe('and the profile is being loaded', () => {
-      beforeEach(() => {
-        state.profile.loading = [action]
-      })
-
-      it('should return true', () => {
-        expect(isLoadingProfile(state, address)).toBe(true)
-      })
+    it('should return true', () => {
+      expect(isLoadingProfile(state, address)).toBe(true)
     })
   })
 })

@@ -16,7 +16,7 @@ const WithProfile = (props: Props) => {
     return <NotFoundPage />
   }
 
-  return <Component isLoading={isLoading} profileAddress={profileAddress} />
+  return <Component isLoading={isLoading || (!hasLoadedProfile && !error)} profileAddress={profileAddress} />
 }
 
 export default WithProfile

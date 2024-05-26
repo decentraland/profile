@@ -37,7 +37,8 @@
     "react-virtualized-auto-sizer": "^1.0.20",
     "react-window": "^1.8.9",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^1.2.3"
+    "redux-saga": "^1.2.3",
+    "reselect": "^5.1.0"
   },
   "devDependencies": {
     "@dcl/eslint-config": "^1.1.9",
