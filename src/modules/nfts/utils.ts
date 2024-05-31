@@ -24,7 +24,11 @@ function getFiltersForCategory(category: NFTCategory): Record<string, string> {
 
     const WEARABLE_CATEGORIES = [...Object.values(WearableCategory), ...Object.values(AccessoryCategory), ...Object.values(HeadCategory)]
 
-    if (WEARABLE_CATEGORIES.includes(category as WearableCategory | AccessoryCategory | HeadCategory)) {
+    if (category === WearableCategory.HEAD) {
+      properties = { ...properties, isWearableHead: 'true' }
+    } else if (category === WearableCategory.ACCESSORIES) {
+      properties = { ...properties, isWearableAccessory: 'true' }
+    } else if (WEARABLE_CATEGORIES.includes(category as WearableCategory | AccessoryCategory | HeadCategory)) {
       properties = { ...properties, wearableCategory: category.replace('wearable_', '') }
     }
   }

@@ -51,7 +51,6 @@ export default function Assets(props: Props) {
 
   useEffect(() => {
     const shouldLoadMultiplePages = !count && page !== 1
-
     onFetchAssets({
       first: shouldLoadMultiplePages ? page * ITEMS_PER_PAGE : first,
       skip: shouldLoadMultiplePages ? 0 : ITEMS_PER_PAGE * (page - 1),
@@ -62,7 +61,16 @@ export default function Assets(props: Props) {
       ...(nftFilters.isOnSale ? { isOnSale: true } : {}),
       ...(nftFilters.isWearableSmart ? { isWearableSmart: true } : {})
     })
-  }, [page, first, nftFilters, selectedSortBy, profileAddress])
+  }, [
+    page,
+    first,
+    nftFilters.category,
+    nftFilters.isOnSale,
+    nftFilters.isWearableSmart,
+    nftFilters.isOnSale,
+    selectedSortBy,
+    profileAddress
+  ])
 
   const onChangePage = useCallback(
     (newPage: number) => {

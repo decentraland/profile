@@ -1,16 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit'
-import { LOAD_PROFILE_REQUEST } from 'decentraland-dapps/dist/modules/profile/actions'
 import { getLoading, getProfileOfAddress, getState } from 'decentraland-dapps/dist/modules/profile/selectors'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { RootState } from '../reducer'
 import { enhancedFetchProfileRequest } from './action'
 
 export const isLoadingProfile = createSelector([getLoading, (_state, address) => address], (loadingState, address) =>
-  loadingState.some(
-    action =>
-      (action.type === LOAD_PROFILE_REQUEST || action.type === enhancedFetchProfileRequest.type) &&
-      (action.payload.address === address.toLowerCase() || action.payload === address.toLowerCase())
-  )
+  loadingState.some(action => action.type === enhancedFetchProfileRequest.type && action.payload === address.toLowerCase())
 )
 
 export const getProfileWithName = createSelector(

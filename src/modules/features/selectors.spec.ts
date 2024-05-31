@@ -55,7 +55,6 @@ waitForInitialLoadingSelectors.forEach(({ name, feature, applicationName, select
 
       it('should return false', () => {
         const isEnabled = selector(state)
-        console.log(isEnabled)
 
         expect(isEnabled).toBe(false)
         expect(getIsFeatureEnabledMock).not.toHaveBeenCalled()
