@@ -5,7 +5,6 @@ import Divider from 'semantic-ui-react/dist/commonjs/elements/Divider/Divider'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { useMobileMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { Tabs } from 'decentraland-ui/dist/components/Tabs/Tabs'
-import usePageTracking from '../../../hooks/usePageTracking'
 import { isTabValid, locations } from '../../../modules/routing/locations'
 import { AccountTabs } from '../../../modules/routing/types'
 import { View, getView } from '../../../utils/view'
@@ -58,8 +57,6 @@ function MainPage(props: Props) {
         return
     }
   }, [])
-
-  usePageTracking()
 
   return isLoading ? (
     <LoadingPage />

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSearchParams, useNavigate, useHref } from 'react-router-dom'
 import { default as SignIn } from 'decentraland-dapps/dist/containers/SignInPage'
-import usePageTracking from '../../../hooks/usePageTracking'
 import { config } from '../../../modules/config'
 import { PageLayout } from '../../PageLayout'
 import { Props } from './SignInPage.types'
@@ -14,8 +13,6 @@ const SignInPage = (props: Props) => {
   const redirectTo = searchParams.get('redirectTo')
   const navigate = useNavigate()
   const redirectToHref = useHref(redirectTo || '')
-
-  usePageTracking()
 
   useEffect(() => {
     if (!isConnected && !isConnecting) {
