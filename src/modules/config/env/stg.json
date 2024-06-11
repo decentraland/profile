@@ -3,7 +3,7 @@
   "CHAIN_ID": "1",
   "EXPLORER_URL": "https://play.decentraland.today",
   "PEER_URL": "https://peer.decentraland.org",
-  "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace",
+  "MARKETPLACE_GRAPH_URL": "https://subgraph.decentraland.org/marketplace",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org",
   "SOCIAL_RPC_URL": "wss://rpc-social-service.decentraland.today",
   "DOCS_URL": "https://docs.decentraland.org",

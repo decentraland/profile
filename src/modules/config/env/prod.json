@@ -3,7 +3,7 @@
   "CHAIN_ID": "1",
   "EXPLORER_URL": "https://play.decentraland.org",
   "PEER_URL": "https://peer.decentraland.org",
-  "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace",
+  "MARKETPLACE_GRAPH_URL": "https://subgraph.decentraland.org/marketplace",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org",
   "DOCS_URL": "https://docs.decentraland.org",
   "BUILDER_URL": "https://decentraland.org/builder",
