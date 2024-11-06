@@ -11,7 +11,7 @@ const getSubdomainByNameQuery = (name: string) => `{
 }`
 
 const getSubdomainQuery = (owner: string, offset: number) => `{
-    nfts(first: ${BATCH_SIZE}, skip: ${offset}, where: { owner: "${owner}", category: ens }) {
+    nfts(first: ${BATCH_SIZE}, skip: ${offset}, where: { owner_: { address:"${owner}" }, category: ens }) {
       ens {
         subdomain
       }
