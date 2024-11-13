@@ -26,7 +26,7 @@
     "ajv": "^8.12.0",
     "classnames": "^2.3.2",
     "decentraland-dapps": "^23.12.0",
-    "decentraland-ui": "^6.12.0",
+    "decentraland-ui": "^6.11.0",
     "ethers": "^6.6.5",
     "p-queue": "^6.6.2",
     "qrcode.react": "^3.1.0",
