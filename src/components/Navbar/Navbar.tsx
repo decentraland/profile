@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
+import { Navbar as BaseNavbar, Navbar2 as BaseNavbar2 } from 'decentraland-dapps/dist/containers'
 import { config } from '../../modules/config'
 import { Props } from './Navbar.types'
 import './Navbar.css'
@@ -16,6 +16,10 @@ const Navbar = (props: Props) => {
 
     window.location.replace(`${config.get('AUTH_URL')}/login?redirectTo=${redirectTo}`)
   }, [])
+
+  if (props.isNavbar2Enabled) {
+    return <BaseNavbar2 {...props} withNotifications onSignIn={handleSignIn} />
+  }
 
   return <BaseNavbar {...props} onSignIn={handleSignIn} withNotifications />
 }

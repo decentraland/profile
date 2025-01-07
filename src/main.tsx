@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
+import { darkTheme, DclThemeProvider } from 'decentraland-ui2'
 import * as modals from './components/Modals'
 import { initStore } from './modules/store'
 import * as locales from './modules/translation/locales'
@@ -24,9 +25,11 @@ const component = (
       <Provider store={initStore()}>
         <WalletProvider>
           <TranslationProvider locales={Object.keys(locales)}>
-            <ModalProvider components={modals}>
-              <AppRoutes />
-            </ModalProvider>
+            <DclThemeProvider theme={darkTheme}>
+              <ModalProvider components={modals}>
+                <AppRoutes />
+              </ModalProvider>
+            </DclThemeProvider>
           </TranslationProvider>
         </WalletProvider>
       </Provider>
