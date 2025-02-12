@@ -26,7 +26,7 @@ const WorldsButton = (props: Props) => {
   const showUserWorlds = !isLoading && hasWorlds
 
   const handleWorldClick = useCallback((world: World) => {
-    getAnalytics().track(Events.GO_TO_WORLD, { world: world.domain })
+    getAnalytics()?.track(Events.GO_TO_WORLD, { world: world.domain })
     const timeout = setTimeout(() => {
       window.open(getJumpToWorldUrl(world), '_blank,noreferrer')
     }, 300)
@@ -36,10 +36,10 @@ const WorldsButton = (props: Props) => {
   const handleButtonClick = useCallback(() => {
     let url: string | undefined
     if (!hasNames) {
-      getAnalytics().track(Events.GET_A_NAME)
+      getAnalytics()?.track(Events.GET_A_NAME)
       url = `${BUILDER_URL}/names`
     } else if (hasNames && !hasWorlds) {
-      getAnalytics().track(Events.ACTIVATE_WORLD)
+      getAnalytics()?.track(Events.ACTIVATE_WORLD)
       url = `${BUILDER_URL}/worlds`
     }
 

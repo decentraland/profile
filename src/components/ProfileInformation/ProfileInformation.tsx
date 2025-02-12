@@ -51,13 +51,13 @@ const ProfileInformation = (props: Props) => {
     const url = `${PROFILE_URL}${locations.account(profileAddress)}`
     navigator.clipboard.writeText(url)
     setHasCopiedLink()
-    getAnalytics().track(Events.SHARE_PROFILE, { type: ShareType.COPY_LINK })
+    getAnalytics()?.track(Events.SHARE_PROFILE, { type: ShareType.COPY_LINK })
   }, [setHasCopiedLink, profileAddress])
 
   const handleCopyWallet = useCallback(() => {
     navigator.clipboard.writeText(profileAddress)
     setHasCopiedWallet()
-    getAnalytics().track(Events.COPY_WALLET_ADDRESS)
+    getAnalytics()?.track(Events.COPY_WALLET_ADDRESS)
   }, [profileAddress, hasCopiedLink])
 
   const handleShareOnTwitter = useCallback(() => {
@@ -66,7 +66,7 @@ const ProfileInformation = (props: Props) => {
         ? t('profile_information.share_my_profile_tw_message')
         : t('profile_information.share_others_profile_tw_message')
     const url = `${twitterURL}${encodeURIComponent(`${message}${PROFILE_URL}${locations.account(profileAddress)}`)}`
-    getAnalytics().track(Events.SHARE_PROFILE, {
+    getAnalytics()?.track(Events.SHARE_PROFILE, {
       type: ShareType.TWITTER
     })
     // Based on SegmentAnalytics track callback implementation
@@ -83,7 +83,7 @@ const ProfileInformation = (props: Props) => {
 
   const handleViewMore = useCallback(() => {
     avatar && onViewMore && onViewMore(avatar)
-    getAnalytics().track(Events.VIEW_MORE_ABOUT_PROFILE)
+    getAnalytics()?.track(Events.VIEW_MORE_ABOUT_PROFILE)
   }, [avatar, onViewMore])
 
   const isLoggedInProfile = loggedInAddress === profileAddress
