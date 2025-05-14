@@ -5,6 +5,7 @@ import createSagasMiddleware from 'redux-saga'
 import { Env } from '@dcl/ui-env'
 import { PeerAPI } from 'decentraland-dapps/dist/lib/peer'
 import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analytics/middleware'
+import { CreditsClient } from 'decentraland-dapps/dist/modules/credits/CreditsClient'
 import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
 import { MarketplaceGraphClient } from '../lib/MarketplaceGraphClient'
 import { config } from './config'
@@ -36,8 +37,9 @@ export function initStore() {
   const worldsContentClient = createContentClient({ url: config.get('WORLDS_CONTENT_SERVER_URL'), fetcher: createFetchComponent() })
   const marketplaceGraphClient = new MarketplaceGraphClient(config.get('MARKETPLACE_GRAPH_URL'))
   const peerApi = new PeerAPI(config.get('PEER_URL'))
+  const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'))
 
-  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi)
+  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi, creditsClient)
   loadStorageMiddleware(store)
 
   return store

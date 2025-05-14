@@ -1,4 +1,5 @@
 import { configureStore, Reducer, Middleware, AnyAction, combineReducers, Store } from '@reduxjs/toolkit'
+import { CreditsState, creditsReducer as credits } from 'decentraland-dapps/dist/modules/credits/reducer'
 import { FeaturesState, featuresReducer as features } from 'decentraland-dapps/dist/modules/features/reducer'
 import { ModalState, modalReducer as modal } from 'decentraland-dapps/dist/modules/modal/reducer'
 import { StorageState, storageReducer as storage, storageReducerWrapper } from 'decentraland-dapps/dist/modules/storage/reducer'
@@ -18,6 +19,7 @@ export const createRootReducer = (middlewares: Middleware[], preloadedState = {}
     reducer: storageReducerWrapper(
       combineReducers<RootState>({
         wallet,
+        credits,
         storage,
         modal: modal as Reducer<ModalState, AnyAction>,
         features: features as Reducer<FeaturesState, AnyAction>,
@@ -57,6 +59,7 @@ export type RootState = {
   items: ItemsState
   nfts: NFTsState
   transaction: TransactionState
+  credits: CreditsState
 }
 
 export type RootStore = Store<RootState>
