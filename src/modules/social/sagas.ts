@@ -59,9 +59,9 @@ export function* socialSagas() {
 
   function* handleStartSocialServiceConnection(action: LoginSuccessAction) {
     try {
-      const { address, identity } = action.payload
+      const { identity } = action.payload
       yield put(initializeSocialClientRequest())
-      yield call(initiateSocialClient, address, identity)
+      yield call(initiateSocialClient, identity)
       yield put(initializeSocialClientSuccess())
     } catch (error) {
       yield put(initializeSocialClientFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
@@ -131,11 +131,16 @@ export function* socialSagas() {
         [client, 'requestFriendship'],
         action.payload.toLowerCase()
       )
+
+      if (!requestEvent) {
+        yield put(requestFriendshipFailure('Unknown'))
+      }
+
       yield put(
         requestFriendshipSuccess({
-          address: requestEvent?.request?.user?.address ?? 'Unknown',
-          createdAt: requestEvent?.request?.createdAt ?? 0,
-          message: requestEvent?.request?.message
+          address: requestEvent?.friend?.address ?? 'Unknown',
+          createdAt: requestEvent?.createdAt ?? 0,
+          message: requestEvent?.message
         })
       )
     } catch (error) {
@@ -146,7 +151,7 @@ export function* socialSagas() {
   function* handleRemoveFriend(action: RemoveFriendRequestAction) {
     try {
       const client: SocialClient = yield call(getClient)
-      yield call([client, 'removeFriend'], action.payload.toLowerCase())
+      yield call([client, 'deleteFriendshipRequest'], action.payload.toLowerCase())
       yield put(removeFriendSuccess(action.payload.toLowerCase()))
     } catch (error) {
       yield put(removeFriendFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))

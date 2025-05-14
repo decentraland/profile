@@ -1,4 +1,4 @@
-import type { createSocialClient } from '@dcl/social-rpc-client'
+import type { createSocialClientV2 } from '@dcl/social-rpc-client'
 
 export enum FriendshipStatus {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -19,4 +19,4 @@ export type RequestEvent = {
   message?: string
 }
 
-export type SocialClient = Awaited<ReturnType<typeof createSocialClient>>
+export type SocialClient = Awaited<ReturnType<typeof createSocialClientV2>>
