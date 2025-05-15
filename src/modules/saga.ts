@@ -1,6 +1,8 @@
 import { all } from 'redux-saga/effects'
 import type { PeerAPI } from 'decentraland-dapps/dist/lib/peer'
 import { createAnalyticsSaga } from 'decentraland-dapps/dist/modules/analytics/sagas'
+import { CreditsClient } from 'decentraland-dapps/dist/modules/credits/CreditsClient'
+import { creditsSaga } from 'decentraland-dapps/dist/modules/credits/sagas'
 import { featuresSaga } from 'decentraland-dapps/dist/modules/features/sagas'
 import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
 import { transactionSaga } from 'decentraland-dapps/dist/modules/transaction/sagas'
@@ -22,7 +24,12 @@ import type { ContentClient } from 'dcl-catalyst-client'
 const analyticsSaga = createAnalyticsSaga()
 export const NFT_SERVER_URL = config.get('NFT_SERVER_URL')
 
-export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphClient: MarketplaceGraphClient, peerApi: PeerAPI) {
+export function* rootSaga(
+  worldsContentClient: ContentClient,
+  marketplaceGraphClient: MarketplaceGraphClient,
+  peerApi: PeerAPI,
+  creditsClient: CreditsClient
+) {
   yield all([
     analyticsSaga(),
     createWalletSaga({
@@ -35,6 +42,7 @@ export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphCl
     })(),
     worldSagas(worldsContentClient, marketplaceGraphClient),
     translationSaga(),
+    creditsSaga({ creditsClient }),
     identitySaga(),
     modalSagas(),
     itemSagas(new ItemsClient(NFT_SERVER_URL)),
