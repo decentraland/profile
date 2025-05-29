@@ -13,6 +13,16 @@ import SportsMedalImageAsset from '../../assets/images/sports-medal.png'
 import { config } from '../../modules/config'
 import { locations } from '../../modules/routing/locations'
 import {
+  REFERRAL_CONTAINER_TEST_ID,
+  REFERRAL_COPY_OPTION_TEST_ID,
+  REFERRAL_INPUT_TEST_ID,
+  REFERRAL_SHARE_BUTTON_TEST_ID,
+  REFERRAL_SHARE_MENU_TEST_ID,
+  REFERRAL_SHARE_X_OPTION_TEST_ID,
+  REFERRAL_STEPS_CONTAINER_TEST_ID,
+  REFERRAL_TOOLTIP_TEST_ID
+} from './constants'
+import {
   SectionContainer,
   EnvelopeImageContainer,
   Title,
@@ -60,7 +70,7 @@ const ReferralHeroSection = (props: Props) => {
             <InfoOutlinedIcon fontSize="small" />
           </Tooltip>
         </Subtitle>
-        <StepsContainer>
+        <StepsContainer data-testid={REFERRAL_STEPS_CONTAINER_TEST_ID}>
           <Step>
             <StepTextContainer>
               <StepNumber variant="h5">1</StepNumber>
@@ -84,10 +94,11 @@ const ReferralHeroSection = (props: Props) => {
           </Step>
         </StepsContainer>
         {!isLoading && (
-          <ReferralContainer>
+          <ReferralContainer data-testid={REFERRAL_CONTAINER_TEST_ID}>
             <ReferralTitle variant="subtitle1">{t('referral_hero_section.your_referral_link')}</ReferralTitle>
             <Box display="flex" width="100%">
               <Tooltip
+                data-testid={REFERRAL_TOOLTIP_TEST_ID}
                 onClose={() => setCopyTooltipOpen(false)}
                 open={copyTooltipOpen}
                 disableFocusListener
@@ -100,6 +111,7 @@ const ReferralHeroSection = (props: Props) => {
                 }
               >
                 <ReferralInput
+                  data-testid={REFERRAL_INPUT_TEST_ID}
                   value={`${INVITE_REFERRER_URL}/${shorten(profileAddress)}`}
                   onClick={() => {
                     navigator.clipboard.writeText(inviteUrl)
@@ -118,10 +130,16 @@ const ReferralHeroSection = (props: Props) => {
                   }}
                 />
               </Tooltip>
-              <ReferralButton variant="contained" endIcon={<ShareRoundedIcon />} onClick={e => setAnchorMenu(e.currentTarget)}>
+              <ReferralButton
+                data-testid={REFERRAL_SHARE_BUTTON_TEST_ID}
+                variant="contained"
+                endIcon={<ShareRoundedIcon />}
+                onClick={e => setAnchorMenu(e.currentTarget)}
+              >
                 {t('referral_hero_section.share')}
               </ReferralButton>
               <Menu
+                data-testid={REFERRAL_SHARE_MENU_TEST_ID}
                 id="basic-menu"
                 anchorEl={anchorMenu}
                 open={shareMenuOpen}
@@ -131,6 +149,7 @@ const ReferralHeroSection = (props: Props) => {
                 }}
               >
                 <MenuItem
+                  data-testid={REFERRAL_COPY_OPTION_TEST_ID}
                   onClick={() => {
                     navigator.clipboard.writeText(inviteUrl)
                     setCopyTooltipOpen(true)
@@ -145,6 +164,7 @@ const ReferralHeroSection = (props: Props) => {
                   </Box>
                 </MenuItem>
                 <MenuItem
+                  data-testid={REFERRAL_SHARE_X_OPTION_TEST_ID}
                   onClick={() => {
                     window.open(locations.twitter(t('referral_hero_section.share_on_x_title'), 'https://decentraland.org'), '_blank')
                     setAnchorMenu(null)
