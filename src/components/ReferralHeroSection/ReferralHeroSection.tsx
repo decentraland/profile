@@ -5,12 +5,14 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded'
 import XIcon from '@mui/icons-material/X'
 import { useShare } from '@dcl/hooks'
+import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { shorten } from 'decentraland-ui2/dist/components/AddressField/utils'
 import { Box, InputAdornment, Menu, MenuItem, Tooltip, useTabletAndBelowMediaQuery } from 'decentraland-ui2'
 import LogoWithPointerImageAsset from '../../assets/images/logo-with-pointer.png'
 import EnvelopeImageAsset from '../../assets/images/referral-envelope.png'
 import SportsMedalImageAsset from '../../assets/images/sports-medal.png'
+import { Events, ShareType } from '../../modules/analytics/types'
 import { config } from '../../modules/config'
 import { locations } from '../../modules/routing/locations'
 import {
@@ -63,16 +65,50 @@ const ReferralHeroSection = (props: Props) => {
     async (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isTabletOrBelow && shareState.isSupported) {
         await share({
-          title: '',
+          title: 'TITLE',
           text: t('referral_hero_section.share_on_x_title'),
           url: inviteUrl
         })
+        getAnalytics()?.track(Events.CLICK_BUTTON, {
+          type: ShareType.MOBILE_SHARE,
+          url: inviteUrl,
+          userAddress: profileAddress
+        })
       } else {
         setAnchorMenu(e.currentTarget)
+        getAnalytics()?.track(Events.CLICK_BUTTON, {
+          type: ShareType.COPY_LINK,
+          url: inviteUrl,
+          userAddress: profileAddress
+        })
       }
     },
-    [isTabletOrBelow, share, shareState, inviteUrl]
+    [isTabletOrBelow, share, shareState, inviteUrl, getAnalytics]
   )
+
+  const handleShareOnXClick = useCallback(() => {
+    window.open(locations.twitter(t('referral_hero_section.share_on_x_title'), inviteUrl), '_blank')
+    setAnchorMenu(null)
+    getAnalytics()?.track(Events.CLICK_BUTTON, {
+      type: ShareType.X,
+      url: inviteUrl,
+      userAddress: profileAddress
+    })
+  }, [inviteUrl, profileAddress, getAnalytics])
+
+  const handleCopyLink = useCallback(() => {
+    navigator.clipboard.writeText(inviteUrl)
+    setCopyTooltipOpen(true)
+    setTimeout(() => {
+      setCopyTooltipOpen(false)
+    }, 2000)
+    setAnchorMenu(null)
+    getAnalytics()?.track(Events.CLICK_BUTTON, {
+      type: ShareType.COPY_LINK,
+      url: inviteUrl,
+      userAddress: profileAddress
+    })
+  }, [inviteUrl, profileAddress, getAnalytics])
 
   return (
     <SectionContainer>
@@ -131,13 +167,7 @@ const ReferralHeroSection = (props: Props) => {
                 <ReferralInput
                   data-testid={REFERRAL_INPUT_TEST_ID}
                   value={`${INVITE_REFERRER_URL}/${shorten(profileAddress)}`}
-                  onClick={() => {
-                    navigator.clipboard.writeText(inviteUrl)
-                    setCopyTooltipOpen(true)
-                    setTimeout(() => {
-                      setCopyTooltipOpen(false)
-                    }, 2000)
-                  }}
+                  onClick={handleCopyLink}
                   InputProps={{
                     readOnly: true,
                     endAdornment: (
@@ -166,28 +196,12 @@ const ReferralHeroSection = (props: Props) => {
                   ['aria-labelledby']: 'share-button'
                 }}
               >
-                <MenuItem
-                  data-testid={REFERRAL_COPY_OPTION_TEST_ID}
-                  onClick={() => {
-                    navigator.clipboard.writeText(inviteUrl)
-                    setCopyTooltipOpen(true)
-                    setTimeout(() => {
-                      setCopyTooltipOpen(false)
-                    }, 2000)
-                    setAnchorMenu(null)
-                  }}
-                >
+                <MenuItem data-testid={REFERRAL_COPY_OPTION_TEST_ID} onClick={handleCopyLink}>
                   <Box display="flex" alignItems="center" gap={1}>
                     <ContentCopyOutlinedIcon /> {t('referral_hero_section.copy_link')}
                   </Box>
                 </MenuItem>
-                <MenuItem
-                  data-testid={REFERRAL_SHARE_X_OPTION_TEST_ID}
-                  onClick={() => {
-                    window.open(locations.twitter(t('referral_hero_section.share_on_x_title'), inviteUrl), '_blank')
-                    setAnchorMenu(null)
-                  }}
-                >
+                <MenuItem data-testid={REFERRAL_SHARE_X_OPTION_TEST_ID} onClick={handleShareOnXClick}>
                   <Box display="flex" alignItems="center" gap={1}>
                     <XIcon /> {t('referral_hero_section.share_on_x')}
                   </Box>
