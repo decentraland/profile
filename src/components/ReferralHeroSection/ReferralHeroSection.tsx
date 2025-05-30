@@ -1,12 +1,13 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded'
 import XIcon from '@mui/icons-material/X'
+import { useShare } from '@dcl/hooks'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { shorten } from 'decentraland-ui2/dist/components/AddressField/utils'
-import { Box, InputAdornment, Menu, MenuItem, Tooltip } from 'decentraland-ui2'
+import { Box, InputAdornment, Menu, MenuItem, Tooltip, useTabletAndBelowMediaQuery } from 'decentraland-ui2'
 import LogoWithPointerImageAsset from '../../assets/images/logo-with-pointer.png'
 import EnvelopeImageAsset from '../../assets/images/referral-envelope.png'
 import SportsMedalImageAsset from '../../assets/images/sports-medal.png'
@@ -51,10 +52,27 @@ const ReferralHeroSection = (props: Props) => {
   const [copyTooltipOpen, setCopyTooltipOpen] = useState(false)
   const [anchorMenu, setAnchorMenu] = useState<null | HTMLElement>(null)
   const shareMenuOpen = Boolean(anchorMenu)
+  const isTabletOrBelow = useTabletAndBelowMediaQuery()
+  const [share, shareState] = useShare()
 
   const inviteUrl = useMemo(() => {
     return `${INVITE_REFERRER_URL}/${profileAddress}`
   }, [INVITE_REFERRER_URL])
+
+  const handleShareButtonClick = useCallback(
+    async (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (isTabletOrBelow && shareState.isSupported) {
+        await share({
+          title: '',
+          text: t('referral_hero_section.share_on_x_title'),
+          url: inviteUrl
+        })
+      } else {
+        setAnchorMenu(e.currentTarget)
+      }
+    },
+    [isTabletOrBelow, share, shareState, inviteUrl]
+  )
 
   return (
     <SectionContainer>
@@ -134,7 +152,7 @@ const ReferralHeroSection = (props: Props) => {
                 data-testid={REFERRAL_SHARE_BUTTON_TEST_ID}
                 variant="contained"
                 endIcon={<ShareRoundedIcon />}
-                onClick={e => setAnchorMenu(e.currentTarget)}
+                onClick={handleShareButtonClick}
               >
                 {t('referral_hero_section.share')}
               </ReferralButton>
@@ -166,7 +184,7 @@ const ReferralHeroSection = (props: Props) => {
                 <MenuItem
                   data-testid={REFERRAL_SHARE_X_OPTION_TEST_ID}
                   onClick={() => {
-                    window.open(locations.twitter(t('referral_hero_section.share_on_x_title'), 'https://decentraland.org'), '_blank')
+                    window.open(locations.twitter(t('referral_hero_section.share_on_x_title'), inviteUrl), '_blank')
                     setAnchorMenu(null)
                   }}
                 >
