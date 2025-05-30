@@ -11,6 +11,21 @@ import { en as dappsEn } from 'decentraland-dapps/dist/modules/translation/defau
 import { mergeTranslations, setCurrentLocale } from 'decentraland-dapps/dist/modules/translation/utils'
 import * as locales from '../modules/translation/locales'
 
+// Mock matchMedia
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn()
+  }))
+})
+
 jest.mock('decentraland-dapps/dist/modules/translation/utils', () => {
   const module = jest.requireActual('decentraland-dapps/dist/modules/translation/utils')
   return {

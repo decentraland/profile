@@ -6,9 +6,8 @@ import { AccountTabs } from './types'
 export const locations = {
   root: () => '/',
   account: (address: string, tab?: AccountTabs) => `/accounts/${address}${tab ? `/${tab}` : ''}`,
-  signIn: (redirectTo?: string) => {
-    return `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`
-  }
+  signIn: (redirectTo?: string) => `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+  twitter: (title: string, url: string) => `https://x.com/intent/post?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`
 }
 
 export const isTabValid = (tab: string | undefined) => {
