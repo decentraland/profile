@@ -139,7 +139,7 @@ describe('ReferralHeroSection', () => {
           fireEvent.click(twitterOption)
         })
         await waitFor(() => {
-          expect(locations.twitter).toHaveBeenCalledWith(t('referral_hero_section.share_on_x_title'), 'https://decentraland.org')
+          expect(locations.twitter).toHaveBeenCalledWith(t('referral_hero_section.share_on_x_title'), inviteUrl)
           expect(mockOpen).toHaveBeenCalledWith(mockTwitterUrl, '_blank')
         })
       } finally {
