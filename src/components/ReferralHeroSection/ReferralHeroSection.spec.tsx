@@ -102,7 +102,9 @@ describe('ReferralHeroSection', () => {
   describe('when interacting with the share menu', () => {
     const openShareMenu = async (getByTestId: (id: string) => HTMLElement, findByTestId: (id: string) => Promise<HTMLElement>) => {
       const shareButton = getByTestId(REFERRAL_SHARE_BUTTON_TEST_ID)
-      await act(async () => fireEvent.click(shareButton))
+      await act(() => {
+        fireEvent.click(shareButton)
+      })
       return await findByTestId(REFERRAL_SHARE_MENU_TEST_ID)
     }
 
@@ -116,7 +118,9 @@ describe('ReferralHeroSection', () => {
       const { getByTestId, findByTestId } = renderReferralHeroSection()
       await openShareMenu(getByTestId, findByTestId)
       const copyOption = await findByTestId(REFERRAL_COPY_OPTION_TEST_ID)
-      await act(async () => fireEvent.click(copyOption))
+      await act(() => {
+        fireEvent.click(copyOption)
+      })
       await waitFor(() => {
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith(inviteUrl)
       })
@@ -131,7 +135,9 @@ describe('ReferralHeroSection', () => {
         const { getByTestId, findByTestId } = renderReferralHeroSection()
         await openShareMenu(getByTestId, findByTestId)
         const twitterOption = await findByTestId(REFERRAL_SHARE_X_OPTION_TEST_ID)
-        await act(async () => fireEvent.click(twitterOption))
+        await act(() => {
+          fireEvent.click(twitterOption)
+        })
         await waitFor(() => {
           expect(locations.twitter).toHaveBeenCalledWith(t('referral_hero_section.share_on_x_title'), 'https://decentraland.org')
           expect(mockOpen).toHaveBeenCalledWith(mockTwitterUrl, '_blank')
