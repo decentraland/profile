@@ -47,7 +47,7 @@ import { Props } from './ReferralHeroSection.types'
 
 const INVITE_REFERRER_URL = config.get('INVITE_REFERRER_URL', '')
 
-const ReferralHeroSection = (props: Props) => {
+const ReferralHeroSection = React.memo((props: Props) => {
   const { isLoading, profileAddress } = props
 
   const [copyTooltipOpen, setCopyTooltipOpen] = useState(false)
@@ -211,6 +211,6 @@ const ReferralHeroSection = (props: Props) => {
       </HeroWrapper>
     </SectionContainer>
   )
-}
+})
 
-export default ReferralHeroSection
+export { ReferralHeroSection }

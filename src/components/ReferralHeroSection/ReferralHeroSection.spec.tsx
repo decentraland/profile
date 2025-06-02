@@ -14,7 +14,7 @@ import {
   REFERRAL_SHARE_X_OPTION_TEST_ID,
   REFERRAL_STEPS_CONTAINER_TEST_ID
 } from './constants'
-import ReferralHeroSection from './ReferralHeroSection'
+import { ReferralHeroSection } from './ReferralHeroSection'
 import { Props } from './ReferralHeroSection.types'
 
 const INVITE_REFERRER_URL = config.get('INVITE_REFERRER_URL', '')

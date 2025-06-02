@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { isLoadingReferrals } from '../../modules/items/selectors'
 import { RootState } from '../../modules/reducer'
-import Referrals from './ReferralHeroSection'
+import { ReferralHeroSection } from './ReferralHeroSection'
 import { MapStateProps, OwnProps } from './ReferralHeroSection.types'
 
 const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
@@ -11,4 +11,4 @@ const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   }
 }
 
-export default connect(mapState)(Referrals)
+export default connect(mapState)(ReferralHeroSection)
