@@ -4,7 +4,6 @@ import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded'
 import XIcon from '@mui/icons-material/X'
-import { useShare } from '@dcl/hooks'
 import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { shorten } from 'decentraland-ui2/dist/components/AddressField/utils'
@@ -55,7 +54,6 @@ const ReferralHeroSection = (props: Props) => {
   const [anchorMenu, setAnchorMenu] = useState<null | HTMLElement>(null)
   const shareMenuOpen = Boolean(anchorMenu)
   const isTabletOrBelow = useTabletAndBelowMediaQuery()
-  const [share, shareState] = useShare()
 
   const inviteUrl = useMemo(() => {
     return `${INVITE_REFERRER_URL}/${profileAddress}`
@@ -63,8 +61,8 @@ const ReferralHeroSection = (props: Props) => {
 
   const handleShareButtonClick = useCallback(
     async (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (isTabletOrBelow && shareState.isSupported) {
-        await share({
+      if (isTabletOrBelow && typeof navigator !== 'undefined' && !!navigator.share) {
+        await navigator.share({
           title: 'TITLE',
           text: t('referral_hero_section.share_on_x_title'),
           url: inviteUrl
@@ -83,7 +81,7 @@ const ReferralHeroSection = (props: Props) => {
         })
       }
     },
-    [isTabletOrBelow, share, shareState, inviteUrl, getAnalytics]
+    [isTabletOrBelow, inviteUrl, getAnalytics]
   )
 
   const handleShareOnXClick = useCallback(() => {
