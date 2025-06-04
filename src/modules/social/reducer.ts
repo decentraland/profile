@@ -80,14 +80,20 @@ export const socialReducer = createReducer<SocialState>(buildInitialState(), bui
     })
     .addCase(fetchFriendRequestsEventsSuccess, (state, action) => {
       state.loading = loadingReducer(state.loading, action)
-      state.data.events.incoming = action.payload.incoming.reduce((acc, event) => {
-        acc[event.address] = event
-        return acc
-      }, {} as Record<string, RequestEvent>)
-      state.data.events.outgoing = action.payload.outgoing.reduce((acc, event) => {
-        acc[event.address] = event
-        return acc
-      }, {} as Record<string, RequestEvent>)
+      state.data.events.incoming = action.payload.incoming.reduce(
+        (acc, event) => {
+          acc[event.address] = event
+          return acc
+        },
+        {} as Record<string, RequestEvent>
+      )
+      state.data.events.outgoing = action.payload.outgoing.reduce(
+        (acc, event) => {
+          acc[event.address] = event
+          return acc
+        },
+        {} as Record<string, RequestEvent>
+      )
       state.error = null
     })
     .addCase(fetchFriendRequestsEventsFailure, (state, action) => {

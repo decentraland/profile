@@ -24,6 +24,7 @@ export function renderWithProviders(
       ...(preloadedState || {}),
       storage: { loading: false },
       translation: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: { en: mergeTranslations<any>(flatten(dappsEn), flatten(locales.en)) },
         locale: 'en'
       }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { userEvent } from '@testing-library/user-event'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { InfiniteScroll } from './InfiniteScroll'
 import { Props } from './InfiniteScroll.types'

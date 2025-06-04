@@ -1,4 +1,4 @@
-import nock from 'nock'
+import nock, { disableNetConnect, isDone } from 'nock'
 import { CatalogSortBy, Item, Network, Rarity } from '@dcl/schemas'
 import { EmoteCategory, MainCategory, WearableCategory } from '../../utils/categories'
 import { ItemsClient } from './client'
@@ -8,7 +8,7 @@ let client: ItemsClient
 let items: Item[]
 
 const scope = nock('https://example.com/')
-nock.disableNetConnect()
+disableNetConnect()
 
 beforeEach(() => {
   client = new ItemsClient('https://example.com')
@@ -32,7 +32,7 @@ describe.each<[string, Options, string]>([
 
   it(`should request the API with the ${type} in the query string and return the resulting items`, async () => {
     const response = await client.get(options)
-    expect(nock.isDone()).toBe(true)
+    expect(isDone()).toBe(true)
     expect(response).toEqual({ data: items })
   })
 })
@@ -50,7 +50,7 @@ describe('when requesting the items with a category', () => {
 
     it('should request the API with the category in the query string and return the resulting items', async () => {
       const response = await client.get(options)
-      expect(nock.isDone()).toBe(true)
+      expect(isDone()).toBe(true)
       expect(response).toEqual({ data: items })
     })
   })
@@ -65,7 +65,7 @@ describe('when requesting the items with a category', () => {
 
     it('should request the API with the category and the wearable category in the query string and return the resulting items', async () => {
       const response = await client.get(options)
-      expect(nock.isDone()).toBe(true)
+      expect(isDone()).toBe(true)
       expect(response).toEqual({ data: items })
     })
   })
@@ -80,7 +80,7 @@ describe('when requesting the items with a category', () => {
 
     it('should request the API with the category in the query string and return the resulting items', async () => {
       const response = await client.get(options)
-      expect(nock.isDone()).toBe(true)
+      expect(isDone()).toBe(true)
       expect(response).toEqual({ data: items })
     })
   })
@@ -95,7 +95,7 @@ describe('when requesting the items with a category', () => {
 
     it('should request the API with the category and the emote category in the query string and return the resulting items', async () => {
       const response = await client.get(options)
-      expect(nock.isDone()).toBe(true)
+      expect(isDone()).toBe(true)
       expect(response).toEqual({ data: items })
     })
   })
@@ -119,7 +119,7 @@ describe('when requesting the items with a status', () => {
 
     it(`should request the API with the query "${query}" and return the resulting items`, async () => {
       const response = await client.get(options)
-      expect(nock.isDone()).toBe(true)
+      expect(isDone()).toBe(true)
       expect(response).toEqual({ data: items })
     })
   })
@@ -139,7 +139,7 @@ describe('when requesting the items with "isWearableSmart"', () => {
 
   it('should request the API with the query isWearableSmart=true and return the resulting items', async () => {
     const response = await client.get(options)
-    expect(nock.isDone()).toBe(true)
+    expect(isDone()).toBe(true)
     expect(response).toEqual({ data: items })
   })
 })

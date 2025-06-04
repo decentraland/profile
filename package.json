@@ -42,7 +42,7 @@
     "redux-saga": "^1.2.3"
   },
   "devDependencies": {
-    "@dcl/eslint-config": "^1.1.9",
+    "@dcl/eslint-config": "^2.2.1",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@swc/core": "^1.4.13",

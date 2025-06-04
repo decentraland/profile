@@ -1,6 +1,6 @@
 import React from 'react'
 import { fireEvent } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { userEvent } from '@testing-library/user-event'
 import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'

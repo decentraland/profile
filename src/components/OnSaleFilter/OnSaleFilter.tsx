@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Box } from 'decentraland-ui/dist/components/Box'
 import { Checkbox, CheckboxProps } from 'decentraland-ui/dist/components/Checkbox/Checkbox'
@@ -12,7 +12,7 @@ const OnSaleFilter = (props: Props) => {
   const { value, onChange } = props
 
   const isMobileOrTablet = useTabletAndBelowMediaQuery()
-  const handleOnChange = React.useCallback(
+  const handleOnChange = useCallback(
     (_: unknown, data: CheckboxProps) => {
       onChange(!!data.checked)
     },
