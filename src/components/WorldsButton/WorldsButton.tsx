@@ -11,9 +11,9 @@ import worldIcon from '../../assets/icons/World.png'
 import { Events } from '../../modules/analytics/types'
 import { config } from '../../modules/config'
 import { getJumpToWorldUrl } from '../../modules/routing/locations'
+import type { World } from '../../modules/world/types'
 import { Props } from './WorldsButton.types'
 import styles from './WorldsButton.module.css'
-import type { World } from '../../modules/world/types'
 
 const BUILDER_URL = config.get('BUILDER_URL')
 

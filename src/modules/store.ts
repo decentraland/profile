@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createFetchComponent } from '@well-known-components/fetch-component'
 import { createContentClient } from 'dcl-catalyst-client'
 import { createLogger } from 'redux-logger'

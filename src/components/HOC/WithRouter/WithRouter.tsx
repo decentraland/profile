@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ComponentProps } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 

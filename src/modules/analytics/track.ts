@@ -15,6 +15,7 @@ import {
 } from '../social/actions'
 import { Events } from './types'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function track<T extends PayloadAction<any, string>>(
   actionType: string,
   eventName: string | ((action: T) => string),
