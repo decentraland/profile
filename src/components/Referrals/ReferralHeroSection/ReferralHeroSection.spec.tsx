@@ -19,7 +19,7 @@ import { Props } from './ReferralHeroSection.types'
 
 const INVITE_REFERRER_URL = config.get('INVITE_REFERRER_URL', '')
 
-jest.mock('../../modules/routing/locations', () => ({
+jest.mock('../../../modules/routing/locations', () => ({
   locations: {
     twitter: jest.fn()
   }
