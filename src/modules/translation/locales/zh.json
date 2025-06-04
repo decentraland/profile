@@ -200,5 +200,13 @@
     "copied_to_clipboard": "链接已复制成功",
     "share_on_x": "分享到 X",
     "share_on_x_title": "想在 Decentraland 闲逛吗？:eyes: 使用我的推荐链接创建您的帐户并下载 Decentraland，以便我们一起探索！ #DCL #Decentraland"
+  },
+  "referral_reward_card": {
+    "swag": "IRL 周边礼包！",
+    "unlock": "解锁",
+    "unlocked": "已解锁！",
+    "claim": "宣称",
+    "tier": "{count} 朋友",
+    "image_alt": "奖励图片"
   }
 }

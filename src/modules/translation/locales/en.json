@@ -200,5 +200,13 @@
     "copied_to_clipboard": "Link copied successfully",
     "share_on_x": "Share on X",
     "share_on_x_title": "Wanna hang out in Decentraland? :eyes: Use my referral link to make your account and download Decentraland so we can explore together! #DCL #Decentraland"
+  },
+  "referral_reward_card": {
+    "swag": "IRL Swag Bag!",
+    "unlock": "Unlock",
+    "unlocked": "Unlocked!",
+    "claim": "CLAIM",
+    "tier": "{count} Friends",
+    "image_alt": "Reward Image"
   }
 }

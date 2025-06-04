@@ -16,7 +16,7 @@ declare module '@emotion/styled' {
     textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'initial'
     display?: 'flex' | 'inline-flex' | 'block' | 'inline-block' | 'none' | 'inherit' | 'inline'
     alignItems?: 'center' | 'flex-start' | 'flex-end' | 'stretch'
-    justifyContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between'
+    justifyContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-evenly'
     verticalAlign?: 'middle' | 'top' | 'bottom' | 'text-top' | 'text-bottom'
     overflowX?: 'hidden' | 'auto' | 'scroll' | 'visible' | 'inherit'
     overflowY?: 'hidden' | 'auto' | 'scroll' | 'visible' | 'inherit' | 'default'
