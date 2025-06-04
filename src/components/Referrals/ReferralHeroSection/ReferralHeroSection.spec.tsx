@@ -2,9 +2,9 @@
 import React from 'react'
 import { fireEvent, waitFor, act } from '@testing-library/react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { config } from '../../modules/config'
-import { locations } from '../../modules/routing/locations'
-import { renderWithProviders } from '../../tests/tests'
+import { config } from '../../../modules/config'
+import { locations } from '../../../modules/routing/locations'
+import { renderWithProviders } from '../../../tests/tests'
 import {
   REFERRAL_CONTAINER_TEST_ID,
   REFERRAL_COPY_OPTION_TEST_ID,

@@ -8,12 +8,12 @@ import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { shorten } from 'decentraland-ui2/dist/components/AddressField/utils'
 import { Box, InputAdornment, Menu, MenuItem, Tooltip, useTabletAndBelowMediaQuery } from 'decentraland-ui2'
-import LogoWithPointerImageAsset from '../../assets/images/logo-with-pointer.png'
-import EnvelopeImageAsset from '../../assets/images/referral-envelope.webp'
-import SportsMedalImageAsset from '../../assets/images/sports-medal.png'
-import { Events, ShareType } from '../../modules/analytics/types'
-import { config } from '../../modules/config'
-import { locations } from '../../modules/routing/locations'
+import LogoWithPointerImageAsset from '../../../assets/images/logo-with-pointer.png'
+import EnvelopeImageAsset from '../../../assets/images/referral-envelope.webp'
+import SportsMedalImageAsset from '../../../assets/images/sports-medal.png'
+import { Events, ShareType } from '../../../modules/analytics/types'
+import { config } from '../../../modules/config'
+import { locations } from '../../../modules/routing/locations'
 import {
   REFERRAL_CONTAINER_TEST_ID,
   REFERRAL_COPY_OPTION_TEST_ID,
