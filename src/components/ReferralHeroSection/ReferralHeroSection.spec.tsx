@@ -47,7 +47,7 @@ describe('ReferralHeroSection', () => {
     jest.clearAllMocks()
   })
 
-  describe('when the component renders', () => {
+  describe('when rendering the component', () => {
     it('should display title and subtitle', () => {
       const { getByText } = renderReferralHeroSection()
       expect(getByText(t('referral_hero_section.title'))).toBeInTheDocument()
@@ -61,90 +61,125 @@ describe('ReferralHeroSection', () => {
       expect(getByText(t('referral_hero_section.step_2'))).toBeInTheDocument()
       expect(getByText(t('referral_hero_section.step_3'))).toBeInTheDocument()
     })
+  })
 
-    it('should display the referral container when not loading', () => {
-      const { getByTestId } = renderReferralHeroSection()
-      expect(getByTestId(REFERRAL_CONTAINER_TEST_ID)).toBeInTheDocument()
+  describe('when the component is loading', () => {
+    let renderedComponent: ReturnType<typeof renderReferralHeroSection>
+
+    beforeEach(() => {
+      renderedComponent = renderReferralHeroSection({ isLoading: true })
     })
 
-    it('should not display the referral container when loading', () => {
-      const { queryByTestId } = renderReferralHeroSection({ isLoading: true })
+    it('should not display the referral container', () => {
+      const { queryByTestId } = renderedComponent
       expect(queryByTestId(REFERRAL_CONTAINER_TEST_ID)).not.toBeInTheDocument()
     })
   })
 
-  describe('when interacting with the copy button', () => {
-    const clickInput = async (getByTestId: (id: string) => HTMLElement) => {
-      const input = getByTestId(REFERRAL_INPUT_TEST_ID)
-      await act(async () => {
-        fireEvent.click(input)
-      })
-    }
+  describe('when the component is not loading', () => {
+    let renderedComponent: ReturnType<typeof renderReferralHeroSection>
 
-    it('should copy the link to clipboard when clicking the input', async () => {
-      const { getByTestId } = renderReferralHeroSection()
-      await clickInput(getByTestId)
-      await waitFor(() => {
-        expect(navigator.clipboard.writeText).toHaveBeenCalledWith(inviteUrl)
-      })
+    beforeEach(() => {
+      renderedComponent = renderReferralHeroSection({ isLoading: false })
     })
 
-    it('should show and hide the copied tooltip when clicking the input', async () => {
-      const { getByTestId, findByText, queryByText } = renderReferralHeroSection()
-      await clickInput(getByTestId)
-      const tooltip = await findByText(t('referral_hero_section.copied_to_clipboard'))
-      expect(tooltip).toBeInTheDocument()
-      await act(async () => jest.advanceTimersByTime(2000))
-      await waitFor(() => expect(queryByText(t('referral_hero_section.copied_to_clipboard'))).not.toBeInTheDocument())
-    })
-  })
-
-  describe('when interacting with the share menu', () => {
-    const openShareMenu = async (getByTestId: (id: string) => HTMLElement, findByTestId: (id: string) => Promise<HTMLElement>) => {
-      const shareButton = getByTestId(REFERRAL_SHARE_BUTTON_TEST_ID)
-      await act(() => {
-        fireEvent.click(shareButton)
-      })
-      return await findByTestId(REFERRAL_SHARE_MENU_TEST_ID)
-    }
-
-    it('should open the menu when clicking the share button', async () => {
-      const { getByTestId, findByTestId } = renderReferralHeroSection()
-      const menu = await openShareMenu(getByTestId, findByTestId)
-      expect(menu).toBeInTheDocument()
+    it('should display the referral container', () => {
+      const { getByTestId } = renderedComponent
+      expect(getByTestId(REFERRAL_CONTAINER_TEST_ID)).toBeInTheDocument()
     })
 
-    it('should copy the link when clicking the copy option', async () => {
-      const { getByTestId, findByTestId } = renderReferralHeroSection()
-      await openShareMenu(getByTestId, findByTestId)
-      const copyOption = await findByTestId(REFERRAL_COPY_OPTION_TEST_ID)
-      await act(() => {
-        fireEvent.click(copyOption)
-      })
-      await waitFor(() => {
-        expect(navigator.clipboard.writeText).toHaveBeenCalledWith(inviteUrl)
-      })
-    })
+    describe('when clicking the copy button', () => {
+      let clickInput: (getByTestId: (id: string) => HTMLElement) => Promise<void>
 
-    it('should open Twitter when clicking the share on X option', async () => {
-      const mockTwitterUrl = 'https://twitter.com/test'
-      ;(locations.twitter as jest.Mock).mockReturnValue(mockTwitterUrl)
-      const mockOpen = jest.spyOn(window, 'open').mockImplementation(() => null)
+      beforeEach(() => {
+        clickInput = async (getByTestId: (id: string) => HTMLElement) => {
+          const input = getByTestId(REFERRAL_INPUT_TEST_ID)
+          act(() => {
+            fireEvent.click(input)
+          })
+        }
+      })
 
-      try {
-        const { getByTestId, findByTestId } = renderReferralHeroSection()
-        await openShareMenu(getByTestId, findByTestId)
-        const twitterOption = await findByTestId(REFERRAL_SHARE_X_OPTION_TEST_ID)
-        await act(() => {
-          fireEvent.click(twitterOption)
-        })
+      it('should copy the link to clipboard', async () => {
+        const { getByTestId } = renderedComponent
+        await clickInput(getByTestId)
         await waitFor(() => {
-          expect(locations.twitter).toHaveBeenCalledWith(t('referral_hero_section.share_on_x_title'), inviteUrl)
-          expect(mockOpen).toHaveBeenCalledWith(mockTwitterUrl, '_blank')
+          expect(navigator.clipboard.writeText).toHaveBeenCalledWith(inviteUrl)
         })
-      } finally {
+      })
+
+      it('should show and hide the copied tooltip', async () => {
+        const { getByTestId, findByText, queryByText } = renderedComponent
+        await clickInput(getByTestId)
+        const tooltip = await findByText(t('referral_hero_section.copied_to_clipboard'))
+        expect(tooltip).toBeInTheDocument()
+        await act(async () => jest.advanceTimersByTime(2000))
+        await waitFor(() => expect(queryByText(t('referral_hero_section.copied_to_clipboard'))).not.toBeInTheDocument())
+      })
+    })
+
+    describe('when interacting with the share menu', () => {
+      let openShareMenu: (
+        getByTestId: (id: string) => HTMLElement,
+        findByTestId: (id: string) => Promise<HTMLElement>
+      ) => Promise<HTMLElement>
+      let mockTwitterUrl: string
+      let mockOpen: jest.SpyInstance
+
+      beforeEach(() => {
+        openShareMenu = async (getByTestId: (id: string) => HTMLElement, findByTestId: (id: string) => Promise<HTMLElement>) => {
+          const shareButton = getByTestId(REFERRAL_SHARE_BUTTON_TEST_ID)
+          act(() => {
+            fireEvent.click(shareButton)
+          })
+          return await findByTestId(REFERRAL_SHARE_MENU_TEST_ID)
+        }
+
+        mockTwitterUrl = 'https://twitter.com/test'
+        ;(locations.twitter as jest.Mock).mockReturnValue(mockTwitterUrl)
+        mockOpen = jest.spyOn(window, 'open').mockImplementation(() => null)
+      })
+
+      afterEach(() => {
         mockOpen.mockRestore()
-      }
+      })
+
+      describe('when clicking the share button', () => {
+        it('should open the menu', async () => {
+          const { getByTestId, findByTestId } = renderedComponent
+          const menu = await openShareMenu(getByTestId, findByTestId)
+          expect(menu).toBeInTheDocument()
+        })
+      })
+
+      describe('when clicking the copy option', () => {
+        it('should copy the link', async () => {
+          const { getByTestId, findByTestId } = renderedComponent
+          await openShareMenu(getByTestId, findByTestId)
+          const copyOption = await findByTestId(REFERRAL_COPY_OPTION_TEST_ID)
+          act(() => {
+            fireEvent.click(copyOption)
+          })
+          await waitFor(() => {
+            expect(navigator.clipboard.writeText).toHaveBeenCalledWith(inviteUrl)
+          })
+        })
+      })
+
+      describe('when clicking the share on X option', () => {
+        it('should open Twitter', async () => {
+          const { getByTestId, findByTestId } = renderedComponent
+          await openShareMenu(getByTestId, findByTestId)
+          const twitterOption = await findByTestId(REFERRAL_SHARE_X_OPTION_TEST_ID)
+          act(() => {
+            fireEvent.click(twitterOption)
+          })
+          await waitFor(() => {
+            expect(locations.twitter).toHaveBeenCalledWith(t('referral_hero_section.share_on_x_title'), inviteUrl)
+            expect(mockOpen).toHaveBeenCalledWith(mockTwitterUrl, '_blank')
+          })
+        })
+      })
     })
   })
 })
