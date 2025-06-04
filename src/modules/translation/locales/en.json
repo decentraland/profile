@@ -37,7 +37,8 @@
     "own_assets": "My Assets",
     "others_assets": "Assets",
     "own_creations": "My Creations",
-    "others_creations": "Creations"
+    "others_creations": "Creations",
+    "referrals": "Referral Rewards"
   },
   "friendship_button": {
     "friends": "Friends",
@@ -186,5 +187,18 @@
     "cheapest": "Cheapest",
     "rental_listing_date": "Recently listed for rent",
     "max_rental_price": "Cheapest listing"
+  },
+  "referral_hero_section": {
+    "title": "Decentraland is Better With Friends",
+    "subtitle": "Invite yours and get rewards!",
+    "step_1": "Invite friends to hang out in-world by sharing your referral link.",
+    "step_2": "Your friends download Decentraland and jump in.",
+    "step_3": "You earn exclusive rewards for helping grow our community!",
+    "your_referral_link": "Your Referral Link",
+    "share": "SHARE",
+    "copy_link": "Copy Link",
+    "copied_to_clipboard": "Link copied successfully",
+    "share_on_x": "Share on X",
+    "share_on_x_title": "Wanna hang out in Decentraland? :eyes: Use my referral link to make your account and download Decentraland so we can explore together! #DCL #Decentraland"
   }
 }

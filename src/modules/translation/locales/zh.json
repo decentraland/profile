@@ -37,7 +37,8 @@
     "own_assets": "我的资产",
     "others_assets": "资产",
     "own_creations": "我的创作",
-    "others_creations": "创作"
+    "others_creations": "创作",
+    "referrals": "推荐奖励"
   },
   "friendship_button": {
     "friends": "朋友们",
@@ -186,5 +187,18 @@
     "cheapest": "最便宜",
     "rental_listing_date": "最近列出出租",
     "max_rental_price": "最便宜的清单"
+  },
+  "referral_hero_section": {
+    "title": "Decentraland 更好玩",
+    "subtitle": "邀请你的朋友，获得奖励！",
+    "step_1": "邀请你的朋友加入 Decentraland，分享你的邀请链接。",
+    "step_2": "你的朋友下载 Decentraland，加入元宇宙。",
+    "step_3": "你帮助我们扩大社区，获得独家奖励！",
+    "your_referral_link": "你的邀请链接",
+    "share": "分享",
+    "copy_link": "复制链接",
+    "copied_to_clipboard": "链接已复制成功",
+    "share_on_x": "分享到 X",
+    "share_on_x_title": "想在 Decentraland 闲逛吗？:eyes: 使用我的推荐链接创建您的帐户并下载 Decentraland，以便我们一起探索！ #DCL #Decentraland"
   }
 }
