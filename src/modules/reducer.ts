@@ -11,7 +11,6 @@ import { ItemsState, itemsReducer as items } from './items/reducer'
 import { NFTsState, nftsReducer as nfts } from './nfts/reducer'
 import { profileReducer as profile } from './profile/reducer'
 import { ProfileState } from './profile/types'
-import { ReferralsState, referralsReducer as referrals } from './referrals/reducer'
 import { SocialState, socialReducer as social } from './social/reducer'
 import { WorldState, worldReducer as world } from './world/reducer'
 
@@ -31,8 +30,7 @@ export const createRootReducer = (middlewares: Middleware[], preloadedState = {}
         world,
         items,
         nfts,
-        transaction,
-        referrals
+        transaction
       })
     ),
     preloadedState,
@@ -62,7 +60,6 @@ export type RootState = {
   nfts: NFTsState
   transaction: TransactionState
   credits: CreditsState
-  referrals: ReferralsState
 }
 
 export type RootStore = Store<RootState>
