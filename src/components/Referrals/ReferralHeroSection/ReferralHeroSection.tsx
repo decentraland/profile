@@ -47,6 +47,7 @@ import { Props } from './ReferralHeroSection.types'
 
 const INVITE_REFERRER_URL = config.get('INVITE_REFERRER_URL', '')
 
+// eslint-disable-next-line import/no-named-as-default-member
 const ReferralHeroSection = React.memo((props: Props) => {
   const { isLoading, profileAddress } = props
 
