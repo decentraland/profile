@@ -42,13 +42,13 @@ describe('ReferralRewardCard', () => {
       expect(getByTestId(REFERRAL_REWARD_CARD_TEST_ID)).toBeInTheDocument()
     })
 
-    it('should display the correct tier', () => {
+    it('should display the given prop tier', () => {
       const { getByTestId } = renderedComponent
       const tierElement = getByTestId(REFERRAL_REWARD_TIER_TEST_ID)
       expect(tierElement).toHaveTextContent(t('referral_reward_card.tier', { count: props.tier }))
     })
 
-    it('should display the image with correct alt text', () => {
+    it('should display the image with the translated alt text', () => {
       const { getByTestId } = renderedComponent
       const imageElement = getByTestId(REFERRAL_REWARD_IMAGE_TEST_ID)
       expect(imageElement).toHaveAttribute('alt', t('referral_reward_card.image_alt'))
@@ -60,8 +60,14 @@ describe('ReferralRewardCard', () => {
       const rarityElement = getByTestId(REFERRAL_REWARD_RARITY_TEST_ID)
       expect(rarityElement).toHaveTextContent(props.rarity.toUpperCase())
     })
+  })
 
-    it('should display the unlock message when not completed', () => {
+  describe('when rendering the component is not being completed', () => {
+    beforeEach(() => {
+      renderedComponent = renderReferralRewardCard(props)
+    })
+
+    it('should display the unlock message', () => {
       const { getByTestId } = renderedComponent
       const descriptionElement = getByTestId(REFERRAL_REWARD_DESCRIPTION_TEST_ID)
       expect(descriptionElement).toHaveTextContent(t('referral_reward_card.unlock'))
