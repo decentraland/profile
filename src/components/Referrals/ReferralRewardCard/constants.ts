@@ -1,0 +1,7 @@
+export const REFERRAL_REWARD_CARD_TEST_ID = 'referral-reward-card'
+export const REFERRAL_REWARD_TIER_TEST_ID = 'referral-reward-tier'
+export const REFERRAL_REWARD_IMAGE_TEST_ID = 'referral-reward-image'
+export const REFERRAL_REWARD_RARITY_TEST_ID = 'referral-reward-rarity'
+export const REFERRAL_REWARD_SWAG_CONTAINER_TEST_ID = 'referral-reward-swag-container'
+export const REFERRAL_REWARD_DESCRIPTION_TEST_ID = 'referral-reward-description'
+export const REFERRAL_REWARD_CLAIM_BUTTON_TEST_ID = 'referral-reward-claim-button'
