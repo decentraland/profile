@@ -62,7 +62,7 @@ const ReferralJourney = React.memo(({ invitedUsersAccepted }: ReferralJourneyPro
   }, [animationPhase])
 
   useEffect(() => {
-    if (animatedStep > 2 && journeyStepRefs.current[animatedStep - 1]) {
+    if (animatedStep > 1 && journeyStepRefs.current[animatedStep - 1]) {
       journeyStepRefs.current[animatedStep - 1]?.scrollIntoView({
         behavior: 'smooth',
         inline: 'center',
@@ -108,7 +108,9 @@ const ReferralJourney = React.memo(({ invitedUsersAccepted }: ReferralJourneyPro
                   completed={tier.completed}
                   showAnimation={animationPhase === AnimationPhaseType.TIER_REACHED && animatedStep === i + 1}
                 >
-                  <JourneyStepIcon>{tier.completed && <CheckRoundedIcon fontSize="medium" />}</JourneyStepIcon>
+                  <JourneyStepIcon>
+                    {tier.completed && <CheckRoundedIcon fontSize="medium" data-testid="CheckRoundedIcon" />}
+                  </JourneyStepIcon>
                 </GradientBorder>
                 <ReferralRewardCard {...tier} />
               </JourneyStep>
@@ -116,7 +118,12 @@ const ReferralJourney = React.memo(({ invitedUsersAccepted }: ReferralJourneyPro
           </JourneyStepper>
         </JourneyWrapper>
       </JourneyContainer>
-      <ReferralRewardReached reward={journeyTiers[Math.max(animatedStep - 1, 0)]} open={open} onClick={handleClose} />
+      <ReferralRewardReached
+        reward={journeyTiers[Math.max(animatedStep - 1, 0)]}
+        open={open}
+        onClick={handleClose}
+        data-testid="reward-modal"
+      />
     </SectionContainer>
   )
 })

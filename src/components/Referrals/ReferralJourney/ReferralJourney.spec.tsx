@@ -1,22 +1,53 @@
 import React from 'react'
 import { screen, fireEvent, act } from '@testing-library/react'
 import { renderWithProviders } from '../../../tests/tests'
+import { REFERRAL_REWARD_DESCRIPTION_TEST_ID } from '../ReferralRewardCard/constants'
+import { REFERRAL_REWARD_REACHED_TEST_ID } from '../ReferralRewardReached/constants'
 import { tiers } from './constants'
 import { ReferralJourney } from './ReferralJourney'
+import { ANIMATION_DURATION } from './utils'
 
-jest.mock('../ReferralRewardReached', () => ({
-  ReferralRewardReached: jest.fn(({ reward, open, onClick }) =>
-    open ? (
-      <div data-testid="reward-modal">
-        <span>{reward.description}</span>
-        <button onClick={onClick}>Close</button>
-      </div>
-    ) : null
-  )
-}))
+jest.mock('@mui/system/cssVars/useCurrentColorScheme', () => {
+  const mockUseCurrentColorScheme = () => ({
+    mode: 'light',
+    systemMode: 'light',
+    setMode: jest.fn()
+  })
+  mockUseCurrentColorScheme.default = mockUseCurrentColorScheme
+  return mockUseCurrentColorScheme
+})
 
-jest.mock('../ReferralRewardCard', () => ({
-  ReferralRewardCard: jest.fn(({ description }) => <div>{description}</div>)
+const mockTranslations = {
+  title: 'Your Reward Journey',
+  invitesAccepted: 'Invites accepted',
+  unlock: 'Unlock',
+  unlocked: 'Unlocked!',
+  reward: 'Reward',
+  newItemUnlocked: 'NEW ITEM UNLOCKED'
+}
+
+const mockT = jest.fn((key, values) => {
+  if (key === 'referral_journey.invites_accepted' && values?.count) {
+    return `🤍 ${values.count} ${mockTranslations.invitesAccepted}`
+  }
+  switch (key) {
+    case 'referral_journey.title':
+      return mockTranslations.title
+    case 'referral_reward_card.unlock':
+      return mockTranslations.unlock
+    case 'referral_reward_card.unlocked':
+      return mockTranslations.unlocked
+    case 'referral_reward_reached.reward':
+      return mockTranslations.reward
+    case 'referral_reward_reached.new_item_unlocked':
+      return mockTranslations.newItemUnlocked
+    default:
+      return key
+  }
+})
+
+jest.mock('decentraland-dapps/dist/modules/translation/utils', () => ({
+  t: mockT
 }))
 
 describe('ReferralJourney', () => {
@@ -30,6 +61,7 @@ describe('ReferralJourney', () => {
   beforeEach(() => {
     invitedUsersAccepted = 0
     jest.useFakeTimers()
+    jest.clearAllMocks()
   })
 
   afterEach(() => {
@@ -45,14 +77,15 @@ describe('ReferralJourney', () => {
 
     it('should display the title and subtitle', () => {
       const { getByRole, getByText } = renderedComponent
-      expect(getByRole('heading', { name: /reward journey/i })).toBeInTheDocument()
-      expect(getByText(/invites accepted/i)).toBeInTheDocument()
+      expect(getByRole('heading', { name: mockTranslations.title })).toBeInTheDocument()
+      expect(getByText(`🤍 ${invitedUsersAccepted} ${mockTranslations.invitesAccepted}`)).toBeInTheDocument()
     })
 
     it('should display all reward cards', () => {
-      const { getByText } = renderedComponent
-      tiers.forEach(tier => {
-        expect(getByText(tier.description)).toBeInTheDocument()
+      const descriptions = screen.getAllByTestId(REFERRAL_REWARD_DESCRIPTION_TEST_ID)
+      expect(descriptions).toHaveLength(tiers.length)
+      descriptions.forEach(description => {
+        expect(description).toHaveTextContent(mockTranslations.unlock)
       })
     })
   })
@@ -63,10 +96,9 @@ describe('ReferralJourney', () => {
       renderedComponent = renderReferralJourney(invitedUsersAccepted)
     })
 
-    it('should mark completed steps with check icons', () => {
-      const { getAllByTestId } = renderedComponent
-      const checks = getAllByTestId('CheckRoundedIcon')
-      expect(checks.length).toBe(tiers.filter(tier => invitedUsersAccepted >= tier.invitesAccepted).length)
+    it('should display the correct number of invites accepted', () => {
+      const { getByText } = renderedComponent
+      expect(getByText(`🤍 ${invitedUsersAccepted} ${mockTranslations.invitesAccepted}`)).toBeInTheDocument()
     })
   })
 
@@ -76,20 +108,26 @@ describe('ReferralJourney', () => {
       renderedComponent = renderReferralJourney(invitedUsersAccepted)
     })
 
-    it('should display the reward modal after animation', () => {
+    it('should display the reward modal after animation', async () => {
       act(() => {
-        jest.advanceTimersByTime(1000)
+        jest.advanceTimersByTime(ANIMATION_DURATION)
       })
-      expect(screen.getByTestId('reward-modal')).toBeInTheDocument()
+
+      const modal = await screen.findByTestId(REFERRAL_REWARD_REACHED_TEST_ID.modal)
+      expect(modal).toBeInTheDocument()
+      expect(screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.title)).toHaveTextContent(mockTranslations.newItemUnlocked)
     })
 
-    describe('and clicking the close button', () => {
-      it('should hide the reward modal', () => {
+    describe('and clicking the modal', () => {
+      it('should hide the reward modal', async () => {
         act(() => {
-          jest.advanceTimersByTime(1000)
+          jest.advanceTimersByTime(ANIMATION_DURATION)
         })
-        fireEvent.click(screen.getByText('Close'))
-        expect(screen.queryByTestId('reward-modal')).not.toBeInTheDocument()
+
+        const modal = await screen.findByTestId(REFERRAL_REWARD_REACHED_TEST_ID.modal)
+        fireEvent.click(modal)
+
+        expect(modal).not.toBeVisible()
       })
     })
   })
@@ -100,10 +138,13 @@ describe('ReferralJourney', () => {
     })
 
     it('should have a heading and all reward descriptions visible', () => {
-      const { getByRole, getByText } = renderedComponent
-      expect(getByRole('heading', { name: /reward journey/i })).toBeInTheDocument()
-      tiers.forEach(tier => {
-        expect(getByText(tier.description)).toBeInTheDocument()
+      const { getByRole } = renderedComponent
+      expect(getByRole('heading', { name: mockTranslations.title })).toBeInTheDocument()
+
+      const descriptions = screen.getAllByTestId(REFERRAL_REWARD_DESCRIPTION_TEST_ID)
+      expect(descriptions).toHaveLength(tiers.length)
+      descriptions.forEach(description => {
+        expect(description).toHaveTextContent(mockTranslations.unlock)
       })
     })
   })
