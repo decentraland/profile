@@ -212,6 +212,10 @@
   "referral_reward_reached": {
     "reward": "奖励",
     "new_item_unlocked": "新物品解锁",
-    "friends_joined": "{count} 朋友加入"
+    "invites_accepted": "{count} 朋友加入"
+  },
+  "referral_journey": {
+    "title": "你的奖励旅程",
+    "invites_accepted": "{count} 邀请接受"
   }
 }

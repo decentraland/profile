@@ -31,7 +31,7 @@ const ReferralRewardReached = React.memo((props: ReferralRewardReachedProps) => 
           <PreTitle data-testid={REFERRAL_REWARD_REACHED_TEST_ID.preTitle}>{t('referral_reward_reached.reward')}</PreTitle>
           <Title data-testid={REFERRAL_REWARD_REACHED_TEST_ID.title}>{t('referral_reward_reached.new_item_unlocked')}</Title>
           <Subtitle data-testid={REFERRAL_REWARD_REACHED_TEST_ID.subtitle}>
-            {t('referral_reward_reached.friends_joined', { count: tier })}
+            {t('referral_reward_reached.invites_accepted', { count: tier })}
           </Subtitle>
         </RewardWrapper>
         <GradientBorder rarity={rarity} data-testid={REFERRAL_REWARD_REACHED_TEST_ID.gradientBorder}>

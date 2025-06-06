@@ -212,6 +212,10 @@
   "referral_reward_reached": {
     "reward": "Reward",
     "new_item_unlocked": "NEW ITEM UNLOCKED",
-    "friends_joined": "{count} Friends Joined"
+    "invites_accepted": "{count} Invites accepted"
+  },
+  "referral_journey": {
+    "title": "Your Reward Journey",
+    "invites_accepted": "{count} Invites accepted"
   }
 }

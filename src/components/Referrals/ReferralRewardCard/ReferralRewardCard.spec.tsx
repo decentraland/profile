@@ -24,7 +24,7 @@ describe('ReferralRewardCard', () => {
 
   beforeEach(() => {
     props = {
-      tier: 1,
+      invitesAccepted: 1,
       rarity: Rarity.COMMON,
       completed: false,
       image: 'test-image.png',
