@@ -28,7 +28,8 @@ describe('ReferralRewardCard', () => {
       rarity: Rarity.COMMON,
       completed: false,
       image: 'test-image.png',
-      claim: false
+      claim: false,
+      description: 'Test reward description'
     }
   })
 
