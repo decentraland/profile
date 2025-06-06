@@ -31,22 +31,29 @@ jest.mock('decentraland-dapps/dist/modules/translation/utils', () => ({
 }))
 
 describe('ReferralRewardReached', () => {
-  const mockReward: ReferralTier = {
-    image: 'test-image.png',
-    rarity: Rarity.LEGENDARY,
-    description: 'Test Reward Description',
-    invitesAccepted: 5,
-    completed: true
-  }
-
-  const mockProps = {
-    reward: mockReward,
-    open: true,
-    onClick: jest.fn()
+  let mockReward: ReferralTier
+  let mockProps: {
+    reward: ReferralTier
+    open: boolean
+    onClick: jest.Mock
   }
 
   beforeEach(() => {
     jest.clearAllMocks()
+
+    mockReward = {
+      image: 'test-image.png',
+      rarity: Rarity.LEGENDARY,
+      description: 'Test Reward Description',
+      invitesAccepted: 5,
+      completed: true
+    }
+
+    mockProps = {
+      reward: mockReward,
+      open: true,
+      onClick: jest.fn()
+    }
   })
 
   afterEach(() => {
