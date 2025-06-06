@@ -43,10 +43,10 @@ describe('ReferralRewardCard', () => {
       expect(getByTestId(REFERRAL_REWARD_CARD_TEST_ID)).toBeInTheDocument()
     })
 
-    it('should display the given prop tier', () => {
+    it('should display the given prop invitesAccepted', () => {
       const { getByTestId } = renderedComponent
       const tierElement = getByTestId(REFERRAL_REWARD_TIER_TEST_ID)
-      expect(tierElement).toHaveTextContent(t('referral_reward_card.tier', { count: props.tier }))
+      expect(tierElement).toHaveTextContent(t('referral_reward_card.tier', { count: props.invitesAccepted }))
     })
 
     it('should display the image with the translated alt text', () => {
