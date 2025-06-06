@@ -208,5 +208,10 @@
     "claim": "宣称",
     "tier": "{count} 朋友",
     "image_alt": "奖励图片"
+  },
+  "referral_reward_reached": {
+    "reward": "奖励",
+    "new_item_unlocked": "新物品解锁",
+    "friends_joined": "{count} 朋友加入"
   }
 }

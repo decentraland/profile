@@ -5,6 +5,7 @@ type ReferralTier = {
   completed: boolean
   image: string
   rarity: Rarity | 'SWAG'
+  description: string
   claim?: boolean
 }
 
