@@ -20,7 +20,7 @@ import { ReferralRewardReachedProps } from './ReferralRewardReached.types'
 
 const ReferralRewardReached = React.memo((props: ReferralRewardReachedProps) => {
   const { reward, open, onClick } = props
-  const { image, rarity, description, tier } = reward
+  const { image, rarity, description, invitesAccepted } = reward
   const backgroundImg = getBackgroundImage(rarity)
 
   return (
@@ -31,7 +31,7 @@ const ReferralRewardReached = React.memo((props: ReferralRewardReachedProps) => 
           <PreTitle data-testid={REFERRAL_REWARD_REACHED_TEST_ID.preTitle}>{t('referral_reward_reached.reward')}</PreTitle>
           <Title data-testid={REFERRAL_REWARD_REACHED_TEST_ID.title}>{t('referral_reward_reached.new_item_unlocked')}</Title>
           <Subtitle data-testid={REFERRAL_REWARD_REACHED_TEST_ID.subtitle}>
-            {t('referral_reward_reached.invites_accepted', { count: tier })}
+            {t('referral_reward_reached.invites_accepted', { count: invitesAccepted })}
           </Subtitle>
         </RewardWrapper>
         <GradientBorder rarity={rarity} data-testid={REFERRAL_REWARD_REACHED_TEST_ID.gradientBorder}>
