@@ -194,7 +194,6 @@
     "step_1": "Invite friends to hang out in-world by sharing your referral link.",
     "step_2": "Your friends download Decentraland and jump in.",
     "step_3": "You earn exclusive rewards for helping grow our community!",
-    "your_referral_link": "Your Referral Link",
     "share": "SHARE",
     "copy_link": "Copy Link",
     "copied_to_clipboard": "Link copied successfully",
@@ -212,6 +211,10 @@
   "referral_reward_reached": {
     "reward": "Reward",
     "new_item_unlocked": "NEW ITEM UNLOCKED",
-    "friends_joined": "{count} Friends Joined"
+    "invites_accepted": "{count} Invites accepted"
+  },
+  "referral_journey": {
+    "title": "Your Reward Journey",
+    "invites_accepted": "{count} Invites accepted"
   }
 }

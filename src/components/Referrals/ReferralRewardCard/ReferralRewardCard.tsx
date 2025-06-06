@@ -26,13 +26,13 @@ import {
 
 // eslint-disable-next-line import/no-named-as-default-member
 const ReferralRewardCard = React.memo((props: ReferralTier) => {
-  const { tier, rarity, completed, image, claim } = props
+  const { invitesAccepted, rarity, completed, image, claim } = props
 
   return (
     <GradientBorder completed={completed} data-testid={REFERRAL_REWARD_CARD_TEST_ID}>
       <CardContainer completed={completed}>
         <RewardLabel variant="subtitle1" data-testid={REFERRAL_REWARD_TIER_TEST_ID}>
-          {t('referral_reward_card.tier', { count: tier })}
+          {t('referral_reward_card.tier', { count: invitesAccepted })}
         </RewardLabel>
         <RewardImageContainer>
           <RewardImage src={image} alt={t('referral_reward_card.image_alt')} data-testid={REFERRAL_REWARD_IMAGE_TEST_ID} />

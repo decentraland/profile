@@ -40,8 +40,8 @@ const RewardImageContainer = styled(Box)({
 })
 
 const RewardImage = styled('img')({
-  width: '64px',
-  height: '64px',
+  width: '90px',
+  height: '90px',
   objectFit: 'contain',
   marginBottom: '12px'
 })
@@ -63,8 +63,24 @@ const RewardRarity = styled(Typography)<{ rarity: Rarity | 'SWAG' }>(({ rarity }
       break
   }
 
+  let color = Rarity.getColor(rarity as Rarity)
+
+  switch (rarity) {
+    case 'SWAG':
+      color = '#fff'
+      break
+    case Rarity.EPIC:
+      // TODO: we should expose light colors into @dcl/schemas
+      color = Rarity.getGradient(rarity as Rarity)[0]
+      break
+    case Rarity.LEGENDARY:
+      // TODO: we need to add this as light color into @dcl/schemas
+      color = '#E8B9FF'
+      break
+  }
+
   return {
-    color: rarity === 'SWAG' ? '#fff' : Rarity.getColor(rarity),
+    color,
     borderRadius: '8px',
     padding: '2px 8px',
     fontWeight: 500,

@@ -1,7 +1,7 @@
 import { Rarity } from '@dcl/schemas'
 
 type ReferralTier = {
-  tier: number
+  invitesAccepted: number
   completed: boolean
   image: string
   rarity: Rarity | 'SWAG'

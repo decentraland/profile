@@ -9,11 +9,11 @@ import { ReferralRewardReached } from './ReferralRewardReached'
 const mockTranslations = {
   reward: 'Reward',
   newItemUnlocked: 'NEW ITEM UNLOCKED',
-  friendsJoined: '5 Friends Joined'
+  friendsJoined: '5 Invites accepted'
 }
 
 const mockT = jest.fn((key, values) => {
-  if (key === 'referral_reward_reached.friends_joined' && values?.count) {
+  if (key === 'referral_reward_reached.invites_accepted' && values?.count) {
     return mockTranslations.friendsJoined
   }
   switch (key) {
@@ -45,7 +45,7 @@ describe('ReferralRewardReached', () => {
       image: 'test-image.png',
       rarity: Rarity.LEGENDARY,
       description: 'Test Reward Description',
-      tier: 5,
+      invitesAccepted: 5,
       completed: true
     }
 
