@@ -35,7 +35,6 @@ import {
   StepText,
   StepImage,
   ReferralContainer,
-  ReferralTitle,
   ReferralInput,
   ReferralButton,
   EnvelopeImage,
@@ -148,7 +147,6 @@ const ReferralHeroSection = React.memo((props: Props) => {
         </StepsContainer>
         {!isLoading && (
           <ReferralContainer data-testid={REFERRAL_CONTAINER_TEST_ID}>
-            <ReferralTitle variant="subtitle1">{t('referral_hero_section.your_referral_link')}</ReferralTitle>
             <Box display="flex" width="100%">
               <Tooltip
                 data-testid={REFERRAL_TOOLTIP_TEST_ID}

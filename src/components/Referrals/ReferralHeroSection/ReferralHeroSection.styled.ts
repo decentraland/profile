@@ -146,13 +146,6 @@ const ReferralContainer = styled(Box)({
   maxWidth: '520px',
   gap: '12px'
 })
-
-const ReferralTitle = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  marginBottom: '8px',
-  fontWeight: 500
-}))
-
 const ReferralInput = styled(TextField)(({ theme }) => ({
   width: '100%',
   borderRadius: '8px',
@@ -190,7 +183,6 @@ export {
   StepText,
   StepImage,
   ReferralContainer,
-  ReferralTitle,
   ReferralInput,
   ReferralButton
 }

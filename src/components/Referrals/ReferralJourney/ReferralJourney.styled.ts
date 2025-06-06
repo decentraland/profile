@@ -110,7 +110,7 @@ const JourneyStepLine = styled(Box)<{
     flex: '1',
     height: '12px',
     borderRadius: '52px',
-    background: 'gray',
+    background: 'rgba(255, 255, 255, 0.1)',
     position: 'absolute',
     top: '20px',
     left: '0',
