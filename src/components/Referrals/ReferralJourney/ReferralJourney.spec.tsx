@@ -3,7 +3,7 @@ import { screen, fireEvent, act } from '@testing-library/react'
 import { renderWithProviders } from '../../../tests/tests'
 import { REFERRAL_REWARD_DESCRIPTION_TEST_ID } from '../ReferralRewardCard/constants'
 import { REFERRAL_REWARD_REACHED_TEST_ID } from '../ReferralRewardReached/constants'
-import { tiers } from './constants'
+import { TIERS } from './constants'
 import { ReferralJourney } from './ReferralJourney'
 import { ANIMATION_DURATION } from './utils'
 
@@ -83,7 +83,7 @@ describe('ReferralJourney', () => {
 
     it('should display all reward cards', () => {
       const descriptions = screen.getAllByTestId(REFERRAL_REWARD_DESCRIPTION_TEST_ID)
-      expect(descriptions).toHaveLength(tiers.length)
+      expect(descriptions).toHaveLength(TIERS.length)
       descriptions.forEach(description => {
         expect(description).toHaveTextContent(mockTranslations.unlock)
       })
@@ -104,7 +104,7 @@ describe('ReferralJourney', () => {
 
   describe('when completing a tier', () => {
     beforeEach(() => {
-      invitedUsersAccepted = tiers[1].invitesAccepted
+      invitedUsersAccepted = TIERS[1].invitesAccepted
       renderedComponent = renderReferralJourney(invitedUsersAccepted)
     })
 
@@ -142,7 +142,7 @@ describe('ReferralJourney', () => {
       expect(getByRole('heading', { name: mockTranslations.title })).toBeInTheDocument()
 
       const descriptions = screen.getAllByTestId(REFERRAL_REWARD_DESCRIPTION_TEST_ID)
-      expect(descriptions).toHaveLength(tiers.length)
+      expect(descriptions).toHaveLength(TIERS.length)
       descriptions.forEach(description => {
         expect(description).toHaveTextContent(mockTranslations.unlock)
       })
