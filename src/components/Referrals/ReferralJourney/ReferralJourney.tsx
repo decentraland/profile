@@ -4,7 +4,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Typography } from 'decentraland-ui2'
 import { ReferralRewardCard } from '../ReferralRewardCard'
 import { ReferralRewardReached } from '../ReferralRewardReached'
-import { tiers } from './constants'
+import { TIERS } from './constants'
 import {
   SectionContainer,
   JourneyStep,
@@ -23,15 +23,15 @@ import { AnimationPhaseType, ReferralJourneyProps } from './ReferralJourney.type
 
 // eslint-disable-next-line import/no-named-as-default-member
 const ReferralJourney = React.memo(({ invitedUsersAccepted }: ReferralJourneyProps) => {
-  const [animatedStep, setAnimatedStep] = useState(tiers.filter(tier => tier.completed).length)
+  const [animatedStep, setAnimatedStep] = useState(TIERS.filter(tier => tier.completed).length)
   const [open, setOpen] = useState(false)
-  const [journeyTiers, setJourneyTiers] = useState(tiers)
+  const [journeyTiers, setJourneyTiers] = useState(TIERS)
   const [animationPhase, setAnimationPhase] = useState<AnimationPhaseType>(AnimationPhaseType.WAITING_NEXT_TIER)
-  const totalSteps = tiers.length
+  const totalSteps = TIERS.length
   const journeyStepRefs = useRef<(Element | null)[]>([])
 
   useEffect(() => {
-    const currentTierIndex = tiers.findIndex(tier => invitedUsersAccepted < tier.invitesAccepted)
+    const currentTierIndex = TIERS.findIndex(tier => invitedUsersAccepted < tier.invitesAccepted)
     const maxTierIndex = currentTierIndex === -1 ? totalSteps : currentTierIndex
 
     if (animatedStep >= maxTierIndex) return
@@ -71,7 +71,7 @@ const ReferralJourney = React.memo(({ invitedUsersAccepted }: ReferralJourneyPro
     }
 
     setJourneyTiers(
-      tiers.map((tier, i) => ({
+      TIERS.map((tier, i) => ({
         ...tier,
         completed: i < animatedStep
       }))

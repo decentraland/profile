@@ -4,7 +4,7 @@ import SneakersMythic from '../../../assets/images/rewards/sneakers-mythic.png'
 import Sneakers from '../../../assets/images/rewards/sneakers.png'
 import { ReferralTier } from '../../../modules/referrals/types'
 
-const tiers = [
+const TIERS = [
   { invitesAccepted: 5, rarity: Rarity.EPIC, completed: false, image: Sneakers, description: 'Bottom Wearable' },
   { invitesAccepted: 10, rarity: Rarity.EPIC, completed: false, image: Sneakers, description: 'Top Wearable + Bronze Badge' },
   { invitesAccepted: 20, rarity: Rarity.LEGENDARY, completed: false, image: Sneakers, description: 'Shoes Wearable' },
@@ -29,4 +29,4 @@ const tiers = [
   }
 ] as ReferralTier[]
 
-export { tiers }
+export { TIERS }
