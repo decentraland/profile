@@ -1,4 +1,4 @@
-import { tiers } from './constants'
+import { TIERS } from './constants'
 
 const ANIMATION_DURATION = 800
 
@@ -8,23 +8,23 @@ const OFFSET = 5
 const calculateProgressPercentage = (totalSteps: number, invitedUsersAccepted: number): number => {
   if (totalSteps <= 0) return 0
 
-  if (invitedUsersAccepted <= tiers[0].invitesAccepted) {
+  if (invitedUsersAccepted <= TIERS[0].invitesAccepted) {
     return invitedUsersAccepted
   }
 
-  if (invitedUsersAccepted >= tiers[tiers.length - 1].invitesAccepted) {
+  if (invitedUsersAccepted >= TIERS[TIERS.length - 1].invitesAccepted) {
     return totalSteps * SEGMENT_PERCENTAGE
   }
 
   let prevTierIndex = 0
-  for (let i = 0; i < tiers.length; i++) {
-    if (invitedUsersAccepted < tiers[i].invitesAccepted) {
+  for (let i = 0; i < TIERS.length; i++) {
+    if (invitedUsersAccepted < TIERS[i].invitesAccepted) {
       prevTierIndex = i - 1
       break
     }
   }
-  const prevTier = tiers[prevTierIndex]
-  const nextTier = tiers[prevTierIndex + 1]
+  const prevTier = TIERS[prevTierIndex]
+  const nextTier = TIERS[prevTierIndex + 1]
   const invitesNeeded = nextTier.invitesAccepted - prevTier.invitesAccepted
   const invitesProgress = invitedUsersAccepted - prevTier.invitesAccepted
   const progressPercentage = (invitesProgress / invitesNeeded) * SEGMENT_PERCENTAGE
