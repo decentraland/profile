@@ -194,7 +194,6 @@
     "step_1": "Invita a tus amigos a unirse a Decentraland compartiendo tu enlace de invitación.",
     "step_2": "Tus amigos descargan Decentraland y se unen al metaverso.",
     "step_3": "Ganas recompensas exclusivas por ayudar a crecer nuestra comunidad!",
-    "your_referral_link": "Tu enlace de invitación",
     "share": "COMPARTIR",
     "copy_link": "Copiar enlace",
     "copied_to_clipboard": "Enlace copiado exitosamente",
@@ -212,6 +211,10 @@
   "referral_reward_reached": {
     "reward": "Recompensa",
     "new_item_unlocked": "NUEVO ITEM DESBLOQUEADO",
-    "friends_joined": "{count} Amigos se han unido"
+    "invites_accepted": "{count} Amigos se han unido"
+  },
+  "referral_journey": {
+    "title": "Tu viaje de recompensas",
+    "invites_accepted": "{count} Invitaciones aceptadas"
   }
 }
