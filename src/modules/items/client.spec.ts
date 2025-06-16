@@ -25,7 +25,7 @@ describe.each<[string, Options, string]>([
   ['isWearableSmart', { isWearableSmart: true }, 'isWearableSmart=true']
 ])('when requesting items with the %s option', (type, options, queryString) => {
   beforeEach(() => {
-    scope.get(`/v1/catalog?${queryString}`).reply(200, {
+    scope.get(`/v2/catalog?${queryString}`).reply(200, {
       data: items
     })
   })
@@ -42,7 +42,7 @@ describe('when requesting the items with a category', () => {
 
   describe('and the category is wearables', () => {
     beforeEach(() => {
-      scope.get('/v1/catalog?category=wearable').reply(200, {
+      scope.get('/v2/catalog?category=wearable').reply(200, {
         data: items
       })
       options = { category: MainCategory.WEARABLE }
@@ -57,7 +57,7 @@ describe('when requesting the items with a category', () => {
 
   describe('and the category is a type of wearable', () => {
     beforeEach(() => {
-      scope.get('/v1/catalog?category=wearable&wearableCategory=head').reply(200, {
+      scope.get('/v2/catalog?category=wearable&wearableCategory=head').reply(200, {
         data: items
       })
       options = { category: WearableCategory.HEAD }
@@ -72,7 +72,7 @@ describe('when requesting the items with a category', () => {
 
   describe('and the category is emotes', () => {
     beforeEach(() => {
-      scope.get('/v1/catalog?category=emote').reply(200, {
+      scope.get('/v2/catalog?category=emote').reply(200, {
         data: items
       })
       options = { category: MainCategory.EMOTE }
@@ -87,7 +87,7 @@ describe('when requesting the items with a category', () => {
 
   describe('and the category is a type of emotes', () => {
     beforeEach(() => {
-      scope.get('/v1/catalog?category=emote&emoteCategory=fun').reply(200, {
+      scope.get('/v2/catalog?category=emote&emoteCategory=fun').reply(200, {
         data: items
       })
       options = { category: EmoteCategory.FUN }
@@ -111,7 +111,7 @@ describe('when requesting the items with a status', () => {
     [ItemSaleStatus.ONLY_MINTING, 'onlyMinting=true']
   ])('and the status is %s', (status, query) => {
     beforeEach(() => {
-      scope.get(`/v1/catalog?${query}`).reply(200, {
+      scope.get(`/v2/catalog?${query}`).reply(200, {
         data: items
       })
       options = { status }
@@ -131,7 +131,7 @@ describe('when requesting the items with "isWearableSmart"', () => {
 
   beforeEach(() => {
     isWearableSmart = true
-    scope.get(`/v1/catalog?isWearableSmart=${isWearableSmart}`).reply(200, {
+    scope.get(`/v2/catalog?isWearableSmart=${isWearableSmart}`).reply(200, {
       data: items
     })
     options = { isWearableSmart }
