@@ -23,6 +23,7 @@ import { worldSagas } from './world/sagas'
 
 const analyticsSaga = createAnalyticsSaga()
 export const NFT_SERVER_URL = config.get('NFT_SERVER_URL')
+export const MARKETPLACE_SERVER_URL = config.get('MARKETPLACE_SERVER_URL')
 
 export function* rootSaga(
   worldsContentClient: ContentClient,
@@ -45,7 +46,7 @@ export function* rootSaga(
     creditsSaga({ creditsClient }),
     identitySaga(),
     modalSagas(),
-    itemSagas(new ItemsClient(NFT_SERVER_URL)),
+    itemSagas(new ItemsClient(MARKETPLACE_SERVER_URL)),
     socialSagas(),
     createProfileSaga(marketplaceGraphClient, peerApi)(),
     featuresSaga({

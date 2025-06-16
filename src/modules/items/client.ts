@@ -12,7 +12,7 @@ export class ItemsClient {
   async get(options: Options = {}): Promise<{ data: Item[]; total: number }> {
     const queryParams = this._buildItemsQueryString(options)
     const url = new URL(this.url)
-    url.pathname = '/v1/catalog'
+    url.pathname = '/v2/catalog'
     url.search = queryParams.toString()
     const response = await fetch(url.toString())
     return response.json()
