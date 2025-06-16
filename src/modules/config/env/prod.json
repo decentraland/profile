@@ -12,6 +12,7 @@
   "PROFILE_URL": "https://decentraland.org/profile",
   "MARKETPLACE_URL": "https://decentraland.org/marketplace",
   "NFT_SERVER_URL": "https://nft-api.decentraland.org/v1",
+  "MARKETPLACE_SERVER_URL": "https://marketplace-api.decentraland.org/v1",
   "CREDITS_SERVER_URL": "https://credits.decentraland.org",
   "SEGMENT_API_KEY": "AGaiQumreF5ubucC71RoGA1rkDAnVocy",
   "ENVIRONMENT": "production",
