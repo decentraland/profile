@@ -25,7 +25,9 @@ import {
   REFERRAL_SHARE_MENU_TEST_ID,
   REFERRAL_SHARE_X_OPTION_TEST_ID,
   REFERRAL_STEPS_CONTAINER_TEST_ID,
-  REFERRAL_TOOLTIP_TEST_ID
+  REFERRAL_TOOLTIP_TEST_ID,
+  REFERRAL_ARROW_DOWN_ICON_TEST_ID,
+  REFERRAL_ARROW_UP_ICON_TEST_ID
 } from './constants'
 import {
   SectionContainer,
@@ -208,7 +210,12 @@ const ReferralHeroSection = React.memo((props: Props) => {
             setShowSteps(prev => !prev)
           }}
         >
-          {t('referral_hero_section.how_it_works')} {showSteps ? <KeyboardArrowUpRoundedIcon /> : <KeyboardArrowDownRoundedIcon />}
+          {t('referral_hero_section.how_it_works')}{' '}
+          {showSteps ? (
+            <KeyboardArrowUpRoundedIcon data-testid={REFERRAL_ARROW_UP_ICON_TEST_ID} />
+          ) : (
+            <KeyboardArrowDownRoundedIcon data-testid={REFERRAL_ARROW_DOWN_ICON_TEST_ID} />
+          )}
         </HowItWorksButton>
         <StepsContainer data-testid={REFERRAL_STEPS_CONTAINER_TEST_ID} showSteps={showSteps}>
           <Step>
