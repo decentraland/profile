@@ -5,7 +5,7 @@ import Sneakers from '../../../assets/images/rewards/sneakers.png'
 import { ReferralTier } from '../../../modules/referrals/types'
 
 const TIERS = [
-  { invitesAccepted: 5, rarity: Rarity.EPIC, completed: false, image: Sneakers, description: 'Bottom Wearable' },
+  { invitesAccepted: 5, rarity: Rarity.EPIC, completed: false, image: Sneakers, description: 'Bottom Wearable + Starter Badge' },
   { invitesAccepted: 10, rarity: Rarity.EPIC, completed: false, image: Sneakers, description: 'Top Wearable + Bronze Badge' },
   { invitesAccepted: 20, rarity: Rarity.LEGENDARY, completed: false, image: Sneakers, description: 'Shoes Wearable' },
   { invitesAccepted: 25, rarity: Rarity.LEGENDARY, completed: false, image: Sneakers, description: 'Handwear + Silver Badge' },

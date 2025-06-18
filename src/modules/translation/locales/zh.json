@@ -191,6 +191,9 @@
   "referral_hero_section": {
     "title": "Decentraland 更好玩",
     "subtitle": "邀请你的朋友，获得奖励！",
+    "tooltip_text": "邀请者必须是 Decentraland 的新用户，并且必须进入元宇宙才能获得奖励。 查看 ",
+    "tooltip_link_label": "条款和条件",
+    "how_it_works": "如何运作",
     "step_1": "邀请你的朋友加入 Decentraland，分享你的邀请链接。",
     "step_2": "你的朋友下载 Decentraland，加入元宇宙。",
     "step_3": "你帮助我们扩大社区，获得独家奖励！",

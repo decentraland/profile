@@ -191,9 +191,12 @@
   "referral_hero_section": {
     "title": "Decentraland is Better With Friends",
     "subtitle": "Invite yours and get rewards!",
+    "tooltip_text": "Invitees must be new to Decentraland and must jump in-world to count toward reward goals. See ",
+    "tooltip_link_label": "Terms & Conditions",
     "step_1": "Invite friends to hang out in-world by sharing your referral link.",
     "step_2": "Your friends download Decentraland and jump in.",
     "step_3": "You earn exclusive rewards for helping grow our community!",
+    "how_it_works": "How it works",
     "share": "SHARE",
     "copy_link": "Copy Link",
     "copied_to_clipboard": "Link copied successfully",

@@ -18,7 +18,7 @@
   "dependencies": {
     "@dcl/crypto": "^3.4.3",
     "@dcl/hooks": "^0.0.3",
-    "@dcl/schemas": "^15.8.1",
+    "@dcl/schemas": "^16.12.0",
     "@dcl/single-sign-on-client": "^0.1.0",
     "@dcl/social-rpc-client": "^1.0.0",
     "@dcl/ui-env": "^1.4.0",

@@ -8,11 +8,14 @@ import { renderWithProviders } from '../../../tests/tests'
 import {
   REFERRAL_CONTAINER_TEST_ID,
   REFERRAL_COPY_OPTION_TEST_ID,
+  REFERRAL_HOW_IT_WORKS_BUTTON_TEST_ID,
   REFERRAL_INPUT_TEST_ID,
   REFERRAL_SHARE_BUTTON_TEST_ID,
   REFERRAL_SHARE_MENU_TEST_ID,
   REFERRAL_SHARE_X_OPTION_TEST_ID,
-  REFERRAL_STEPS_CONTAINER_TEST_ID
+  REFERRAL_STEPS_CONTAINER_TEST_ID,
+  REFERRAL_ARROW_DOWN_ICON_TEST_ID,
+  REFERRAL_ARROW_UP_ICON_TEST_ID
 } from './constants'
 import { ReferralHeroSection } from './ReferralHeroSection'
 import { Props } from './ReferralHeroSection.types'
@@ -54,12 +57,23 @@ describe('ReferralHeroSection', () => {
       expect(getByText(t('referral_hero_section.subtitle'))).toBeInTheDocument()
     })
 
-    it('should display the three steps', () => {
-      const { getByTestId, getByText } = renderReferralHeroSection()
-      expect(getByTestId(REFERRAL_STEPS_CONTAINER_TEST_ID)).toBeInTheDocument()
-      expect(getByText(t('referral_hero_section.step_1'))).toBeInTheDocument()
-      expect(getByText(t('referral_hero_section.step_2'))).toBeInTheDocument()
-      expect(getByText(t('referral_hero_section.step_3'))).toBeInTheDocument()
+    it('should display the steps container with hidden steps initially', () => {
+      const { getByTestId, queryByText } = renderReferralHeroSection()
+      const stepsContainer = getByTestId(REFERRAL_STEPS_CONTAINER_TEST_ID)
+
+      expect(stepsContainer).toBeInTheDocument()
+      expect(stepsContainer).toHaveStyle({ opacity: '0' })
+      expect(stepsContainer).toHaveStyle({ visibility: 'hidden' })
+      expect(stepsContainer).toHaveStyle({ maxHeight: '0px' })
+
+      expect(queryByText(t('referral_hero_section.step_1'))).toBeInTheDocument()
+      expect(queryByText(t('referral_hero_section.step_2'))).toBeInTheDocument()
+      expect(queryByText(t('referral_hero_section.step_3'))).toBeInTheDocument()
+    })
+
+    it('should display the how it works button', () => {
+      const { getByTestId } = renderReferralHeroSection()
+      expect(getByTestId(REFERRAL_HOW_IT_WORKS_BUTTON_TEST_ID)).toBeInTheDocument()
     })
   })
 
@@ -86,6 +100,47 @@ describe('ReferralHeroSection', () => {
     it('should display the referral container', () => {
       const { getByTestId } = renderedComponent
       expect(getByTestId(REFERRAL_CONTAINER_TEST_ID)).toBeInTheDocument()
+    })
+
+    describe('when clicking the how it works button', () => {
+      it('should toggle the steps visibility', () => {
+        const { getByTestId } = renderedComponent
+        const howItWorksButton = getByTestId(REFERRAL_HOW_IT_WORKS_BUTTON_TEST_ID)
+        const stepsContainer = getByTestId(REFERRAL_STEPS_CONTAINER_TEST_ID)
+
+        expect(stepsContainer).toHaveStyle({ opacity: '0' })
+
+        act(() => {
+          fireEvent.click(howItWorksButton)
+        })
+
+        expect(stepsContainer).toHaveStyle({ opacity: '1' })
+
+        act(() => {
+          fireEvent.click(howItWorksButton)
+        })
+
+        expect(stepsContainer).toHaveStyle({ opacity: '0' })
+      })
+
+      it('should change the arrow icon when toggling', () => {
+        const { getByTestId } = renderedComponent
+        const howItWorksButton = getByTestId(REFERRAL_HOW_IT_WORKS_BUTTON_TEST_ID)
+
+        expect(getByTestId(REFERRAL_ARROW_DOWN_ICON_TEST_ID)).toBeInTheDocument()
+
+        act(() => {
+          fireEvent.click(howItWorksButton)
+        })
+
+        expect(getByTestId(REFERRAL_ARROW_UP_ICON_TEST_ID)).toBeInTheDocument()
+
+        act(() => {
+          fireEvent.click(howItWorksButton)
+        })
+
+        expect(getByTestId(REFERRAL_ARROW_DOWN_ICON_TEST_ID)).toBeInTheDocument()
+      })
     })
 
     describe('when clicking the copy button', () => {

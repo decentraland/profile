@@ -1,15 +1,19 @@
-import { Box, Typography, emotionStyled as styled, Button, TextField } from 'decentraland-ui2'
+import { Box, Typography, Link, emotionStyled as styled, Button, TextField } from 'decentraland-ui2'
 
-const SectionContainer = styled(Box)({
-  width: '100%',
-  maxWidth: '1264px',
+const SectionContainer = styled(Box)(({ theme }) => ({
+  width: 'calc(100% - 48px)',
+  margin: '0 auto',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'flex-start',
   padding: '48px 0 0 0',
-  position: 'relative'
-})
+  position: 'relative',
+  borderBottom: '0.5px solid rgba(160, 155, 168, 1)',
+  [theme.breakpoints.down('sm')]: {
+    width: 'calc(100% - 24px)'
+  }
+}))
 
 const EnvelopeImageContainer = styled(Box)({
   width: '120px',
@@ -69,12 +73,43 @@ const Subtitle = styled(Box)({
   }
 })
 
-const StepsContainer = styled(Box)(({ theme }) => ({
+const TooltipLink = styled(Link)({
+  color: '#fff',
+  ['&:hover']: {
+    color: '#fff',
+    textDecoration: 'underline'
+  }
+})
+
+const HowItWorksButton = styled(Button)({
+  marginTop: '24px',
+  marginBottom: '16px',
+  alignItems: 'center',
+  color: '#fff',
+  fontWeight: 500,
+  fontSize: '20px',
+  lineHeight: '160%',
+  letterSpacing: '0px',
+  ['&.MuiButton-sizeMedium.MuiButton-textPrimary:not(.Mui-disabled):not(.Mui-focusVisible):hover']: {
+    background: 'transparent',
+    color: '#fff'
+  }
+})
+
+const StepsContainer = styled(Box)<{ showSteps?: boolean }>(({ theme, showSteps }) => ({
   display: 'flex',
   gap: '24px',
   justifyContent: 'center',
-  marginBottom: '48px',
+  marginBottom: showSteps ? '48px' : '0px',
   width: '100%',
+  maxWidth: '1264px',
+  opacity: showSteps ? 1 : 0,
+  maxHeight: showSteps ? '500px' : '0px',
+  overflow: 'hidden',
+  visibility: showSteps ? 'visible' : 'hidden',
+  transform: showSteps ? 'translateY(0)' : 'translateY(20px)',
+  transition:
+    'opacity 0.5s ease-in-out, transform 0.5s ease-in-out, max-height 0.5s ease-in-out, visibility 0.5s ease-in-out, margin-bottom 0.5s ease-in-out',
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
     alignItems: 'center',
@@ -176,6 +211,8 @@ export {
   HeroWrapper,
   Title,
   Subtitle,
+  TooltipLink,
+  HowItWorksButton,
   StepsContainer,
   Step,
   StepTextContainer,
