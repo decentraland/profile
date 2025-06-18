@@ -2,12 +2,14 @@ import React, { useCallback, useMemo, useState } from 'react'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
+import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded'
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded'
 import XIcon from '@mui/icons-material/X'
 import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { shorten } from 'decentraland-ui2/dist/components/AddressField/utils'
-import { Box, InputAdornment, Menu, MenuItem, Tooltip, useTabletAndBelowMediaQuery } from 'decentraland-ui2'
+import { Box, InputAdornment, Menu, MenuItem, Tooltip, useTabletAndBelowMediaQuery, Typography } from 'decentraland-ui2'
 import LogoWithPointerImageAsset from '../../../assets/images/logo-with-pointer.png'
 import EnvelopeImageAsset from '../../../assets/images/referral-envelope.webp'
 import SportsMedalImageAsset from '../../../assets/images/sports-medal.png'
@@ -40,7 +42,9 @@ import {
   EnvelopeImage,
   EnvelopeShadow,
   HeroWrapper,
-  StepTextContainer
+  StepTextContainer,
+  HowItWorksButton,
+  TooltipLink
 } from './ReferralHeroSection.styled'
 import { Props } from './ReferralHeroSection.types'
 
@@ -54,6 +58,7 @@ const ReferralHeroSection = React.memo((props: Props) => {
   const [anchorMenu, setAnchorMenu] = useState<null | HTMLElement>(null)
   const shareMenuOpen = Boolean(anchorMenu)
   const isTabletOrBelow = useTabletAndBelowMediaQuery()
+  const [showSteps, setShowSteps] = useState(false)
 
   const inviteUrl = useMemo(() => {
     return `${INVITE_REFERRER_URL}/${profileAddress}`
@@ -118,33 +123,22 @@ const ReferralHeroSection = React.memo((props: Props) => {
         <Title variant="h3">{t('referral_hero_section.title')}</Title>
         <Subtitle>
           {t('referral_hero_section.subtitle')}
-          <Tooltip disableFocusListener title="Some information" placement="right">
+          <Tooltip
+            disableFocusListener
+            title={
+              <Typography color="inherit">
+                {t('referral_hero_section.tooltip_text')}
+                <TooltipLink href="https://decentraland.org/terms-and-conditions" target="_blank">
+                  {t('referral_hero_section.tooltip_link_label')}
+                </TooltipLink>
+                .
+              </Typography>
+            }
+            placement="top"
+          >
             <InfoOutlinedIcon fontSize="small" />
           </Tooltip>
         </Subtitle>
-        <StepsContainer data-testid={REFERRAL_STEPS_CONTAINER_TEST_ID}>
-          <Step>
-            <StepTextContainer>
-              <StepNumber variant="h5">1</StepNumber>
-              <StepText variant="body1">{t('referral_hero_section.step_1')}</StepText>
-            </StepTextContainer>
-            <StepImage src={EnvelopeImageAsset} alt="Step 1" />
-          </Step>
-          <Step>
-            <StepTextContainer>
-              <StepNumber variant="h5">2</StepNumber>
-              <StepText variant="body1">{t('referral_hero_section.step_2')}</StepText>
-            </StepTextContainer>
-            <StepImage src={LogoWithPointerImageAsset} alt="Step 2" />
-          </Step>
-          <Step>
-            <StepTextContainer>
-              <StepNumber variant="h5">3</StepNumber>
-              <StepText variant="body1">{t('referral_hero_section.step_3')}</StepText>
-            </StepTextContainer>
-            <StepImage src={SportsMedalImageAsset} alt="Step 3" />
-          </Step>
-        </StepsContainer>
         {!isLoading && (
           <ReferralContainer data-testid={REFERRAL_CONTAINER_TEST_ID}>
             <Box display="flex" width="100%">
@@ -207,6 +201,36 @@ const ReferralHeroSection = React.memo((props: Props) => {
             </Box>
           </ReferralContainer>
         )}
+        <HowItWorksButton
+          onClick={() => {
+            setShowSteps(prev => !prev)
+          }}
+        >
+          {t('referral_hero_section.how_it_works')} {showSteps ? <KeyboardArrowUpRoundedIcon /> : <KeyboardArrowDownRoundedIcon />}
+        </HowItWorksButton>
+        <StepsContainer data-testid={REFERRAL_STEPS_CONTAINER_TEST_ID} showSteps={showSteps}>
+          <Step>
+            <StepTextContainer>
+              <StepNumber variant="h5">1</StepNumber>
+              <StepText variant="body1">{t('referral_hero_section.step_1')}</StepText>
+            </StepTextContainer>
+            <StepImage src={EnvelopeImageAsset} alt="Step 1" />
+          </Step>
+          <Step>
+            <StepTextContainer>
+              <StepNumber variant="h5">2</StepNumber>
+              <StepText variant="body1">{t('referral_hero_section.step_2')}</StepText>
+            </StepTextContainer>
+            <StepImage src={LogoWithPointerImageAsset} alt="Step 2" />
+          </Step>
+          <Step>
+            <StepTextContainer>
+              <StepNumber variant="h5">3</StepNumber>
+              <StepText variant="body1">{t('referral_hero_section.step_3')}</StepText>
+            </StepTextContainer>
+            <StepImage src={SportsMedalImageAsset} alt="Step 3" />
+          </Step>
+        </StepsContainer>
       </HeroWrapper>
     </SectionContainer>
   )
