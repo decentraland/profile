@@ -13,7 +13,9 @@ import {
   REFERRAL_SHARE_BUTTON_TEST_ID,
   REFERRAL_SHARE_MENU_TEST_ID,
   REFERRAL_SHARE_X_OPTION_TEST_ID,
-  REFERRAL_STEPS_CONTAINER_TEST_ID
+  REFERRAL_STEPS_CONTAINER_TEST_ID,
+  REFERRAL_ARROW_DOWN_ICON_TEST_ID,
+  REFERRAL_ARROW_UP_ICON_TEST_ID
 } from './constants'
 import { ReferralHeroSection } from './ReferralHeroSection'
 import { Props } from './ReferralHeroSection.types'
@@ -57,7 +59,13 @@ describe('ReferralHeroSection', () => {
 
     it('should display the steps container with hidden steps initially', () => {
       const { getByTestId, queryByText } = renderReferralHeroSection()
-      expect(getByTestId(REFERRAL_STEPS_CONTAINER_TEST_ID)).toBeInTheDocument()
+      const stepsContainer = getByTestId(REFERRAL_STEPS_CONTAINER_TEST_ID)
+
+      expect(stepsContainer).toBeInTheDocument()
+      expect(stepsContainer).toHaveStyle({ opacity: '0' })
+      expect(stepsContainer).toHaveStyle({ visibility: 'hidden' })
+      expect(stepsContainer).toHaveStyle({ maxHeight: '0px' })
+
       expect(queryByText(t('referral_hero_section.step_1'))).toBeInTheDocument()
       expect(queryByText(t('referral_hero_section.step_2'))).toBeInTheDocument()
       expect(queryByText(t('referral_hero_section.step_3'))).toBeInTheDocument()
@@ -119,19 +127,19 @@ describe('ReferralHeroSection', () => {
         const { getByTestId } = renderedComponent
         const howItWorksButton = getByTestId(REFERRAL_HOW_IT_WORKS_BUTTON_TEST_ID)
 
-        expect(getByTestId('KeyboardArrowDownRoundedIcon')).toBeInTheDocument()
+        expect(getByTestId(REFERRAL_ARROW_DOWN_ICON_TEST_ID)).toBeInTheDocument()
 
         act(() => {
           fireEvent.click(howItWorksButton)
         })
 
-        expect(getByTestId('KeyboardArrowUpRoundedIcon')).toBeInTheDocument()
+        expect(getByTestId(REFERRAL_ARROW_UP_ICON_TEST_ID)).toBeInTheDocument()
 
         act(() => {
           fireEvent.click(howItWorksButton)
         })
 
-        expect(getByTestId('KeyboardArrowDownRoundedIcon')).toBeInTheDocument()
+        expect(getByTestId(REFERRAL_ARROW_DOWN_ICON_TEST_ID)).toBeInTheDocument()
       })
     })
 
