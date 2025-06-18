@@ -19,6 +19,7 @@ import { locations } from '../../../modules/routing/locations'
 import {
   REFERRAL_CONTAINER_TEST_ID,
   REFERRAL_COPY_OPTION_TEST_ID,
+  REFERRAL_HOW_IT_WORKS_BUTTON_TEST_ID,
   REFERRAL_INPUT_TEST_ID,
   REFERRAL_SHARE_BUTTON_TEST_ID,
   REFERRAL_SHARE_MENU_TEST_ID,
@@ -202,6 +203,7 @@ const ReferralHeroSection = React.memo((props: Props) => {
           </ReferralContainer>
         )}
         <HowItWorksButton
+          data-testid={REFERRAL_HOW_IT_WORKS_BUTTON_TEST_ID}
           onClick={() => {
             setShowSteps(prev => !prev)
           }}
