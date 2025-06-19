@@ -10,6 +10,7 @@ export type Props = {
   isLoading: boolean
   hasLoadedProfile: boolean
   isAddress: boolean
+  isLoggedIn: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: React.FunctionComponent<ComponentProps<any>>
   router: RouterProps<Params>
@@ -17,9 +18,13 @@ export type Props = {
 }
 type Params = {
   profileAddress?: string
+  tab?: string
 }
 
 export type OwnProps = Pick<Props, 'component' | 'router'>
-export type MapStateProps = Pick<Props, 'profileAddress' | 'addressOrName' | 'error' | 'isLoading' | 'hasLoadedProfile' | 'isAddress'>
+export type MapStateProps = Pick<
+  Props,
+  'profileAddress' | 'addressOrName' | 'error' | 'isLoading' | 'hasLoadedProfile' | 'isAddress' | 'isLoggedIn'
+>
 export type MapDispatch = Dispatch<EnhancedFetchProfileRequestAction>
 export type MapDispatchProps = Pick<Props, 'onFetchProfile'>

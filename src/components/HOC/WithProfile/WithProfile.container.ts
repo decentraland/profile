@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { isAddress } from 'ethers'
 import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
 import type { Profile } from 'decentraland-dapps/dist/modules/profile/types'
+import { isLoggedIn } from '../../../modules/identity/selector'
 import { enhancedFetchProfileRequest } from '../../../modules/profile/action'
 import { getErrorLoadingProfile, getProfileWithName, isLoadingProfile } from '../../../modules/profile/selectors'
 import type { RootState } from '../../../modules/reducer'
@@ -28,7 +29,8 @@ const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps =>
     error: getErrorLoadingProfile(state, addressOrName),
     isLoading: isLoadingProfileFromPath,
     hasLoadedProfile: Boolean(profile),
-    isAddress: isAddressFromPath
+    isAddress: isAddressFromPath,
+    isLoggedIn: isLoggedIn(state)
   }
 }
 

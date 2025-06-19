@@ -10,3 +10,8 @@ type ReferralTier = {
 }
 
 export type { ReferralTier }
+
+export type ReferralProgressResponse = {
+  invitedUsersAccepted: number
+  invitedUsersAcceptedViewed: number
+}

@@ -4,7 +4,18 @@ import { Props } from './WithProfile.types'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const WithProfile = (props: Props) => {
-  const { component: Component, error, isAddress, isLoading, hasLoadedProfile, addressOrName, profileAddress, onFetchProfile } = props
+  const {
+    component: Component,
+    error,
+    isAddress,
+    isLoading,
+    hasLoadedProfile,
+    addressOrName,
+    profileAddress,
+    onFetchProfile,
+    isLoggedIn,
+    router
+  } = props
 
   useEffect(() => {
     if (!isLoading && !hasLoadedProfile && !error) {
@@ -16,7 +27,10 @@ const WithProfile = (props: Props) => {
     return <NotFoundPage />
   }
 
-  return <Component isLoading={isLoading || (!hasLoadedProfile && !error)} profileAddress={profileAddress} />
+  const isReferralTab = router.params.tab === 'referral'
+  const shouldShowLoading = (isLoading || (!hasLoadedProfile && !error)) && !(isReferralTab && isLoggedIn)
+
+  return <Component isLoading={shouldShowLoading} profileAddress={profileAddress} />
 }
 
 export default WithProfile

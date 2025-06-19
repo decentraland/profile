@@ -7,6 +7,10 @@ import { TIERS } from './constants'
 import { ReferralJourney } from './ReferralJourney'
 import { ANIMATION_DURATION } from './utils'
 
+// Mock scrollIntoView
+const mockScrollIntoView = jest.fn()
+Element.prototype.scrollIntoView = mockScrollIntoView
+
 jest.mock('@mui/system/cssVars/useCurrentColorScheme', () => {
   const mockUseCurrentColorScheme = () => ({
     mode: 'light',
@@ -62,6 +66,7 @@ describe('ReferralJourney', () => {
     invitedUsersAccepted = 0
     jest.useFakeTimers()
     jest.clearAllMocks()
+    mockScrollIntoView.mockClear()
   })
 
   afterEach(() => {

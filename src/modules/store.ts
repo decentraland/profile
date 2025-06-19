@@ -11,6 +11,7 @@ import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage
 import { MarketplaceGraphClient } from '../lib/MarketplaceGraphClient'
 import { config } from './config'
 import { createRootReducer } from './reducer'
+import { ReferralsClient } from './referrals/client'
 import { rootSaga } from './saga'
 
 export function initStore() {
@@ -39,8 +40,9 @@ export function initStore() {
   const marketplaceGraphClient = new MarketplaceGraphClient(config.get('MARKETPLACE_GRAPH_URL'))
   const peerApi = new PeerAPI(config.get('PEER_URL'))
   const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'))
+  const referralsClient = new ReferralsClient(config.get('REFERRAL_SERVER_URL'))
 
-  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi, creditsClient)
+  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi, creditsClient, referralsClient)
   loadStorageMiddleware(store)
 
   return store

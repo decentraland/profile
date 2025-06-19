@@ -1,21 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { loadingReducer, LoadingState } from 'decentraland-dapps/dist/modules/loading/reducer'
-import { fetchReferralsRequest } from './actions'
-import { ReferralTier } from './types'
+import { fetchReferralsRequest, fetchReferralsSuccess, fetchReferralsFailure } from './actions'
+import { ReferralProgressResponse } from './types'
 
 export type ReferralsState = {
-  data: {
-    referrals: ReferralTier[]
-    invitedUsersAccepted: number
-    invitedUsersAcceptedViewed: number
-  }
+  data: ReferralProgressResponse
   loading: LoadingState
   error: string | null
 }
 
 export const buildInitialState = (): ReferralsState => ({
   data: {
-    referrals: [],
     invitedUsersAccepted: 0,
     invitedUsersAcceptedViewed: 0
   },
@@ -24,7 +19,18 @@ export const buildInitialState = (): ReferralsState => ({
 })
 
 export const referralsReducer = createReducer<ReferralsState>(buildInitialState(), builder => {
-  builder.addCase(fetchReferralsRequest, (state, action) => {
-    state.loading = loadingReducer(state.loading, action)
-  })
+  builder
+    .addCase(fetchReferralsRequest, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = null
+    })
+    .addCase(fetchReferralsSuccess, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.data.invitedUsersAccepted = action.payload.invitedUsersAccepted
+      state.data.invitedUsersAcceptedViewed = action.payload.invitedUsersAcceptedViewed
+    })
+    .addCase(fetchReferralsFailure, (state, action) => {
+      state.loading = loadingReducer(state.loading, action)
+      state.error = action.payload
+    })
 })
