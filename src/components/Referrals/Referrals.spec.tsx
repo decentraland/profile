@@ -1,6 +1,5 @@
 import React from 'react'
 import { renderWithProviders } from '../../tests/tests'
-import { View } from '../../utils/view'
 import { MOCK_HERO_SECTION_TEST_ID, MOCK_JOURNEY_TEST_ID } from './__mocks__/constants'
 import { REFERRALS_CONTAINER_TEST_ID, REFERRALS_HERO_SECTION_TEST_ID, REFERRALS_JOURNEY_TEST_ID } from './constants'
 import Referrals from './Referrals'
@@ -21,7 +20,6 @@ describe('Referrals', () => {
     defaultProps = {
       isLoading: false,
       error: null,
-      view: View.OWN,
       profileAddress: '0x123',
       invitedUsersAccepted: 0,
       invitedUsersAcceptedViewed: 0,
