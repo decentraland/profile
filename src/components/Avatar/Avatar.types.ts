@@ -5,7 +5,7 @@ export type Props = {
   profile?: Profile
   profileAddress: string
   view: View
-  isUnityWearablePreviewEnabled: boolean
+  isUnityWearablePreviewEnabled?: boolean
 }
 
 export type OwnProps = Pick<Props, 'profileAddress' | 'view'>
