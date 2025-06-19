@@ -6,12 +6,12 @@ import { fetchReferralsRequest, fetchReferralsSuccess, fetchReferralsFailure } f
 import { ReferralsClient } from './client'
 import { ReferralProgressResponse } from './types'
 
-export function* referralsSagas(api: ReferralsClient): Generator {
+export function* referralsSagas(api: ReferralsClient) {
   yield takeEvery(fetchReferralsRequest.type, handleFetchReferrals)
 
-  function* handleFetchReferrals(): Generator {
+  function* handleFetchReferrals() {
     try {
-      const identity = yield select(getCurrentIdentity)
+      const identity: ReturnType<typeof getCurrentIdentity> = yield select(getCurrentIdentity)
       const address: string = yield select(getAddress)
 
       if (!identity || !address) {
