@@ -1,15 +1,12 @@
-import { createSelector } from 'reselect'
 import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
 import { RootState } from '../reducer'
 import { fetchReferralsRequest } from './actions'
 
-const getState = (state: RootState) => state.referrals
+export const getData = (state: RootState) => state.referrals.data
+export const getLoading = (state: RootState) => state.referrals.loading
+export const getError = (state: RootState) => state.referrals.error
 
-export const getData = createSelector([getState], state => state.data)
-export const getLoading = createSelector([getState], state => state.loading)
-export const getError = createSelector([getState], state => state.error)
+export const getInvitedUsersAccepted = (state: RootState) => getData(state).invitedUsersAccepted
+export const getInvitedUsersAcceptedViewed = (state: RootState) => getData(state).invitedUsersAcceptedViewed
 
-export const getInvitedUsersAccepted = createSelector([getData], data => data.invitedUsersAccepted)
-export const getInvitedUsersAcceptedViewed = createSelector([getData], data => data.invitedUsersAcceptedViewed)
-
-export const isLoadingReferrals = createSelector([getLoading], loadingState => isLoadingType(loadingState, fetchReferralsRequest.type))
+export const isLoadingReferrals = (state: RootState) => isLoadingType(getLoading(state), fetchReferralsRequest.type)

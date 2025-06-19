@@ -82,39 +82,6 @@ function MainPage(props: Props) {
     }
   }, [selectedTab])
 
-  if (selectedTab === AccountTabs.REFERRAL && isLoggedIn) {
-    return (
-      <PageLayout>
-        <div className={classNames(styles.MainPage, { [styles.extended]: true })}>
-          <div
-            className={classNames(styles.avatarContainer, {
-              [styles.hidden]: true,
-              [styles.visible]: isMobile
-            })}
-          >
-            <Avatar view={View.OWN} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
-          </div>
-          <div className={classNames(styles.infoContainer)}>
-            <ProfileInformation profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} loggedInAddress={loggedInAddress} />
-            <Divider className={styles.divider} />
-            <div ref={tabsRef}>
-              <Tabs>
-                {tabs.map(tab => {
-                  return (
-                    <Tabs.Tab key={tab.value} active={selectedTab === tab.value} onClick={() => handleTabChange(tab.value)}>
-                      <span className={styles.tab}>{tab.displayValue}</span>
-                    </Tabs.Tab>
-                  )
-                })}
-              </Tabs>
-            </div>
-            <Referrals view={View.OWN} profileAddress={profileAddress ?? loggedInAddress ?? nullAddress} />
-          </div>
-        </div>
-      </PageLayout>
-    )
-  }
-
   return shouldShowLoadingPage ? (
     <LoadingPage />
   ) : (
@@ -149,7 +116,7 @@ function MainPage(props: Props) {
               ) : selectedTab === AccountTabs.CREATIONS ? (
                 <Creations profileAddress={profileAddress ?? nullAddress} view={view} />
               ) : selectedTab === AccountTabs.REFERRAL && profileAddress ? (
-                <Referrals view={view} profileAddress={profileAddress} />
+                <Referrals profileAddress={profileAddress} />
               ) : (
                 <Overview profileAddress={profileAddress ?? nullAddress} />
               )}

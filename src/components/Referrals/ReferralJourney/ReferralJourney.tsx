@@ -33,12 +33,6 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }, [])
-
-  useEffect(() => {
     const currentTierIndex = TIERS.findIndex(tier => invitedUsersAccepted < tier.invitesAccepted)
     const maxTierIndex = currentTierIndex === -1 ? totalSteps : currentTierIndex
 
