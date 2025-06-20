@@ -1,19 +1,13 @@
 import { disableNetConnect } from 'nock'
 import { AuthIdentity } from '@dcl/crypto'
-import { signedFetchFactory } from 'decentraland-crypto-fetch'
 import { createTestIdentity } from '../../tests/createTestIdentity'
 import { ReferralsClient } from './client'
 import { ReferralProgressResponse } from './types'
 
-// Mock signedFetch
-jest.mock('decentraland-crypto-fetch', () => ({
-  signedFetchFactory: jest.fn(() => jest.fn())
-}))
-
 let client: ReferralsClient
 let mockIdentity: AuthIdentity
 let referralProgress: ReferralProgressResponse
-let mockSignedFetch: jest.Mock
+let mockFetch: jest.Mock
 
 disableNetConnect()
 
@@ -29,33 +23,30 @@ beforeEach(() => {
     invitedUsersAcceptedViewed: 3
   }
 
-  // Setup mock signedFetch
-  mockSignedFetch = jest.fn()
-  ;(signedFetchFactory as jest.Mock).mockReturnValue(mockSignedFetch)
+  // Setup mock fetch
+  mockFetch = jest.fn()
+  ;(client as any).fetch = mockFetch
 })
 
 describe('when requesting referral progress', () => {
   beforeEach(() => {
-    mockSignedFetch.mockResolvedValue({
-      ok: true,
-      json: jest.fn().mockResolvedValue(referralProgress)
-    })
+    mockFetch.mockResolvedValue(referralProgress)
   })
 
   it('should request the API and return the referral progress', async () => {
     const response = await client.getReferralProgress(mockIdentity)
 
-    expect(mockSignedFetch).toHaveBeenCalledWith('https://example.com/referral-progress', { identity: mockIdentity })
+    expect(mockFetch).toHaveBeenCalledWith('/v1/referral-progress', {
+      method: 'GET',
+      identity: mockIdentity
+    })
     expect(response).toEqual(referralProgress)
   })
 })
 
 describe('when the API returns an error', () => {
   beforeEach(() => {
-    mockSignedFetch.mockResolvedValue({
-      ok: false,
-      status: 500
-    })
+    mockFetch.mockRejectedValue(new Error('HTTP error! status: 500'))
   })
 
   it('should throw an error with the HTTP status', async () => {
@@ -65,10 +56,7 @@ describe('when the API returns an error', () => {
 
 describe('when the API returns a 404 error', () => {
   beforeEach(() => {
-    mockSignedFetch.mockResolvedValue({
-      ok: false,
-      status: 404
-    })
+    mockFetch.mockRejectedValue(new Error('HTTP error! status: 404'))
   })
 
   it('should throw an error with the HTTP status', async () => {
@@ -78,10 +66,7 @@ describe('when the API returns a 404 error', () => {
 
 describe('when the API returns a 400 error', () => {
   beforeEach(() => {
-    mockSignedFetch.mockResolvedValue({
-      ok: false,
-      status: 400
-    })
+    mockFetch.mockRejectedValue(new Error('HTTP error! status: 400'))
   })
 
   it('should throw an error with the HTTP status', async () => {
@@ -91,10 +76,7 @@ describe('when the API returns a 400 error', () => {
 
 describe('when the API returns a 503 error', () => {
   beforeEach(() => {
-    mockSignedFetch.mockResolvedValue({
-      ok: false,
-      status: 503
-    })
+    mockFetch.mockRejectedValue(new Error('HTTP error! status: 503'))
   })
 
   it('should throw an error with the HTTP status', async () => {

@@ -2,7 +2,6 @@ import { call, select } from 'redux-saga/effects'
 import { expectSaga } from 'redux-saga-test-plan'
 import { throwError } from 'redux-saga-test-plan/providers'
 import { AuthIdentity } from '@dcl/crypto'
-import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { createTestIdentity } from '../../tests/createTestIdentity'
 import { getCurrentIdentity } from '../identity/selector'
 import { fetchReferralsRequest, fetchReferralsSuccess, fetchReferralsFailure } from './actions'
@@ -13,13 +12,11 @@ import { ReferralProgressResponse } from './types'
 describe('referrals sagas', () => {
   let mockApi: ReferralsClient
   let mockIdentity: AuthIdentity
-  let mockAddress: string
   let mockReferralData: ReferralProgressResponse
 
   beforeEach(async () => {
     const testIdentity = await createTestIdentity()
     mockIdentity = testIdentity.authChain
-    mockAddress = testIdentity.realAccount.address
 
     mockApi = new ReferralsClient('mock-url')
     jest.spyOn(mockApi, 'getReferralProgress').mockImplementation(jest.fn())
@@ -35,7 +32,6 @@ describe('referrals sagas', () => {
         return expectSaga(referralsSagas, mockApi)
           .provide([
             [select(getCurrentIdentity), mockIdentity],
-            [select(getAddress), mockAddress],
             [call([mockApi, 'getReferralProgress'], mockIdentity), mockReferralData]
           ])
           .dispatch(fetchReferralsRequest())
@@ -57,7 +53,6 @@ describe('referrals sagas', () => {
         return expectSaga(referralsSagas, mockApi)
           .provide([
             [select(getCurrentIdentity), mockIdentity],
-            [select(getAddress), mockAddress],
             [call([mockApi, 'getReferralProgress'], mockIdentity), zeroData]
           ])
           .dispatch(fetchReferralsRequest())
@@ -79,7 +74,6 @@ describe('referrals sagas', () => {
         return expectSaga(referralsSagas, mockApi)
           .provide([
             [select(getCurrentIdentity), mockIdentity],
-            [select(getAddress), mockAddress],
             [call([mockApi, 'getReferralProgress'], mockIdentity), largeData]
           ])
           .dispatch(fetchReferralsRequest())
@@ -96,38 +90,9 @@ describe('referrals sagas', () => {
     describe('and there is no identity available', () => {
       it('should dispatch failure action with error message', () => {
         return expectSaga(referralsSagas, mockApi)
-          .provide([
-            [select(getCurrentIdentity), null],
-            [select(getAddress), mockAddress]
-          ])
+          .provide([[select(getCurrentIdentity), null]])
           .dispatch(fetchReferralsRequest())
-          .put(fetchReferralsFailure('No identity or address available'))
-          .run()
-      })
-    })
-
-    describe('and there is no address available', () => {
-      it('should dispatch failure action with error message', () => {
-        return expectSaga(referralsSagas, mockApi)
-          .provide([
-            [select(getCurrentIdentity), mockIdentity],
-            [select(getAddress), null]
-          ])
-          .dispatch(fetchReferralsRequest())
-          .put(fetchReferralsFailure('No identity or address available'))
-          .run()
-      })
-    })
-
-    describe('and both identity and address are missing', () => {
-      it('should dispatch failure action with error message', () => {
-        return expectSaga(referralsSagas, mockApi)
-          .provide([
-            [select(getCurrentIdentity), null],
-            [select(getAddress), null]
-          ])
-          .dispatch(fetchReferralsRequest())
-          .put(fetchReferralsFailure('No identity or address available'))
+          .put(fetchReferralsFailure('No identity available'))
           .run()
       })
     })
@@ -139,7 +104,6 @@ describe('referrals sagas', () => {
         return expectSaga(referralsSagas, mockApi)
           .provide([
             [select(getCurrentIdentity), mockIdentity],
-            [select(getAddress), mockAddress],
             [call([mockApi, 'getReferralProgress'], mockIdentity), throwError(error)]
           ])
           .dispatch(fetchReferralsRequest())
@@ -155,7 +119,6 @@ describe('referrals sagas', () => {
         return expectSaga(referralsSagas, mockApi)
           .provide([
             [select(getCurrentIdentity), mockIdentity],
-            [select(getAddress), mockAddress],
             [call([mockApi, 'getReferralProgress'], mockIdentity), throwError(error)]
           ])
           .dispatch(fetchReferralsRequest())
@@ -171,7 +134,6 @@ describe('referrals sagas', () => {
         return expectSaga(referralsSagas, mockApi)
           .provide([
             [select(getCurrentIdentity), mockIdentity],
-            [select(getAddress), mockAddress],
             [call([mockApi, 'getReferralProgress'], mockIdentity), throwError(error)]
           ])
           .dispatch(fetchReferralsRequest())
@@ -187,7 +149,6 @@ describe('referrals sagas', () => {
         return expectSaga(referralsSagas, mockApi)
           .provide([
             [select(getCurrentIdentity), mockIdentity],
-            [select(getAddress), mockAddress],
             [call([mockApi, 'getReferralProgress'], mockIdentity), throwError(error)]
           ])
           .dispatch(fetchReferralsRequest())
@@ -198,14 +159,15 @@ describe('referrals sagas', () => {
 
     describe('and the API call fails with undefined', () => {
       it('should dispatch failure action with default error message', () => {
+        const error = new Error('Undefined error')
+
         return expectSaga(referralsSagas, mockApi)
           .provide([
             [select(getCurrentIdentity), mockIdentity],
-            [select(getAddress), mockAddress],
-            [call([mockApi, 'getReferralProgress'], mockIdentity), throwError(undefined)]
+            [call([mockApi, 'getReferralProgress'], mockIdentity), throwError(error)]
           ])
           .dispatch(fetchReferralsRequest())
-          .put(fetchReferralsFailure('Unknown error'))
+          .put(fetchReferralsFailure('Undefined error'))
           .run()
       })
     })
@@ -216,7 +178,6 @@ describe('referrals sagas', () => {
       return expectSaga(referralsSagas, mockApi)
         .provide([
           [select(getCurrentIdentity), mockIdentity],
-          [select(getAddress), mockAddress],
           [call([mockApi, 'getReferralProgress'], mockIdentity), mockReferralData],
           [call([mockApi, 'getReferralProgress'], mockIdentity), mockReferralData]
         ])
