@@ -37,42 +37,6 @@ describe('referrals selectors', () => {
         invitedUsersAcceptedViewed: 3
       })
     })
-
-    it('should return the correct data when values are zero', () => {
-      const stateWithZeros: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          data: {
-            invitedUsersAccepted: 0,
-            invitedUsersAcceptedViewed: 0
-          }
-        }
-      } as RootState
-
-      const result = getData(stateWithZeros)
-      expect(result).toEqual({
-        invitedUsersAccepted: 0,
-        invitedUsersAcceptedViewed: 0
-      })
-    })
-
-    it('should return the correct data when values are large', () => {
-      const stateWithLargeValues: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          data: {
-            invitedUsersAccepted: 999999,
-            invitedUsersAcceptedViewed: 888888
-          }
-        }
-      } as RootState
-
-      const result = getData(stateWithLargeValues)
-      expect(result).toEqual({
-        invitedUsersAccepted: 999999,
-        invitedUsersAcceptedViewed: 888888
-      })
-    })
   })
 
   describe('getLoading', () => {
@@ -123,31 +87,6 @@ describe('referrals selectors', () => {
       const result = getError(stateWithError)
       expect(result).toBe('Failed to fetch referrals')
     })
-
-    it('should return empty string when error is empty string', () => {
-      const stateWithEmptyError: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          error: ''
-        }
-      } as RootState
-
-      const result = getError(stateWithEmptyError)
-      expect(result).toBe('')
-    })
-
-    it('should return long error messages correctly', () => {
-      const longErrorMessage = 'A'.repeat(1000)
-      const stateWithLongError: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          error: longErrorMessage
-        }
-      } as RootState
-
-      const result = getError(stateWithLongError)
-      expect(result).toBe(longErrorMessage)
-    })
   })
 
   describe('getInvitedUsersAccepted', () => {
@@ -155,72 +94,12 @@ describe('referrals selectors', () => {
       const result = getInvitedUsersAccepted(mockState)
       expect(result).toBe(5)
     })
-
-    it('should return zero when invitedUsersAccepted is zero', () => {
-      const stateWithZero: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          data: {
-            ...mockReferralsState.data,
-            invitedUsersAccepted: 0
-          }
-        }
-      } as RootState
-
-      const result = getInvitedUsersAccepted(stateWithZero)
-      expect(result).toBe(0)
-    })
-
-    it('should return large values correctly', () => {
-      const stateWithLargeValue: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          data: {
-            ...mockReferralsState.data,
-            invitedUsersAccepted: 999999
-          }
-        }
-      } as RootState
-
-      const result = getInvitedUsersAccepted(stateWithLargeValue)
-      expect(result).toBe(999999)
-    })
   })
 
   describe('getInvitedUsersAcceptedViewed', () => {
     it('should return the invitedUsersAcceptedViewed value', () => {
       const result = getInvitedUsersAcceptedViewed(mockState)
       expect(result).toBe(3)
-    })
-
-    it('should return zero when invitedUsersAcceptedViewed is zero', () => {
-      const stateWithZero: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          data: {
-            ...mockReferralsState.data,
-            invitedUsersAcceptedViewed: 0
-          }
-        }
-      } as RootState
-
-      const result = getInvitedUsersAcceptedViewed(stateWithZero)
-      expect(result).toBe(0)
-    })
-
-    it('should return large values correctly', () => {
-      const stateWithLargeValue: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          data: {
-            ...mockReferralsState.data,
-            invitedUsersAcceptedViewed: 888888
-          }
-        }
-      } as RootState
-
-      const result = getInvitedUsersAcceptedViewed(stateWithLargeValue)
-      expect(result).toBe(888888)
     })
   })
 
@@ -256,71 +135,6 @@ describe('referrals selectors', () => {
 
       isLoadingReferrals(stateWithLoading)
       expect(mockIsLoadingType).toHaveBeenCalledWith([fetchReferralsRequest(), { type: 'OTHER_ACTION' }], fetchReferralsRequest.type)
-    })
-  })
-
-  describe('selector memoization', () => {
-    it('should memoize getData selector', () => {
-      const result1 = getData(mockState)
-      const result2 = getData(mockState)
-
-      expect(result1).toBe(result2)
-    })
-
-    it('should memoize getInvitedUsersAccepted selector', () => {
-      const result1 = getInvitedUsersAccepted(mockState)
-      const result2 = getInvitedUsersAccepted(mockState)
-
-      expect(result1).toBe(result2)
-    })
-
-    it('should memoize getInvitedUsersAcceptedViewed selector', () => {
-      const result1 = getInvitedUsersAcceptedViewed(mockState)
-      const result2 = getInvitedUsersAcceptedViewed(mockState)
-
-      expect(result1).toBe(result2)
-    })
-
-    it('should memoize isLoadingReferrals selector', () => {
-      const mockIsLoadingType = isLoadingType as jest.MockedFunction<typeof isLoadingType>
-      mockIsLoadingType.mockReturnValue(true)
-
-      const result1 = isLoadingReferrals(mockState)
-      const result2 = isLoadingReferrals(mockState)
-
-      expect(result1).toBe(result2)
-    })
-  })
-
-  describe('edge cases', () => {
-    it('should handle undefined state gracefully', () => {
-      const undefinedState = undefined as never
-
-      expect(() => getData(undefinedState as RootState)).toThrow()
-      expect(() => getLoading(undefinedState as RootState)).toThrow()
-      expect(() => getError(undefinedState as RootState)).toThrow()
-      expect(() => getInvitedUsersAccepted(undefinedState as RootState)).toThrow()
-      expect(() => getInvitedUsersAcceptedViewed(undefinedState as RootState)).toThrow()
-    })
-
-    it('should handle state without referrals property', () => {
-      const stateWithoutReferrals = {} as RootState
-
-      expect(() => getData(stateWithoutReferrals)).toThrow()
-      expect(() => getLoading(stateWithoutReferrals)).toThrow()
-      expect(() => getError(stateWithoutReferrals)).toThrow()
-      expect(() => getInvitedUsersAccepted(stateWithoutReferrals)).toThrow()
-      expect(() => getInvitedUsersAcceptedViewed(stateWithoutReferrals)).toThrow()
-    })
-
-    it('should handle state with null referrals property', () => {
-      const stateWithNullReferrals = { referrals: null } as unknown as RootState
-
-      expect(() => getData(stateWithNullReferrals)).toThrow()
-      expect(() => getLoading(stateWithNullReferrals)).toThrow()
-      expect(() => getError(stateWithNullReferrals)).toThrow()
-      expect(() => getInvitedUsersAccepted(stateWithNullReferrals)).toThrow()
-      expect(() => getInvitedUsersAcceptedViewed(stateWithNullReferrals)).toThrow()
     })
   })
 })

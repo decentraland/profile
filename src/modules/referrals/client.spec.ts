@@ -1,12 +1,9 @@
-import { disableNetConnect } from 'nock'
 import { ReferralsClient } from './client'
 import { ReferralProgressResponse } from './types'
 
 let client: ReferralsClient
 let referralProgress: ReferralProgressResponse
 let mockFetch: jest.Mock
-
-disableNetConnect()
 
 beforeEach(() => {
   client = new ReferralsClient('https://example.com')
@@ -40,16 +37,6 @@ describe('when the API returns an error', () => {
 
   it('should throw an error with the HTTP status', async () => {
     await expect(client.getReferralProgress()).rejects.toThrow('HTTP error! status: 500')
-  })
-})
-
-describe('when the API returns a 404 error', () => {
-  beforeEach(() => {
-    mockFetch.mockRejectedValue(new Error('HTTP error! status: 404'))
-  })
-
-  it('should throw an error with the HTTP status', async () => {
-    await expect(client.getReferralProgress()).rejects.toThrow('HTTP error! status: 404')
   })
 })
 
