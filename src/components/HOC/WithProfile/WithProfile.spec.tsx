@@ -13,7 +13,6 @@ function renderConnectAndRedirect(props: Partial<Props> = {}) {
       isLoading={false}
       hasLoadedProfile={false}
       isAddress={false}
-      isLoggedIn={false}
       component={() => <div></div>}
       router={{ location: { pathname: '/' } as RouterProps<{ profileAddress: string }>['location'], params: {} }}
       onFetchProfile={jest.fn()}

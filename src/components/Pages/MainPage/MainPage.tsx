@@ -80,7 +80,7 @@ function MainPage(props: Props) {
         tabsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }, 100)
     }
-  }, [selectedTab])
+  }, [selectedTab, shouldShowLoadingPage])
 
   return shouldShowLoadingPage ? (
     <LoadingPage />
