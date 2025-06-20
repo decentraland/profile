@@ -15,7 +15,7 @@ import { Props } from './Avatar.types'
 import styles from './Avatar.module.css'
 
 const Avatar = (props: Props) => {
-  const { profile, profileAddress, view } = props
+  const { profile, profileAddress, view, isUnityWearablePreviewEnabled } = props
 
   const [isLoadingWearablePreview, setIsLoadingWearablePreview] = useState(true)
   const [isError, setIsError] = useState(false)
@@ -41,14 +41,17 @@ const Avatar = (props: Props) => {
       {!isError ? (
         <div className={styles.wearablePreview}>
           <WearablePreview
-            onLoad={handleOnLoad}
-            onError={handleError}
-            panning={false}
-            lockBeta={true}
+            baseUrl={config.get('WEARABLE_PREVIEW_URL')}
             dev={config.getEnv() === Env.DEVELOPMENT}
             disableBackground={true}
-            profile={profileAddress}
             disableDefaultWearables
+            lockBeta={true}
+            panning={false}
+            profile={profileAddress}
+            unity={!!isUnityWearablePreviewEnabled}
+            unityMode="profile"
+            onError={handleError}
+            onLoad={handleOnLoad}
           />
         </div>
       ) : null}
