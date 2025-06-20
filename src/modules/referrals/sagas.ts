@@ -1,6 +1,5 @@
-import { call, put, takeEvery, select } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
-import { getCurrentIdentity } from '../identity/selector'
 import { fetchReferralsRequest, fetchReferralsSuccess, fetchReferralsFailure } from './actions'
 import { ReferralsClient } from './client'
 import { ReferralProgressResponse } from './types'
@@ -10,20 +9,9 @@ export function* referralsSagas(api: ReferralsClient) {
 
   function* handleFetchReferrals() {
     try {
-      const identity: ReturnType<typeof getCurrentIdentity> = yield select(getCurrentIdentity)
+      const response: ReferralProgressResponse = yield call([api, 'getReferralProgress'])
 
-      if (!identity) {
-        throw new Error('No identity available')
-      }
-
-      const data: ReferralProgressResponse = yield call([api, 'getReferralProgress'], identity)
-
-      yield put(
-        fetchReferralsSuccess({
-          invitedUsersAccepted: data.invitedUsersAccepted,
-          invitedUsersAcceptedViewed: data.invitedUsersAcceptedViewed
-        })
-      )
+      yield put(fetchReferralsSuccess(response))
     } catch (error) {
       yield put(fetchReferralsFailure(isErrorWithMessage(error) ? error.message : 'Unknown error'))
     }

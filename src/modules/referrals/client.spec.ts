@@ -1,20 +1,12 @@
 import { disableNetConnect } from 'nock'
-import { AuthIdentity } from '@dcl/crypto'
-import { createTestIdentity } from '../../tests/createTestIdentity'
 import { ReferralsClient } from './client'
 import { ReferralProgressResponse } from './types'
 
 let client: ReferralsClient
-let mockIdentity: AuthIdentity
 let referralProgress: ReferralProgressResponse
 let mockFetch: jest.Mock
 
 disableNetConnect()
-
-beforeAll(async () => {
-  const testIdentity = await createTestIdentity()
-  mockIdentity = testIdentity.authChain
-})
 
 beforeEach(() => {
   client = new ReferralsClient('https://example.com')
@@ -34,12 +26,9 @@ describe('when requesting referral progress', () => {
   })
 
   it('should request the API and return the referral progress', async () => {
-    const response = await client.getReferralProgress(mockIdentity)
+    const response = await client.getReferralProgress()
 
-    expect(mockFetch).toHaveBeenCalledWith('/v1/referral-progress', {
-      method: 'GET',
-      identity: mockIdentity
-    })
+    expect(mockFetch).toHaveBeenCalledWith('/v1/referral-progress')
     expect(response).toEqual(referralProgress)
   })
 })
@@ -50,7 +39,7 @@ describe('when the API returns an error', () => {
   })
 
   it('should throw an error with the HTTP status', async () => {
-    await expect(client.getReferralProgress(mockIdentity)).rejects.toThrow('HTTP error! status: 500')
+    await expect(client.getReferralProgress()).rejects.toThrow('HTTP error! status: 500')
   })
 })
 
@@ -60,7 +49,7 @@ describe('when the API returns a 404 error', () => {
   })
 
   it('should throw an error with the HTTP status', async () => {
-    await expect(client.getReferralProgress(mockIdentity)).rejects.toThrow('HTTP error! status: 404')
+    await expect(client.getReferralProgress()).rejects.toThrow('HTTP error! status: 404')
   })
 })
 
@@ -70,7 +59,7 @@ describe('when the API returns a 400 error', () => {
   })
 
   it('should throw an error with the HTTP status', async () => {
-    await expect(client.getReferralProgress(mockIdentity)).rejects.toThrow('HTTP error! status: 400')
+    await expect(client.getReferralProgress()).rejects.toThrow('HTTP error! status: 400')
   })
 })
 
@@ -80,6 +69,6 @@ describe('when the API returns a 503 error', () => {
   })
 
   it('should throw an error with the HTTP status', async () => {
-    await expect(client.getReferralProgress(mockIdentity)).rejects.toThrow('HTTP error! status: 503')
+    await expect(client.getReferralProgress()).rejects.toThrow('HTTP error! status: 503')
   })
 })
