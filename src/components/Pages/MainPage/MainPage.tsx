@@ -50,11 +50,11 @@ function MainPage(props: Props) {
       { displayValue: t('tabs.overview'), value: AccountTabs.OVERVIEW },
       { displayValue: view === View.OWN ? t('tabs.own_assets') : t('tabs.others_assets'), value: AccountTabs.ASSETS },
       { displayValue: view === View.OWN ? t('tabs.own_creations') : t('tabs.others_creations'), value: AccountTabs.CREATIONS },
-      ...(isReferralEnabled
+      ...(isReferralEnabled && profileAddress === loggedInAddress
         ? [{ displayValue: view === View.OWN ? t('tabs.referrals') : t('tabs.referrals'), value: AccountTabs.REFERRAL }]
         : [])
     ],
-    [view, isReferralEnabled]
+    [view, isReferralEnabled, profileAddress, loggedInAddress]
   )
 
   const handleTabChange = useCallback((tab: AccountTabs) => {
