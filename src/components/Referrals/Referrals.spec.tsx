@@ -18,8 +18,6 @@ describe('Referrals', () => {
 
   beforeEach(() => {
     defaultProps = {
-      isLoading: false,
-      error: null,
       profileAddress: '0x123',
       invitedUsersAccepted: 0,
       invitedUsersAcceptedViewed: 0,
