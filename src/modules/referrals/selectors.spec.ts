@@ -97,9 +97,11 @@ describe('referrals selectors', () => {
       expect(result).toBeNull()
     })
 
-    it('should return the error message when there is an error', () => {
-      const result = getError(stateWithError)
-      expect(result).toBe('Failed to fetch referrals')
+    describe('and there is an error', () => {
+      it('should return the error message', () => {
+        const result = getError(stateWithError)
+        expect(result).toBe('Failed to fetch referrals')
+      })
     })
   })
 
@@ -118,27 +120,33 @@ describe('referrals selectors', () => {
   })
 
   describe('when checking if referrals are loading', () => {
-    it('should return true when referrals are loading', () => {
-      mockIsLoadingType.mockReturnValue(true)
+    describe('and referrals are loading', () => {
+      it('should return true', () => {
+        mockIsLoadingType.mockReturnValue(true)
 
-      const result = isLoadingReferrals(mockState)
-      expect(result).toBe(true)
-      expect(mockIsLoadingType).toHaveBeenCalledWith([], fetchReferralsRequest.type)
+        const result = isLoadingReferrals(mockState)
+        expect(result).toBe(true)
+        expect(mockIsLoadingType).toHaveBeenCalledWith([], fetchReferralsRequest.type)
+      })
     })
 
-    it('should return false when referrals are not loading', () => {
-      mockIsLoadingType.mockReturnValue(false)
+    describe('and referrals are not loading', () => {
+      it('should return false', () => {
+        mockIsLoadingType.mockReturnValue(false)
 
-      const result = isLoadingReferrals(mockState)
-      expect(result).toBe(false)
-      expect(mockIsLoadingType).toHaveBeenCalledWith([], fetchReferralsRequest.type)
+        const result = isLoadingReferrals(mockState)
+        expect(result).toBe(false)
+        expect(mockIsLoadingType).toHaveBeenCalledWith([], fetchReferralsRequest.type)
+      })
     })
 
-    it('should call isLoadingType with the correct loading state', () => {
-      mockIsLoadingType.mockReturnValue(true)
+    describe('and there are multiple loading actions', () => {
+      it('should call isLoadingType with the correct loading state', () => {
+        mockIsLoadingType.mockReturnValue(true)
 
-      isLoadingReferrals(stateWithMultipleLoading)
-      expect(mockIsLoadingType).toHaveBeenCalledWith([fetchReferralsRequest(), { type: 'OTHER_ACTION' }], fetchReferralsRequest.type)
+        isLoadingReferrals(stateWithMultipleLoading)
+        expect(mockIsLoadingType).toHaveBeenCalledWith([fetchReferralsRequest(), { type: 'OTHER_ACTION' }], fetchReferralsRequest.type)
+      })
     })
   })
 })
