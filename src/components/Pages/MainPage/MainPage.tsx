@@ -22,7 +22,7 @@ import { Props } from './MainPage.types'
 import styles from './MainPage.module.css'
 
 function MainPage(props: Props) {
-  const { isLoading, profileAddress, loggedInAddress, isBlocked, isReferralEnabled, isLoggedIn, isLoadingFeatures } = props
+  const { isLoading, profileAddress, loggedInAddress, isBlocked, isReferralEnabled, isLoadingFeatures } = props
   const view = getView(loggedInAddress, profileAddress)
   const isMobile = useMobileMediaQuery()
   const navigate = useNavigate()
@@ -43,14 +43,14 @@ function MainPage(props: Props) {
     return params.tab ?? AccountTabs.OVERVIEW
   }, [params])
 
-  const shouldShowLoadingPage = isLoading && !(selectedTab === AccountTabs.REFERRAL && isLoggedIn) && !(isLoggedIn && !profileAddress)
+  const shouldShowLoadingPage = isLoading || isLoadingFeatures
 
   const tabs: { displayValue: string; value: AccountTabs }[] = useMemo(
     () => [
       { displayValue: t('tabs.overview'), value: AccountTabs.OVERVIEW },
       { displayValue: view === View.OWN ? t('tabs.own_assets') : t('tabs.others_assets'), value: AccountTabs.ASSETS },
       { displayValue: view === View.OWN ? t('tabs.own_creations') : t('tabs.others_creations'), value: AccountTabs.CREATIONS },
-      ...(isReferralEnabled && profileAddress === loggedInAddress
+      ...(isReferralEnabled && view === View.OWN
         ? [{ displayValue: view === View.OWN ? t('tabs.referrals') : t('tabs.referrals'), value: AccountTabs.REFERRAL }]
         : [])
     ],
