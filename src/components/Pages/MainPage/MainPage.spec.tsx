@@ -31,7 +31,6 @@ function renderMainPage(props: Partial<Props> = {}) {
       profileAddress="0xaddress"
       isBlocked={false}
       isLoadingFeatures={false}
-      isLoggedIn={false}
       isReferralEnabled={false}
       {...props}
     />
