@@ -1,11 +1,12 @@
-import { createSelector } from '@reduxjs/toolkit'
 import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
 import { RootState } from '../reducer'
 import { fetchReferralsRequest } from './actions'
 
-const getState = (state: RootState) => state.referrals
-const getLoading = (state: RootState) => getState(state).loading
-export const isLoadingReferrals = createSelector([getLoading], loadingState => isLoadingType(loadingState, fetchReferralsRequest.type))
+export const getData = (state: RootState) => state.referrals.data
+export const getLoading = (state: RootState) => state.referrals.loading
+export const getError = (state: RootState) => state.referrals.error
 
-export const getReferrals = createSelector([getState], state => state.data)
-export const getReferralsError = createSelector([getState], state => state.error)
+export const getInvitedUsersAccepted = (state: RootState) => getData(state).invitedUsersAccepted
+export const getInvitedUsersAcceptedViewed = (state: RootState) => getData(state).invitedUsersAcceptedViewed
+
+export const isLoadingReferrals = (state: RootState) => isLoadingType(getLoading(state), fetchReferralsRequest.type)

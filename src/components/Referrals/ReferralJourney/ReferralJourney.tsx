@@ -22,13 +22,15 @@ import { ANIMATION_DURATION } from './utils'
 import { AnimationPhaseType, ReferralJourneyProps } from './ReferralJourney.types'
 
 // eslint-disable-next-line import/no-named-as-default-member
-const ReferralJourney = React.memo(({ invitedUsersAccepted }: ReferralJourneyProps) => {
+const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
+  const { invitedUsersAccepted } = props
   const [animatedStep, setAnimatedStep] = useState(TIERS.filter(tier => tier.completed).length)
   const [open, setOpen] = useState(false)
   const [journeyTiers, setJourneyTiers] = useState(TIERS)
   const [animationPhase, setAnimationPhase] = useState<AnimationPhaseType>(AnimationPhaseType.WAITING_NEXT_TIER)
   const totalSteps = TIERS.length
   const journeyStepRefs = useRef<(Element | null)[]>([])
+  const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const currentTierIndex = TIERS.findIndex(tier => invitedUsersAccepted < tier.invitesAccepted)
@@ -42,6 +44,9 @@ const ReferralJourney = React.memo(({ invitedUsersAccepted }: ReferralJourneyPro
     if (!isTierReached && !isWaitingNextTier) return
 
     if (animatedStep !== maxTierIndex && !isTierReached) {
+      if (sectionRef.current) {
+        sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
       setAnimationPhase(AnimationPhaseType.TIER_REACHED)
       setAnimatedStep(prev => prev + 1)
     }
@@ -86,7 +91,7 @@ const ReferralJourney = React.memo(({ invitedUsersAccepted }: ReferralJourneyPro
   }
 
   return (
-    <SectionContainer>
+    <SectionContainer ref={sectionRef}>
       <TitleContainer>
         <Typography variant="h4">{t('referral_journey.title')}</Typography>
       </TitleContainer>

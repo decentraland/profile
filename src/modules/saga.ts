@@ -17,6 +17,8 @@ import { modalSagas } from './modal/sagas'
 import { NFTClient } from './nfts/client'
 import { nftSagas } from './nfts/sagas'
 import { createProfileSaga } from './profile/sagas'
+import { ReferralsClient } from './referrals/client'
+import { referralsSagas } from './referrals/sagas'
 import { socialSagas } from './social/sagas'
 import { translationSaga } from './translation/sagas'
 import { worldSagas } from './world/sagas'
@@ -24,12 +26,14 @@ import { worldSagas } from './world/sagas'
 const analyticsSaga = createAnalyticsSaga()
 export const NFT_SERVER_URL = config.get('NFT_SERVER_URL')
 export const MARKETPLACE_SERVER_URL = config.get('MARKETPLACE_SERVER_URL')
+export const REFERRAL_SERVER_URL = config.get('REFERRAL_SERVER_URL')
 
 export function* rootSaga(
   worldsContentClient: ContentClient,
   marketplaceGraphClient: MarketplaceGraphClient,
   peerApi: PeerAPI,
-  creditsClient: CreditsClient
+  creditsClient: CreditsClient,
+  referralsClient: ReferralsClient
 ) {
   yield all([
     analyticsSaga(),
@@ -56,6 +60,7 @@ export function* rootSaga(
       }
     }),
     nftSagas(new NFTClient(NFT_SERVER_URL)),
-    transactionSaga()
+    transactionSaga(),
+    referralsSagas(referralsClient)
   ])
 }
