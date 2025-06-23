@@ -13,9 +13,6 @@ jest.mock('decentraland-dapps/dist/modules/loading/selectors', () => ({
 describe('referrals selectors', () => {
   let mockState: RootState
   let mockReferralsState: ReferralsState
-  let stateWithLoading: RootState
-  let stateWithMultipleLoading: RootState
-  let stateWithError: RootState
   let mockIsLoadingType: jest.MockedFunction<typeof isLoadingType>
 
   beforeEach(() => {
@@ -30,27 +27,6 @@ describe('referrals selectors', () => {
 
     mockState = {
       referrals: mockReferralsState
-    } as RootState
-
-    stateWithLoading = {
-      referrals: {
-        ...mockReferralsState,
-        loading: [fetchReferralsRequest() as AnyAction]
-      }
-    } as RootState
-
-    stateWithMultipleLoading = {
-      referrals: {
-        ...mockReferralsState,
-        loading: [fetchReferralsRequest() as AnyAction, { type: 'OTHER_ACTION' } as AnyAction]
-      }
-    } as RootState
-
-    stateWithError = {
-      referrals: {
-        ...mockReferralsState,
-        error: 'Failed to fetch referrals'
-      }
     } as RootState
 
     mockIsLoadingType = isLoadingType as jest.MockedFunction<typeof isLoadingType>
@@ -71,6 +47,25 @@ describe('referrals selectors', () => {
   })
 
   describe('when getting the loading state', () => {
+    let stateWithLoading: RootState
+    let stateWithMultipleLoading: RootState
+
+    beforeEach(() => {
+      stateWithLoading = {
+        referrals: {
+          ...mockReferralsState,
+          loading: [fetchReferralsRequest() as AnyAction]
+        }
+      } as RootState
+
+      stateWithMultipleLoading = {
+        referrals: {
+          ...mockReferralsState,
+          loading: [fetchReferralsRequest() as AnyAction, { type: 'OTHER_ACTION' } as AnyAction]
+        }
+      } as RootState
+    })
+
     it('should return the loading state', () => {
       const result = getLoading(mockState)
       expect(result).toEqual([])
@@ -92,9 +87,22 @@ describe('referrals selectors', () => {
   })
 
   describe('when getting the error state', () => {
-    it('should return null when there is no error', () => {
-      const result = getError(mockState)
-      expect(result).toBeNull()
+    let stateWithError: RootState
+
+    beforeEach(() => {
+      stateWithError = {
+        referrals: {
+          ...mockReferralsState,
+          error: 'Failed to fetch referrals'
+        }
+      } as RootState
+    })
+
+    describe('and there is no error', () => {
+      it('should return null', () => {
+        const result = getError(mockState)
+        expect(result).toBeNull()
+      })
     })
 
     describe('and there is an error', () => {
@@ -120,6 +128,17 @@ describe('referrals selectors', () => {
   })
 
   describe('when checking if referrals are loading', () => {
+    let stateWithMultipleLoading: RootState
+
+    beforeEach(() => {
+      stateWithMultipleLoading = {
+        referrals: {
+          ...mockReferralsState,
+          loading: [fetchReferralsRequest() as AnyAction, { type: 'OTHER_ACTION' } as AnyAction]
+        }
+      } as RootState
+    })
+
     describe('and referrals are loading', () => {
       it('should return true', () => {
         mockIsLoadingType.mockReturnValue(true)
