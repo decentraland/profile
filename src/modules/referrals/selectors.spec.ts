@@ -13,6 +13,10 @@ jest.mock('decentraland-dapps/dist/modules/loading/selectors', () => ({
 describe('referrals selectors', () => {
   let mockState: RootState
   let mockReferralsState: ReferralsState
+  let stateWithLoading: RootState
+  let stateWithMultipleLoading: RootState
+  let stateWithError: RootState
+  let mockIsLoadingType: jest.MockedFunction<typeof isLoadingType>
 
   beforeEach(() => {
     mockReferralsState = {
@@ -27,9 +31,36 @@ describe('referrals selectors', () => {
     mockState = {
       referrals: mockReferralsState
     } as RootState
+
+    stateWithLoading = {
+      referrals: {
+        ...mockReferralsState,
+        loading: [fetchReferralsRequest() as AnyAction]
+      }
+    } as RootState
+
+    stateWithMultipleLoading = {
+      referrals: {
+        ...mockReferralsState,
+        loading: [fetchReferralsRequest() as AnyAction, { type: 'OTHER_ACTION' } as AnyAction]
+      }
+    } as RootState
+
+    stateWithError = {
+      referrals: {
+        ...mockReferralsState,
+        error: 'Failed to fetch referrals'
+      }
+    } as RootState
+
+    mockIsLoadingType = isLoadingType as jest.MockedFunction<typeof isLoadingType>
   })
 
-  describe('getData', () => {
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
+  describe("when getting the state's data", () => {
     it('should return the referrals data', () => {
       const result = getData(mockState)
       expect(result).toEqual({
@@ -39,73 +70,55 @@ describe('referrals selectors', () => {
     })
   })
 
-  describe('getLoading', () => {
+  describe('when getting the loading state', () => {
     it('should return the loading state', () => {
       const result = getLoading(mockState)
       expect(result).toEqual([])
     })
 
-    it('should return the correct loading state when there are loading actions', () => {
-      const stateWithLoading: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          loading: [fetchReferralsRequest() as AnyAction]
-        }
-      } as RootState
-
-      const result = getLoading(stateWithLoading)
-      expect(result).toEqual([fetchReferralsRequest()])
+    describe('and there are loading actions', () => {
+      it('should return the correct loading state', () => {
+        const result = getLoading(stateWithLoading)
+        expect(result).toEqual([fetchReferralsRequest()])
+      })
     })
 
-    it('should return the correct loading state with multiple loading actions', () => {
-      const stateWithMultipleLoading: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          loading: [fetchReferralsRequest() as AnyAction, { type: 'OTHER_ACTION' } as AnyAction]
-        }
-      } as RootState
-
-      const result = getLoading(stateWithMultipleLoading)
-      expect(result).toEqual([fetchReferralsRequest(), { type: 'OTHER_ACTION' }])
+    describe('and there are multiple loading actions', () => {
+      it('should return the correct loading state', () => {
+        const result = getLoading(stateWithMultipleLoading)
+        expect(result).toEqual([fetchReferralsRequest(), { type: 'OTHER_ACTION' }])
+      })
     })
   })
 
-  describe('getError', () => {
+  describe('when getting the error state', () => {
     it('should return null when there is no error', () => {
       const result = getError(mockState)
       expect(result).toBeNull()
     })
 
     it('should return the error message when there is an error', () => {
-      const stateWithError: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          error: 'Failed to fetch referrals'
-        }
-      } as RootState
-
       const result = getError(stateWithError)
       expect(result).toBe('Failed to fetch referrals')
     })
   })
 
-  describe('getInvitedUsersAccepted', () => {
+  describe('when getting the invited users accepted count', () => {
     it('should return the invitedUsersAccepted value', () => {
       const result = getInvitedUsersAccepted(mockState)
       expect(result).toBe(5)
     })
   })
 
-  describe('getInvitedUsersAcceptedViewed', () => {
+  describe('when getting the invited users accepted viewed count', () => {
     it('should return the invitedUsersAcceptedViewed value', () => {
       const result = getInvitedUsersAcceptedViewed(mockState)
       expect(result).toBe(3)
     })
   })
 
-  describe('isLoadingReferrals', () => {
+  describe('when checking if referrals are loading', () => {
     it('should return true when referrals are loading', () => {
-      const mockIsLoadingType = isLoadingType as jest.MockedFunction<typeof isLoadingType>
       mockIsLoadingType.mockReturnValue(true)
 
       const result = isLoadingReferrals(mockState)
@@ -114,7 +127,6 @@ describe('referrals selectors', () => {
     })
 
     it('should return false when referrals are not loading', () => {
-      const mockIsLoadingType = isLoadingType as jest.MockedFunction<typeof isLoadingType>
       mockIsLoadingType.mockReturnValue(false)
 
       const result = isLoadingReferrals(mockState)
@@ -123,17 +135,9 @@ describe('referrals selectors', () => {
     })
 
     it('should call isLoadingType with the correct loading state', () => {
-      const stateWithLoading: RootState = {
-        referrals: {
-          ...mockReferralsState,
-          loading: [fetchReferralsRequest() as AnyAction, { type: 'OTHER_ACTION' } as AnyAction]
-        }
-      } as RootState
-
-      const mockIsLoadingType = isLoadingType as jest.MockedFunction<typeof isLoadingType>
       mockIsLoadingType.mockReturnValue(true)
 
-      isLoadingReferrals(stateWithLoading)
+      isLoadingReferrals(stateWithMultipleLoading)
       expect(mockIsLoadingType).toHaveBeenCalledWith([fetchReferralsRequest(), { type: 'OTHER_ACTION' }], fetchReferralsRequest.type)
     })
   })
