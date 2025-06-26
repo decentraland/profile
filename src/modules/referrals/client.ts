@@ -9,4 +9,11 @@ export class ReferralsClient extends BaseClient {
   async getReferralProgress(): Promise<ReferralProgressResponse> {
     return this.fetch<ReferralProgressResponse>('/v1/referral-progress')
   }
+
+  async setReferralEmail(email: string): Promise<void> {
+    return this.fetch<void>('/v1/referral-email', {
+      method: 'POST',
+      body: JSON.stringify({ email })
+    })
+  }
 }

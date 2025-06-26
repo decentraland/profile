@@ -1,5 +1,12 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { fetchReferralsRequest, fetchReferralsSuccess, fetchReferralsFailure } from './actions'
+import {
+  fetchReferralsRequest,
+  fetchReferralsSuccess,
+  fetchReferralsFailure,
+  setReferralEmailRequest,
+  setReferralEmailSuccess,
+  setReferralEmailFailure
+} from './actions'
 import { referralsReducer, buildInitialState, ReferralsState } from './reducer'
 import { ReferralProgressResponse } from './types'
 
@@ -105,6 +112,84 @@ describe('referrals reducer', () => {
       it('should update the data with the response values', () => {
         expect(state.data.invitedUsersAccepted).toBe(15)
         expect(state.data.invitedUsersAcceptedViewed).toBe(12)
+      })
+    })
+  })
+
+  describe('when handling a set referral email request', () => {
+    let testEmail: string
+
+    beforeEach(() => {
+      testEmail = 'test@example.com'
+      state = referralsReducer(initialState, setReferralEmailRequest(testEmail))
+    })
+
+    it('should add the request action to loading state', () => {
+      expect(state.loading).toContainEqual(setReferralEmailRequest(testEmail))
+    })
+
+    it('should clear any existing error', () => {
+      const stateWithError: ReferralsState = {
+        ...initialState,
+        error: 'Previous error'
+      }
+
+      const result = referralsReducer(stateWithError, setReferralEmailRequest(testEmail))
+      expect(result.error).toBeNull()
+    })
+
+    describe('and handling a set referral email success', () => {
+      beforeEach(() => {
+        state = referralsReducer(state, setReferralEmailSuccess())
+      })
+
+      it('should remove the request action from loading state', () => {
+        expect(state.loading).not.toContainEqual(setReferralEmailRequest(testEmail))
+      })
+
+      it('should keep error as null', () => {
+        expect(state.error).toBeNull()
+      })
+    })
+
+    describe('and handling a set referral email failure', () => {
+      let errorMessage: string
+
+      beforeEach(() => {
+        errorMessage = 'Failed to set referral email'
+        state = referralsReducer(state, setReferralEmailFailure(errorMessage))
+      })
+
+      it('should set the error message', () => {
+        expect(state.error).toBe(errorMessage)
+      })
+
+      it('should remove the request action from loading state', () => {
+        expect(state.loading).not.toContainEqual(setReferralEmailRequest(testEmail))
+      })
+    })
+  })
+
+  describe('when handling multiple set referral email requests', () => {
+    let testEmail: string
+
+    beforeEach(() => {
+      testEmail = 'test@example.com'
+      state = referralsReducer(initialState, setReferralEmailRequest(testEmail))
+      state = referralsReducer(state, setReferralEmailRequest(testEmail))
+    })
+
+    it('should keep the request action in loading state', () => {
+      expect(state.loading).toContainEqual(setReferralEmailRequest(testEmail))
+    })
+
+    describe('and handling a success response', () => {
+      beforeEach(() => {
+        state = referralsReducer(state, setReferralEmailSuccess())
+      })
+
+      it('should remove the request action from loading state', () => {
+        expect(state.loading).toHaveLength(1)
       })
     })
   })
