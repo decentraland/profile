@@ -87,43 +87,13 @@ describe('when setting referral email', () => {
     })
   })
 
-  describe('and the request fails with 400 (InvalidRequestError)', () => {
+  describe('and the request fails with 400', () => {
     beforeEach(() => {
       mockFetch.mockRejectedValue(new Error('HTTP error! status: 400'))
     })
 
     it('should throw an error with the HTTP status', async () => {
       await expect(client.setReferralEmail(testEmail)).rejects.toThrow('HTTP error! status: 400')
-    })
-  })
-
-  describe('and the request fails with 400 (ReferralInvalidInputError)', () => {
-    beforeEach(() => {
-      mockFetch.mockRejectedValue(new Error('HTTP error! status: 400'))
-    })
-
-    it('should throw an error with the HTTP status', async () => {
-      await expect(client.setReferralEmail(testEmail)).rejects.toThrow('HTTP error! status: 400')
-    })
-  })
-
-  describe('and the request fails with 500', () => {
-    beforeEach(() => {
-      mockFetch.mockRejectedValue(new Error('HTTP error! status: 500'))
-    })
-
-    it('should throw an error with the HTTP status', async () => {
-      await expect(client.setReferralEmail(testEmail)).rejects.toThrow('HTTP error! status: 500')
-    })
-  })
-
-  describe('and the request fails with 503', () => {
-    beforeEach(() => {
-      mockFetch.mockRejectedValue(new Error('HTTP error! status: 503'))
-    })
-
-    it('should throw an error with the HTTP status', async () => {
-      await expect(client.setReferralEmail(testEmail)).rejects.toThrow('HTTP error! status: 503')
     })
   })
 
