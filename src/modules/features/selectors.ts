@@ -23,3 +23,10 @@ export const getIsReferralEnabled = (state: RootState) => {
   }
   return false
 }
+
+export const getIsReferralTestingButtonEnabled = (state: RootState) => {
+  if (hasLoadedInitialFlags(state)) {
+    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.REFERRAL_TESTING_BUTTON)
+  }
+  return false
+}
