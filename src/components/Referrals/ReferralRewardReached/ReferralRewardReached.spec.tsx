@@ -1,15 +1,19 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import { userEvent } from '@testing-library/user-event'
-import { Rarity } from '@dcl/schemas'
+import { screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { Rarity, Email } from '@dcl/schemas'
 import type { ReferralTier } from '../../../modules/referrals/types'
+import { renderWithProviders } from '../../../tests/tests'
 import { REFERRAL_REWARD_REACHED_TEST_ID } from './constants'
 import { ReferralRewardReached } from './ReferralRewardReached'
 
 const mockTranslations = {
   reward: 'Reward',
-  newItemUnlocked: 'NEW ITEM UNLOCKED',
-  friendsJoined: '5 Invites accepted'
+  newItemUnlocked: 'New Item Unlocked!',
+  friendsJoined: '5 friends joined',
+  swagRewardTitle: 'Claim your swag',
+  swagRewardInputPlaceholder: 'Enter your email',
+  swagRewardButton: 'Submit'
 }
 
 const mockT = jest.fn((key, values) => {
@@ -21,6 +25,12 @@ const mockT = jest.fn((key, values) => {
       return mockTranslations.reward
     case 'referral_reward_reached.new_item_unlocked':
       return mockTranslations.newItemUnlocked
+    case 'referral_reward_reached.swag_reward_title':
+      return mockTranslations.swagRewardTitle
+    case 'referral_reward_reached.swag_reward_input_placeholder':
+      return mockTranslations.swagRewardInputPlaceholder
+    case 'referral_reward_reached.swag_reward_button':
+      return mockTranslations.swagRewardButton
     default:
       return key
   }
@@ -30,39 +40,43 @@ jest.mock('decentraland-dapps/dist/modules/translation/utils', () => ({
   t: mockT
 }))
 
+jest.mock('@dcl/schemas', () => ({
+  ...jest.requireActual('@dcl/schemas'),
+  ['Email']: {
+    validate: jest.fn()
+  }
+}))
+
 describe('ReferralRewardReached', () => {
   let mockReward: ReferralTier
-  let mockProps: {
-    reward: ReferralTier
-    open: boolean
-    onClick: jest.Mock
-  }
+  let mockOnClick: jest.Mock
 
   beforeEach(() => {
-    jest.clearAllMocks()
-
     mockReward = {
       image: 'test-image.png',
       rarity: Rarity.LEGENDARY,
       description: 'Test Reward Description',
-      invitesAccepted: 5,
-      completed: true
+      invitesAccepted: 5
     }
 
-    mockProps = {
-      reward: mockReward,
-      open: true,
-      onClick: jest.fn()
-    }
+    mockOnClick = jest.fn()
   })
 
   afterEach(() => {
     jest.resetAllMocks()
   })
 
+  const renderComponent = (props: { reward: ReferralTier; open: boolean; onClick: jest.Mock }) => {
+    return renderWithProviders(<ReferralRewardReached {...props} />)
+  }
+
   describe('when the modal is open', () => {
     beforeEach(() => {
-      render(<ReferralRewardReached {...mockProps} />)
+      renderComponent({
+        reward: mockReward,
+        open: true,
+        onClick: mockOnClick
+      })
     })
 
     it('should display the modal with all elements', () => {
@@ -90,17 +104,138 @@ describe('ReferralRewardReached', () => {
   })
 
   describe('when clicking the modal', () => {
+    beforeEach(() => {
+      renderComponent({
+        reward: mockReward,
+        open: true,
+        onClick: mockOnClick
+      })
+    })
+
     it('should call the onClick function', async () => {
-      render(<ReferralRewardReached {...mockProps} />)
       await userEvent.click(screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.modal))
-      expect(mockProps.onClick).toHaveBeenCalledTimes(1)
+      expect(mockOnClick).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('when the modal is closed', () => {
+    beforeEach(() => {
+      renderComponent({
+        reward: mockReward,
+        open: false,
+        onClick: mockOnClick
+      })
+    })
+
     it('should not display the content', () => {
-      render(<ReferralRewardReached {...mockProps} open={false} />)
       expect(screen.queryByTestId(REFERRAL_REWARD_REACHED_TEST_ID.modal)).not.toBeInTheDocument()
+    })
+  })
+
+  describe('when rarity is SWAG', () => {
+    beforeEach(() => {
+      mockReward = {
+        ...mockReward,
+        rarity: 'SWAG'
+      }
+      renderComponent({
+        reward: mockReward,
+        open: true,
+        onClick: mockOnClick
+      })
+    })
+
+    it('should display the SWAG reward form', () => {
+      expect(screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardContainer)).toBeInTheDocument()
+      expect(screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardTitle)).toBeInTheDocument()
+      expect(screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardInput)).toBeInTheDocument()
+      expect(screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardButton)).toBeInTheDocument()
+    })
+
+    it('should handle email input changes', async () => {
+      const emailInput = screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardInput)
+      await userEvent.type(emailInput, 'test@example.com')
+      expect(emailInput).toHaveValue('test@example.com')
+    })
+
+    it('should prevent event propagation when clicking input', async () => {
+      const emailInput = screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardInput)
+      await userEvent.click(emailInput)
+      expect(mockOnClick).not.toHaveBeenCalled()
+    })
+
+    describe('when submitting valid email', () => {
+      beforeEach(() => {
+        ;(Email.validate as unknown as jest.Mock).mockReturnValue(true)
+      })
+
+      it('should not show error message', async () => {
+        const emailInput = screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardInput)
+        const submitButton = screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardButton)
+
+        await userEvent.type(emailInput, 'valid@example.com')
+        await userEvent.click(submitButton)
+
+        expect(Email.validate).toHaveBeenCalledWith('valid@example.com')
+        expect(screen.queryByText('Invalid email format')).not.toBeInTheDocument()
+      })
+    })
+
+    describe('when submitting invalid email', () => {
+      beforeEach(() => {
+        ;(Email.validate as unknown as jest.Mock).mockReturnValue(false)
+      })
+
+      it('should show error message', async () => {
+        const emailInput = screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardInput)
+        const submitButton = screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardButton)
+
+        await userEvent.type(emailInput, 'invalid-email')
+        await userEvent.click(submitButton)
+
+        expect(Email.validate).toHaveBeenCalledWith('invalid-email')
+        expect(screen.getByText('Invalid email format')).toBeInTheDocument()
+      })
+
+      it('should clear error when typing valid email', async () => {
+        const emailInput = screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardInput)
+        const submitButton = screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardButton)
+
+        await userEvent.type(emailInput, 'invalid-email')
+        await userEvent.click(submitButton)
+        expect(screen.getByText('Invalid email format')).toBeInTheDocument()
+
+        await userEvent.clear(emailInput)
+        await userEvent.type(emailInput, 'valid@example.com')
+        expect(screen.queryByText('Invalid email format')).not.toBeInTheDocument()
+      })
+    })
+
+    it('should prevent event propagation when clicking submit button', async () => {
+      const submitButton = screen.getByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardButton)
+      await userEvent.click(submitButton)
+      expect(mockOnClick).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('when rarity is not SWAG', () => {
+    beforeEach(() => {
+      mockReward = {
+        ...mockReward,
+        rarity: Rarity.LEGENDARY
+      }
+      renderComponent({
+        reward: mockReward,
+        open: true,
+        onClick: mockOnClick
+      })
+    })
+
+    it('should not display the SWAG reward form', () => {
+      expect(screen.queryByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardContainer)).not.toBeInTheDocument()
+      expect(screen.queryByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardTitle)).not.toBeInTheDocument()
+      expect(screen.queryByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardInput)).not.toBeInTheDocument()
+      expect(screen.queryByTestId(REFERRAL_REWARD_REACHED_TEST_ID.swagRewardButton)).not.toBeInTheDocument()
     })
   })
 })

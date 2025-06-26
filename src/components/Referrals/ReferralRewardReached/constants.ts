@@ -9,5 +9,9 @@ export const REFERRAL_REWARD_REACHED_TEST_ID = {
   gradientBorder: 'referral-reward-reached-gradient-border',
   imageContainer: 'referral-reward-reached-image-container',
   image: 'referral-reward-reached-image',
-  description: 'referral-reward-reached-description'
+  description: 'referral-reward-reached-description',
+  swagRewardContainer: 'referral-reward-reached-swag-reward-container',
+  swagRewardTitle: 'referral-reward-reached-swag-reward-title',
+  swagRewardInput: 'referral-reward-reached-swag-reward-input',
+  swagRewardButton: 'referral-reward-reached-swag-reward-button'
 } as const

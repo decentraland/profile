@@ -1,5 +1,5 @@
 import { Rarity } from '@dcl/schemas'
-import { Box, keyframes, Modal, styled, Typography } from 'decentraland-ui2'
+import { Box, Button, keyframes, Modal, styled, TextField, Typography } from 'decentraland-ui2'
 
 const rotate = keyframes`
   from {
@@ -143,6 +143,46 @@ const RewardImageLabel = styled(Typography)(({ theme }) => ({
   }
 }))
 
+const SwagRewardContainer = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  maxWidth: '656px',
+  marginTop: '44px'
+})
+
+const SwagRewardTitle = styled(Typography)({
+  fontWeight: 400,
+  fontSize: '18px',
+  lineHeight: '100%',
+  letterSpacing: '0px',
+  marginBottom: '12px'
+})
+
+const SwagRewardInputContainer = styled(Box)({
+  display: 'flex',
+  width: '100%'
+})
+
+const SwagRewardInput = styled(TextField)({
+  width: '100%',
+  borderRadius: '8px',
+  fontSize: '16px',
+  marginRight: '8px',
+  height: '40px',
+  ['& .MuiInputBase-root']: {
+    background: 'rgba(252, 252, 252, 1)',
+    color: 'rgba(0, 0, 0, 1)',
+    height: '40px'
+  }
+})
+
+const SwagRewardButton = styled(Button)({
+  width: '158px',
+  height: '42px'
+})
+
 export {
   RewardReachedModal,
   AnimatedBackground,
@@ -154,5 +194,10 @@ export {
   GradientBorder,
   RewardImageContainer,
   RewardImage,
-  RewardImageLabel
+  RewardImageLabel,
+  SwagRewardContainer,
+  SwagRewardTitle,
+  SwagRewardInputContainer,
+  SwagRewardInput,
+  SwagRewardButton
 }
