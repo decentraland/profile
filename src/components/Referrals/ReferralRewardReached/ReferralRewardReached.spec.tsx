@@ -7,10 +7,31 @@ import { renderWithProviders } from '../../../tests/tests'
 import { REFERRAL_REWARD_REACHED_TEST_ID } from './constants'
 import { ReferralRewardReached } from './ReferralRewardReached'
 
+// Mock decentraland-ui2 to avoid MUI CssVarsProvider errors
+jest.mock('decentraland-ui2', () => ({
+  ...jest.requireActual('decentraland-ui2'),
+  DclThemeProvider: ({ children }: { children: React.ReactNode }) => <div data-testid="dcl-theme-provider">{children}</div>,
+  dclModal: {
+    Modal: ({ children, open, onClose, ...props }: any) =>
+      open ? (
+        <div data-testid="dcl-modal" onClick={onClose} {...props}>
+          {children}
+        </div>
+      ) : null
+  }
+}))
+
+jest.mock('@dcl/schemas', () => ({
+  ...jest.requireActual('@dcl/schemas'),
+  ['Email']: {
+    validate: jest.fn()
+  }
+}))
+
 const mockTranslations = {
   reward: 'Reward',
-  newItemUnlocked: 'New Item Unlocked!',
-  friendsJoined: '5 friends joined',
+  newItemUnlocked: 'NEW ITEM UNLOCKED',
+  friendsJoined: '5 Invites accepted',
   swagRewardTitle: 'Claim your swag',
   swagRewardInputPlaceholder: 'Enter your email',
   swagRewardButton: 'Submit'
@@ -38,13 +59,6 @@ const mockT = jest.fn((key, values) => {
 
 jest.mock('decentraland-dapps/dist/modules/translation/utils', () => ({
   t: mockT
-}))
-
-jest.mock('@dcl/schemas', () => ({
-  ...jest.requireActual('@dcl/schemas'),
-  ['Email']: {
-    validate: jest.fn()
-  }
 }))
 
 describe('ReferralRewardReached', () => {
