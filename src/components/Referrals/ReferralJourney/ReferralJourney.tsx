@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Typography } from 'decentraland-ui2'
+import { Tooltip, Typography } from 'decentraland-ui2'
 import { ReferralRewardCard } from '../ReferralRewardCard'
 import { ReferralRewardReached } from '../ReferralRewardReached'
-import { TIERS } from './constants'
+import { TIERS, REFERRAL_JOURNEY_TEST_ID } from './constants'
 import {
   SectionContainer,
   JourneyStep,
@@ -19,18 +19,38 @@ import {
   JourneyWrapper
 } from './ReferralJourney.styled'
 import { ANIMATION_DURATION } from './utils'
-import { AnimationPhaseType, ReferralJourneyProps } from './ReferralJourney.types'
+import { AnimationPhase as AnimationPhase, ReferralJourneyProps } from './ReferralJourney.types'
 
 // eslint-disable-next-line import/no-named-as-default-member
 const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
-  const { invitedUsersAccepted } = props
-  const [animatedStep, setAnimatedStep] = useState(TIERS.filter(tier => tier.completed).length)
+  const { invitedUsersAccepted, onSetReferralEmail } = props
+  const [animatedStep, setAnimatedStep] = useState(TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAccepted).length)
   const [open, setOpen] = useState(false)
-  const [journeyTiers, setJourneyTiers] = useState(TIERS)
-  const [animationPhase, setAnimationPhase] = useState<AnimationPhaseType>(AnimationPhaseType.WAITING_NEXT_TIER)
+  const [journeyTiers, setJourneyTiers] = useState(
+    TIERS.map(tier => ({ ...tier, completed: tier.invitesAccepted <= invitedUsersAccepted }))
+  )
+  const [animationPhase, setAnimationPhase] = useState<AnimationPhase>(AnimationPhase.WAITING_NEXT_TIER)
   const totalSteps = TIERS.length
   const journeyStepRefs = useRef<(Element | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
+
+  const tooltipTitle = useMemo(() => {
+    const currentTierIndex = TIERS.findIndex(tier => invitedUsersAccepted < tier.invitesAccepted)
+    const nextTier = currentTierIndex !== -1 ? TIERS[currentTierIndex] : null
+
+    if (!nextTier) {
+      return <Typography>{t('referral_journey.tooltip_title', { count: invitedUsersAccepted })}</Typography>
+    }
+
+    const friendsNeeded = nextTier.invitesAccepted - invitedUsersAccepted
+    return (
+      <Typography>
+        {t('referral_journey.tooltip_title', { count: invitedUsersAccepted })}
+        <br />
+        {t('referral_journey.tooltip_subtitle', { count: friendsNeeded })}
+      </Typography>
+    )
+  }, [invitedUsersAccepted])
 
   useEffect(() => {
     const currentTierIndex = TIERS.findIndex(tier => invitedUsersAccepted < tier.invitesAccepted)
@@ -38,8 +58,8 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
 
     if (animatedStep >= maxTierIndex) return
 
-    const isTierReached = animationPhase === AnimationPhaseType.TIER_REACHED && !open
-    const isWaitingNextTier = animationPhase === AnimationPhaseType.WAITING_NEXT_TIER && !open
+    const isTierReached = animationPhase === AnimationPhase.TIER_REACHED && !open
+    const isWaitingNextTier = animationPhase === AnimationPhase.WAITING_NEXT_TIER && !open
 
     if (!isTierReached && !isWaitingNextTier) return
 
@@ -47,13 +67,13 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
       if (sectionRef.current) {
         sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
-      setAnimationPhase(AnimationPhaseType.TIER_REACHED)
+      setAnimationPhase(AnimationPhase.TIER_REACHED)
       setAnimatedStep(prev => prev + 1)
     }
   }, [animatedStep, totalSteps, animationPhase, open, invitedUsersAccepted])
 
   useEffect(() => {
-    if (animationPhase !== AnimationPhaseType.TIER_REACHED) return
+    if (animationPhase !== AnimationPhase.TIER_REACHED) return
 
     const timeout = setTimeout(() => {
       setOpen(true)
@@ -86,38 +106,54 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
   const handleClose = () => {
     setOpen(false)
     setTimeout(() => {
-      setAnimationPhase(AnimationPhaseType.WAITING_NEXT_TIER)
+      setAnimationPhase(AnimationPhase.WAITING_NEXT_TIER)
     }, 10)
   }
 
   return (
-    <SectionContainer ref={sectionRef}>
-      <TitleContainer>
-        <Typography variant="h4">{t('referral_journey.title')}</Typography>
+    <SectionContainer ref={sectionRef} data-testid={REFERRAL_JOURNEY_TEST_ID.sectionContainer}>
+      <TitleContainer data-testid={REFERRAL_JOURNEY_TEST_ID.titleContainer}>
+        <Typography variant="h4" data-testid={REFERRAL_JOURNEY_TEST_ID.title}>
+          {t('referral_journey.title')}
+        </Typography>
       </TitleContainer>
-      <SubtitleContainer>
-        <Subtitle variant="h6">🤍 {t('referral_journey.invites_accepted', { count: invitedUsersAccepted })}</Subtitle>
+      <SubtitleContainer data-testid={REFERRAL_JOURNEY_TEST_ID.subtitleContainer}>
+        <Subtitle variant="h6" data-testid={REFERRAL_JOURNEY_TEST_ID.subtitle}>
+          🤍 {t('referral_journey.invites_accepted', { count: invitedUsersAccepted })}
+        </Subtitle>
       </SubtitleContainer>
-      <JourneyContainer>
-        <JourneyWrapper>
-          <JourneyStepper>
-            <JourneyStepLine
-              activeStep={animatedStep}
-              totalSteps={totalSteps}
-              phase={animationPhase}
-              invitedUsersAccepted={invitedUsersAccepted}
-            />
+      <JourneyContainer data-testid={REFERRAL_JOURNEY_TEST_ID.journeyContainer}>
+        <JourneyWrapper data-testid={REFERRAL_JOURNEY_TEST_ID.journeyWrapper}>
+          <JourneyStepper data-testid={REFERRAL_JOURNEY_TEST_ID.journeyStepper}>
+            <Tooltip title={tooltipTitle} followCursor arrow>
+              <JourneyStepLine
+                activeStep={animatedStep}
+                totalSteps={totalSteps}
+                phase={animationPhase}
+                invitedUsersAccepted={invitedUsersAccepted}
+                data-testid={REFERRAL_JOURNEY_TEST_ID.journeyStepLine}
+              />
+            </Tooltip>
             {journeyTiers.map((tier, i) => (
-              <JourneyStep key={i} ref={(el: Element | null) => (journeyStepRefs.current[i] = el)}>
+              <JourneyStep
+                key={i}
+                ref={(el: Element | null) => (journeyStepRefs.current[i] = el)}
+                data-testid={`${REFERRAL_JOURNEY_TEST_ID.journeyStep}-${i}`}
+              >
                 <GradientBorder
                   completed={tier.completed}
-                  showAnimation={animationPhase === AnimationPhaseType.TIER_REACHED && animatedStep === i + 1}
+                  showAnimation={animationPhase === AnimationPhase.TIER_REACHED && animatedStep === i + 1}
+                  data-testid={`${REFERRAL_JOURNEY_TEST_ID.gradientBorder}-${i}`}
                 >
-                  <JourneyStepIcon>
-                    {tier.completed && <CheckRoundedIcon fontSize="medium" data-testid="CheckRoundedIcon" />}
+                  <JourneyStepIcon data-testid={`${REFERRAL_JOURNEY_TEST_ID.journeyStepIcon}-${i}`}>
+                    {tier.completed && <CheckRoundedIcon fontSize="medium" data-testid={REFERRAL_JOURNEY_TEST_ID.checkRoundedIcon} />}
                   </JourneyStepIcon>
                 </GradientBorder>
-                <ReferralRewardCard {...tier} />
+                <ReferralRewardCard
+                  {...tier}
+                  onSetReferralEmail={onSetReferralEmail}
+                  data-testid={`${REFERRAL_JOURNEY_TEST_ID.referralRewardCard}-${i}`}
+                />
               </JourneyStep>
             ))}
           </JourneyStepper>
@@ -127,7 +163,8 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
         reward={journeyTiers[Math.max(animatedStep - 1, 0)]}
         open={open}
         onClick={handleClose}
-        data-testid="reward-modal"
+        onSetReferralEmail={onSetReferralEmail}
+        data-testid={REFERRAL_JOURNEY_TEST_ID.rewardModal}
       />
     </SectionContainer>
   )
