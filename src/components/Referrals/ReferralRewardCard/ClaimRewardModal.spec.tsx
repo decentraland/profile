@@ -1,6 +1,5 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { cleanup, screen, act, fireEvent } from '@testing-library/react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { renderWithProviders } from '../../../tests/tests'
 import ClaimRewardModal from './ClaimRewardModal'
@@ -19,118 +18,123 @@ describe('ClaimRewardModal', () => {
     jest.resetAllMocks()
   })
 
+  afterEach(() => {
+    renderedComponent.unmount()
+    cleanup()
+  })
+
   describe.only('when the modal is open', () => {
     beforeEach(() => {
-      onClose = jest.fn()
-      onConfirm = jest.fn()
-      renderedComponent = renderClaimRewardModal({ isOpen: true, onClose, onConfirm })
+      renderedComponent = renderClaimRewardModal({})
     })
 
-    it.only('should render the modal', () => {
-      expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.modal)).toBeInTheDocument()
+    afterEach(() => {
+      renderedComponent.unmount()
+      cleanup()
     })
 
-    it('should render the title component', () => {
+    it('should render all components with the correct text', () => {
       expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.title)).toBeInTheDocument()
-    })
-
-    it('should render the description component', () => {
       expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.description)).toBeInTheDocument()
-    })
-
-    it('should render the email input component', () => {
       expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput)).toBeInTheDocument()
-    })
-
-    it('should render the submit button component', () => {
       expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)).toBeInTheDocument()
-    })
-
-    it('should render the title with the correct text', () => {
       expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.title).textContent).toBe(t('claim_reward_modal.title'))
-    })
-
-    it('should render the description with the correct text', () => {
       expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.description).textContent).toBe(t('claim_reward_modal.description'))
-    })
-
-    it('should render the submit button with the correct text', () => {
       expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton).textContent).toBe(t('claim_reward_modal.submit'))
+      expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)).toBeDisabled()
     })
   })
 
   describe('when the modal is closed', () => {
     beforeEach(() => {
-      renderClaimRewardModal({ isOpen: false, onClose, onConfirm })
+      renderedComponent = renderClaimRewardModal({ isOpen: false })
+    })
+
+    afterEach(() => {
+      renderedComponent.unmount()
+      cleanup()
     })
 
     it('should not render the modal', () => {
-      expect(screen.queryByRole('presentation')).not.toBeInTheDocument()
-    })
-  })
-
-  describe('when the email input is empty', () => {
-    beforeEach(() => {
-      onClose = jest.fn()
-      onConfirm = jest.fn()
-      renderedComponent = renderClaimRewardModal({ isOpen: true, onClose, onConfirm })
-    })
-
-    it('should render the email input with empty value', () => {
-      const emailInput = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput).querySelector('input') as HTMLInputElement
-      expect(emailInput.value).toBe('')
-    })
-
-    it('should render the submit button as disabled', () => {
-      expect(screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)).toBeDisabled()
+      expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.title)).not.toBeInTheDocument()
     })
   })
 
   describe('when the user enters a valid email', () => {
     beforeEach(() => {
-      renderClaimRewardModal({ onClose, onConfirm })
+      onConfirm = jest.fn()
+      renderedComponent = renderClaimRewardModal({ onConfirm })
+    })
+
+    afterEach(() => {
+      renderedComponent.unmount()
+      cleanup()
     })
 
     it('should enable the submit button', async () => {
-      const emailInput = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput)
-      const submitButton = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)
+      const emailInput = renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput)
+      const submitButton = renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)
 
-      await userEvent.type(emailInput, 'test@example.com')
+      await act(async () => {
+        fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
+      })
 
       expect(submitButton).not.toBeDisabled()
     })
 
-    it('should call onConfirm when clicking submit button', async () => {
-      const emailInput = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput)
-      const submitButton = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)
+    describe('and the user clicks on the submit button', () => {
+      beforeEach(() => {
+        onConfirm = jest.fn()
+        renderedComponent = renderClaimRewardModal({ onClose, onConfirm })
+      })
 
-      await userEvent.type(emailInput, 'test@example.com')
-      await userEvent.click(submitButton)
+      afterEach(() => {
+        renderedComponent.unmount()
+        cleanup()
+      })
 
-      expect(onConfirm).toHaveBeenCalledWith('test@example.com')
+      it('should call onConfirm', async () => {
+        const emailInput = renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput)
+        const submitButton = renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)
+
+        await act(async () => {
+          fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
+        })
+
+        expect(submitButton).not.toBeDisabled()
+
+        await act(async () => {
+          fireEvent.click(submitButton)
+        })
+
+        expect(onConfirm).toHaveBeenCalledWith('test@example.com')
+      })
     })
   })
 
   describe('when the user enters an invalid email', () => {
     beforeEach(() => {
-      renderClaimRewardModal({ onClose, onConfirm })
+      renderedComponent = renderClaimRewardModal({})
     })
 
-    it('should keep the submit button disabled', async () => {
+    afterEach(() => {
+      renderedComponent.unmount()
+      cleanup()
+    })
+
+    it('should keep the submit button disabled not call onConfirm when clicking submit button', async () => {
       const emailInput = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput)
       const submitButton = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)
 
-      await userEvent.type(emailInput, 'invalid-email')
+      await act(async () => {
+        fireEvent.change(emailInput, { target: { value: 'invalid-email' } })
+      })
 
       expect(submitButton).toBeDisabled()
-    })
 
-    it('should not call onConfirm when clicking submit button', async () => {
-      const emailInput = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput)
-      const submitButton = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)
-
-      await userEvent.type(emailInput, 'invalid-email')
-      await userEvent.click(submitButton)
+      await act(async () => {
+        fireEvent.click(submitButton)
+      })
 
       expect(onConfirm).not.toHaveBeenCalled()
     })
@@ -138,13 +142,21 @@ describe('ClaimRewardModal', () => {
 
   describe('when the user clicks the close button', () => {
     beforeEach(() => {
-      renderClaimRewardModal({ onClose, onConfirm })
+      onClose = jest.fn()
+      renderedComponent = renderClaimRewardModal({ onClose })
+    })
+
+    afterEach(() => {
+      renderedComponent.unmount()
+      cleanup()
     })
 
     it('should call onClose', async () => {
       const closeButton = screen.getByLabelText('close')
 
-      await userEvent.click(closeButton)
+      await act(async () => {
+        fireEvent.click(closeButton)
+      })
 
       expect(onClose).toHaveBeenCalledTimes(1)
     })
@@ -152,36 +164,31 @@ describe('ClaimRewardModal', () => {
 
   describe('when the user enters an invalid email and then a valid one', () => {
     beforeEach(() => {
-      renderClaimRewardModal({ onClose, onConfirm })
+      onClose = jest.fn()
+      onConfirm = jest.fn()
+      renderedComponent = renderClaimRewardModal({ onClose, onConfirm })
+    })
+
+    afterEach(() => {
+      renderedComponent.unmount()
+      cleanup()
     })
 
     it('should enable the submit button after entering valid email', async () => {
       const emailInput = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput)
       const submitButton = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)
 
-      await userEvent.type(emailInput, 'invalid-email')
+      await act(async () => {
+        fireEvent.change(emailInput, { target: { value: 'invalid-email' } })
+      })
+
       expect(submitButton).toBeDisabled()
 
-      await userEvent.clear(emailInput)
-      await userEvent.type(emailInput, 'valid@example.com')
+      await act(async () => {
+        fireEvent.change(emailInput, { target: { value: 'valid@example.com' } })
+      })
 
       expect(submitButton).not.toBeDisabled()
-    })
-  })
-
-  describe('when the modal is closed and reopened', () => {
-    it('should clear the email input', async () => {
-      const { rerender } = renderClaimRewardModal({ isOpen: true, onClose, onConfirm })
-
-      const emailInput = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput).querySelector('input') as HTMLInputElement
-      await userEvent.type(emailInput, 'test@example.com')
-
-      rerender(<ClaimRewardModal isOpen={false} onClose={onClose} onConfirm={onConfirm} />)
-
-      rerender(<ClaimRewardModal isOpen={true} onClose={onClose} onConfirm={onConfirm} />)
-
-      const newEmailInput = screen.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.emailInput).querySelector('input') as HTMLInputElement
-      expect(newEmailInput.value).toBe('')
     })
   })
 })

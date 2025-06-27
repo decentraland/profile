@@ -38,7 +38,7 @@ const ClaimRewardModal = (props: ClaimRewardModalProps) => {
   )
 
   return (
-    <dclModal.Modal size="small" onClose={handleClose} open={isOpen} data-testid={CLAIM_REWARD_MODAL_TEST_ID.modal}>
+    <dclModal.Modal size="small" onClose={handleClose} open={isOpen}>
       <>
         <Title variant="h2" data-testid={CLAIM_REWARD_MODAL_TEST_ID.title}>
           {t('claim_reward_modal.title')}

@@ -6,7 +6,6 @@ export const REFERRAL_REWARD_CHECK_ICON_TEST_ID = 'referral-reward-check-icon'
 export const REFERRAL_REWARD_LOCK_ICON_TEST_ID = 'referral-reward-lock-icon'
 
 export const CLAIM_REWARD_MODAL_TEST_ID = {
-  modal: 'claim-reward-modal',
   title: 'claim-reward-modal-title',
   description: 'claim-reward-modal-description',
   emailInput: 'claim-reward-modal-email-input',
