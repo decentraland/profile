@@ -11,17 +11,15 @@ const ClaimRewardModal = (props: ClaimRewardModalProps) => {
   const [email, setEmail] = useState('')
   const [hasError, setHasError] = useState(false)
 
-  const isEmailValid = Email.validate(email)
-
   const handleConfirm = useCallback(() => {
-    if (isEmailValid) {
+    if (Email.validate(email)) {
       setHasError(false)
       onConfirm(email)
       setEmail('')
     } else {
       setHasError(true)
     }
-  }, [onConfirm, email, isEmailValid])
+  }, [onConfirm, email])
 
   const handleClose = useCallback(() => {
     setEmail('')
@@ -62,7 +60,7 @@ const ClaimRewardModal = (props: ClaimRewardModalProps) => {
           <ModalButton
             variant="contained"
             onClick={handleConfirm}
-            disabled={!isEmailValid}
+            disabled={!Email.validate(email)}
             data-testid={CLAIM_REWARD_MODAL_TEST_ID.submitButton}
           >
             {t('claim_reward_modal.submit')}
