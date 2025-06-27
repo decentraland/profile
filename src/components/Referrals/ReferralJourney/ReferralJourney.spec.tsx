@@ -2,7 +2,7 @@ import React from 'react'
 import { fireEvent, act, cleanup } from '@testing-library/react'
 import { setReferralEmailRequest } from '../../../modules/referrals/actions'
 import { renderWithProviders } from '../../../tests/tests'
-import { REFERRAL_REWARD_CARD_TEST_ID } from '../ReferralRewardCard/constants'
+import { REFERRAL_REWARD_CARD_TEST_ID, REFERRAL_REWARD_IMAGE_TEST_ID } from '../ReferralRewardCard/constants'
 import { REFERRAL_REWARD_REACHED_TEST_ID } from '../ReferralRewardReached/constants'
 import { REFERRAL_JOURNEY_TEST_ID, TIERS } from './constants'
 import { ReferralJourney } from './ReferralJourney'
@@ -162,14 +162,14 @@ describe('ReferralJourney', () => {
       cleanup()
     })
 
-    it('should have a heading and all reward descriptions visible', () => {
+    it('should have a heading and all reward image visible', () => {
       const { getByTestId, getAllByTestId } = renderedComponent
       expect(getByTestId(REFERRAL_JOURNEY_TEST_ID.title)).toBeInTheDocument()
 
-      const descriptions = getAllByTestId(REFERRAL_REWARD_DESCRIPTION_TEST_ID)
-      expect(descriptions).toHaveLength(TIERS.length)
-      descriptions.forEach(description => {
-        expect(description).toHaveTextContent(mockTranslations.unlock)
+      const images = getAllByTestId(REFERRAL_REWARD_IMAGE_TEST_ID)
+      expect(images).toHaveLength(TIERS.length)
+      images.forEach(image => {
+        expect(image).toBeInTheDocument()
       })
     })
   })
