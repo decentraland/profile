@@ -6,9 +6,13 @@ export type Props = {
   invitedUsersAccepted: number
   invitedUsersAcceptedViewed: number
   onFetchReferrals: typeof fetchReferralsRequest
+  isReferralTestingButtonEnabled: boolean
 }
 
-export type MapStateProps = Pick<Props, 'profileAddress' | 'invitedUsersAccepted' | 'invitedUsersAcceptedViewed'>
+export type MapStateProps = Pick<
+  Props,
+  'profileAddress' | 'invitedUsersAccepted' | 'invitedUsersAcceptedViewed' | 'isReferralTestingButtonEnabled'
+>
 export type MapDispatch = Dispatch
 export type MapDispatchProps = Pick<Props, 'onFetchReferrals'>
 export type OwnProps = Pick<Props, 'profileAddress'>

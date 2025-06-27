@@ -75,7 +75,16 @@ const Subtitle = styled(Box)({
 
 const TooltipLink = styled(Link)({
   color: '#fff',
+  textDecoration: 'underline',
   ['&:hover']: {
+    color: '#fff',
+    textDecoration: 'underline'
+  },
+  ['&:active']: {
+    color: '#fff',
+    textDecoration: 'underline'
+  },
+  ['&:focus']: {
     color: '#fff',
     textDecoration: 'underline'
   }
@@ -176,11 +185,11 @@ const ReferralContainer = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
-  marginTop: '24px',
   width: '100%',
   maxWidth: '520px',
   gap: '12px'
 })
+
 const ReferralInput = styled(TextField)(({ theme }) => ({
   width: '100%',
   borderRadius: '8px',

@@ -1,1 +1,1 @@
-export { ReferralJourney } from './ReferralJourney'
+export { default as ReferralJourney } from './ReferralJourney.container'

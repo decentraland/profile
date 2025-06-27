@@ -1,6 +1,6 @@
 import { Box, Typography, emotionStyled as styled, keyframes } from 'decentraland-ui2'
 import { ANIMATION_DURATION, calculateProgressPercentage } from './utils'
-import { AnimationPhaseType } from './ReferralJourney.types'
+import { AnimationPhase } from './ReferralJourney.types'
 
 const shakeAnimation = keyframes`
   0% { transform: scale(1); }
@@ -100,11 +100,11 @@ const JourneyStepper = styled(Box)({
 const JourneyStepLine = styled(Box)<{
   activeStep: number
   totalSteps: number
-  phase: AnimationPhaseType
+  phase: AnimationPhase
   invitedUsersAccepted: number
 }>(({ activeStep, totalSteps, phase, invitedUsersAccepted, theme }) => {
   const percent = calculateProgressPercentage(totalSteps, invitedUsersAccepted)
-  const isInitialState = activeStep === 0 && phase === AnimationPhaseType.TIER_REACHED
+  const isInitialState = activeStep === 0 && phase === AnimationPhase.TIER_REACHED
 
   return {
     flex: '1',
@@ -142,7 +142,7 @@ const JourneyStep = styled(Box)({
   justifyContent: 'center',
   gap: '16px',
   ['&:nth-child(2)']: {
-    paddingLeft: '2px'
+    marginLeft: '4px'
   },
   ['&:last-child']: {
     marginRight: '0'

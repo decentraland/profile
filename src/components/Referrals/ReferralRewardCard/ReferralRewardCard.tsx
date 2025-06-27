@@ -1,68 +1,92 @@
-import React from 'react'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import React, { useState } from 'react'
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
+import LockRoundedIcon from '@mui/icons-material/LockRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Tooltip } from 'decentraland-ui2'
-import type { ReferralTier } from '../../../modules/referrals/types'
+import ClaimRewardModal from './ClaimRewardModal'
 import {
   REFERRAL_REWARD_CARD_TEST_ID,
-  REFERRAL_REWARD_TIER_TEST_ID,
   REFERRAL_REWARD_IMAGE_TEST_ID,
   REFERRAL_REWARD_RARITY_TEST_ID,
-  REFERRAL_REWARD_SWAG_CONTAINER_TEST_ID,
-  REFERRAL_REWARD_DESCRIPTION_TEST_ID,
-  REFERRAL_REWARD_CLAIM_BUTTON_TEST_ID
+  REFERRAL_REWARD_CLAIM_BUTTON_TEST_ID,
+  REFERRAL_REWARD_CHECK_ICON_TEST_ID,
+  REFERRAL_REWARD_LOCK_ICON_TEST_ID
 } from './constants'
 import {
   GradientBorder,
   CardContainer,
   ClaimButton,
-  Description,
   RewardRarity,
   RewardImage,
-  RewardLabel,
   RewardImageContainer,
-  SwagRarityContainer
+  ReferralRewardCardContainer,
+  ReferralRewardCardHeader,
+  ReferralRewardCardTitle,
+  HeaderContainer,
+  CompletedIcon
 } from './ReferralRewardCard.styled'
+import { ReferralRewardCardProps } from './ReferralRewardCard.types'
 
 // eslint-disable-next-line import/no-named-as-default-member
-const ReferralRewardCard = React.memo((props: ReferralTier) => {
-  const { invitesAccepted, rarity, completed, image, claim } = props
+const ReferralRewardCard = React.memo((props: ReferralRewardCardProps) => {
+  const { invitesAccepted, rarity, completed, image, onSetReferralEmail } = props
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleClaimClick = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleConfirmClaim = (email: string) => {
+    if (onSetReferralEmail) {
+      onSetReferralEmail(email)
+    }
+    setIsModalOpen(false)
+  }
 
   return (
-    <GradientBorder completed={completed} data-testid={REFERRAL_REWARD_CARD_TEST_ID}>
-      <CardContainer completed={completed}>
-        <RewardLabel variant="subtitle1" data-testid={REFERRAL_REWARD_TIER_TEST_ID}>
-          {t('referral_reward_card.tier', { count: invitesAccepted })}
-        </RewardLabel>
-        <RewardImageContainer>
-          <RewardImage src={image} alt={t('referral_reward_card.image_alt')} data-testid={REFERRAL_REWARD_IMAGE_TEST_ID} />
-        </RewardImageContainer>
-        {rarity && (
-          <RewardRarity rarity={rarity} data-testid={REFERRAL_REWARD_RARITY_TEST_ID}>
-            {rarity === 'SWAG' ? (
-              <SwagRarityContainer data-testid={REFERRAL_REWARD_SWAG_CONTAINER_TEST_ID}>
-                {t('referral_reward_card.swag')}
-                <Tooltip disableFocusListener title="Some information" placement="right">
-                  <InfoOutlinedIcon fontSize="small" />
-                </Tooltip>
-              </SwagRarityContainer>
-            ) : (
-              rarity.toUpperCase()
+    <>
+      <ReferralRewardCardContainer>
+        <ReferralRewardCardHeader>
+          <ReferralRewardCardTitle>{invitesAccepted}</ReferralRewardCardTitle>
+        </ReferralRewardCardHeader>
+        <GradientBorder completed={completed} data-testid={REFERRAL_REWARD_CARD_TEST_ID}>
+          <CardContainer completed={completed} rarity={rarity}>
+            <HeaderContainer>
+              {rarity && (
+                <RewardRarity rarity={rarity} data-testid={REFERRAL_REWARD_RARITY_TEST_ID}>
+                  {rarity === 'SWAG' ? t('referral_reward_card.swag') : rarity.toUpperCase()}
+                </RewardRarity>
+              )}
+              <CompletedIcon>
+                {completed ? (
+                  <CheckRoundedIcon fontSize="small" data-testid={REFERRAL_REWARD_CHECK_ICON_TEST_ID} />
+                ) : (
+                  <LockRoundedIcon fontSize="small" data-testid={REFERRAL_REWARD_LOCK_ICON_TEST_ID} />
+                )}
+              </CompletedIcon>
+            </HeaderContainer>
+            <RewardImageContainer>
+              <RewardImage
+                completed={completed}
+                src={image}
+                alt={t('referral_reward_card.image_alt')}
+                data-testid={REFERRAL_REWARD_IMAGE_TEST_ID}
+              />
+            </RewardImageContainer>
+            {completed && rarity === 'SWAG' && (
+              <ClaimButton variant="text" data-testid={REFERRAL_REWARD_CLAIM_BUTTON_TEST_ID} onClick={handleClaimClick}>
+                {t('referral_reward_card.claim')}
+              </ClaimButton>
             )}
-          </RewardRarity>
-        )}
-        {!claim && (
-          <Description data-testid={REFERRAL_REWARD_DESCRIPTION_TEST_ID}>
-            {completed ? t('referral_reward_card.unlocked') : t('referral_reward_card.unlock')}
-          </Description>
-        )}
-        {completed && claim && (
-          <ClaimButton variant="contained" data-testid={REFERRAL_REWARD_CLAIM_BUTTON_TEST_ID}>
-            {t('referral_reward_card.claim')}
-          </ClaimButton>
-        )}
-      </CardContainer>
-    </GradientBorder>
+          </CardContainer>
+        </GradientBorder>
+      </ReferralRewardCardContainer>
+
+      <ClaimRewardModal isOpen={isModalOpen} onClose={handleCloseModal} onConfirm={handleConfirmClaim} />
+    </>
   )
 })
 
