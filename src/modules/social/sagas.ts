@@ -1,4 +1,5 @@
-import { takeEvery, call, put, race, take, select } from 'redux-saga/effects'
+import { takeEvery, call, put, race, take, select, all } from 'redux-saga/effects'
+import { FriendshipRequestResponse } from '@dcl/social-rpc-client/dist/protobuff-types/decentraland/social_service/v2/social_service_v2.gen'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import { CLOSE_MODAL, CloseModalAction, openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { CONNECT_WALLET_SUCCESS, ConnectWalletSuccessAction } from 'decentraland-dapps/dist/modules/wallet/actions'
@@ -40,7 +41,14 @@ import {
   LogInAndRequestFriendshipRequestAction,
   logInAndRequestFriendshipRequest
 } from './actions'
-import { getClient, getFriends, getMutualFriends, initiateSocialClient } from './client'
+import {
+  getClient,
+  getFriends,
+  getMutualFriends,
+  getPendingIncomingFriendshipRequests,
+  getPendingOutgoingFriendshipRequests,
+  initiateSocialClient
+} from './client'
 import { getFriendshipStatus } from './selectors'
 import { FriendshipStatus, RequestEvent, SocialClient } from './types'
 
@@ -85,17 +93,20 @@ export function* socialSagas() {
 
   function* handleFetchFriendRequests() {
     try {
-      const client: SocialClient = yield call(getClient)
-      const requestEvents: Awaited<ReturnType<SocialClient['getRequestEvents']>> = yield call([client, 'getRequestEvents'])
+      const [incomingRequests, outgoingRequests] = (yield all([
+        call(getPendingIncomingFriendshipRequests),
+        call(getPendingOutgoingFriendshipRequests)
+      ])) as [FriendshipRequestResponse[], FriendshipRequestResponse[]]
+
       const incoming: RequestEvent[] =
-        requestEvents?.incoming?.items.map(event => ({
-          address: event.user?.address.toLowerCase() ?? 'Unknown',
+        incomingRequests.map(event => ({
+          address: event.friend?.address.toLowerCase() ?? 'Unknown',
           createdAt: event.createdAt,
           message: event.message
         })) ?? []
       const outgoing: RequestEvent[] =
-        requestEvents?.outgoing?.items.map(event => ({
-          address: event.user?.address.toLowerCase() ?? 'Unknown',
+        outgoingRequests.map(event => ({
+          address: event.friend?.address.toLowerCase() ?? 'Unknown',
           createdAt: event.createdAt,
           message: event.message
         })) ?? []

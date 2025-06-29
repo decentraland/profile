@@ -5,7 +5,7 @@
   "PEER_URL": "https://peer-testing.decentraland.org",
   "MARKETPLACE_GRAPH_URL": "https://subgraph.decentraland.org/marketplace",
   "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org",
-  "SOCIAL_RPC_URL": "wss://rpc-social-service.decentraland.today",
+  "SOCIAL_RPC_URL": "wss://rpc-social-service-ea.decentraland.today",
   "DOCS_URL": "https://docs.decentraland.org",
   "BUILDER_URL": "https://decentraland.today/builder",
   "SYNAPSE_URL": "https://social.decentraland.today",
