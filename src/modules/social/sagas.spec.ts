@@ -40,7 +40,14 @@ import {
   FetchFriendsSuccessAction,
   FetchFriendsFailureAction
 } from './actions'
-import { getClient, getFriends, getMutualFriends, initiateSocialClient } from './client'
+import {
+  getClient,
+  getFriends,
+  getMutualFriends,
+  getPendingIncomingFriendshipRequests,
+  getPendingOutgoingFriendshipRequests,
+  initiateSocialClient
+} from './client'
 import { socialSagas } from './sagas'
 import { getFriendshipStatus } from './selectors'
 import { FriendshipStatus, RequestEvent, SocialClient } from './types'
@@ -96,20 +103,26 @@ describe('when handling the fetch friends requests action', () => {
       return expectSaga(socialSagas)
         .provide([
           [
-            call(getClient),
-            {
-              getRequestEvents: () =>
-                Promise.resolve({
-                  incoming: {
-                    items: [{ user: { address: incomingEvents[0].address.toUpperCase() }, createdAt: incomingEvents[0].createdAt }],
-                    total: incomingEvents.length
-                  },
-                  outgoing: {
-                    items: [{ user: { address: outgoingEvents[0].address.toUpperCase() }, createdAt: outgoingEvents[0].createdAt }],
-                    total: outgoingEvents.length
-                  }
-                })
-            }
+            call(getPendingIncomingFriendshipRequests),
+            Promise.resolve([
+              {
+                id: '123',
+                friend: { address: incomingEvents[0].address.toUpperCase() },
+                createdAt: incomingEvents[0].createdAt,
+                message: incomingEvents[0].message
+              }
+            ])
+          ],
+          [
+            call(getPendingOutgoingFriendshipRequests),
+            Promise.resolve([
+              {
+                id: '123',
+                friend: { address: outgoingEvents[0].address.toUpperCase() },
+                createdAt: outgoingEvents[0].createdAt,
+                message: outgoingEvents[0].message
+              }
+            ])
           ]
         ])
         .put(fetchFriendRequestsEventsSuccess({ incoming: incomingEvents, outgoing: outgoingEvents }))
@@ -118,10 +131,34 @@ describe('when handling the fetch friends requests action', () => {
     })
   })
 
-  describe('and getting the friends requests fails', () => {
+  describe('and getting the pending incoming friendship requests fails', () => {
     it('should put a fetch friends requests failure action with the error message', () => {
       return expectSaga(socialSagas)
-        .provide([[call(getClient), Promise.reject(new Error('anErrorMessage'))]])
+        .provide([
+          [call(getPendingIncomingFriendshipRequests), Promise.reject(new Error('anErrorMessage'))],
+          [call(getPendingOutgoingFriendshipRequests), Promise.resolve([])]
+        ])
+        .put(fetchFriendRequestsEventsFailure('anErrorMessage'))
+        .dispatch(fetchFriendRequestsEventsRequest())
+        .silentRun()
+    })
+  })
+
+  describe('and getting the pending outgoing friendship requests fails', () => {
+    it('should put a fetch friends requests failure action with the error message', () => {
+      return expectSaga(socialSagas)
+        .provide([
+          [
+            call(getPendingIncomingFriendshipRequests),
+            Promise.resolve({
+              requests: [],
+              paginationData: {
+                total: 0
+              }
+            })
+          ],
+          [call(getPendingOutgoingFriendshipRequests), Promise.reject(new Error('anErrorMessage'))]
+        ])
         .put(fetchFriendRequestsEventsFailure('anErrorMessage'))
         .dispatch(fetchFriendRequestsEventsRequest())
         .silentRun()
@@ -156,7 +193,7 @@ describe('when handing the login success action', () => {
         .put(initializeSocialClientRequest())
         .call.like({
           fn: initiateSocialClient,
-          args: [address.toLocaleLowerCase(), identity]
+          args: [identity]
         })
         .put(initializeSocialClientSuccess())
         .dispatch(loginSuccess({ address, identity }))
@@ -193,14 +230,17 @@ describe('when handling the friendship request action', () => {
 
     beforeEach(() => {
       resolvedEvent = {
-        request: {
-          user: {
-            address: 'anAddress'
-          },
-          createdAt: 123456789
-        }
+        id: '123',
+        createdAt: 123456789,
+        friend: {
+          name: 'anAddress',
+          hasClaimedName: false,
+          profilePictureUrl: 'anUrl',
+          address: 'anAddress'
+        },
+        message: 'aMessage'
       }
-      requestEvent = { address: 'anAddress', createdAt: 123456789, message: undefined }
+      requestEvent = { address: 'anAddress', createdAt: 123456789, message: 'aMessage' }
       mockedClient = { requestFriendship: () => Promise.resolve(resolvedEvent) }
     })
 
@@ -208,7 +248,13 @@ describe('when handling the friendship request action', () => {
       return expectSaga(socialSagas)
         .provide([[call(getClient), Promise.resolve(mockedClient)]])
         .call.like({ fn: mockedClient.requestFriendship, args: [requestEvent.address.toLowerCase()] })
-        .put(requestFriendshipSuccess(requestEvent))
+        .put(
+          requestFriendshipSuccess({
+            address: requestEvent.address,
+            createdAt: requestEvent.createdAt,
+            message: requestEvent.message
+          })
+        )
         .dispatch(requestFriendshipRequest(requestEvent.address))
         .silentRun()
     })
@@ -267,7 +313,7 @@ describe('when handling the remove friend request action', () => {
   describe('and the removal fails', () => {
     it('should put a remove friend failure action with the error', () => {
       return expectSaga(socialSagas)
-        .provide([[call(getClient), Promise.resolve({ removeFriend: () => Promise.reject(new Error('anErrorMessage')) })]])
+        .provide([[call(getClient), Promise.resolve({ deleteFriendshipRequest: () => Promise.reject(new Error('anErrorMessage')) })]])
         .put(removeFriendFailure('anErrorMessage'))
         .dispatch(removeFriendRequest('anAddress'))
         .silentRun()
@@ -275,16 +321,16 @@ describe('when handling the remove friend request action', () => {
   })
 
   describe('and the removal succeeds', () => {
-    let mockedClient: { removeFriend: () => Promise<void> }
+    let mockedClient: { deleteFriendshipRequest: () => Promise<void> }
 
     beforeEach(() => {
-      mockedClient = { removeFriend: () => Promise.resolve() }
+      mockedClient = { deleteFriendshipRequest: () => Promise.resolve() }
     })
 
     it('should put a reject friend success action with the address of the new friend', () => {
       return expectSaga(socialSagas)
         .provide([[call(getClient), Promise.resolve(mockedClient)]])
-        .call.like({ fn: mockedClient.removeFriend, args: ['anAddress'.toLowerCase()] })
+        .call.like({ fn: mockedClient.deleteFriendshipRequest, args: ['anAddress'.toLowerCase()] })
         .put(removeFriendSuccess('anAddress'.toLowerCase()))
         .dispatch(removeFriendRequest('anAddress'))
         .silentRun()
