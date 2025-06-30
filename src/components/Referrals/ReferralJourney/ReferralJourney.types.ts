@@ -8,7 +8,7 @@ enum AnimationPhase {
 
 type ReferralJourneyProps = {
   invitedUsersAccepted: number
-  onSetReferralEmail: typeof setReferralEmailRequest
+  onSetReferralEmail: (email: string) => unknown
 }
 
 type MapStateProps = {

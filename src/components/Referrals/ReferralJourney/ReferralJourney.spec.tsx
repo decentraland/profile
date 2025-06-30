@@ -1,6 +1,5 @@
 import React from 'react'
 import { fireEvent, act, cleanup } from '@testing-library/react'
-import { setReferralEmailRequest } from '../../../modules/referrals/actions'
 import { renderWithProviders } from '../../../tests/tests'
 import { REFERRAL_REWARD_CARD_TEST_ID, REFERRAL_REWARD_IMAGE_TEST_ID } from '../ReferralRewardCard/constants'
 import { REFERRAL_REWARD_REACHED_TEST_ID } from '../ReferralRewardReached/constants'
@@ -50,15 +49,8 @@ describe('ReferralJourney', () => {
   let invitedUsersAccepted: number
   let renderedComponent: ReturnType<typeof renderReferralJourney>
 
-  const mockOnSetReferralEmail = Object.assign(jest.fn(), {
-    type: 'setReferralEmailRequest',
-    match: jest.fn()
-  }) as unknown as typeof setReferralEmailRequest
-
   const renderReferralJourney = (props: Partial<ReferralJourneyProps>) => {
-    return renderWithProviders(
-      <ReferralJourney invitedUsersAccepted={invitedUsersAccepted} onSetReferralEmail={mockOnSetReferralEmail} {...props} />
-    )
+    return renderWithProviders(<ReferralJourney invitedUsersAccepted={invitedUsersAccepted} onSetReferralEmail={jest.fn()} {...props} />)
   }
 
   beforeEach(() => {

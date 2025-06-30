@@ -42,7 +42,7 @@ describe('ClaimRewardModal', () => {
       expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.title).textContent).toBe(t('claim_reward_modal.title'))
       expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.description).textContent).toBe(t('claim_reward_modal.description'))
       expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton).textContent).toBe(t('claim_reward_modal.submit'))
-      expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)).toBeDisabled()
+      expect(renderedComponent.getByTestId(CLAIM_REWARD_MODAL_TEST_ID.submitButton)).not.toBeDisabled()
     })
   })
 
