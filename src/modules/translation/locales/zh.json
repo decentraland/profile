@@ -214,7 +214,8 @@
     "invites_accepted": "{count} 朋友加入",
     "swag_reward_title": "输入您的电子邮件，我们将与您联系安排发送您的 IRL 赃物包！",
     "swag_reward_input_placeholder": "在此输入您的电子邮件",
-    "swag_reward_button": "提交"
+    "swag_reward_button": "提交",
+    "swag_reward_error_message": "无效的电子邮件格式"
   },
   "referral_journey": {
     "title": "你的奖励旅程",
@@ -226,6 +227,7 @@
     "title": "领取你的 IRL 赃物包",
     "description": "输入您的电子邮件，我们将与您联系安排发送您的 IRL 赃物包！",
     "email_placeholder": "在此输入您的电子邮件",
-    "submit": "提交"
+    "submit": "提交",
+    "error_message": "无效的电子邮件格式"
   }
 }

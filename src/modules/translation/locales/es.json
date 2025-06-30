@@ -214,7 +214,8 @@
     "invites_accepted": "{count} Amigos se han unido",
     "swag_reward_title": "Ingresa tu correo electrónico y te contactaremos para coordinar el envío de tu bolsa de swag!",
     "swag_reward_input_placeholder": "Escribe tu correo electrónico aquí",
-    "swag_reward_button": "ENVIAR"
+    "swag_reward_button": "ENVIAR",
+    "swag_reward_error_message": "Formato de correo electrónico inválido"
   },
   "referral_journey": {
     "title": "Tu viaje de recompensas",
@@ -226,6 +227,7 @@
     "title": "Reclamar tu bolsa de swag",
     "description": "Ingresa tu correo electrónico y te contactaremos para coordinar el envío de tu bolsa de swag!",
     "email_placeholder": "Escribe tu correo electrónico aquí",
-    "submit": "ENVIAR"
+    "submit": "ENVIAR",
+    "error_message": "Formato de correo electrónico inválido"
   }
 }

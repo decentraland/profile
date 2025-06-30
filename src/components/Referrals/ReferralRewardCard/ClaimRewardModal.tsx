@@ -52,7 +52,7 @@ const ClaimRewardModal = (props: ClaimRewardModalProps) => {
             onChange={handleEmailChange}
             type="email"
             error={hasError}
-            helperText={hasError ? 'Invalid email format' : ''}
+            helperText={hasError ? t('claim_reward_modal.error_message') : ''}
             inputProps={{
               ['data-testid']: CLAIM_REWARD_MODAL_TEST_ID.emailInput
             }}
@@ -60,7 +60,7 @@ const ClaimRewardModal = (props: ClaimRewardModalProps) => {
           <ModalButton
             variant="contained"
             onClick={handleConfirm}
-            disabled={!Email.validate(email)}
+            disabled={hasError}
             data-testid={CLAIM_REWARD_MODAL_TEST_ID.submitButton}
           >
             {t('claim_reward_modal.submit')}

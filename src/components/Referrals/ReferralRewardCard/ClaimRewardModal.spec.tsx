@@ -23,6 +23,7 @@ describe('ClaimRewardModal', () => {
     cleanup()
   })
 
+  // TODO: we are running only this test by the time being
   describe.only('when the modal is open', () => {
     beforeEach(() => {
       renderedComponent = renderClaimRewardModal({})

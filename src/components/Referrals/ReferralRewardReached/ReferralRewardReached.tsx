@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default-member */
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Email } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { REFERRAL_REWARD_REACHED_TEST_ID } from './constants'
@@ -31,29 +31,35 @@ const ReferralRewardReached = React.memo((props: ReferralRewardReachedProps) => 
   const [email, setEmail] = useState('')
   const [hasError, setHasError] = useState(false)
 
-  const handleInputClick = (event: React.MouseEvent) => {
+  const handleInputClick = useCallback((event: React.MouseEvent) => {
     event.stopPropagation()
-  }
+  }, [])
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value)
-    if (hasError) {
-      setHasError(false)
-    }
-  }
-
-  const handleButtonClick = (event: React.MouseEvent) => {
-    event.stopPropagation()
-
-    if (Email.validate(email)) {
-      setHasError(false)
-      if (onSetReferralEmail) {
-        onSetReferralEmail(email)
+  const handleInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(event.target.value)
+      if (hasError) {
+        setHasError(false)
       }
-    } else {
-      setHasError(true)
-    }
-  }
+    },
+    [hasError]
+  )
+
+  const handleButtonClick = useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation()
+
+      if (Email.validate(email)) {
+        setHasError(false)
+        if (onSetReferralEmail) {
+          onSetReferralEmail(email)
+        }
+      } else {
+        setHasError(true)
+      }
+    },
+    [email, onSetReferralEmail]
+  )
 
   return (
     <RewardReachedModal open={open} onClose={onClick} onClick={onClick} data-testid={REFERRAL_REWARD_REACHED_TEST_ID.modal}>
@@ -85,7 +91,7 @@ const ReferralRewardReached = React.memo((props: ReferralRewardReachedProps) => 
                 onChange={handleInputChange}
                 onClick={handleInputClick}
                 error={hasError}
-                helperText={hasError ? 'Invalid email format' : ''}
+                helperText={hasError ? t('referral_reward_reached.swag_reward_error_message') : ''}
                 inputProps={{
                   ['data-testid']: REFERRAL_REWARD_REACHED_TEST_ID.swagRewardInput
                 }}

@@ -214,7 +214,8 @@
     "invites_accepted": "{count} Invites accepted",
     "swag_reward_title": "Enter your email and we'll reach out to arrange the shipment of your IRL Swag Bag!",
     "swag_reward_input_placeholder": "Write your email here",
-    "swag_reward_button": "SUBMIT"
+    "swag_reward_button": "SUBMIT",
+    "swag_reward_error_message": "Invalid email format"
   },
   "referral_journey": {
     "title": "Your Reward Journey",
@@ -226,6 +227,7 @@
     "title": "Claim your IRL Swag Pack",
     "description": "Enter your email and we'll reach out to arrange the shipment of your IRL Swag Bag!",
     "email_placeholder": "Write your email here",
-    "submit": "SUBMIT"
+    "submit": "SUBMIT",
+    "error_message": "Invalid email format"
   }
 }

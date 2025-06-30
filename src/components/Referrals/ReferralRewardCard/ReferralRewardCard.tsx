@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import LockRoundedIcon from '@mui/icons-material/LockRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
@@ -31,20 +31,23 @@ const ReferralRewardCard = React.memo((props: ReferralRewardCardProps) => {
   const { invitesAccepted, rarity, completed, image, onSetReferralEmail } = props
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleClaimClick = () => {
+  const handleClaimClick = useCallback(() => {
     setIsModalOpen(true)
-  }
+  }, [])
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setIsModalOpen(false)
-  }
+  }, [])
 
-  const handleConfirmClaim = (email: string) => {
-    if (onSetReferralEmail) {
-      onSetReferralEmail(email)
-    }
-    setIsModalOpen(false)
-  }
+  const handleConfirmClaim = useCallback(
+    (email: string) => {
+      if (onSetReferralEmail) {
+        onSetReferralEmail(email)
+      }
+      setIsModalOpen(false)
+    },
+    [onSetReferralEmail]
+  )
 
   return (
     <>

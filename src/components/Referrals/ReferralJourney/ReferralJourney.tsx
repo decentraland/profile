@@ -35,8 +35,7 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   const tooltipTitle = useMemo(() => {
-    const currentTierIndex = TIERS.findIndex(tier => invitedUsersAccepted < tier.invitesAccepted)
-    const nextTier = currentTierIndex !== -1 ? TIERS[currentTierIndex] : null
+    const nextTier = TIERS.find(tier => invitedUsersAccepted < tier.invitesAccepted) ?? null
 
     if (!nextTier) {
       return <Typography>{t('referral_journey.tooltip_title', { count: invitedUsersAccepted })}</Typography>
