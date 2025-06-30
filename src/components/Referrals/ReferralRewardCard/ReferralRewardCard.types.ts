@@ -1,8 +1,6 @@
 import { ReferralTier } from '../../../modules/referrals/types'
 
-export interface ReferralRewardReachedProps {
-  open: boolean
-  onClick: () => void
-  reward: ReferralTier
+export type ReferralRewardCardProps = ReferralTier & {
+  completed: boolean
   onSetReferralEmail?: (email: string) => void
 }

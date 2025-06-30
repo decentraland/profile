@@ -204,20 +204,30 @@
     "share_on_x_title": "Wanna hang out in Decentraland? :eyes: Use my referral link to make your account and download Decentraland so we can explore together! #DCL #Decentraland"
   },
   "referral_reward_card": {
-    "swag": "IRL Swag Bag!",
-    "unlock": "Unlock",
-    "unlocked": "Unlocked!",
+    "swag": "SWAG PACK",
     "claim": "CLAIM",
-    "tier": "{count} Friends",
     "image_alt": "Reward Image"
   },
   "referral_reward_reached": {
     "reward": "Reward",
     "new_item_unlocked": "NEW ITEM UNLOCKED",
-    "invites_accepted": "{count} Invites accepted"
+    "invites_accepted": "{count} Invites accepted",
+    "swag_reward_title": "Enter your email and we'll reach out to arrange the shipment of your IRL Swag Bag!",
+    "swag_reward_input_placeholder": "Write your email here",
+    "swag_reward_button": "SUBMIT",
+    "swag_reward_error_message": "Invalid email format"
   },
   "referral_journey": {
     "title": "Your Reward Journey",
-    "invites_accepted": "{count} Invites accepted"
+    "invites_accepted": "{count} Invites accepted",
+    "tooltip_title": "{count} Friends Joined",
+    "tooltip_subtitle": "{count} More friends for your next Reward!"
+  },
+  "claim_reward_modal": {
+    "title": "Claim your IRL Swag Pack",
+    "description": "Enter your email and we'll reach out to arrange the shipment of your IRL Swag Bag!",
+    "email_placeholder": "Write your email here",
+    "submit": "SUBMIT",
+    "error_message": "Invalid email format"
   }
 }

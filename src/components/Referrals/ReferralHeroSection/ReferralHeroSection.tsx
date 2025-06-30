@@ -128,6 +128,7 @@ const ReferralHeroSection = React.memo((props: Props) => {
           {t('referral_hero_section.subtitle')}
           <Tooltip
             disableFocusListener
+            arrow
             title={
               <Typography color="inherit">
                 {t('referral_hero_section.tooltip_text')}
@@ -152,6 +153,7 @@ const ReferralHeroSection = React.memo((props: Props) => {
                 disableFocusListener
                 disableHoverListener
                 disableTouchListener
+                arrow
                 title={
                   <Box display="flex" alignItems="center" gap={1}>
                     <CheckRoundedIcon /> {t('referral_hero_section.copied_to_clipboard')}
@@ -166,7 +168,9 @@ const ReferralHeroSection = React.memo((props: Props) => {
                     readOnly: true,
                     endAdornment: (
                       <InputAdornment position="end">
-                        <ContentCopyOutlinedIcon />
+                        <Tooltip title={t('referral_hero_section.copy_link')} placement="top" arrow>
+                          <ContentCopyOutlinedIcon />
+                        </Tooltip>
                       </InputAdornment>
                     )
                   }}

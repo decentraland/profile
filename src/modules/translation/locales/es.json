@@ -204,20 +204,30 @@
     "share_on_x_title": "¿Quieres pasar el rato en Decentraland? :eyes: ¡Usa mi enlace de referencia para crear tu cuenta y descargar Decentraland para que podamos explorar juntos! #DCL #Decentraland"
   },
   "referral_reward_card": {
-    "swag": "Bolsa de swag IRL!",
-    "unlock": "Desbloquear",
-    "unlocked": "Desbloqueado!",
+    "swag": "Bolsa de swag!",
     "claim": "RECLAMAR",
-    "tier": "{count} Amigos",
     "image_alt": "Imagen de recompensa"
   },
   "referral_reward_reached": {
     "reward": "Recompensa",
     "new_item_unlocked": "NUEVO ITEM DESBLOQUEADO",
-    "invites_accepted": "{count} Amigos se han unido"
+    "invites_accepted": "{count} Amigos se han unido",
+    "swag_reward_title": "Ingresa tu correo electrónico y te contactaremos para coordinar el envío de tu bolsa de swag!",
+    "swag_reward_input_placeholder": "Escribe tu correo electrónico aquí",
+    "swag_reward_button": "ENVIAR",
+    "swag_reward_error_message": "Formato de correo electrónico inválido"
   },
   "referral_journey": {
     "title": "Tu viaje de recompensas",
-    "invites_accepted": "{count} Invitaciones aceptadas"
+    "invites_accepted": "{count} Invitaciones aceptadas",
+    "tooltip_title": "{count} Amigos se han unido",
+    "tooltip_subtitle": "{count} Más amigos para tu próxima recompensa!"
+  },
+  "claim_reward_modal": {
+    "title": "Reclamar tu bolsa de swag",
+    "description": "Ingresa tu correo electrónico y te contactaremos para coordinar el envío de tu bolsa de swag!",
+    "email_placeholder": "Escribe tu correo electrónico aquí",
+    "submit": "ENVIAR",
+    "error_message": "Formato de correo electrónico inválido"
   }
 }
