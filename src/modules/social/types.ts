@@ -19,4 +19,4 @@ export type RequestEvent = {
   message?: string
 }
 
-export type SocialClient = Awaited<ReturnType<typeof createSocialClientV2>>
+export type SocialClient = ReturnType<typeof createSocialClientV2>

@@ -16,13 +16,19 @@ import { createProfileSaga } from './profile/sagas'
 import { socialSagas } from './social/sagas'
 import { translationSaga } from './translation/sagas'
 import { worldSagas } from './world/sagas'
+import type { ProfileSocialClient } from './social/client'
 import type { MarketplaceGraphClient } from '../lib/MarketplaceGraphClient'
 import type { ContentClient } from 'dcl-catalyst-client'
 
 const analyticsSaga = createAnalyticsSaga()
 export const NFT_SERVER_URL = config.get('NFT_SERVER_URL')
 
-export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphClient: MarketplaceGraphClient, peerApi: PeerAPI) {
+export function* rootSaga(
+  worldsContentClient: ContentClient,
+  marketplaceGraphClient: MarketplaceGraphClient,
+  peerApi: PeerAPI,
+  socialClient: ProfileSocialClient
+) {
   yield all([
     analyticsSaga(),
     createWalletSaga({
@@ -38,7 +44,7 @@ export function* rootSaga(worldsContentClient: ContentClient, marketplaceGraphCl
     identitySaga(),
     modalSagas(),
     itemSagas(new ItemsClient(NFT_SERVER_URL)),
-    socialSagas(),
+    socialSagas(socialClient),
     createProfileSaga(marketplaceGraphClient, peerApi)(),
     featuresSaga({
       polling: {
