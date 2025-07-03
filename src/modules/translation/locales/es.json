@@ -204,14 +204,14 @@
     "share_on_x_title": "¿Quieres pasar el rato en Decentraland? :eyes: ¡Usa mi enlace de referencia para crear tu cuenta y descargar Decentraland para que podamos explorar juntos! #DCL #Decentraland"
   },
   "referral_reward_card": {
-    "swag": "Bolsa de swag!",
+    "swag": "IRL Bolsa de swag!",
     "claim": "RECLAMAR",
     "image_alt": "Imagen de recompensa"
   },
   "referral_reward_reached": {
-    "reward": "Recompensa",
-    "new_item_unlocked": "NUEVO ITEM DESBLOQUEADO",
-    "invites_accepted": "{count} Amigos se han unido",
+    "reward": "Programa de Referidos",
+    "new_item_unlocked": "NUEVO REWARD DESBLOQUEADO!",
+    "invites_accepted": "{count} Amigos se han unido!",
     "swag_reward_title": "Ingresa tu correo electrónico y te contactaremos para coordinar el envío de tu bolsa de swag!",
     "swag_reward_input_placeholder": "Escribe tu correo electrónico aquí",
     "swag_reward_button": "ENVIAR",
@@ -219,7 +219,7 @@
   },
   "referral_journey": {
     "title": "Tu viaje de recompensas",
-    "invites_accepted": "{count} Invitaciones aceptadas",
+    "invites_accepted": "{count} Amigos se han unido",
     "tooltip_title": "{count} Amigos se han unido",
     "tooltip_subtitle": "{count} Más amigos para tu próxima recompensa!"
   },

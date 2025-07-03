@@ -13,10 +13,10 @@ import { ReferralTier } from '../../../modules/referrals/types'
 const TIERS = [
   { invitesAccepted: 5, rarity: Rarity.EPIC, image: Tier1, description: 'RainbowWave Jeans + Community Recruiter Starter Badge' },
   { invitesAccepted: 10, rarity: Rarity.EPIC, image: Tier2, description: 'Good Vibes Letterman + Community Recruiter Bronze Badge' },
-  { invitesAccepted: 20, rarity: Rarity.LEGENDARY, image: Tier3, description: 'Afterglow Kicks' },
-  { invitesAccepted: 25, rarity: Rarity.LEGENDARY, image: Tier4, description: 'Signal Surge Gloves + Community Recruiter Silver Badge' },
-  { invitesAccepted: 30, rarity: Rarity.EXOTIC, image: Tier5, description: 'Spunky MopTop' },
-  { invitesAccepted: 50, rarity: Rarity.EXOTIC, image: Tier6, description: 'Postman Emote + Community Recruiter Gold Badge' },
+  { invitesAccepted: 20, rarity: Rarity.LEGENDARY, image: Tier3, description: 'Signal Surge Gloves' },
+  { invitesAccepted: 25, rarity: Rarity.LEGENDARY, image: Tier4, description: 'Postman Emote + Community Recruiter Silver Badge' },
+  { invitesAccepted: 30, rarity: Rarity.EXOTIC, image: Tier5, description: 'Afterglow Kicks' },
+  { invitesAccepted: 50, rarity: Rarity.EXOTIC, image: Tier6, description: 'Spunky MopTop + Community Recruiter Gold Badge' },
   { invitesAccepted: 60, rarity: Rarity.MYTHIC, image: Tier7, description: 'Volty Vibes Shoulder Companion' },
   { invitesAccepted: 75, rarity: Rarity.MYTHIC, image: Tier8, description: 'Monocycle Emote + Community Recruiter Platinum Badge' },
   {

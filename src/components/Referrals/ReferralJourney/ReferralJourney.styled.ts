@@ -18,7 +18,7 @@ const splashAnimation = keyframes`
 
 const SectionContainer = styled(Box)({
   width: '100%',
-  maxWidth: '1264px',
+  maxWidth: '1605px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -33,7 +33,7 @@ const TitleContainer = styled(Box)({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
-  marginBottom: '16px'
+  marginBottom: '42px'
 })
 
 const Title = styled(Typography)(({ theme }) => ({
@@ -56,11 +56,9 @@ const Title = styled(Typography)(({ theme }) => ({
 }))
 
 const SubtitleContainer = styled(Box)({
-  width: '100%',
   display: 'flex',
   flexDirection: 'row',
-  gap: '8px',
-  marginBottom: '42px'
+  gap: '8px'
 })
 
 const Subtitle = styled(Typography)(({ theme }) => ({
@@ -83,7 +81,8 @@ const JourneyContainer = styled(Box)({
 })
 
 const JourneyWrapper = styled(Box)({
-  width: 'fit-content'
+  width: 'fit-content',
+  margin: '0 auto'
 })
 
 const JourneyStepper = styled(Box)({

@@ -115,12 +115,12 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
         <Typography variant="h4" data-testid={REFERRAL_JOURNEY_TEST_ID.title}>
           {t('referral_journey.title')}
         </Typography>
+        <SubtitleContainer data-testid={REFERRAL_JOURNEY_TEST_ID.subtitleContainer}>
+          <Subtitle variant="h6" data-testid={REFERRAL_JOURNEY_TEST_ID.subtitle}>
+            🤍 {t('referral_journey.invites_accepted', { count: invitedUsersAccepted })}
+          </Subtitle>
+        </SubtitleContainer>
       </TitleContainer>
-      <SubtitleContainer data-testid={REFERRAL_JOURNEY_TEST_ID.subtitleContainer}>
-        <Subtitle variant="h6" data-testid={REFERRAL_JOURNEY_TEST_ID.subtitle}>
-          🤍 {t('referral_journey.invites_accepted', { count: invitedUsersAccepted })}
-        </Subtitle>
-      </SubtitleContainer>
       <JourneyContainer data-testid={REFERRAL_JOURNEY_TEST_ID.journeyContainer}>
         <JourneyWrapper data-testid={REFERRAL_JOURNEY_TEST_ID.journeyWrapper}>
           <JourneyStepper data-testid={REFERRAL_JOURNEY_TEST_ID.journeyStepper}>

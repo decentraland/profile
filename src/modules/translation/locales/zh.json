@@ -204,14 +204,14 @@
     "share_on_x_title": "想在 Decentraland 闲逛吗？:eyes: 使用我的推荐链接创建您的帐户并下载 Decentraland，以便我们一起探索！ #DCL #Decentraland"
   },
   "referral_reward_card": {
-    "swag": "赃物包！",
+    "swag": "IRL 赃物包！",
     "claim": "宣称",
     "image_alt": "奖励图片"
   },
   "referral_reward_reached": {
-    "reward": "奖励",
-    "new_item_unlocked": "新物品解锁",
-    "invites_accepted": "{count} 朋友加入",
+    "reward": "推荐计划",
+    "new_item_unlocked": "新奖励已解锁！",
+    "invites_accepted": "{count} 位好友加入！",
     "swag_reward_title": "输入您的电子邮件，我们将与您联系安排发送您的 IRL 赃物包！",
     "swag_reward_input_placeholder": "在此输入您的电子邮件",
     "swag_reward_button": "提交",
@@ -219,7 +219,7 @@
   },
   "referral_journey": {
     "title": "你的奖励旅程",
-    "invites_accepted": "{count} 邀请接受",
+    "invites_accepted": "{count} 朋友加入",
     "tooltip_title": "{count} 朋友加入",
     "tooltip_subtitle": "{count} 更多朋友获得你的下一个奖励！"
   },
