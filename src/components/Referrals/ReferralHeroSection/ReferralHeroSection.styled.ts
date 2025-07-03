@@ -1,7 +1,8 @@
 import { Box, Typography, Link, emotionStyled as styled, Button, TextField } from 'decentraland-ui2'
 
-const SectionContainer = styled(Box)(({ theme }) => ({
-  width: 'calc(100% - 48px)',
+const SectionContainer = styled(Box)({
+  width: '100%',
+  maxWidth: '1605px',
   margin: '0 auto',
   display: 'flex',
   flexDirection: 'column',
@@ -9,11 +10,8 @@ const SectionContainer = styled(Box)(({ theme }) => ({
   justifyContent: 'flex-start',
   padding: '48px 0 0 0',
   position: 'relative',
-  borderBottom: '0.5px solid rgba(160, 155, 168, 1)',
-  [theme.breakpoints.down('sm')]: {
-    width: '100%'
-  }
-}))
+  borderBottom: '0.5px solid rgba(160, 155, 168, 1)'
+})
 
 const EnvelopeImageContainer = styled(Box)({
   width: '120px',
