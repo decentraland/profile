@@ -12,6 +12,13 @@ const ReferralsContainer = styled(Box)({
   backgroundColor: '#351444'
 })
 
+const ReferralHeroContainer = styled(Box)(({ theme }) => ({
+  width: '100%',
+  [theme.breakpoints.down('sm')]: {
+    width: 'calc(100% - 24px)'
+  }
+}))
+
 const ReferralJourneySectionContainer = styled(Box)(({ theme }) => ({
   width: 'calc(100% - 48px)',
   display: 'flex',
@@ -21,4 +28,4 @@ const ReferralJourneySectionContainer = styled(Box)(({ theme }) => ({
   }
 }))
 
-export { ReferralsContainer, ReferralJourneySectionContainer }
+export { ReferralsContainer, ReferralHeroContainer, ReferralJourneySectionContainer }

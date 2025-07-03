@@ -11,7 +11,7 @@ const SectionContainer = styled(Box)(({ theme }) => ({
   position: 'relative',
   borderBottom: '0.5px solid rgba(160, 155, 168, 1)',
   [theme.breakpoints.down('sm')]: {
-    width: 'calc(100% - 24px)'
+    width: '100%'
   }
 }))
 
@@ -58,10 +58,17 @@ const Title = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
   textAlign: 'center',
   marginBottom: '12px',
-  color: theme.palette.text.primary
+  color: theme.palette.text.primary,
+  fontSize: '48px',
+  [theme.breakpoints.down('md')]: {
+    fontSize: '32px'
+  },
+  [theme.breakpoints.down('xs')]: {
+    fontSize: '20px'
+  }
 }))
 
-const Subtitle = styled(Box)({
+const Subtitle = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -70,8 +77,15 @@ const Subtitle = styled(Box)({
   ['& .MuiSvgIcon-root']: {
     fontSize: '22px',
     marginLeft: '4px'
+  },
+  fontSize: '24px',
+  [theme.breakpoints.down('md')]: {
+    fontSize: '20px'
+  },
+  [theme.breakpoints.down('xs')]: {
+    fontSize: '16px'
   }
-})
+}))
 
 const TooltipLink = styled(Link)({
   color: '#fff',
@@ -200,9 +214,13 @@ const ReferralInput = styled(TextField)(({ theme }) => ({
   ['& .MuiInputBase-root']: {
     background: 'rgba(0, 0, 0, 0.5)',
     height: '40px',
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
+    cursor: 'pointer'
   },
   ['& .MuiInputBase-input']: {
+    cursor: 'pointer'
+  },
+  ['& .InputAdornment']: {
     cursor: 'pointer'
   }
 }))
