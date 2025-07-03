@@ -29,9 +29,9 @@ jest.mock('@dcl/schemas', () => ({
 }))
 
 const mockTranslations = {
-  reward: 'Reward',
-  newItemUnlocked: 'NEW ITEM UNLOCKED',
-  friendsJoined: '5 Invites accepted',
+  reward: 'Referral Program',
+  newItemUnlocked: 'NEW REWARD UNLOCKED!',
+  friendsJoined: '5 Friends Joined!',
   swagRewardTitle: 'Claim your swag',
   swagRewardInputPlaceholder: 'Enter your email',
   swagRewardButton: 'Submit'
