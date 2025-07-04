@@ -8,7 +8,7 @@
   "DOCS_URL": "https://docs.decentraland.org",
   "BUILDER_URL": "https://decentraland.org/builder",
   "SYNAPSE_URL": "https://social.decentraland.org",
-  "SOCIAL_RPC_URL": "wss://rpc-social-service.decentraland.org",
+  "SOCIAL_RPC_URL": "wss://rpc-social-service-ea.decentraland.org",
   "PROFILE_URL": "https://decentraland.org/profile",
   "MARKETPLACE_URL": "https://decentraland.org/marketplace",
   "NFT_SERVER_URL": "https://nft-api.decentraland.org/v1",

@@ -19,6 +19,7 @@ import { nftSagas } from './nfts/sagas'
 import { createProfileSaga } from './profile/sagas'
 import { ReferralsClient } from './referrals/client'
 import { referralsSagas } from './referrals/sagas'
+import type { ProfileSocialClient } from './social/client'
 import { socialSagas } from './social/sagas'
 import { translationSaga } from './translation/sagas'
 import { worldSagas } from './world/sagas'
@@ -32,6 +33,7 @@ export function* rootSaga(
   worldsContentClient: ContentClient,
   marketplaceGraphClient: MarketplaceGraphClient,
   peerApi: PeerAPI,
+  socialClient: ProfileSocialClient,
   creditsClient: CreditsClient,
   referralsClient: ReferralsClient
 ) {
@@ -50,8 +52,8 @@ export function* rootSaga(
     creditsSaga({ creditsClient }),
     identitySaga(),
     modalSagas(),
+    socialSagas(socialClient),
     itemSagas(new ItemsClient(MARKETPLACE_SERVER_URL)),
-    socialSagas(),
     createProfileSaga(marketplaceGraphClient, peerApi)(),
     featuresSaga({
       polling: {

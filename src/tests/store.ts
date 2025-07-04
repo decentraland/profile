@@ -8,6 +8,7 @@ import { MarketplaceGraphClient } from '../lib/MarketplaceGraphClient'
 import { createRootReducer } from '../modules/reducer'
 import { ReferralsClient } from '../modules/referrals/client'
 import { rootSaga } from '../modules/saga'
+import { createProfileSocialClient } from '../modules/social/client'
 
 export function initTestStore(preloadedState = {}) {
   const sagasMiddleware = createSagasMiddleware()
@@ -21,9 +22,11 @@ export function initTestStore(preloadedState = {}) {
   const worldsContentClient = createContentClient({ url: 'WORLDS_CONTENT_SERVER_URL', fetcher: createFetchComponent() })
   const marketplaceGraphClient = new MarketplaceGraphClient('MARKETPLACE_GRAPH_URL')
   const peerApi = new PeerAPI('PEER_URL')
+  const socialClient = createProfileSocialClient()
   const creditsClient = new CreditsClient('CREDITS_SERVER_URL')
   const referralsClient = new ReferralsClient('REFERRAL_SERVER_URL')
-  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi, creditsClient, referralsClient)
+
+  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi, socialClient, creditsClient, referralsClient)
   loadStorageMiddleware(store)
 
   return store

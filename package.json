@@ -20,7 +20,7 @@
     "@dcl/hooks": "^0.0.3",
     "@dcl/schemas": "^16.12.0",
     "@dcl/single-sign-on-client": "^0.1.0",
-    "@dcl/social-rpc-client": "^1.0.0",
+    "@dcl/social-rpc-client": "^2.0.0",
     "@dcl/ui-env": "^1.4.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@sentry/react": "^7.67.0",
