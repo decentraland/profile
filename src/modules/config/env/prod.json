@@ -12,8 +12,12 @@
   "PROFILE_URL": "https://decentraland.org/profile",
   "MARKETPLACE_URL": "https://decentraland.org/marketplace",
   "NFT_SERVER_URL": "https://nft-api.decentraland.org/v1",
+  "MARKETPLACE_SERVER_URL": "https://marketplace-api.decentraland.org/v1",
+  "CREDITS_SERVER_URL": "https://credits.decentraland.org",
   "SEGMENT_API_KEY": "AGaiQumreF5ubucC71RoGA1rkDAnVocy",
   "ENVIRONMENT": "production",
   "SENTRY_DSN": "https://d2d3f81155656b53fe7746a0b69b6e0e@o4504361728212992.ingest.sentry.io/4505748385169408",
-  "AUTH_URL": "/auth"
+  "AUTH_URL": "/auth",
+  "INVITE_REFERRER_URL": "https://decentraland.org/invite",
+  "REFERRAL_SERVER_URL": "https://social-api.decentraland.org/v1"
 }

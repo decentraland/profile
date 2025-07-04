@@ -4,10 +4,10 @@ import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/sel
 import type { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { enhancedFetchProfileRequest } from '../../../modules/profile/action'
 import { getErrorLoadingProfile, getProfileWithName, isLoadingProfile } from '../../../modules/profile/selectors'
+import type { RootState } from '../../../modules/reducer'
 import WithRouter from '../WithRouter'
 import WithProfile from './WithProfile'
 import type { MapDispatch, MapStateProps, OwnProps } from './WithProfile.types'
-import type { RootState } from '../../../modules/reducer'
 
 const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps => {
   const addressOrName = (ownProps.router.params.profileAddress as string).toLowerCase()

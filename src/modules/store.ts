@@ -1,14 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createFetchComponent } from '@well-known-components/fetch-component'
 import { createContentClient } from 'dcl-catalyst-client'
 import { createLogger } from 'redux-logger'
 import createSagasMiddleware from 'redux-saga'
+import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
 import { Env } from '@dcl/ui-env'
 import { PeerAPI } from 'decentraland-dapps/dist/lib/peer'
 import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analytics/middleware'
+import { CreditsClient } from 'decentraland-dapps/dist/modules/credits/CreditsClient'
 import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
+import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { MarketplaceGraphClient } from '../lib/MarketplaceGraphClient'
 import { config } from './config'
 import { createRootReducer } from './reducer'
+import { ReferralsClient } from './referrals/client'
 import { rootSaga } from './saga'
 import { createProfileSocialClient } from './social/client'
 
@@ -39,7 +44,16 @@ export function initStore() {
   const peerApi = new PeerAPI(config.get('PEER_URL'))
   const socialClient = createProfileSocialClient()
 
-  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi, socialClient)
+  const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'))
+  const referralsClient = new ReferralsClient(config.get('REFERRAL_SERVER_URL'), {
+    identity: () => {
+      const address = getAddress(store.getState())
+      const identity = address ? localStorageGetIdentity(address.toLowerCase()) : null
+      return identity || undefined
+    }
+  })
+
+  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi, socialClient, creditsClient, referralsClient)
   loadStorageMiddleware(store)
 
   return store

@@ -1,4 +1,4 @@
-import nock from 'nock'
+import nock, { disableNetConnect, isDone } from 'nock'
 import { Rarity } from '@dcl/schemas'
 import { EmoteCategory, LandCategory, MainCategory, WearableCategory } from '../../utils/categories'
 import { NFTClient } from './client'
@@ -8,7 +8,7 @@ let client: NFTClient
 let nfts: NFTResult[]
 
 const scope = nock('https://example.com/')
-nock.disableNetConnect()
+disableNetConnect()
 
 beforeEach(() => {
   client = new NFTClient('https://example.com')
@@ -35,7 +35,7 @@ describe.each<[string, NFTOptions, string]>([
 
   it(`should request the API with the ${type} in the query string and return the resulting items`, async () => {
     const response = await client.get(options)
-    expect(nock.isDone()).toBe(true)
+    expect(isDone()).toBe(true)
     expect(response).toEqual({ data: nfts })
   })
 })

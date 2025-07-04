@@ -37,7 +37,8 @@
     "own_assets": "My Assets",
     "others_assets": "Assets",
     "own_creations": "My Creations",
-    "others_creations": "Creations"
+    "others_creations": "Creations",
+    "referrals": "Referral Rewards"
   },
   "friendship_button": {
     "friends": "Friends",
@@ -186,5 +187,47 @@
     "cheapest": "Cheapest",
     "rental_listing_date": "Recently listed for rent",
     "max_rental_price": "Cheapest listing"
+  },
+  "referral_hero_section": {
+    "title": "Decentraland is Better With Friends",
+    "subtitle": "Invite yours and get rewards!",
+    "tooltip_text": "Invitees must be new to Decentraland and must jump in-world to count toward reward goals. See ",
+    "tooltip_link_label": "Terms & Conditions",
+    "step_1": "Invite friends to hang out in-world by sharing your referral link.",
+    "step_2": "Your friends download Decentraland and jump in.",
+    "step_3": "You earn exclusive rewards for helping grow our community!",
+    "how_it_works": "How it works",
+    "share": "SHARE",
+    "copy_link": "Copy Link",
+    "copied_to_clipboard": "Link copied successfully",
+    "share_on_x": "Share on X",
+    "share_on_x_title": "Wanna hang out in Decentraland? :eyes: Use my referral link to make your account and download Decentraland so we can explore together! #DCL #Decentraland"
+  },
+  "referral_reward_card": {
+    "swag": "IRL SWAG PACK",
+    "claim": "CLAIM",
+    "image_alt": "Reward Image"
+  },
+  "referral_reward_reached": {
+    "reward": "Referral Program",
+    "new_item_unlocked": "NEW REWARD UNLOCKED!",
+    "invites_accepted": "{count} Friends Joined!",
+    "swag_reward_title": "Enter your email and we'll reach out to arrange the shipment of your IRL Swag Bag!",
+    "swag_reward_input_placeholder": "Write your email here",
+    "swag_reward_button": "SUBMIT",
+    "swag_reward_error_message": "Invalid email format"
+  },
+  "referral_journey": {
+    "title": "Your Reward Journey",
+    "invites_accepted": "{count} Friends Joined",
+    "tooltip_title": "{count} Friends Joined",
+    "tooltip_subtitle": "{count} More friends for your next Reward!"
+  },
+  "claim_reward_modal": {
+    "title": "Claim your IRL Swag Pack",
+    "description": "Enter your email and we'll reach out to arrange the shipment of your IRL Swag Bag!",
+    "email_placeholder": "Write your email here",
+    "submit": "SUBMIT",
+    "error_message": "Invalid email format"
   }
 }

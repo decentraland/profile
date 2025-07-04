@@ -32,6 +32,7 @@ beforeEach(() => {
       error: 'anError',
       loading: []
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any
   getIsFeatureEnabledMock = getIsFeatureEnabled as jest.MockedFunction<typeof getIsFeatureEnabled>
   hasLoadedInitialFlagsMock = hasLoadedInitialFlags as jest.MockedFunction<typeof hasLoadedInitialFlags>

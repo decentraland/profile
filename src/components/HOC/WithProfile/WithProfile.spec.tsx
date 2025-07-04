@@ -1,9 +1,9 @@
 import React from 'react'
 import { renderWithProviders } from '../../../tests/tests'
 import { NOT_FOUND_PAGE_DATA_TEST_ID } from '../../Pages/NotFoundPage'
+import type { RouterProps } from '../WithRouter/WithRouter'
 import WithProfile from './WithProfile'
 import type { Props } from './WithProfile.types'
-import type { RouterProps } from '../WithRouter/WithRouter'
 
 function renderConnectAndRedirect(props: Partial<Props> = {}) {
   return renderWithProviders(
@@ -31,6 +31,7 @@ describe('when rendering the with profile component', () => {
   let error: string | null
   let isAddress: boolean
   let onFetchProfile: jest.Mock
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let component: React.FunctionComponent<any>
 
   beforeEach(() => {

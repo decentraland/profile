@@ -10,6 +10,7 @@ export type Props = {
   isLoading: boolean
   hasLoadedProfile: boolean
   isAddress: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: React.FunctionComponent<ComponentProps<any>>
   router: RouterProps<Params>
   onFetchProfile: (nameOrAddress: string) => void

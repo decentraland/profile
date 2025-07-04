@@ -26,7 +26,14 @@ jest.mock('decentraland-ui/dist/components/Tabs/Tabs', () => {
 
 function renderMainPage(props: Partial<Props> = {}) {
   return renderWithProviders(
-    <MainPage loggedInAddress="0xtest" profileAddress="0xaddress" isBlocked={false} isLoadingFeatures={false} {...props} />
+    <MainPage
+      loggedInAddress="0xtest"
+      profileAddress="0xaddress"
+      isBlocked={false}
+      isLoadingFeatures={false}
+      isReferralEnabled={false}
+      {...props}
+    />
   )
 }
 

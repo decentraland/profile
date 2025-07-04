@@ -37,7 +37,8 @@
     "own_assets": "我的资产",
     "others_assets": "资产",
     "own_creations": "我的创作",
-    "others_creations": "创作"
+    "others_creations": "创作",
+    "referrals": "推荐奖励"
   },
   "friendship_button": {
     "friends": "朋友们",
@@ -186,5 +187,47 @@
     "cheapest": "最便宜",
     "rental_listing_date": "最近列出出租",
     "max_rental_price": "最便宜的清单"
+  },
+  "referral_hero_section": {
+    "title": "Decentraland 更好玩",
+    "subtitle": "邀请你的朋友，获得奖励！",
+    "tooltip_text": "邀请者必须是 Decentraland 的新用户，并且必须进入元宇宙才能获得奖励。 查看 ",
+    "tooltip_link_label": "条款和条件",
+    "how_it_works": "如何运作",
+    "step_1": "邀请你的朋友加入 Decentraland，分享你的邀请链接。",
+    "step_2": "你的朋友下载 Decentraland，加入元宇宙。",
+    "step_3": "你帮助我们扩大社区，获得独家奖励！",
+    "share": "分享",
+    "copy_link": "复制链接",
+    "copied_to_clipboard": "链接已复制成功",
+    "share_on_x": "分享到 X",
+    "share_on_x_title": "想在 Decentraland 闲逛吗？:eyes: 使用我的推荐链接创建您的帐户并下载 Decentraland，以便我们一起探索！ #DCL #Decentraland"
+  },
+  "referral_reward_card": {
+    "swag": "IRL 赃物包！",
+    "claim": "宣称",
+    "image_alt": "奖励图片"
+  },
+  "referral_reward_reached": {
+    "reward": "推荐计划",
+    "new_item_unlocked": "新奖励已解锁！",
+    "invites_accepted": "{count} 位好友加入！",
+    "swag_reward_title": "输入您的电子邮件，我们将与您联系安排发送您的 IRL 赃物包！",
+    "swag_reward_input_placeholder": "在此输入您的电子邮件",
+    "swag_reward_button": "提交",
+    "swag_reward_error_message": "无效的电子邮件格式"
+  },
+  "referral_journey": {
+    "title": "你的奖励旅程",
+    "invites_accepted": "{count} 朋友加入",
+    "tooltip_title": "{count} 朋友加入",
+    "tooltip_subtitle": "{count} 更多朋友获得你的下一个奖励！"
+  },
+  "claim_reward_modal": {
+    "title": "领取你的 IRL 赃物包",
+    "description": "输入您的电子邮件，我们将与您联系安排发送您的 IRL 赃物包！",
+    "email_placeholder": "在此输入您的电子邮件",
+    "submit": "提交",
+    "error_message": "无效的电子邮件格式"
   }
 }
