@@ -10,6 +10,7 @@ import { MarketplaceGraphClient } from '../lib/MarketplaceGraphClient'
 import { config } from './config'
 import { createRootReducer } from './reducer'
 import { rootSaga } from './saga'
+import { createProfileSocialClient } from './social/client'
 
 export function initStore() {
   const sagasMiddleware = createSagasMiddleware()
@@ -36,8 +37,9 @@ export function initStore() {
   const worldsContentClient = createContentClient({ url: config.get('WORLDS_CONTENT_SERVER_URL'), fetcher: createFetchComponent() })
   const marketplaceGraphClient = new MarketplaceGraphClient(config.get('MARKETPLACE_GRAPH_URL'))
   const peerApi = new PeerAPI(config.get('PEER_URL'))
+  const socialClient = createProfileSocialClient()
 
-  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi)
+  sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi, socialClient)
   loadStorageMiddleware(store)
 
   return store
