@@ -134,8 +134,6 @@ export function* socialSagas(socialClient: ProfileSocialClient) {
         action.payload.toLowerCase()
       )
 
-      console.log('requestEvent', requestEvent, action.payload.toLowerCase())
-
       if (!requestEvent) {
         throw new Error('Unsuccessful request')
       }
