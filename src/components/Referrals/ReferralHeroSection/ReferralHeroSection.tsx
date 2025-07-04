@@ -70,23 +70,18 @@ const ReferralHeroSection = React.memo((props: Props) => {
   const handleShareButtonClick = useCallback(
     async (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isTabletOrBelow && typeof navigator !== 'undefined' && !!navigator.share) {
-        await navigator.share({
-          title: 'TITLE',
-          text: t('referral_hero_section.share_on_x_title'),
-          url: inviteUrl
-        })
         getAnalytics()?.track(Events.CLICK_BUTTON, {
           type: ShareType.MOBILE_SHARE,
           url: inviteUrl,
           userAddress: profileAddress
         })
+        await navigator.share({
+          title: 'TITLE',
+          text: t('referral_hero_section.share_on_x_title'),
+          url: inviteUrl
+        })
       } else {
         setAnchorMenu(e.currentTarget)
-        getAnalytics()?.track(Events.CLICK_BUTTON, {
-          type: ShareType.COPY_LINK,
-          url: inviteUrl,
-          userAddress: profileAddress
-        })
       }
     },
     [isTabletOrBelow, inviteUrl, getAnalytics]
