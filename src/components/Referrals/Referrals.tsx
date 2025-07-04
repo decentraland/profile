@@ -15,7 +15,11 @@ const Referrals = (props: Props) => {
     }
   }, [profileAddress, onFetchReferrals])
 
-  const [invitedUsers, setInvitedUsers] = useState<number>(invitedUsersAccepted)
+  const [invitedUsers, setInvitedUsers] = useState<number>(0)
+
+  useEffect(() => {
+    setInvitedUsers(invitedUsersAccepted)
+  }, [invitedUsersAccepted])
 
   return (
     <ReferralsContainer data-testid={REFERRALS_CONTAINER_TEST_ID}>
