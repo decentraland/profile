@@ -127,7 +127,7 @@ const ReferralHeroSection = React.memo((props: Props) => {
             title={
               <Typography color="inherit">
                 {t('referral_hero_section.tooltip_text')}
-                <TooltipLink href="https://decentraland.org/terms-and-conditions" target="_blank">
+                <TooltipLink href="https://decentraland.org/referral-terms" target="_blank">
                   {t('referral_hero_section.tooltip_link_label')}
                 </TooltipLink>
                 .
