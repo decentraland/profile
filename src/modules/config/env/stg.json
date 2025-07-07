@@ -20,5 +20,5 @@
   "AUTH_URL": "/auth",
   "INVITE_REFERRER_URL": "https://decentraland.today/invite",
   "REFERRAL_SERVER_URL": "https://social-api.decentraland.today/v1",
-  "WEARABLE_PREVIEW_URL": "https://wearable-preview.decentraland.org"
+  "WEARABLE_PREVIEW_URL": "https://wearable-preview.decentraland.today"
 }
