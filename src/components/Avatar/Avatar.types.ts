@@ -5,8 +5,9 @@ export type Props = {
   profile?: Profile
   profileAddress: string
   view: View
+  isUnityWearablePreviewEnabled?: boolean
 }
 
 export type OwnProps = Pick<Props, 'profileAddress' | 'view'>
 
-export type MapStateProps = Pick<Props, 'profile'>
+export type MapStateProps = Pick<Props, 'profile' | 'isUnityWearablePreviewEnabled'>

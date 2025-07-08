@@ -19,5 +19,6 @@
   "SENTRY_DSN": "https://d2d3f81155656b53fe7746a0b69b6e0e@o4504361728212992.ingest.sentry.io/4505748385169408",
   "AUTH_URL": "/auth",
   "INVITE_REFERRER_URL": "https://decentraland.today/invite",
-  "REFERRAL_SERVER_URL": "https://social-api.decentraland.today/v1"
+  "REFERRAL_SERVER_URL": "https://social-api.decentraland.today/v1",
+  "WEARABLE_PREVIEW_URL": "https://wearable-preview.decentraland.today"
 }
