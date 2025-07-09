@@ -21,6 +21,7 @@ describe('Referrals', () => {
       profileAddress: '0x123',
       invitedUsersAccepted: 0,
       invitedUsersAcceptedViewed: 0,
+      rewardGrantedImages: [],
       isReferralTestingButtonEnabled: false,
       onFetchReferrals: jest.fn() as unknown as Props['onFetchReferrals']
     }

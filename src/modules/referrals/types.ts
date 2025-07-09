@@ -13,4 +13,5 @@ export type { ReferralTier }
 export type ReferralProgressResponse = {
   invitedUsersAccepted: number
   invitedUsersAcceptedViewed: number
+  rewardImages: { tier: number; url: string }[]
 }

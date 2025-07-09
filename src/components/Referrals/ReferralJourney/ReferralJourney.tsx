@@ -23,13 +23,16 @@ import { AnimationPhase as AnimationPhase, ReferralJourneyProps } from './Referr
 
 // eslint-disable-next-line import/no-named-as-default-member
 const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
-  const { invitedUsersAccepted, onSetReferralEmail } = props
-  const [animatedStep, setAnimatedStep] = useState(TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAccepted).length)
+  const { invitedUsersAccepted, invitedUsersAcceptedViewed, onSetReferralEmail, rewardImages } = props
+
+  const [animatedStep, setAnimatedStep] = useState(TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAcceptedViewed).length)
   const [open, setOpen] = useState(false)
   const [journeyTiers, setJourneyTiers] = useState(
     TIERS.map(tier => ({ ...tier, completed: tier.invitesAccepted <= invitedUsersAccepted }))
   )
   const [animationPhase, setAnimationPhase] = useState<AnimationPhase>(AnimationPhase.WAITING_NEXT_TIER)
+  const animatedTierKeyRef = useRef<string>('')
+  const hasOpenedModalRef = useRef(false)
   const totalSteps = TIERS.length
   const journeyStepRefs = useRef<(Element | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -52,28 +55,37 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
   }, [invitedUsersAccepted])
 
   useEffect(() => {
-    const currentTierIndex = TIERS.findIndex(tier => invitedUsersAccepted < tier.invitesAccepted)
-    const maxTierIndex = currentTierIndex === -1 ? totalSteps : currentTierIndex
+    const tiersViewed = TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAcceptedViewed).length
+    const tiersCompleted = TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAccepted).length
+    const newTiersToAnimate = tiersCompleted - tiersViewed
 
-    if (animatedStep >= maxTierIndex) return
+    if (newTiersToAnimate <= 0 || animatedTierKeyRef.current !== '') {
+      return
+    }
 
-    const isTierReached = animationPhase === AnimationPhase.TIER_REACHED && !open
-    const isWaitingNextTier = animationPhase === AnimationPhase.WAITING_NEXT_TIER && !open
+    const newlyReachedTierIndex = TIERS.findIndex(
+      tier => tier.invitesAccepted <= invitedUsersAccepted && tier.invitesAccepted > invitedUsersAcceptedViewed
+    )
 
-    if (!isTierReached && !isWaitingNextTier) return
-
-    if (animatedStep !== maxTierIndex && !isTierReached) {
+    if (animationPhase === AnimationPhase.WAITING_NEXT_TIER && !open && newlyReachedTierIndex !== -1) {
       if (sectionRef.current) {
         sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
       setAnimationPhase(AnimationPhase.TIER_REACHED)
-      setAnimatedStep(prev => prev + 1)
+      setAnimatedStep(newlyReachedTierIndex + 1)
+      animatedTierKeyRef.current = `tier-${newlyReachedTierIndex}`
     }
-  }, [animatedStep, totalSteps, animationPhase, open, invitedUsersAccepted])
+  }, [animatedStep, totalSteps, animationPhase, open, invitedUsersAccepted, invitedUsersAcceptedViewed])
 
   useEffect(() => {
-    if (animationPhase !== AnimationPhase.TIER_REACHED) return
+    animatedTierKeyRef.current = ''
+    hasOpenedModalRef.current = false
+  }, [invitedUsersAccepted, invitedUsersAcceptedViewed])
 
+  useEffect(() => {
+    if (animationPhase !== AnimationPhase.TIER_REACHED || hasOpenedModalRef.current) return
+
+    hasOpenedModalRef.current = true // Marcar que ya abrimos el modal
     const timeout = setTimeout(() => {
       setOpen(true)
     }, ANIMATION_DURATION)
@@ -94,19 +106,29 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
       })
     }
 
+    // Actualizar journeyTiers basado en invitedUsersAccepted, no en animatedStep
     setJourneyTiers(
-      TIERS.map((tier, i) => ({
+      TIERS.map(tier => ({
         ...tier,
-        completed: i < animatedStep
+        completed: tier.invitesAccepted <= invitedUsersAccepted
       }))
     )
-  }, [animatedStep])
+  }, [animatedStep, invitedUsersAccepted])
 
   const handleClose = () => {
     setOpen(false)
+    // NO resetear hasOpenedModalRef aquí, solo cuando cambien los valores
     setTimeout(() => {
       setAnimationPhase(AnimationPhase.WAITING_NEXT_TIER)
     }, 10)
+  }
+
+  const shouldShowAnimation = (tierIndex: number): boolean => {
+    const tier = TIERS[tierIndex]
+    const isNewlyCompleted = tier.invitesAccepted <= invitedUsersAccepted && tier.invitesAccepted > invitedUsersAcceptedViewed
+    const isCurrentlyAnimating = animationPhase === AnimationPhase.TIER_REACHED && animatedStep === tierIndex + 1
+
+    return isNewlyCompleted && isCurrentlyAnimating
   }
 
   return (
@@ -141,7 +163,7 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
               >
                 <GradientBorder
                   completed={tier.completed}
-                  showAnimation={animationPhase === AnimationPhase.TIER_REACHED && animatedStep === i + 1}
+                  showAnimation={shouldShowAnimation(i)}
                   data-testid={`${REFERRAL_JOURNEY_TEST_ID.gradientBorder}-${i}`}
                 >
                   <JourneyStepIcon data-testid={`${REFERRAL_JOURNEY_TEST_ID.journeyStepIcon}-${i}`}>
@@ -150,6 +172,7 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
                 </GradientBorder>
                 <ReferralRewardCard
                   {...tier}
+                  image={rewardImages?.find(reward => reward.tier === tier.invitesAccepted)?.url || tier.image}
                   onSetReferralEmail={onSetReferralEmail}
                   data-testid={`${REFERRAL_JOURNEY_TEST_ID.referralRewardCard}-${i}`}
                 />
@@ -159,7 +182,12 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
         </JourneyWrapper>
       </JourneyContainer>
       <ReferralRewardReached
-        reward={journeyTiers[Math.max(animatedStep - 1, 0)]}
+        reward={{
+          ...journeyTiers[Math.max(animatedStep - 1, 0)], // Usar Math.max para evitar índices negativos
+          image:
+            rewardImages?.find(reward => reward.tier === journeyTiers[Math.max(animatedStep - 1, 0)].invitesAccepted)?.url ||
+            journeyTiers[Math.max(animatedStep - 1, 0)].image
+        }}
         open={open}
         onClick={handleClose}
         onSetReferralEmail={onSetReferralEmail}

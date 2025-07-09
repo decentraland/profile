@@ -7,7 +7,14 @@ import { ReferralsContainer, ReferralJourneySectionContainer, ReferralHeroContai
 import { Props } from './Referrals.types'
 
 const Referrals = (props: Props) => {
-  const { profileAddress, onFetchReferrals, invitedUsersAccepted, isReferralTestingButtonEnabled } = props
+  const {
+    profileAddress,
+    onFetchReferrals,
+    invitedUsersAccepted,
+    invitedUsersAcceptedViewed,
+    rewardGrantedImages,
+    isReferralTestingButtonEnabled
+  } = props
 
   useEffect(() => {
     if (profileAddress) {
@@ -16,9 +23,11 @@ const Referrals = (props: Props) => {
   }, [profileAddress, onFetchReferrals])
 
   const [invitedUsers, setInvitedUsers] = useState<number>(0)
+  const [invitedUsersViewed, setInvitedUsersViewed] = useState<number>(0)
 
   useEffect(() => {
     setInvitedUsers(invitedUsersAccepted)
+    setInvitedUsersViewed(invitedUsersAcceptedViewed)
   }, [invitedUsersAccepted])
 
   return (
@@ -27,7 +36,11 @@ const Referrals = (props: Props) => {
         <ReferralHeroSection profileAddress={profileAddress} />
       </ReferralHeroContainer>
       <ReferralJourneySectionContainer data-testid={REFERRALS_JOURNEY_TEST_ID}>
-        <ReferralJourney invitedUsersAccepted={invitedUsers} />
+        <ReferralJourney
+          invitedUsersAccepted={invitedUsers}
+          invitedUsersAcceptedViewed={invitedUsersViewed}
+          rewardImages={rewardGrantedImages}
+        />
       </ReferralJourneySectionContainer>
       {isReferralTestingButtonEnabled && <Button onClick={() => setInvitedUsers(invitedUsers + 1)}>Test adding invited user</Button>}
     </ReferralsContainer>
