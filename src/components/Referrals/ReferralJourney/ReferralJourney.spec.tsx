@@ -50,7 +50,15 @@ describe('ReferralJourney', () => {
   let renderedComponent: ReturnType<typeof renderReferralJourney>
 
   const renderReferralJourney = (props: Partial<ReferralJourneyProps>) => {
-    return renderWithProviders(<ReferralJourney invitedUsersAccepted={invitedUsersAccepted} onSetReferralEmail={jest.fn()} {...props} />)
+    return renderWithProviders(
+      <ReferralJourney
+        invitedUsersAccepted={invitedUsersAccepted}
+        invitedUsersAcceptedViewed={0}
+        rewardImages={[]}
+        onSetReferralEmail={jest.fn()}
+        {...props}
+      />
+    )
   }
 
   beforeEach(() => {

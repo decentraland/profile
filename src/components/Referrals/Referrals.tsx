@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from 'decentraland-ui2'
 import { REFERRALS_CONTAINER_TEST_ID, REFERRALS_HERO_SECTION_TEST_ID, REFERRALS_JOURNEY_TEST_ID } from './constants'
 import { ReferralHeroSection } from './ReferralHeroSection'
-import { ReferralJourney } from './ReferralJourney'
+import ReferralJourney from './ReferralJourney/ReferralJourney.container'
 import { ReferralsContainer, ReferralJourneySectionContainer, ReferralHeroContainer } from './Referrals.styled'
 import { Props } from './Referrals.types'
 

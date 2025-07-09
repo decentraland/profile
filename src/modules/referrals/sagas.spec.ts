@@ -23,7 +23,8 @@ describe('referrals sagas', () => {
     jest.spyOn(mockApi, 'setReferralEmail').mockImplementation(jest.fn())
     mockReferralData = {
       invitedUsersAccepted: 5,
-      invitedUsersAcceptedViewed: 3
+      invitedUsersAcceptedViewed: 3,
+      rewardImages: []
     }
   })
 
@@ -36,7 +37,8 @@ describe('referrals sagas', () => {
           .put(
             fetchReferralsSuccess({
               invitedUsersAccepted: 5,
-              invitedUsersAcceptedViewed: 3
+              invitedUsersAcceptedViewed: 3,
+              rewardImages: []
             })
           )
           .run()
@@ -103,14 +105,16 @@ describe('referrals sagas', () => {
         .put(
           fetchReferralsSuccess({
             invitedUsersAccepted: 5,
-            invitedUsersAcceptedViewed: 3
+            invitedUsersAcceptedViewed: 3,
+            rewardImages: []
           })
         )
         .dispatch(fetchReferralsRequest())
         .put(
           fetchReferralsSuccess({
             invitedUsersAccepted: 5,
-            invitedUsersAcceptedViewed: 3
+            invitedUsersAcceptedViewed: 3,
+            rewardImages: []
           })
         )
         .run()

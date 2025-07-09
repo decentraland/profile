@@ -111,7 +111,8 @@ describe('referrals reducer', () => {
       beforeEach(() => {
         mockData = {
           invitedUsersAccepted: 15,
-          invitedUsersAcceptedViewed: 12
+          invitedUsersAcceptedViewed: 12,
+          rewardImages: []
         }
         state = referralsReducer(state, fetchReferralsSuccess(mockData))
       })

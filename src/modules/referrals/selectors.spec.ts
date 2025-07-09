@@ -19,7 +19,8 @@ describe('referrals selectors', () => {
     mockReferralsState = {
       data: {
         invitedUsersAccepted: 5,
-        invitedUsersAcceptedViewed: 3
+        invitedUsersAcceptedViewed: 3,
+        rewardImages: []
       },
       loading: [],
       error: null
@@ -41,7 +42,8 @@ describe('referrals selectors', () => {
       const result = getData(mockState)
       expect(result).toEqual({
         invitedUsersAccepted: 5,
-        invitedUsersAcceptedViewed: 3
+        invitedUsersAcceptedViewed: 3,
+        rewardImages: []
       })
     })
   })
