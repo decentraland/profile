@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react'
+import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Tooltip, Typography } from 'decentraland-ui2'
@@ -18,7 +18,7 @@ import {
   JourneyContainer,
   JourneyWrapper
 } from './ReferralJourney.styled'
-import { ANIMATION_DURATION } from './utils'
+import { ANIMATION_DURATION, getTiersCompletedCount } from './utils'
 import { AnimationPhase as AnimationPhase, ReferralJourneyProps } from './ReferralJourney.types'
 
 // eslint-disable-next-line import/no-named-as-default-member
@@ -35,6 +35,22 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
   const totalSteps = TIERS.length
   const journeyStepRefs = useRef<(Element | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
+
+  const getNextTierIndex = useCallback((): number => {
+    return TIERS.findIndex((tier, index) => {
+      const isCurrentlyCompleted = tier.invitesAccepted <= invitedUsersAccepted
+      const wasCompletedWhenViewed = tier.invitesAccepted <= invitedUsersAcceptedViewed
+      const isNewlyCompleted = isCurrentlyCompleted && !wasCompletedWhenViewed
+
+      return isNewlyCompleted && index > currentTierIndex
+    })
+  }, [invitedUsersAccepted, invitedUsersAcceptedViewed, currentTierIndex])
+
+  const getNewTiersToAnimate = useCallback((): number => {
+    const tiersCompletedWhenViewed = getTiersCompletedCount(invitedUsersAcceptedViewed)
+    const tiersCompletedNow = getTiersCompletedCount(invitedUsersAccepted)
+    return tiersCompletedNow - tiersCompletedWhenViewed
+  }, [invitedUsersAccepted, invitedUsersAcceptedViewed])
 
   const tooltipTitle = useMemo(() => {
     const nextTier = TIERS.find(tier => invitedUsersAccepted < tier.invitesAccepted) ?? null
@@ -54,26 +70,18 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
   }, [invitedUsersAccepted])
 
   useEffect(() => {
-    const currentAnimatedStep = TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAccepted).length
+    const currentAnimatedStep = getTiersCompletedCount(invitedUsersAccepted)
     setAnimatedStep(currentAnimatedStep)
-  }, [invitedUsersAccepted])
+  }, [invitedUsersAccepted, getTiersCompletedCount])
 
   useEffect(() => {
-    const tiersCompletedWhenViewed = TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAcceptedViewed).length
-    const tiersCompletedNow = TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAccepted).length
-    const newTiersToAnimate = tiersCompletedNow - tiersCompletedWhenViewed
+    const newTiersToAnimate = getNewTiersToAnimate()
 
     if (newTiersToAnimate <= 0) {
       return
     }
 
-    const nextTierIndex = TIERS.findIndex((tier, index) => {
-      const isCurrentlyCompleted = tier.invitesAccepted <= invitedUsersAccepted
-      const wasCompletedWhenViewed = tier.invitesAccepted <= invitedUsersAcceptedViewed
-      const isNewlyCompleted = isCurrentlyCompleted && !wasCompletedWhenViewed
-
-      return isNewlyCompleted && index > currentTierIndex
-    })
+    const nextTierIndex = getNextTierIndex()
 
     if (animationPhase === AnimationPhase.WAITING_NEXT_TIER && !open && nextTierIndex !== -1) {
       if (sectionRef.current) {
@@ -83,7 +91,17 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
       setAnimatedStep(nextTierIndex + 1)
       setCurrentTierIndex(nextTierIndex)
     }
-  }, [animatedStep, totalSteps, animationPhase, open, invitedUsersAccepted, invitedUsersAcceptedViewed, currentTierIndex])
+  }, [
+    animatedStep,
+    totalSteps,
+    animationPhase,
+    open,
+    invitedUsersAccepted,
+    invitedUsersAcceptedViewed,
+    currentTierIndex,
+    getNewTiersToAnimate,
+    getNextTierIndex
+  ])
 
   useEffect(() => {
     if (animationPhase !== AnimationPhase.TIER_REACHED) return
@@ -116,24 +134,16 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
     )
   }, [animatedStep, invitedUsersAccepted])
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false)
 
     setTimeout(() => {
       setAnimationPhase(AnimationPhase.WAITING_NEXT_TIER)
 
-      const tiersCompletedWhenViewed = TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAcceptedViewed).length
-      const tiersCompletedNow = TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAccepted).length
-      const newTiersToAnimate = tiersCompletedNow - tiersCompletedWhenViewed
+      const newTiersToAnimate = getNewTiersToAnimate()
 
       if (newTiersToAnimate > 0) {
-        const nextTierIndex = TIERS.findIndex((tier, index) => {
-          const isCurrentlyCompleted = tier.invitesAccepted <= invitedUsersAccepted
-          const wasCompletedWhenViewed = tier.invitesAccepted <= invitedUsersAcceptedViewed
-          const isNewlyCompleted = isCurrentlyCompleted && !wasCompletedWhenViewed
-
-          return isNewlyCompleted && index > currentTierIndex
-        })
+        const nextTierIndex = getNextTierIndex()
 
         if (nextTierIndex !== -1) {
           setAnimatedStep(nextTierIndex + 1)
@@ -142,23 +152,29 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
         }
       }
     }, 10)
-  }
+  }, [getNewTiersToAnimate, getNextTierIndex])
 
-  const shouldShowAnimation = (tierIndex: number): boolean => {
-    const tier = TIERS[tierIndex]
-    const isNewlyCompleted = tier.invitesAccepted <= invitedUsersAccepted && tier.invitesAccepted > invitedUsersAcceptedViewed
-    const isCurrentlyAnimating = animationPhase === AnimationPhase.TIER_REACHED && animatedStep === tierIndex + 1
+  const shouldShowAnimation = useCallback(
+    (tierIndex: number): boolean => {
+      const tier = TIERS[tierIndex]
+      const isNewlyCompleted = tier.invitesAccepted <= invitedUsersAccepted && tier.invitesAccepted > invitedUsersAcceptedViewed
+      const isCurrentlyAnimating = animationPhase === AnimationPhase.TIER_REACHED && animatedStep === tierIndex + 1
 
-    return isNewlyCompleted && isCurrentlyAnimating
-  }
+      return isNewlyCompleted && isCurrentlyAnimating
+    },
+    [invitedUsersAccepted, invitedUsersAcceptedViewed, animationPhase, animatedStep]
+  )
 
-  const shouldShowIcon = (tierIndex: number): boolean => {
-    const tier = TIERS[tierIndex]
-    const isCompleted = tier.invitesAccepted <= invitedUsersAccepted
-    const isCurrentlyAnimating = animationPhase === AnimationPhase.TIER_REACHED && animatedStep === tierIndex + 1
+  const shouldShowIcon = useCallback(
+    (tierIndex: number): boolean => {
+      const tier = TIERS[tierIndex]
+      const isCompleted = tier.invitesAccepted <= invitedUsersAccepted
+      const isCurrentlyAnimating = animationPhase === AnimationPhase.TIER_REACHED && animatedStep === tierIndex + 1
 
-    return isCompleted || isCurrentlyAnimating
-  }
+      return isCompleted || isCurrentlyAnimating
+    },
+    [invitedUsersAccepted, animationPhase, animatedStep]
+  )
 
   return (
     <SectionContainer ref={sectionRef} data-testid={REFERRAL_JOURNEY_TEST_ID.sectionContainer}>
@@ -180,7 +196,11 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
                 activeStep={animatedStep}
                 totalSteps={totalSteps}
                 phase={animationPhase}
-                invitedUsersAccepted={animatedStep}
+                invitedUsersAccepted={
+                  animationPhase === AnimationPhase.TIER_REACHED
+                    ? (TIERS[animatedStep - 1]?.invitesAccepted ?? invitedUsersAccepted)
+                    : invitedUsersAccepted
+                }
                 data-testid={REFERRAL_JOURNEY_TEST_ID.journeyStepLine}
               />
             </Tooltip>
