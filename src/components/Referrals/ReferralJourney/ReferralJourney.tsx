@@ -72,7 +72,7 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
   useEffect(() => {
     const currentAnimatedStep = getTiersCompletedCount(invitedUsersAccepted)
     setAnimatedStep(currentAnimatedStep)
-  }, [])
+  }, [invitedUsersAccepted, getTiersCompletedCount])
 
   useEffect(() => {
     const newTiersToAnimate = getNewTiersToAnimate()
