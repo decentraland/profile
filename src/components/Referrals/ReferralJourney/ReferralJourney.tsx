@@ -25,7 +25,7 @@ import { AnimationPhase as AnimationPhase, ReferralJourneyProps } from './Referr
 const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
   const { invitedUsersAccepted, invitedUsersAcceptedViewed, onSetReferralEmail, rewardImages } = props
 
-  const [animatedStep, setAnimatedStep] = useState(TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAccepted).length)
+  const [animatedStep, setAnimatedStep] = useState(getTiersCompletedCount(invitedUsersAccepted))
   const [open, setOpen] = useState(false)
   const [journeyTiers, setJourneyTiers] = useState(
     TIERS.map(tier => ({ ...tier, completed: tier.invitesAccepted <= invitedUsersAccepted }))
@@ -72,7 +72,7 @@ const ReferralJourney = React.memo((props: ReferralJourneyProps) => {
   useEffect(() => {
     const currentAnimatedStep = getTiersCompletedCount(invitedUsersAccepted)
     setAnimatedStep(currentAnimatedStep)
-  }, [invitedUsersAccepted, getTiersCompletedCount])
+  }, [])
 
   useEffect(() => {
     const newTiersToAnimate = getNewTiersToAnimate()
