@@ -19,7 +19,8 @@ export type ReferralsState = {
 export const buildInitialState = (): ReferralsState => ({
   data: {
     invitedUsersAccepted: 0,
-    invitedUsersAcceptedViewed: 0
+    invitedUsersAcceptedViewed: 0,
+    rewardImages: []
   },
   loading: [],
   error: null
@@ -35,6 +36,7 @@ export const referralsReducer = createReducer<ReferralsState>(buildInitialState(
       state.loading = loadingReducer(state.loading, action)
       state.data.invitedUsersAccepted = action.payload.invitedUsersAccepted
       state.data.invitedUsersAcceptedViewed = action.payload.invitedUsersAcceptedViewed
+      state.data.rewardImages = action.payload.rewardImages
     })
     .addCase(fetchReferralsFailure, (state, action) => {
       state.loading = loadingReducer(state.loading, action)

@@ -8,11 +8,15 @@ enum AnimationPhase {
 
 type ReferralJourneyProps = {
   invitedUsersAccepted: number
+  invitedUsersAcceptedViewed: number
+  rewardImages: { tier: number; url: string }[]
   onSetReferralEmail: (email: string) => unknown
 }
 
 type MapStateProps = {
   invitedUsersAccepted: number
+  invitedUsersAcceptedViewed: number
+  rewardImages: { tier: number; url: string }[]
 }
 
 type MapDispatch = Dispatch
@@ -23,6 +27,8 @@ type MapDispatchProps = {
 
 type OwnProps = {
   invitedUsersAccepted: number
+  invitedUsersAcceptedViewed: number
+  rewardImages: { tier: number; url: string }[]
 }
 
 export { AnimationPhase }

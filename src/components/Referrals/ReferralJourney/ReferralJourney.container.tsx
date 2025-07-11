@@ -6,7 +6,9 @@ import { ReferralJourney } from './ReferralJourney'
 import { MapStateProps, MapDispatch, MapDispatchProps, OwnProps } from './ReferralJourney.types'
 
 const mapState = (_: RootState, ownProps: OwnProps): MapStateProps => ({
-  invitedUsersAccepted: ownProps.invitedUsersAccepted
+  invitedUsersAccepted: ownProps.invitedUsersAccepted,
+  invitedUsersAcceptedViewed: ownProps.invitedUsersAcceptedViewed,
+  rewardImages: ownProps.rewardImages
 })
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps =>

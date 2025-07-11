@@ -9,7 +9,8 @@ beforeEach(() => {
   client = new ReferralsClient('https://example.com')
   referralProgress = {
     invitedUsersAccepted: 5,
-    invitedUsersAcceptedViewed: 3
+    invitedUsersAcceptedViewed: 3,
+    rewardImages: []
   }
 
   // Setup mock fetch

@@ -8,5 +8,6 @@ export const getError = (state: RootState) => state.referrals.error
 
 export const getInvitedUsersAccepted = (state: RootState) => getData(state).invitedUsersAccepted
 export const getInvitedUsersAcceptedViewed = (state: RootState) => getData(state).invitedUsersAcceptedViewed
+export const getRewardGrantedImages = (state: RootState) => getData(state).rewardImages
 
 export const isLoadingReferrals = (state: RootState) => isLoadingType(getLoading(state), fetchReferralsRequest.type)

@@ -51,7 +51,13 @@ describe('referrals reducer', () => {
       beforeEach(() => {
         mockData = {
           invitedUsersAccepted: 5,
-          invitedUsersAcceptedViewed: 3
+          invitedUsersAcceptedViewed: 3,
+          rewardImages: [
+            {
+              tier: 5,
+              url: 'https://peer.decentraland.zone/lambdas/collections/contents/urn:decentraland:amoy:collections-v2:0x6d8a2b6753f59d909ffa7f38b01327c191e4bf60:0/thumbnail'
+            }
+          ]
         }
         state = referralsReducer(state, fetchReferralsSuccess(mockData))
       })
@@ -59,6 +65,7 @@ describe('referrals reducer', () => {
       it('should update the data with the response values', () => {
         expect(state.data.invitedUsersAccepted).toBe(5)
         expect(state.data.invitedUsersAcceptedViewed).toBe(3)
+        expect(state.data.rewardImages).toEqual(mockData.rewardImages)
       })
 
       it('should remove the request action from loading state', () => {
@@ -104,7 +111,8 @@ describe('referrals reducer', () => {
       beforeEach(() => {
         mockData = {
           invitedUsersAccepted: 15,
-          invitedUsersAcceptedViewed: 12
+          invitedUsersAcceptedViewed: 12,
+          rewardImages: []
         }
         state = referralsReducer(state, fetchReferralsSuccess(mockData))
       })
@@ -201,7 +209,13 @@ describe('referrals reducer', () => {
       currentState = {
         data: {
           invitedUsersAccepted: 5,
-          invitedUsersAcceptedViewed: 3
+          invitedUsersAcceptedViewed: 3,
+          rewardImages: [
+            {
+              tier: 5,
+              url: 'https://peer.decentraland.zone/lambdas/collections/contents/urn:decentraland:amoy:collections-v2:0x6d8a2b6753f59d909ffa7f38b01327c191e4bf60:0/thumbnail'
+            }
+          ]
         },
         loading: [],
         error: null

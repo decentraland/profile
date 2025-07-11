@@ -32,4 +32,8 @@ const calculateProgressPercentage = (totalSteps: number, invitedUsersAccepted: n
   return basePercentage + progressPercentage
 }
 
-export { ANIMATION_DURATION, calculateProgressPercentage }
+const getTiersCompletedCount = (invitedUsersAccepted: number): number => {
+  return TIERS.filter(tier => tier.invitesAccepted <= invitedUsersAccepted).length
+}
+
+export { ANIMATION_DURATION, calculateProgressPercentage, getTiersCompletedCount }

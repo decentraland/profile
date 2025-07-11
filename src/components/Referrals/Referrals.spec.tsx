@@ -9,8 +9,10 @@ jest.mock('./ReferralHeroSection', () => ({
   ReferralHeroSection: () => <div data-testid={MOCK_HERO_SECTION_TEST_ID} />
 }))
 
-jest.mock('./ReferralJourney', () => ({
-  ReferralJourney: () => <div data-testid={MOCK_JOURNEY_TEST_ID} />
+jest.mock('./ReferralJourney/ReferralJourney.container', () => ({
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  __esModule: true,
+  default: () => <div data-testid={MOCK_JOURNEY_TEST_ID} />
 }))
 
 describe('Referrals', () => {
@@ -21,6 +23,7 @@ describe('Referrals', () => {
       profileAddress: '0x123',
       invitedUsersAccepted: 0,
       invitedUsersAcceptedViewed: 0,
+      rewardGrantedImages: [],
       isReferralTestingButtonEnabled: false,
       onFetchReferrals: jest.fn() as unknown as Props['onFetchReferrals']
     }
