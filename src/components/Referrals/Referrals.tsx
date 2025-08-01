@@ -13,7 +13,8 @@ const Referrals = (props: Props) => {
     invitedUsersAccepted,
     invitedUsersAcceptedViewed,
     rewardGrantedImages,
-    isReferralTestingButtonEnabled
+    isReferralTestingButtonEnabled,
+    avatar
   } = props
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const Referrals = (props: Props) => {
   return (
     <ReferralsContainer data-testid={REFERRALS_CONTAINER_TEST_ID}>
       <ReferralHeroContainer data-testid={REFERRALS_HERO_SECTION_TEST_ID}>
-        <ReferralHeroSection profileAddress={profileAddress} />
+        <ReferralHeroSection profileAddress={profileAddress} avatar={avatar} />
       </ReferralHeroContainer>
       <ReferralJourneySectionContainer data-testid={REFERRALS_JOURNEY_TEST_ID}>
         <ReferralJourney

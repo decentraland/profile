@@ -3,6 +3,7 @@ import React from 'react'
 import { fireEvent, waitFor, act } from '@testing-library/react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { config } from '../../../modules/config'
+import { Avatar } from '../../../modules/profile/types'
 import { locations } from '../../../modules/routing/locations'
 import { renderWithProviders } from '../../../tests/tests'
 import {
@@ -29,8 +30,35 @@ jest.mock('../../../modules/routing/locations', () => ({
 }))
 
 describe('ReferralHeroSection', () => {
-  const profileAddress = '0x123456789abcdef'
-  const inviteUrl = `${INVITE_REFERRER_URL}/${profileAddress}`
+  let profileAddress: string
+  let profileAddressWithClaimedName: string
+  let inviteUrl: string
+  let mockAvatarWithClaimedName: Avatar
+  let mockAvatarWithoutClaimedName: Avatar
+
+  beforeEach(() => {
+    profileAddress = '0x123456789abcdef'
+    profileAddressWithClaimedName = '0x123456789abcdef'
+    inviteUrl = `${INVITE_REFERRER_URL}/${profileAddress}`
+
+    mockAvatarWithClaimedName = {
+      userId: profileAddress,
+      name: 'testuser',
+      hasClaimedName: true,
+      profilePictureUrl: 'https://example.com/avatar.png'
+    } as unknown as Avatar
+
+    mockAvatarWithoutClaimedName = {
+      userId: profileAddressWithClaimedName,
+      name: 'testuser',
+      hasClaimedName: false,
+      profilePictureUrl: 'https://example.com/avatar.png'
+    } as unknown as Avatar
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
 
   const renderReferralHeroSection = (props: Partial<Props> = {}) => {
     return renderWithProviders(<ReferralHeroSection profileAddress={profileAddress} isLoading={false} {...props} />)
@@ -100,6 +128,13 @@ describe('ReferralHeroSection', () => {
     it('should display the referral container', () => {
       const { getByTestId } = renderedComponent
       expect(getByTestId(REFERRAL_CONTAINER_TEST_ID)).toBeInTheDocument()
+    })
+
+    it('should display shortened address in input when no avatar provided', () => {
+      const { getByTestId } = renderedComponent
+      const textField = getByTestId(REFERRAL_INPUT_TEST_ID)
+      const input = textField.querySelector('input') as HTMLInputElement
+      expect(input.value).toContain('0x1234...')
     })
 
     describe('when clicking the how it works button', () => {
@@ -233,6 +268,63 @@ describe('ReferralHeroSection', () => {
             expect(locations.twitter).toHaveBeenCalledWith(t('referral_hero_section.share_on_x_title'), inviteUrl)
             expect(mockOpen).toHaveBeenCalledWith(mockTwitterUrl, '_blank')
           })
+        })
+      })
+    })
+  })
+
+  describe('when avatar has claimed name', () => {
+    let renderedComponentWithAvatar: ReturnType<typeof renderReferralHeroSection>
+
+    beforeEach(() => {
+      renderedComponentWithAvatar = renderReferralHeroSection({ avatar: mockAvatarWithClaimedName })
+    })
+
+    it('should display claimed name in input field', () => {
+      const { getByTestId } = renderedComponentWithAvatar
+      const textField = getByTestId(REFERRAL_INPUT_TEST_ID)
+      const input = textField.querySelector('input') as HTMLInputElement
+      expect(input.value).toContain(mockAvatarWithClaimedName.name)
+    })
+
+    describe('when clicking the input', () => {
+      it('should copy the link with claimed name to clipboard', async () => {
+        const inviteUrlWithName = `${INVITE_REFERRER_URL}/${mockAvatarWithClaimedName.name}`
+        const { getByTestId } = renderedComponentWithAvatar
+        const input = getByTestId(REFERRAL_INPUT_TEST_ID)
+        act(() => {
+          fireEvent.click(input)
+        })
+        await waitFor(() => {
+          expect(navigator.clipboard.writeText).toHaveBeenCalledWith(inviteUrlWithName)
+        })
+      })
+    })
+  })
+
+  describe('when avatar has no claimed name', () => {
+    let renderedComponentWithoutClaimed: ReturnType<typeof renderReferralHeroSection>
+
+    beforeEach(() => {
+      renderedComponentWithoutClaimed = renderReferralHeroSection({ avatar: mockAvatarWithoutClaimedName })
+    })
+
+    it('should display shortened address in input field', () => {
+      const { getByTestId } = renderedComponentWithoutClaimed
+      const textField = getByTestId(REFERRAL_INPUT_TEST_ID)
+      const input = textField.querySelector('input') as HTMLInputElement
+      expect(input.value).toContain('0x1234...')
+    })
+
+    describe('when clicking the input', () => {
+      it('should copy the link with address', async () => {
+        const { getByTestId } = renderedComponentWithoutClaimed
+        const input = getByTestId(REFERRAL_INPUT_TEST_ID)
+        act(() => {
+          fireEvent.click(input)
+        })
+        await waitFor(() => {
+          expect(navigator.clipboard.writeText).toHaveBeenCalledWith(inviteUrl)
         })
       })
     })

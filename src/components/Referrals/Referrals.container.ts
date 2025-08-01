@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from '@reduxjs/toolkit'
+import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
 import { getIsReferralTestingButtonEnabled } from '../../modules/features/selectors'
 import { RootState } from '../../modules/reducer'
 import { fetchReferralsRequest } from '../../modules/referrals/actions'
@@ -12,7 +13,8 @@ const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => ({
   invitedUsersAcceptedViewed: getInvitedUsersAcceptedViewed(state),
   rewardGrantedImages: getRewardGrantedImages(state),
   profileAddress: ownProps.profileAddress,
-  isReferralTestingButtonEnabled: getIsReferralTestingButtonEnabled(state)
+  isReferralTestingButtonEnabled: getIsReferralTestingButtonEnabled(state),
+  avatar: getProfileOfAddress(state, ownProps.profileAddress)?.avatars[0]
 })
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps =>
