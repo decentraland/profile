@@ -64,8 +64,8 @@ const ReferralHeroSection = React.memo((props: Props) => {
   const [showSteps, setShowSteps] = useState(false)
 
   const inviteUrl = useMemo(() => {
-    return `${INVITE_REFERRER_URL}/${avatar?.hasClaimedName ? avatar.name : profileAddress}`
-  }, [INVITE_REFERRER_URL, avatar])
+    return `${INVITE_REFERRER_URL}/${avatar?.hasClaimedName && avatar.name ? avatar.name : profileAddress}`
+  }, [INVITE_REFERRER_URL, avatar, profileAddress])
 
   const handleShareButtonClick = useCallback(
     async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -84,7 +84,7 @@ const ReferralHeroSection = React.memo((props: Props) => {
         setAnchorMenu(e.currentTarget)
       }
     },
-    [isTabletOrBelow, inviteUrl, getAnalytics]
+    [isTabletOrBelow, inviteUrl, profileAddress, getAnalytics]
   )
 
   const handleShareOnXClick = useCallback(() => {
@@ -157,7 +157,7 @@ const ReferralHeroSection = React.memo((props: Props) => {
               >
                 <ReferralInput
                   data-testid={REFERRAL_INPUT_TEST_ID}
-                  value={`${INVITE_REFERRER_URL}/${avatar?.hasClaimedName ? avatar.name : shorten(profileAddress)}`}
+                  value={`${INVITE_REFERRER_URL}/${avatar?.hasClaimedName && avatar.name ? avatar.name : shorten(profileAddress)}`}
                   onClick={handleCopyLink}
                   InputProps={{
                     readOnly: true,
