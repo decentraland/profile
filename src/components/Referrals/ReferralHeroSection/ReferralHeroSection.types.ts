@@ -1,3 +1,4 @@
+import { Avatar } from '../../../modules/profile/types'
 import { View } from '../../../utils/view'
 
 export type Props = {
@@ -5,4 +6,5 @@ export type Props = {
   error?: string | null
   view?: View
   profileAddress: string
+  avatar?: Avatar
 }
