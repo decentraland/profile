@@ -31,29 +31,11 @@ jest.mock('../../../modules/routing/locations', () => ({
 
 describe('ReferralHeroSection', () => {
   let profileAddress: string
-  let profileAddressWithClaimedName: string
   let inviteUrl: string
-  let mockAvatarWithClaimedName: Avatar
-  let mockAvatarWithoutClaimedName: Avatar
 
   beforeEach(() => {
     profileAddress = '0x123456789abcdef'
-    profileAddressWithClaimedName = '0x123456789abcdef'
     inviteUrl = `${INVITE_REFERRER_URL}/${profileAddress}`
-
-    mockAvatarWithClaimedName = {
-      userId: profileAddress,
-      name: 'testuser',
-      hasClaimedName: true,
-      profilePictureUrl: 'https://example.com/avatar.png'
-    } as unknown as Avatar
-
-    mockAvatarWithoutClaimedName = {
-      userId: profileAddressWithClaimedName,
-      name: 'testuser',
-      hasClaimedName: false,
-      profilePictureUrl: 'https://example.com/avatar.png'
-    } as unknown as Avatar
   })
 
   afterEach(() => {
@@ -275,8 +257,15 @@ describe('ReferralHeroSection', () => {
 
   describe('when avatar has claimed name', () => {
     let renderedComponentWithAvatar: ReturnType<typeof renderReferralHeroSection>
+    let mockAvatarWithClaimedName: Avatar
 
     beforeEach(() => {
+      mockAvatarWithClaimedName = {
+        userId: profileAddress,
+        name: 'testuser',
+        hasClaimedName: true,
+        profilePictureUrl: 'https://example.com/avatar.png'
+      } as unknown as Avatar
       renderedComponentWithAvatar = renderReferralHeroSection({ avatar: mockAvatarWithClaimedName })
     })
 
@@ -304,8 +293,15 @@ describe('ReferralHeroSection', () => {
 
   describe('when avatar has no claimed name', () => {
     let renderedComponentWithoutClaimed: ReturnType<typeof renderReferralHeroSection>
+    let mockAvatarWithoutClaimedName: Avatar
 
     beforeEach(() => {
+      mockAvatarWithoutClaimedName = {
+        userId: profileAddress,
+        name: 'testuser',
+        hasClaimedName: false,
+        profilePictureUrl: 'https://example.com/avatar.png'
+      } as unknown as Avatar
       renderedComponentWithoutClaimed = renderReferralHeroSection({ avatar: mockAvatarWithoutClaimedName })
     })
 
