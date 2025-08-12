@@ -15,7 +15,7 @@ import { Props } from './Avatar.types'
 import styles from './Avatar.module.css'
 
 const Avatar = (props: Props) => {
-  const { profile, profileAddress, view, isUnityWearablePreviewEnabled } = props
+  const { profile, profileAddress, view } = props
 
   const [isLoadingWearablePreview, setIsLoadingWearablePreview] = useState(true)
   const [isError, setIsError] = useState(false)
