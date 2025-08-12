@@ -48,7 +48,7 @@ const Avatar = (props: Props) => {
             lockBeta={true}
             panning={false}
             profile={profileAddress}
-            unity={!!isUnityWearablePreviewEnabled}
+            unity={true}
             unityMode="profile"
             onError={handleError}
             onLoad={handleOnLoad}
