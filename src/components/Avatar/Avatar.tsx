@@ -41,7 +41,7 @@ const Avatar = (props: Props) => {
       {!isError ? (
         <div className={styles.wearablePreview}>
           <WearablePreview
-            baseUrl="https://wearable-preview-git-feat-configutaror-decentraland1.vercel.app"
+            baseUrl="https://wearable-preview-git-feat-update-unity-ren-aade4d-decentraland1.vercel.app"
             dev={config.getEnv() === Env.DEVELOPMENT}
             disableBackground={true}
             disableDefaultWearables
