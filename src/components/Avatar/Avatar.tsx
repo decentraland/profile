@@ -15,7 +15,7 @@ import { Props } from './Avatar.types'
 import styles from './Avatar.module.css'
 
 const Avatar = (props: Props) => {
-  const { profile, profileAddress, view, isUnityWearablePreviewEnabled } = props
+  const { profile, profileAddress, view } = props
 
   const [isLoadingWearablePreview, setIsLoadingWearablePreview] = useState(true)
   const [isError, setIsError] = useState(false)
@@ -41,14 +41,14 @@ const Avatar = (props: Props) => {
       {!isError ? (
         <div className={styles.wearablePreview}>
           <WearablePreview
-            baseUrl={config.get('WEARABLE_PREVIEW_URL')}
+            baseUrl="https://wearable-preview-git-feat-update-unity-ren-aade4d-decentraland1.vercel.app"
             dev={config.getEnv() === Env.DEVELOPMENT}
             disableBackground={true}
             disableDefaultWearables
             lockBeta={true}
             panning={false}
             profile={profileAddress}
-            unity={!!isUnityWearablePreviewEnabled}
+            unity={true}
             unityMode="profile"
             onError={handleError}
             onLoad={handleOnLoad}
