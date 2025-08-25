@@ -8,6 +8,7 @@ import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { Popup } from 'decentraland-ui/dist/components/Popup/Popup'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
+import { launchDesktopApp } from 'decentraland-ui2/dist/modules/jumpIn'
 import Share from '../../assets/icons/Share.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
 import { Events, ShareType } from '../../modules/analytics/types'
@@ -107,6 +108,13 @@ const ProfileInformation = (props: Props) => {
     [isBlocked, links]
   )
 
+  const handleEditAvatarClick = useCallback(async () => {
+    const hasLauncher = await launchDesktopApp({})
+    if (!hasLauncher) {
+      window.open(getEditAvatarUrl(), '_blank,noreferrer')
+    }
+  }, [])
+
   const renderActions = useCallback(
     () => (
       <div className={classnames(styles.actions)}>
@@ -172,7 +180,7 @@ const ProfileInformation = (props: Props) => {
               direction="left"
             >
               <Dropdown.Menu>
-                <Dropdown.Item as="a" icon={'user'} text={t('profile_information.edit')} href={getEditAvatarUrl()} target="_blank" />
+                <Dropdown.Item icon={'user'} text={t('profile_information.edit')} target="_blank" onClick={handleEditAvatarClick} />
               </Dropdown.Menu>
             </Dropdown>
           )}
