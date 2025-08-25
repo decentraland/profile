@@ -140,3 +140,4 @@ dist
 *.sln
 *.sw?
 .cursor/*
+.claude/*
