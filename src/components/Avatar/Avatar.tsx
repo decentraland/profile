@@ -5,8 +5,8 @@ import { Env } from '@dcl/ui-env'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
-import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
-import { WearablePreview } from 'decentraland-ui/dist/components/WearablePreview/WearablePreview'
+import { useTabletAndBelowMediaQuery } from 'decentraland-ui2/dist/components/Media/Media'
+import { WearablePreview, launchDesktopApp } from 'decentraland-ui2'
 import Edit from '../../assets/icons/Edit.svg'
 import { config } from '../../modules/config'
 import { getEditAvatarUrl } from '../../modules/routing/locations'
@@ -30,6 +30,13 @@ const Avatar = (props: Props) => {
     setIsLoadingWearablePreview(false)
     setIsError(true)
   }, [setIsLoadingWearablePreview])
+
+  const handleEditAvatarClick = useCallback(async () => {
+    const hasLauncher = await launchDesktopApp({})
+    if (!hasLauncher) {
+      window.open(getEditAvatarUrl(), '_blank,noreferrer')
+    }
+  }, [])
 
   return (
     <div className={classNames(styles.Avatar, { [styles.loading]: isLoadingWearablePreview, [styles.noProfile]: !profile })}>
@@ -61,14 +68,7 @@ const Avatar = (props: Props) => {
         </div>
       ) : null}
       {view === View.OWN && (
-        <Button
-          primary
-          fluid
-          className={classNames('customIconButton', styles.editButton)}
-          as={Link}
-          to={getEditAvatarUrl()}
-          target="_blank"
-        >
+        <Button primary fluid className={classNames('customIconButton', styles.editButton)} as={Link} onClick={handleEditAvatarClick}>
           <img src={Edit} className="iconSize" />
           {!isTabletAndBelow && ` ${t('avatar.edit')}`}
         </Button>

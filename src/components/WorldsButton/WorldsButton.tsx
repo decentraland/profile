@@ -5,6 +5,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import { Popup } from 'decentraland-ui/dist/components/Popup/Popup'
+import { launchDesktopApp } from 'decentraland-ui2/dist/modules/jumpIn'
 import jumpIcon from '../../assets/icons/Jump.png'
 import verifiedIcon from '../../assets/icons/Verified.png'
 import worldIcon from '../../assets/icons/World.png'
@@ -25,10 +26,16 @@ const WorldsButton = (props: Props) => {
   const promptUserToActivateWorld = hasNames && !hasWorlds && !isLoading && isLoggedIn
   const showUserWorlds = !isLoading && hasWorlds
 
-  const handleWorldClick = useCallback((world: World) => {
+  const handleWorldClick = useCallback(async (world: World) => {
     getAnalytics()?.track(Events.GO_TO_WORLD, { world: world.domain })
+
+    const hasLauncher = await launchDesktopApp({
+      realm: world.domain
+    })
     const timeout = setTimeout(() => {
-      window.open(getJumpToWorldUrl(world), '_blank,noreferrer')
+      if (!hasLauncher) {
+        window.open(getJumpToWorldUrl(world), '_blank,noreferrer')
+      }
     }, 300)
     return () => clearTimeout(timeout)
   }, [])
