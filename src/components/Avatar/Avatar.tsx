@@ -6,7 +6,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
-import { WearablePreview } from 'decentraland-ui/dist/components/WearablePreview/WearablePreview'
+import { PreviewUnityMode, WearablePreview } from 'decentraland-ui2'
 import Edit from '../../assets/icons/Edit.svg'
 import { config } from '../../modules/config'
 import { getEditAvatarUrl } from '../../modules/routing/locations'
@@ -41,7 +41,7 @@ const Avatar = (props: Props) => {
       {!isError ? (
         <div className={styles.wearablePreview}>
           <WearablePreview
-            baseUrl={config.get('WEARABLE_PREVIEW_URL')}
+            baseUrl="https://wearable-preview-git-chore-update-aang-ren-170d38-decentraland1.vercel.app/"
             dev={config.getEnv() === Env.DEVELOPMENT}
             disableBackground={true}
             disableDefaultWearables
@@ -49,7 +49,7 @@ const Avatar = (props: Props) => {
             panning={false}
             profile={profileAddress}
             unity={!!isUnityWearablePreviewEnabled}
-            unityMode="profile"
+            unityMode={PreviewUnityMode.Profile}
             onError={handleError}
             onLoad={handleOnLoad}
           />
