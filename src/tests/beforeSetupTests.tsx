@@ -26,6 +26,69 @@ Object.defineProperty(window, 'matchMedia', {
   }))
 })
 
+// Mock HTMLCanvasElement.getContext for lottie-web
+HTMLCanvasElement.prototype.getContext = jest.fn().mockImplementation((contextType: string) => {
+  if (contextType === '2d') {
+    return {
+      canvas: document.createElement('canvas'),
+      fillStyle: '',
+      strokeStyle: '',
+      lineWidth: 1,
+      lineCap: 'butt',
+      lineJoin: 'miter',
+      miterLimit: 10,
+      shadowOffsetX: 0,
+      shadowOffsetY: 0,
+      shadowBlur: 0,
+      shadowColor: 'rgba(0, 0, 0, 0)',
+      globalAlpha: 1,
+      globalCompositeOperation: 'source-over',
+      save: jest.fn(),
+      restore: jest.fn(),
+      scale: jest.fn(),
+      rotate: jest.fn(),
+      translate: jest.fn(),
+      transform: jest.fn(),
+      setTransform: jest.fn(),
+      resetTransform: jest.fn(),
+      createLinearGradient: jest.fn(),
+      createRadialGradient: jest.fn(),
+      createPattern: jest.fn(),
+      clearRect: jest.fn(),
+      fillRect: jest.fn(),
+      strokeRect: jest.fn(),
+      beginPath: jest.fn(),
+      closePath: jest.fn(),
+      moveTo: jest.fn(),
+      lineTo: jest.fn(),
+      bezierCurveTo: jest.fn(),
+      quadraticCurveTo: jest.fn(),
+      arc: jest.fn(),
+      arcTo: jest.fn(),
+      rect: jest.fn(),
+      fill: jest.fn(),
+      stroke: jest.fn(),
+      drawFocusIfNeeded: jest.fn(),
+      clip: jest.fn(),
+      isPointInPath: jest.fn(),
+      isPointInStroke: jest.fn(),
+      measureText: jest.fn(() => ({ width: 0 })),
+      setLineDash: jest.fn(),
+      getLineDash: jest.fn(() => []),
+      createImageData: jest.fn(),
+      getImageData: jest.fn(),
+      putImageData: jest.fn(),
+      createImageBitmap: jest.fn(),
+      drawImage: jest.fn(),
+      getContextAttributes: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn()
+    }
+  }
+  return null
+})
+
 jest.mock('decentraland-dapps/dist/modules/translation/utils', () => {
   const module = jest.requireActual('decentraland-dapps/dist/modules/translation/utils')
   return {
