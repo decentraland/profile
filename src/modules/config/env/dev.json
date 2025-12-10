@@ -11,7 +11,6 @@
   "SYNAPSE_URL": "https://social.decentraland.zone",
   "PROFILE_URL": "https://decentraland.zone/profile",
   "MARKETPLACE_URL": "https://decentraland.zone/marketplace",
-  "NFT_SERVER_URL": "https://nft-api.decentraland.zone/v1",
   "MARKETPLACE_SERVER_URL": "https://marketplace-api.decentraland.zone/v1",
   "CREDITS_SERVER_URL": "https://credits.decentraland.zone",
   "SEGMENT_API_KEY": "69qQIHhaX2FkM9KP233SYNQNuPjpY0JG",

@@ -25,10 +25,9 @@ import { translationSaga } from './translation/sagas'
 import { worldSagas } from './world/sagas'
 
 const analyticsSaga = createAnalyticsSaga()
-export const NFT_SERVER_URL = config.get('NFT_SERVER_URL')
-export const MARKETPLACE_SERVER_URL = config.get('MARKETPLACE_SERVER_URL')
+const MARKETPLACE_SERVER_URL = config.get('MARKETPLACE_SERVER_URL')
 
-export function* rootSaga(
+function* rootSaga(
   worldsContentClient: ContentClient,
   marketplaceGraphClient: MarketplaceGraphClient,
   peerApi: PeerAPI,
@@ -60,8 +59,10 @@ export function* rootSaga(
         delay: 60000 /** 60 seconds */
       }
     }),
-    nftSagas(new NFTClient(NFT_SERVER_URL)),
+    nftSagas(new NFTClient(MARKETPLACE_SERVER_URL)),
     transactionSaga(),
     referralsSagas(referralsClient)
   ])
 }
+
+export { MARKETPLACE_SERVER_URL, rootSaga }
