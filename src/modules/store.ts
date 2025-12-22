@@ -44,13 +44,17 @@ export function initStore() {
   const peerApi = new PeerAPI(config.get('PEER_URL'))
   const socialClient = createProfileSocialClient()
 
-  const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'))
+  const getIdentity = () => {
+    const address = getAddress(store.getState())
+    const identity = address ? localStorageGetIdentity(address.toLowerCase()) : null
+    return identity || undefined
+  }
+
+  const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'), {
+    identity: getIdentity
+  })
   const referralsClient = new ReferralsClient(config.get('REFERRAL_SERVER_URL'), {
-    identity: () => {
-      const address = getAddress(store.getState())
-      const identity = address ? localStorageGetIdentity(address.toLowerCase()) : null
-      return identity || undefined
-    }
+    identity: getIdentity
   })
 
   sagasMiddleware.run(rootSaga, worldsContentClient, marketplaceGraphClient, peerApi, socialClient, creditsClient, referralsClient)
