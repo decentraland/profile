@@ -1,4 +1,4 @@
-import { configureStore, Reducer, Middleware, AnyAction, combineReducers, Store } from '@reduxjs/toolkit'
+import { Middleware, Reducer, Store, combineReducers, configureStore } from '@reduxjs/toolkit'
 import { CreditsState, creditsReducer as credits } from 'decentraland-dapps/dist/modules/credits/reducer'
 import { FeaturesState, featuresReducer as features } from 'decentraland-dapps/dist/modules/features/reducer'
 import { ModalState, modalReducer as modal } from 'decentraland-dapps/dist/modules/modal/reducer'
@@ -15,26 +15,27 @@ import { ReferralsState, referralsReducer as referrals } from './referrals/reduc
 import { SocialState, socialReducer as social } from './social/reducer'
 import { WorldState, worldReducer as world } from './world/reducer'
 
+const rootReducer = combineReducers({
+  wallet,
+  credits,
+  storage,
+  modal: modal as Reducer<ModalState>,
+  features: features as Reducer<FeaturesState>,
+  translation: translation as Reducer<TranslationState>,
+  profile,
+  identity,
+  social,
+  world,
+  items,
+  nfts,
+  transaction,
+  referrals
+})
+
 export const createRootReducer = (middlewares: Middleware[], preloadedState = {}) =>
   configureStore({
-    reducer: storageReducerWrapper(
-      combineReducers<RootState>({
-        wallet,
-        credits,
-        storage,
-        modal: modal as Reducer<ModalState, AnyAction>,
-        features: features as Reducer<FeaturesState, AnyAction>,
-        translation: translation as Reducer<TranslationState, AnyAction>,
-        profile,
-        identity,
-        social,
-        world,
-        items,
-        nfts,
-        transaction,
-        referrals
-      })
-    ),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    reducer: storageReducerWrapper(rootReducer) as any,
     preloadedState,
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware({

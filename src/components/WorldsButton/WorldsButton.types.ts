@@ -1,4 +1,4 @@
-import { Dispatch } from '@reduxjs/toolkit'
+import { Dispatch } from 'redux'
 import { FetchWorldsRequestAction } from '../../modules/world/actions'
 import { World } from '../../modules/world/types'
 
