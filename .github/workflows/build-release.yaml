@@ -23,7 +23,7 @@ jobs:
           deterministic-snapshot: true
           only-update-versions: true
       - name: Install
-        run: npm ci
+        run: npm i
         env:
           HUSKY: 0
       - name: Build
