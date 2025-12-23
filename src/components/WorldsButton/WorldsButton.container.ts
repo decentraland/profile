@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from '@reduxjs/toolkit'
 import { RootState } from '../../modules/reducer'
 import { fetchWorldsRequest } from '../../modules/world/actions'
 import { getActiveWorlds, hasAName, isLoadingWorlds } from '../../modules/world/selectors'
 import WorldsButton from './WorldsButton'
-import { MapStateProps, MapDispatch, MapDispatchProps } from './WorldsButton.types'
+import { MapDispatch, MapDispatchProps, MapStateProps } from './WorldsButton.types'
 
 const mapState = (state: RootState): MapStateProps => {
   return {
