@@ -1,13 +1,13 @@
 /* eslint-disable import/order */
 import 'semantic-ui-css/semantic.min.css'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
-import { darkTheme, DclThemeProvider } from 'decentraland-ui2'
+import { DclThemeProvider, darkTheme } from 'decentraland-ui2'
 import * as modals from './components/Modals'
 import { initStore } from './modules/store'
 import * as locales from './modules/translation/locales'
@@ -19,7 +19,9 @@ import 'decentraland-ui/dist/themes/alternative/dark-theme.css'
 import './index.css'
 
 const basename = /^decentraland.(zone|org|today)$/.test(window.location.host) ? '/profile' : '/'
-const component = (
+
+const root = createRoot(document.getElementById('root') as HTMLElement)
+root.render(
   <React.StrictMode>
     <BrowserRouter basename={basename}>
       <Provider store={initStore()}>
@@ -36,5 +38,3 @@ const component = (
     </BrowserRouter>
   </React.StrictMode>
 )
-
-ReactDOM.render(component, document.getElementById('root') as HTMLElement)

@@ -1,5 +1,5 @@
-import { isAddress } from 'ethers'
-import { call, put, all, takeEvery } from 'redux-saga/effects'
+import { all, call, put, takeEvery } from 'redux-saga/effects'
+import { EthAddress } from '@dcl/schemas'
 import { isErrorWithMessage } from '@dcl/social-rpc-client'
 import { PeerAPI } from 'decentraland-dapps/dist/lib/peer'
 import { createProfileSaga as createDefaultProfileSaga } from 'decentraland-dapps/dist/modules/profile/sagas'
@@ -25,7 +25,7 @@ export function* profileSagas(marketplaceGraphClient: MarketplaceGraphClient, pe
 
   function* handleEnhancedFetchProfileRequest(action: EnhancedFetchProfileRequestAction) {
     let address: string = action.payload
-    const isEthereumAddress = isAddress(action.payload)
+    const isEthereumAddress = EthAddress.validate(action.payload)
     try {
       if (!isEthereumAddress) {
         if (!isNameValid(address)) {

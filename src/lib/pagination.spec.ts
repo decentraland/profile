@@ -1,6 +1,6 @@
-import { useNavigate, useLocation } from 'react-router-dom'
-import { renderHook, act } from '@testing-library/react-hooks'
-import { UsePaginationResult, usePagination, DEFAULT_PAGE_SIZE } from './pagination'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { act, renderHook } from '@testing-library/react'
+import { DEFAULT_PAGE_SIZE, UsePaginationResult, usePagination } from './pagination'
 
 jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn(),
