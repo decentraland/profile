@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { bindActionCreators } from '@reduxjs/toolkit'
+import { bindActionCreators } from 'redux'
 import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
 import { fetchNFTsRequest } from '../../modules/nfts/actions'
