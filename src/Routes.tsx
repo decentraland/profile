@@ -1,13 +1,14 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import { usePageTracking } from 'decentraland-dapps/dist/hooks/usePageTracking'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import { usePageTracking } from '@dcl/hooks'
 import ConnectAndRedirect from './components/HOC/ConnectAndRedirect'
 import WithProfile from './components/HOC/WithProfile'
 import MainPage from './components/Pages/MainPage'
 import SignInPage from './components/Pages/SignInPage'
 
 export default function AppRoutes() {
-  usePageTracking()
+  const location = useLocation()
+  usePageTracking(location.pathname)
 
   return (
     <Routes>

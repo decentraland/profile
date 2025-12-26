@@ -1,4 +1,4 @@
-import { formatEther } from 'ethers'
+import { utils } from 'ethers'
 
 const formatter = Intl.NumberFormat('en', { notation: 'compact' })
 
@@ -7,7 +7,7 @@ export function getMinimumValueForFractionDigits(maximumFractionDigits: number) 
 }
 
 export function formatWeiToMana(wei: string): string {
-  const value = Number(formatEther(wei))
+  const value = Number(utils.formatEther(wei))
 
   if (value === 0) {
     return '0'

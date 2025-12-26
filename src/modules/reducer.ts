@@ -1,4 +1,4 @@
-import { configureStore, Reducer, Middleware, AnyAction, combineReducers, Store } from '@reduxjs/toolkit'
+import { AnyAction, Middleware, Reducer, Store, combineReducers, configureStore } from '@reduxjs/toolkit'
 import { CreditsState, creditsReducer as credits } from 'decentraland-dapps/dist/modules/credits/reducer'
 import { FeaturesState, featuresReducer as features } from 'decentraland-dapps/dist/modules/features/reducer'
 import { ModalState, modalReducer as modal } from 'decentraland-dapps/dist/modules/modal/reducer'

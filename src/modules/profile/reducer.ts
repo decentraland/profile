@@ -1,6 +1,6 @@
-import { createReducer } from '@reduxjs/toolkit'
+import { AnyAction, createReducer } from '@reduxjs/toolkit'
 import { loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
-import { profileReducer as defaultProfileReducer } from 'decentraland-dapps/dist/modules/profile/reducer'
+import { ProfileReducerAction, profileReducer as defaultProfileReducer } from 'decentraland-dapps/dist/modules/profile/reducer'
 import { enhancedFetchProfileFailure, enhancedFetchProfileRequest, enhancedFetchProfileSuccess } from './action'
 import { ProfileState } from './types'
 
@@ -25,8 +25,8 @@ export const profileReducer = createReducer<ProfileState>(buildInitialState(), b
       state.loading = loadingReducer(state.loading, action)
       state.enhancedProfileFetchErrors[action.payload.address] = action.payload.error
     })
-    .addDefaultCase((state, action) => {
-      const defaultState = defaultProfileReducer(state, action)
+    .addDefaultCase((state, action: AnyAction) => {
+      const defaultState = defaultProfileReducer(state, action as ProfileReducerAction)
       state.data = defaultState.data
       state.loading = defaultState.loading
       state.error = defaultState.error
