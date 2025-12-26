@@ -16,7 +16,7 @@ export const LOCATION_DISPLAY_TEST_ID = 'location-display'
 
 export function renderWithProviders(
   component: JSX.Element,
-  { preloadedState, store, router }: { preloadedState?: Partial<RootState>; store?: Store; router?: MemoryRouterProps } = {}
+  { preloadedState, store, router }: { preloadedState?: Partial<RootState>; store?: Store<RootState>; router?: MemoryRouterProps } = {}
 ) {
   const initializedStore =
     store ||

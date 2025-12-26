@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { isAddress } from 'ethers'
+import { EthAddress } from '@dcl/schemas'
 import { getProfileOfAddress } from 'decentraland-dapps/dist/modules/profile/selectors'
 import type { Profile } from 'decentraland-dapps/dist/modules/profile/types'
 import { enhancedFetchProfileRequest } from '../../../modules/profile/action'
@@ -11,7 +11,7 @@ import type { MapDispatch, MapStateProps, OwnProps } from './WithProfile.types'
 
 const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps => {
   const addressOrName = (ownProps.router.params.profileAddress as string).toLowerCase()
-  const isAddressFromPath = isAddress(addressOrName)
+  const isAddressFromPath = EthAddress.validate(addressOrName)
 
   const isLoadingProfileFromPath = addressOrName ? isLoadingProfile(state, addressOrName) : false
 

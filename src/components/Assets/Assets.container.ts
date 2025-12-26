@@ -6,7 +6,7 @@ import { fetchNFTsRequest } from '../../modules/nfts/actions'
 import { getError, getNFTs, getTotalNFTs, isLoading } from '../../modules/nfts/selectors'
 import { RootState } from '../../modules/reducer'
 import Assets from './Assets'
-import { MapStateProps, MapDispatch, MapDispatchProps, OwnProps } from './Assets.types'
+import { MapDispatch, MapDispatchProps, MapStateProps, OwnProps } from './Assets.types'
 
 const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   return {
