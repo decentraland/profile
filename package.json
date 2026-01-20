@@ -18,7 +18,7 @@
   "dependencies": {
     "@dcl/crypto": "^3.4.3",
     "@dcl/hooks": "^1.0.0",
-    "@dcl/schemas": "^19.8.0",
+    "@dcl/schemas": "^22.2.0",
     "@dcl/single-sign-on-client": "^0.1.0",
     "@dcl/social-rpc-client": "^2.0.0",
     "@dcl/ui-env": "^1.4.0",
@@ -29,7 +29,7 @@
     "decentraland-connect": "^11.0.0",
     "decentraland-dapps": "^26.3.0",
     "decentraland-ui": "^7.1.0",
-    "decentraland-ui2": "^1.1.6",
+    "decentraland-ui2": "^1.1.12",
     "ethers": "^5.7.2",
     "p-queue": "^6.6.2",
     "qrcode.react": "^3.1.0",
