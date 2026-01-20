@@ -27,7 +27,7 @@
     "ajv": "^8.12.0",
     "classnames": "^2.3.2",
     "decentraland-connect": "^11.0.0",
-    "decentraland-dapps": "^26.3.0",
+    "decentraland-dapps": "^26.4.0",
     "decentraland-ui": "^7.1.0",
     "decentraland-ui2": "^1.1.12",
     "ethers": "^5.7.2",
