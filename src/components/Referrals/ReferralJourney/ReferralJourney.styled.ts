@@ -1,4 +1,5 @@
-import { Box, Typography, emotionStyled as styled, keyframes } from 'decentraland-ui2'
+import { Box, Typography, emotionStyled as styled } from 'decentraland-ui2'
+import { keyframes } from '@emotion/react'
 import { ANIMATION_DURATION, calculateProgressPercentage } from './utils'
 import { AnimationPhase } from './ReferralJourney.types'
 

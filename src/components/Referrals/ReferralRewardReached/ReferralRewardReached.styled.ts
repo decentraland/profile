@@ -1,5 +1,6 @@
 import { Rarity } from '@dcl/schemas'
-import { Box, Button, keyframes, Modal, styled, TextField, Typography } from 'decentraland-ui2'
+import { Box, Button, Modal, TextField, Typography, styled } from 'decentraland-ui2'
+import { keyframes } from '@emotion/react'
 
 const rotate = keyframes`
   from {
