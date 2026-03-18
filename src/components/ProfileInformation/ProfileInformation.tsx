@@ -259,9 +259,9 @@ const ProfileInformation = (props: Props) => {
       </div>
       {showQRCode && <ShareQRCodeModal profileAddress={profileAddress} profile={profile} onClose={handleHideQRcode} />}
       <DownloadModal
-        title={t('avatar.download_modal.title')}
-        description={t('avatar.download_modal.description')}
-        buttonLabel={t('avatar.download_modal.button_label')}
+        title={t('avatar.download_modal_title')}
+        description={t('avatar.download_modal_description')}
+        buttonLabel={t('avatar.download_modal_button_label')}
         open={showDownloadModal}
         onClose={() => setShowDownloadModal(false)}
         onDownloadClick={handleDownloadClick}

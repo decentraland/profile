@@ -64,9 +64,9 @@ const Avatar = (props: Props) => {
             buttonText={isTabletAndBelow ? undefined : t('avatar.edit')}
             hideIcon={false}
             modalProps={{
-              title: t('avatar.download_modal.title'),
-              description: t('avatar.download_modal.description'),
-              buttonLabel: t('avatar.download_modal.button_label')
+              title: t('avatar.download_modal_title'),
+              description: t('avatar.download_modal_description'),
+              buttonLabel: t('avatar.download_modal_button_label')
             }}
           />
         </div>
