@@ -40,6 +40,10 @@
   position: relative;
 }
 
+.editButton {
+  width: 100%;
+}
+
 .editButton>img {
   margin-right: 5px;
 }

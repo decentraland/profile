@@ -8,12 +8,13 @@ import { Dropdown } from 'decentraland-ui/dist/components/Dropdown/Dropdown'
 import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { Popup } from 'decentraland-ui/dist/components/Popup/Popup'
 import { Profile } from 'decentraland-ui/dist/components/Profile/Profile'
+import { DownloadModal, launchDesktopApp } from 'decentraland-ui2'
 import Share from '../../assets/icons/Share.svg'
 import Wallet from '../../assets/icons/Wallet.svg'
 import { Events, ShareType } from '../../modules/analytics/types'
 import { config } from '../../modules/config/config'
 import { getAvatarName, hasAboutInformation } from '../../modules/profile/utils'
-import { getEditAvatarUrl, locations } from '../../modules/routing/locations'
+import { locations } from '../../modules/routing/locations'
 import { useTimer } from '../../utils/timer'
 import { hasHttpProtocol } from '../../utils/url'
 import { AvatarLink } from '../AvatarLink'
@@ -24,12 +25,12 @@ import MutualFriendsCounter from '../MutualFriendsCounter'
 import WorldsButton from '../WorldsButton'
 import {
   MAX_DESCRIPTION_LENGTH,
+  MAX_NUMBER_OF_LINKS,
   actionsForNonBlockedTestId,
   blockedButtonTestId,
   shareButtonTestId,
   twitterURL,
-  walletTestId,
-  MAX_NUMBER_OF_LINKS
+  walletTestId
 } from './constants'
 import ShareQRCodeModal from './ShareQrCodeModal'
 import { Props } from './ProfileInformation.types'
@@ -43,6 +44,7 @@ const ProfileInformation = (props: Props) => {
   const [hasCopiedLink, setHasCopiedLink] = useTimer(1200)
   const [hasCopiedWallet, setHasCopiedWallet] = useTimer(1200)
   const [showQRCode, setShowQRCode] = useState(false)
+  const [showDownloadModal, setShowDownloadModal] = useState(false)
   const isTabletAndBelow = useTabletAndBelowMediaQuery()
 
   const avatar = profile?.avatars[0]
@@ -76,6 +78,19 @@ const ProfileInformation = (props: Props) => {
 
     return () => clearTimeout(timeout)
   }, [profileAddress, loggedInAddress])
+
+  const handleEditAvatar = useCallback(async () => {
+    const hasLauncher = await launchDesktopApp()
+    if (!hasLauncher) {
+      setShowDownloadModal(true)
+    }
+  }, [])
+
+  const handleDownloadClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    e.preventDefault()
+    window.open('https://decentraland.org/download', '_blank')
+  }, [])
 
   const handleShowQrCode = () => setShowQRCode(true)
 
@@ -172,7 +187,7 @@ const ProfileInformation = (props: Props) => {
               direction="left"
             >
               <Dropdown.Menu>
-                <Dropdown.Item as="a" icon={'user'} text={t('profile_information.edit')} href={getEditAvatarUrl()} target="_blank" />
+                <Dropdown.Item icon={'user'} text={t('profile_information.edit')} onClick={handleEditAvatar} />
               </Dropdown.Menu>
             </Dropdown>
           )}
@@ -243,6 +258,14 @@ const ProfileInformation = (props: Props) => {
         )}
       </div>
       {showQRCode && <ShareQRCodeModal profileAddress={profileAddress} profile={profile} onClose={handleHideQRcode} />}
+      <DownloadModal
+        title={t('avatar.download_modal_title')}
+        description={t('avatar.download_modal_description')}
+        buttonLabel={t('avatar.download_modal_button_label')}
+        open={showDownloadModal}
+        onClose={() => setShowDownloadModal(false)}
+        onDownloadClick={handleDownloadClick}
+      />
     </div>
   )
 }

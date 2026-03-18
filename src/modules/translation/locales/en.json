@@ -4,7 +4,10 @@
   },
   "avatar": {
     "edit": "Edit Avatar",
-    "message": "Edit your avatar in Decentraland"
+    "message": "Edit your avatar in Decentraland",
+    "download_modal_title": "Download Decentraland",
+    "download_modal_description": "To edit your avatar, you need the Decentraland desktop client installed.",
+    "download_modal_button_label": "Download"
   },
   "profile_information": {
     "default_name": "Unnamed",
