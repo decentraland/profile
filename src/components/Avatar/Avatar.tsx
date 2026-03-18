@@ -1,15 +1,12 @@
 import React, { useCallback, useState } from 'react'
-import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { Env } from '@dcl/ui-env'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button } from 'decentraland-ui/dist/components/Button/Button'
 import { Loader } from 'decentraland-ui/dist/components/Loader/Loader'
 import { useTabletAndBelowMediaQuery } from 'decentraland-ui/dist/components/Media/Media'
 import { WearablePreview } from 'decentraland-ui/dist/components/WearablePreview/WearablePreview'
-import Edit from '../../assets/icons/Edit.svg'
+import { JumpIn } from 'decentraland-ui2'
 import { config } from '../../modules/config'
-import { getEditAvatarUrl } from '../../modules/routing/locations'
 import { View } from '../../utils/view'
 import { Props } from './Avatar.types'
 import styles from './Avatar.module.css'
@@ -61,17 +58,18 @@ const Avatar = (props: Props) => {
         </div>
       ) : null}
       {view === View.OWN && (
-        <Button
-          primary
-          fluid
-          className={classNames('customIconButton', styles.editButton)}
-          as={Link}
-          to={getEditAvatarUrl()}
-          target="_blank"
-        >
-          <img src={Edit} className="iconSize" />
-          {!isTabletAndBelow && ` ${t('avatar.edit')}`}
-        </Button>
+        <div className={styles.editButton}>
+          <JumpIn
+            variant="button"
+            buttonText={isTabletAndBelow ? undefined : t('avatar.edit')}
+            hideIcon={false}
+            modalProps={{
+              title: t('avatar.download_modal.title'),
+              description: t('avatar.download_modal.description'),
+              buttonLabel: t('avatar.download_modal.button_label')
+            }}
+          />
+        </div>
       )}
     </div>
   )

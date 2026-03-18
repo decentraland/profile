@@ -5,6 +5,11 @@ import { renderWithProviders } from '../../tests/tests'
 import { View } from '../../utils/view'
 import Avatar from './Avatar'
 
+jest.mock('decentraland-ui2', () => ({
+  ...jest.requireActual('decentraland-ui2'),
+  JumpIn: (props: { buttonText?: string }) => <button>{props.buttonText ?? 'Jump In'}</button>
+}))
+
 describe('Avatar', () => {
   const anAddress = 'anAddress'
   const anotherAddress = 'anotherAddress'
