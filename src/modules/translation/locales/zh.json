@@ -5,11 +5,9 @@
   "avatar": {
     "edit": "編輯頭像",
     "message": "在 Decentraland 中编辑您的头像",
-    "download_modal": {
-      "title": "下载 Decentraland",
-      "description": "要编辑您的头像，您需要安装 Decentraland 桌面客户端。",
-      "button_label": "下载"
-    }
+    "download_modal_title": "下载 Decentraland",
+    "download_modal_description": "要编辑您的头像，您需要安装 Decentraland 桌面客户端。",
+    "download_modal_button_label": "下载"
   },
   "profile_information": {
     "default_name": "未命名的",
