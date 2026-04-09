@@ -3,9 +3,8 @@ import { useLocation } from 'react-router-dom'
 import { Navbar2 as BaseNavbar } from 'decentraland-dapps/dist/containers'
 import { config } from '../../modules/config'
 import { Props } from './Navbar.types'
-import './Navbar.css'
 
-const Navbar = (props: Props) => {
+const Navbar = ({ identity }: Props) => {
   const { pathname, search } = useLocation()
 
   const handleSignIn = useCallback(() => {
@@ -17,7 +16,7 @@ const Navbar = (props: Props) => {
     window.location.replace(`${config.get('AUTH_URL')}/login?redirectTo=${redirectTo}`)
   }, [])
 
-  return <BaseNavbar {...props} withNotifications onSignIn={handleSignIn} />
+  return <BaseNavbar identity={identity} withNotifications onSignIn={handleSignIn} />
 }
 
-export default Navbar
+export { Navbar }
