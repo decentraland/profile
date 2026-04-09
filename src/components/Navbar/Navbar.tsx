@@ -16,7 +16,7 @@ const Navbar = ({ identity }: Props) => {
     window.location.replace(`${config.get('AUTH_URL')}/login?redirectTo=${redirectTo}`)
   }, [])
 
-  return <BaseNavbar identity={identity} withNotifications onSignIn={handleSignIn} />
+  return <BaseNavbar identity={identity} withNotifications withCredits={false} onSignIn={handleSignIn} />
 }
 
 export { Navbar }
