@@ -1,1 +1,1 @@
-export { default } from './Navbar.container'
+export { Navbar } from './Navbar.container'
