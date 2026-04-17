@@ -64,9 +64,10 @@ const Avatar = (props: Props) => {
             buttonText={isTabletAndBelow ? undefined : t('avatar.edit')}
             hideIcon={false}
             modalProps={{
-              title: t('avatar.download_modal_title'),
-              description: t('avatar.download_modal_description'),
-              buttonLabel: t('avatar.download_modal_button_label')
+              os: 'windows',
+              downloadUrl: 'https://decentraland.org/download',
+              epicUrl: 'https://store.epicgames.com/p/decentraland',
+              googlePlayUrl: 'https://play.google.com/store/apps/details?id=org.decentraland.explorer'
             }}
           />
         </div>
@@ -75,4 +76,5 @@ const Avatar = (props: Props) => {
   )
 }
 
+// eslint-disable-next-line import/no-default-export
 export default Avatar
