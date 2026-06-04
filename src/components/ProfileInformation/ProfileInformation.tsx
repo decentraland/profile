@@ -86,9 +86,7 @@ const ProfileInformation = (props: Props) => {
     }
   }, [])
 
-  const handleDownloadClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    e.preventDefault()
+  const handleDownloadClick = useCallback(() => {
     window.open('https://decentraland.org/download', '_blank')
   }, [])
 
@@ -259,9 +257,10 @@ const ProfileInformation = (props: Props) => {
       </div>
       {showQRCode && <ShareQRCodeModal profileAddress={profileAddress} profile={profile} onClose={handleHideQRcode} />}
       <DownloadModal
-        title={t('avatar.download_modal_title')}
-        description={t('avatar.download_modal_description')}
-        buttonLabel={t('avatar.download_modal_button_label')}
+        os="windows"
+        downloadUrl="https://decentraland.org/download"
+        epicUrl="https://store.epicgames.com/p/decentraland"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=org.decentraland.explorer"
         open={showDownloadModal}
         onClose={() => setShowDownloadModal(false)}
         onDownloadClick={handleDownloadClick}
@@ -270,4 +269,5 @@ const ProfileInformation = (props: Props) => {
   )
 }
 
+// eslint-disable-next-line import/no-default-export
 export default ProfileInformation
